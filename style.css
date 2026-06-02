@@ -16,11 +16,10 @@ body {
     color: white;
 }
 
-/* NAVBAR FIXA */
+/* NAVBAR */
 .navbar {
     position: fixed;
     top: 0;
-    left: 0;
     width: 100%;
 
     display: flex;
@@ -35,12 +34,10 @@ body {
     z-index: 1000;
 }
 
-/* LOGO */
 .logo img {
     height: 55px;
 }
 
-/* MENU */
 .menu {
     display: flex;
     gap: 25px;
@@ -51,51 +48,45 @@ body {
     color: white;
     text-decoration: none;
     font-weight: 600;
-    transition: 0.3s;
 }
 
 .menu a:hover {
     color: #1FB5A8;
 }
 
-/* BOTÃO */
 .btn {
     background: #1FB5A8;
     padding: 10px 18px;
     border-radius: 8px;
 }
 
-.btn:hover {
-    background: #17998d;
-}
+/* ===== SCROLL PAGES ===== */
 
-/* SEÇÕES BASE */
-.section {
-    min-height: 100vh;
+.panel {
+    height: 100vh;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    text-align: center;
+    position: relative;
 
-    padding: 120px 20px;
-
-    scroll-snap-align: start;
+    overflow: hidden;
 }
 
-/* HERO 1 */
+/* HERO */
 .hero {
     background: #081522;
 }
 
-.hero-logo {
+.hero-img {
     width: 90vw;
     max-width: 1400px;
-    animation: fadeIn 1.2s ease;
+
+    animation: fadeUp 1.2s ease;
 }
 
-/* HERO 2 CARGO */
+/* CARGO (TRANSIÇÃO PRINCIPAL) */
 .cargo {
     background: #0b1f33;
 }
@@ -103,32 +94,39 @@ body {
 .cargo-img {
     width: 90vw;
     max-width: 1400px;
-    animation: fadeIn 1.2s ease;
+
+    animation: fadeUp 1.2s ease;
 }
 
-/* TEXT SECTIONS */
-.dark {
-    background: #0d1d2e;
+/* TEXTO */
+.text {
+    flex-direction: column;
+    text-align: center;
+    padding: 60px;
 }
 
-.section h2 {
+.text h2 {
     color: #1FB5A8;
-    font-size: 40px;
+    font-size: 42px;
     margin-bottom: 20px;
 }
 
-.section p {
+.text p {
     max-width: 900px;
     line-height: 1.8;
     font-size: 18px;
     color: #d5dce5;
 }
 
-/* ANIMAÇÃO */
-@keyframes fadeIn {
+.dark {
+    background: #0d1d2e;
+}
+
+/* ANIMAÇÃO SUAVE */
+@keyframes fadeUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(60px);
     }
     to {
         opacity: 1;
@@ -141,7 +139,7 @@ body {
 
     .navbar {
         flex-direction: column;
-        gap: 15px;
+        gap: 10px;
         padding: 20px;
     }
 
@@ -151,16 +149,16 @@ body {
         gap: 15px;
     }
 
-    .hero-logo,
+    .hero-img,
     .cargo-img {
         width: 95vw;
     }
 
-    .section h2 {
+    .text h2 {
         font-size: 30px;
     }
 
-    .section p {
+    .text p {
         font-size: 16px;
     }
 }
