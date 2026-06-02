@@ -158,6 +158,23 @@ body {
 }
 
 /* =====================================
+  FROTA
+===================================== */
+
+.frota-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.frota-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* =====================================
    FOOTER
 ===================================== */
 
