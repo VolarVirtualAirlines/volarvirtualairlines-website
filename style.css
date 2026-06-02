@@ -126,7 +126,7 @@ body {
 
 .section {
 
-    padding: 120px 30px;
+    padding: 60px 30px;
 
     text-align: center;
 }
@@ -137,7 +137,7 @@ body {
 
     font-size: 38px;
 
-    margin-bottom: 25px;
+    margin: 10px 0 20px 0;
 }
 
 .section p {
