@@ -1,7 +1,5 @@
-/* =====================================
-   RESET
-===================================== */
 
+/* RESET */
 * {
     margin: 0;
     padding: 0;
@@ -13,20 +11,16 @@ html {
 }
 
 body {
+    font-family: Arial, Helvetica, sans-serif;
     background: #081522;
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
-/* =====================================
-   HEADER
-===================================== */
-
+/* NAVBAR FIXA */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
-
     width: 100%;
 
     display: flex;
@@ -41,152 +35,108 @@ body {
     z-index: 1000;
 }
 
-/* =====================================
-   LOGO MENU
-===================================== */
-
-.logo {
-    height: 60px;
-    width: auto;
+/* LOGO */
+.logo img {
+    height: 55px;
 }
 
-/* =====================================
-   MENU
-===================================== */
-
+/* MENU */
 .menu {
     display: flex;
-    align-items: center;
     gap: 25px;
+    align-items: center;
 }
 
 .menu a {
     color: white;
     text-decoration: none;
     font-weight: 600;
-    transition: 0.3s ease;
+    transition: 0.3s;
 }
 
 .menu a:hover {
     color: #1FB5A8;
 }
 
-/* =====================================
-   BOTÃO ENTRAR NA VA
-===================================== */
-
-.btn-va {
+/* BOTÃO */
+.btn {
     background: #1FB5A8;
     padding: 10px 18px;
     border-radius: 8px;
-    transition: 0.3s ease;
 }
 
-.btn-va:hover {
+.btn:hover {
     background: #17998d;
-    color: white !important;
 }
 
-/* =====================================
-   HERO
-===================================== */
-
-.hero {
-
+/* SEÇÕES BASE */
+.section {
     min-height: 100vh;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    /* Espaço reduzido entre menu e logo principal */
-    padding-top: 100px;
+    text-align: center;
 
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 120px 20px;
+
+    scroll-snap-align: start;
 }
 
-/* Logo principal */
+/* HERO 1 */
+.hero {
+    background: #081522;
+}
 
 .hero-logo {
-
-    width: 88vw;
+    width: 90vw;
     max-width: 1400px;
-
-    height: auto;
-
-    display: block;
-
-    margin-top: 5px;
+    animation: fadeIn 1.2s ease;
 }
 
-/* =====================================
-   SEÇÕES
-===================================== */
-
-.section {
-
-    padding: 120px 30px;
-
-    text-align: center;
+/* HERO 2 CARGO */
+.cargo {
+    background: #0b1f33;
 }
 
-.section h2 {
-
-    color: #1FB5A8;
-
-    font-size: 38px;
-
-    margin-bottom: 25px;
+.cargo-img {
+    width: 90vw;
+    max-width: 1400px;
+    animation: fadeIn 1.2s ease;
 }
 
-.section p {
-
-    max-width: 900px;
-
-    margin: auto;
-
-    line-height: 1.8;
-
-    font-size: 18px;
-
-    color: #d5dce5;
-}
-
+/* TEXT SECTIONS */
 .dark {
     background: #0d1d2e;
 }
 
-/* =====================================
-   FOOTER
-===================================== */
-
-footer {
-
-    text-align: center;
-
-    padding: 30px;
-
-    background: #050e18;
+.section h2 {
+    color: #1FB5A8;
+    font-size: 40px;
+    margin-bottom: 20px;
 }
 
-footer p {
-
-    color: #9ba9b8;
+.section p {
+    max-width: 900px;
+    line-height: 1.8;
+    font-size: 18px;
+    color: #d5dce5;
 }
 
-/* =====================================
-   RESPONSIVO
-===================================== */
-
-@media (max-width: 992px) {
-
-    .hero-logo {
-        width: 92vw;
+/* ANIMAÇÃO */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
     }
-
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
+/* RESPONSIVO */
 @media (max-width: 768px) {
 
     .navbar {
@@ -201,30 +151,16 @@ footer p {
         gap: 15px;
     }
 
-    .logo {
-        height: 50px;
-    }
-
-    .hero {
-
-        padding-top: 130px;
-    }
-
-    .hero-logo {
-
+    .hero-logo,
+    .cargo-img {
         width: 95vw;
-
-        margin-top: 0;
     }
 
     .section h2 {
-
         font-size: 30px;
     }
 
     .section p {
-
         font-size: 16px;
     }
-
 }
