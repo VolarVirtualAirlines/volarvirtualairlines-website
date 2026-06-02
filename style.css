@@ -1,168 +1,257 @@
-/* RESET */
+/* ========================================
+RESET
+======================================== */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* CONFIG GERAL */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
 
 html {
-    scroll-behavior: smooth;
+scroll-behavior: smooth;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #081522;
-    color: #ffffff;
+font-family: Arial, Helvetica, sans-serif;
+background: #081522;
+color: #ffffff;
 }
 
-/* MENU */
+/* ========================================
+HEADER
+======================================== */
 
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
+position: fixed;
+top: 0;
+left: 0;
 
-    width: 100%;
+```
+width: 100%;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+display: flex;
+justify-content: space-between;
+align-items: center;
 
-    padding: 15px 40px;
+padding: 15px 40px;
 
-    background: rgba(5, 14, 24, 0.92);
+background: rgba(5, 14, 24, 0.95);
 
-    backdrop-filter: blur(10px);
+backdrop-filter: blur(12px);
 
-    z-index: 999;
+z-index: 999;
+```
+
+}
+
+/* ========================================
+LOGOS
+======================================== */
+
+.logo-link {
+display: flex;
+align-items: center;
+gap: 15px;
+
+```
+text-decoration: none;
+```
+
 }
 
 .logo {
-    height: 55px;
-    width: auto;
+height: 60px;
+width: auto;
 }
 
+.logo-extenso {
+height: 38px;
+width: auto;
+}
+
+/* ========================================
+MENU
+======================================== */
+
 .menu {
-    display: flex;
-    align-items: center;
-    gap: 25px;
+display: flex;
+align-items: center;
+gap: 25px;
 }
 
 .menu a {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
+color: #ffffff;
+text-decoration: none;
+font-weight: 600;
+
+```
+transition: all 0.3s ease;
+```
+
 }
 
 .menu a:hover {
-    color: #1FB5A8;
+color: #1FB5A8;
 }
 
-/* BOTÃO */
+/* ========================================
+BOTÃO VA
+======================================== */
 
 .btn-va {
-    background: #1FB5A8;
-    padding: 10px 18px;
-    border-radius: 6px;
+background: #1FB5A8;
+padding: 10px 18px;
+border-radius: 8px;
 }
 
 .btn-va:hover {
-    background: #17998d;
-    color: white !important;
+background: #17998d;
+color: #ffffff !important;
 }
 
-/* HERO */
+/* ========================================
+HERO
+======================================== */
 
 .hero {
-    min-height: 100vh;
+min-height: 100vh;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+```
+display: flex;
+justify-content: center;
+align-items: center;
 
-    text-align: center;
+text-align: center;
 
-    padding-top: 90px;
+padding-top: 120px;
+padding-left: 20px;
+padding-right: 20px;
+```
+
 }
 
 .hero-content {
-    max-width: 900px;
+max-width: 1200px;
 }
 
 .hero-logo {
-    width: 450px;
-    max-width: 90%;
+width: 650px;
+max-width: 90%;
 
-    margin-bottom: 30px;
+```
+margin-bottom: 30px;
+```
+
 }
 
 .hero h1 {
-    font-size: 48px;
-    margin-bottom: 15px;
+font-size: 48px;
+margin-bottom: 15px;
+
+```
+letter-spacing: 1px;
+```
+
 }
 
 .hero p {
-    font-size: 22px;
-    color: #b8c5d3;
+font-size: 22px;
+color: #b8c5d3;
 }
 
-/* SEÇÕES */
+/* ========================================
+SEÇÕES
+======================================== */
 
 .section {
-    padding: 120px 30px;
-    text-align: center;
+padding: 120px 30px;
+text-align: center;
 }
 
 .section h2 {
-    color: #1FB5A8;
-    font-size: 36px;
-    margin-bottom: 25px;
+color: #1FB5A8;
+font-size: 38px;
+margin-bottom: 25px;
 }
 
 .section p {
-    max-width: 900px;
-    margin: auto;
+max-width: 900px;
+margin: auto;
 
-    line-height: 1.8;
-    font-size: 18px;
+```
+line-height: 1.8;
+font-size: 18px;
+```
+
 }
 
 .dark {
-    background: #0d1d2e;
+background: #0d1d2e;
 }
 
-/* FOOTER */
+/* ========================================
+FOOTER
+======================================== */
 
 footer {
-    text-align: center;
-    padding: 30px;
-    background: #050e18;
+text-align: center;
+padding: 30px;
+background: #050e18;
 }
 
-/* RESPONSIVO */
+footer p {
+color: #9ba9b8;
+}
+
+/* ========================================
+RESPONSIVO
+======================================== */
+
+@media (max-width: 992px) {
+
+```
+.logo-extenso {
+    display: none;
+}
+
+.hero-logo {
+    width: 500px;
+}
+```
+
+}
 
 @media (max-width: 768px) {
 
-    .navbar {
-        flex-direction: column;
-        gap: 15px;
-    }
+```
+.navbar {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+}
 
-    .menu {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+.menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
 
-    .hero-logo {
-        width: 280px;
-    }
+.hero-logo {
+    width: 320px;
+}
 
-    .hero h1 {
-        font-size: 32px;
-    }
+.hero h1 {
+    font-size: 32px;
+}
+
+.hero p {
+    font-size: 18px;
+}
+
+.section h2 {
+    font-size: 30px;
+}
+```
 
 }
