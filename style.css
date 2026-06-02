@@ -1,5 +1,5 @@
 
-/* RESET BÁSICO */
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -21,6 +21,8 @@ body {
   flex-direction: column;
   justify-content: center;
   position: relative;
+
+  padding-top: 90px; /* evita colisão com navbar */
 }
 
 /* overlay escuro premium */
@@ -31,26 +33,32 @@ body {
   background: rgba(0,0,0,0.55);
 }
 
-/* NAVBAR GLASS */
+/* NAVBAR GLASS FIXADO */
 .navbar {
   position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
+
+  padding: 25px 60px;
+
   z-index: 10;
 
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
 }
 
+/* LOGO MENU */
 .logo-small {
-  height: 38px;
+  height: 40px;
+  display: block;
 }
 
-/* LINKS MENU */
+/* LINKS */
 .nav-right a {
   margin: 0 12px;
   text-decoration: none;
@@ -75,15 +83,17 @@ body {
   background: #17a089;
 }
 
-/* CONTEÚDO HERO */
+/* HERO CONTENT CENTRAL */
 .hero-content {
   position: relative;
   text-align: center;
   z-index: 2;
+
+  margin-top: 40px;
   animation: fadeIn 1.2s ease-in-out;
 }
 
-/* logo grande central */
+/* LOGO GRANDE */
 .hero-logo {
   width: 220px;
   margin-bottom: 20px;
@@ -154,11 +164,15 @@ footer {
     font-size: 28px;
   }
 
-  .nav-right {
-    display: none; /* versão simples mobile */
-  }
-
   .hero-logo {
     width: 160px;
+  }
+
+  .nav-right {
+    display: none;
+  }
+
+  .navbar {
+    padding: 20px;
   }
 }
