@@ -43,7 +43,7 @@ body {
 }
 
 /* =====================================
-   LOGO
+   LOGO MENU
 ===================================== */
 
 .logo {
@@ -65,8 +65,7 @@ body {
     color: white;
     text-decoration: none;
     font-weight: 600;
-
-    transition: 0.3s;
+    transition: 0.3s ease;
 }
 
 .menu a:hover {
@@ -74,13 +73,14 @@ body {
 }
 
 /* =====================================
-   BOTÃO
+   BOTÃO ENTRAR NA VA
 ===================================== */
 
 .btn-va {
     background: #1FB5A8;
     padding: 10px 18px;
     border-radius: 8px;
+    transition: 0.3s ease;
 }
 
 .btn-va:hover {
@@ -94,25 +94,32 @@ body {
 
 .hero {
 
-    height: 100vh;
+    min-height: 100vh;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    padding-top: 90px;
+    /* Espaço para não colidir com o menu */
+    padding-top: 140px;
+
     padding-left: 20px;
     padding-right: 20px;
 }
 
+/* Logo principal */
+
 .hero-logo {
 
-    width: 90vw;
+    width: 88vw;
     max-width: 1400px;
 
     height: auto;
 
     display: block;
+
+    /* Respiro adicional */
+    margin-top: 30px;
 }
 
 /* =====================================
@@ -144,6 +151,8 @@ body {
     line-height: 1.8;
 
     font-size: 18px;
+
+    color: #d5dce5;
 }
 
 .dark {
@@ -172,6 +181,14 @@ footer p {
    RESPONSIVO
 ===================================== */
 
+@media (max-width: 992px) {
+
+    .hero-logo {
+        width: 92vw;
+    }
+
+}
+
 @media (max-width: 768px) {
 
     .navbar {
@@ -190,12 +207,26 @@ footer p {
         height: 50px;
     }
 
+    .hero {
+
+        padding-top: 180px;
+    }
+
     .hero-logo {
+
         width: 95vw;
+
+        margin-top: 15px;
     }
 
     .section h2 {
+
         font-size: 30px;
+    }
+
+    .section p {
+
+        font-size: 16px;
     }
 
 }
