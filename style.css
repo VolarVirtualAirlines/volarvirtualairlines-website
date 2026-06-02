@@ -36,7 +36,6 @@ body {
     padding: 15px 40px;
 
     background: rgba(5, 14, 24, 0.92);
-
     backdrop-filter: blur(12px);
 
     z-index: 1000;
@@ -100,8 +99,8 @@ body {
     justify-content: center;
     align-items: center;
 
-    /* Espaço para não colidir com o menu */
-    padding-top: 140px;
+    /* Espaço reduzido entre menu e logo principal */
+    padding-top: 100px;
 
     padding-left: 20px;
     padding-right: 20px;
@@ -118,8 +117,7 @@ body {
 
     display: block;
 
-    /* Respiro adicional */
-    margin-top: 30px;
+    margin-top: 5px;
 }
 
 /* =====================================
@@ -209,14 +207,14 @@ footer p {
 
     .hero {
 
-        padding-top: 180px;
+        padding-top: 130px;
     }
 
     .hero-logo {
 
         width: 95vw;
 
-        margin-top: 15px;
+        margin-top: 0;
     }
 
     .section h2 {
