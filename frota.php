@@ -3,7 +3,7 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *'); // Evita erros de bloqueio no site
 
-$apiKey = 'SUA_CHAVE_DE_FROTA_AQUI'; // Cole sua chave de frota aqui
+$apiKey = 'VVX_cHqukvBS7KYYsliiPFlMJbKQJFjYsj'; // Cole sua chave de frota aqui
 $url = 'https://newsky.app/api/airline-api/fleet';
 
 $ch = curl_init();
