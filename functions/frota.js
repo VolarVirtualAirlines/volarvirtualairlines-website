@@ -1,38 +1,40 @@
-export async function onRequest(context) {
+export async function onRequestGet(context) {
   const url = "https://newsky.app/api/airline-api/fleet";
   const apiKey = "VVX_cHqukvBS7KYYsliiPFlMJbKQJFjYsj";
 
   try {
-    // Fazendo a requisição limpa para a NewSky, sem cabeçalhos extras que travam o Cloudflare
     const response = await fetch(url, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${apiKey}`
+        "Authorization": `Bearer ${apiKey}`,
+        "Accept": "application/json"
       }
     });
 
+    // Se a própria NewSky rejeitar (Chave errada, por exemplo), capturamos aqui
     if (!response.ok) {
-      return new Response(JSON.stringify({ error: `Erro NewSky HTTP ${response.status}` }), {
-        status: response.status,
-        headers: { "Content-Type": "application/json;charset=UTF-8" }
+      const textoErro = await response.text();
+      return new Response(JSON.stringify({ error: `NewSky respondeu com erro ${response.status}: ${textoErro}` }), {
+        status: 200, // Retornamos 200 para o HTML exibir a mensagem real do erro na tela em vez de dar 500
+        headers: { "Content-Type": "application/json" }
       });
     }
 
     const dados = await response.json();
 
-    // Retorna os dados para o seu HTML principal
     return new Response(JSON.stringify(dados), {
       status: 200,
       headers: {
-        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Type": "application/json",
         "Cache-Control": "no-cache"
       }
     });
 
   } catch (error) {
-    return new Response(JSON.stringify({ error: `Erro no servidor: ${error.message}` }), {
-      status: 500,
-      headers: { "Content-Type": "application/json;charset=UTF-8" }
+    // Se falhar o código aqui dentro, ele vai cuspir o erro exato na tela pra gente ler
+    return new Response(JSON.stringify({ error: `Falha interna no Cloudflare: ${error.message}` }), {
+      status: 200, 
+      headers: { "Content-Type": "application/json" }
     });
   }
 }
