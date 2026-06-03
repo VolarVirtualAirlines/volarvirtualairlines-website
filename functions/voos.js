@@ -6,26 +6,38 @@ export async function onRequestGet(context) {
     const response = await fetch(url, {
       method: "GET",
       headers: {
+        // Opção A (Padrão):
         "Authorization": `Bearer ${apiKey}`,
+        
+        // Opção B: Se continuar dando "Bad token", comente a linha de cima e tente esta:
+        // "Authorization": apiKey,
+        
+        // Opção C: Se a documentação deles pedir um header customizado:
+        // "x-api-key": apiKey,
+
         "Accept": "application/json"
       }
     });
 
-    // Pega a resposta como texto puro para não quebrar se não for JSON
     const textoPuro = await response.text();
+    const textoLimpo = textoPuro.trim();
 
-    // Se a resposta for um texto comum ou HTML, vamos empacotar em um erro legível
-    if (!response.ok || textoPuro.includes("<html") || !textoPuro.trim().startsWith("[")) {
+    // 1. Verifica se o servidor retornou um erro HTTP (401, 404, 500, etc.)
+    // 2. Verifica se veio HTML em vez de dados
+    // 3. Modificado: Aceita se começar com '[' (Array) OU '{' (Objeto)
+    const ehJsonValido = textoLimpo.startsWith("[") || textoLimpo.startsWith("{");
+
+    if (!response.ok || textoLimpo.includes("<html") || !ehJsonValido) {
       return new Response(JSON.stringify({ 
         error: true, 
-        message: `Resposta bruta da NewSky: ${textoPuro.substring(0, 100)}` 
+        message: `Resposta inesperada (Status ${response.status}): ${textoLimpo.substring(0, 150)}` 
       }), {
-        status: 200,
+        status: 200, // Mantido 200 para o seu front-end tratar a mensagem amigavelmente
         headers: { "Content-Type": "application/json" }
       });
     }
 
-    // Se for um JSON válido (começa com [), envia normalmente
+    // Se passou no teste, entrega o JSON puro para o front-end
     return new Response(textoPuro, {
       status: 200,
       headers: { "Content-Type": "application/json" }
