@@ -124,7 +124,7 @@
     // Agora aponta direto para a função interna do seu Cloudflare Pages
     const URL_VOOS = "/voos";
 
-    async function carregarVoosEmTempoReal() {
+async function carregarVoosEmTempoReal() {
         const msgVoos = document.getElementById('mensagem-voos');
         const tabelaVoos = document.getElementById('tabela-voos');
         const corpoTabela = document.getElementById('corpo-tabela-voos');
@@ -133,9 +133,17 @@
             const resposta = await fetch(URL_VOOS);
             if (!resposta.ok) throw new Error("Erro ao ler rota interna");
 
-            const voos = await resposta.json();
+            const dados = await resposta.json();
 
-            if (!voos || voos.length === 0) {
+            // Garante a leitura correta se os dados vierem envelopados ou se forem uma lista direta
+            let voos = [];
+            if (Array.isArray(dados)) {
+                voos = dados;
+            } else if (dados && typeof dados === 'object') {
+                voos = dados.flights || dados.results || dados.data || [];
+            }
+
+            if (voos.length === 0) {
                 msgVoos.innerHTML = "✈️ Nenhum piloto voando no momento. Que tal iniciar um voo?";
                 tabelaVoos.style.display = 'none';
                 return;
@@ -144,13 +152,14 @@
             corpoTabela.innerHTML = '';
 
             voos.forEach(voo => {
+                // Mapeia os parâmetros da NewSky de forma flexível
                 const callsign = voo.callsign || 'VOLAR';
                 const piloto = voo.pilotName || voo.pilot || 'Piloto Virtual';
-                const dep = voo.departureAirport || '???';
-                const arr = voo.arrivalAirport || '???';
+                const dep = voo.departureAirport || voo.dep || '???';
+                const arr = voo.arrivalAirport || voo.arr || '???';
                 const acft = voo.aircraftModel || voo.aircraftType || 'B738';
                 const alt = voo.altitude ? `${voo.altitude} ft` : '---';
-                const gs = voo.groundSpeed ? `${voo.groundSpeed} kt` : '---';
+                const gs = voo.groundSpeed || voo.gs ? `${voo.groundSpeed || voo.gs} kt` : '---';
 
                 corpoTabela.innerHTML += `
                     <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
