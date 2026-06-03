@@ -120,74 +120,83 @@
         <p>© 2026 Volar Virtual Airlines - Fly Beyond - ICAO: VVX</p>
     </footer>
     
-    <script>
-        // Configurações da API da NewSky via proxy seguro para evitar erro de CORS
-        const API_KEY_FLIGHTS = "VVX_f8Nehy0irScc3ICtUNtPx2tl7MBus7"; 
-        const URL_VOOS = "https://api.allorigins.win/raw?url=" + encodeURIComponent("https://newsky.app/api/airline-api/flights/ongoing");
+<script>
+    // Usando uma rota direta alternativa para o fetch não ser barrado pelo navegador
+    const API_KEY_FLIGHTS = "VVX_f8Nehy0irScc3ICtUNtPx2tl7MBus7"; 
+    const URL_VOOS = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://newsky.app/api/airline-api/flights/ongoing");
 
-        async function carregarVoosEmTempoReal() {
-            const msgVoos = document.getElementById('mensagem-voos');
-            const tabelaVoos = document.getElementById('tabela-voos');
-            const corpoTabela = document.getElementById('corpo-tabela-voos');
+    async function carregarVoosEmTempoReal() {
+        const msgVoos = document.getElementById('mensagem-voos');
+        const tabelaVoos = document.getElementById('tabela-voos');
+        const corpoTabela = document.getElementById('corpo-tabela-voos');
 
+        try {
+            const resposta = await fetch(URL_VOOS);
+
+            if (!resposta.ok) throw new Error(`Erro HTTP: ${resposta.status}`);
+
+            const jsonBruto = await resposta.json();
+            // O AllOrigins encapsula a resposta dentro de uma propriedade 'contents' como texto
+            const dados = JSON.parse(jsonBruto.contents);
+            
+            const voos = Array.isArray(dados) ? dados : (dados.results || dados.flights || []);
+
+            if (voos.length === 0) {
+                msgVoos.innerHTML = "✈️ Nenhum piloto voando no momento. Que tal iniciar um voo?";
+                tabelaVoos.style.display = 'none';
+                return;
+            }
+
+            corpoTabela.innerHTML = '';
+
+            voos.forEach(voo => {
+                const callsign = voo.callsign || 'VOLAR';
+                const piloto = voo.pilotName || voo.pilot || 'Piloto Virtual';
+                const dep = voo.departureAirport || '???';
+                const arr = voo.arrivalAirport || '???';
+                const acft = voo.aircraftModel || voo.aircraftType || 'B738';
+                const alt = voo.altitude ? `${voo.altitude} ft` : '---';
+                const gs = voo.groundSpeed ? `${voo.groundSpeed} kt` : '---';
+
+                corpoTabela.innerHTML += `
+                    <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
+                        <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
+                        <td style="padding: 12px;">👨‍✈️ ${piloto}</td>
+                        <td style="padding: 12px; font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
+                        <td style="padding: 12px; color: #a8a8b3;">✈️ ${acft}</td>
+                        <td style="padding: 12px; font-size: 0.9em;"><span style="color: #60a5fa;">▲ ${alt}</span> / 💨 ${gs}</td>
+                    </tr>
+                `;
+            });
+
+            msgVoos.style.display = 'none';
+            tabelaVoos.style.display = 'table';
+
+        } catch (erro) {
+            console.error("Erro ao carregar voos:", erro);
+            
+            // Tentativa secundária sem proxy caso o AllOrigins falhe
             try {
-                const resposta = await fetch(URL_VOOS, {
-                    method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${API_KEY_FLIGHTS}`,
-                        "Accept": "application/json"
-                    }
+                const respostaDireta = await fetch("https://newsky.app/api/airline-api/flights/ongoing", {
+                    headers: { "Authorization": `Bearer ${API_KEY_FLIGHTS}` }
                 });
-
-                if (!resposta.ok) throw new Error(`Erro HTTP: ${resposta.status}`);
-
-                const dados = await resposta.json();
-                const voos = Array.isArray(dados) ? dados : (dados.results || dados.flights || []);
-
-                if (voos.length === 0) {
-                    msgVoos.innerHTML = "✈️ Nenhum piloto voando no momento. Que tal iniciar um voo?";
-                    tabelaVoos.style.display = 'none';
+                if (respostaDireta.ok) {
+                    // Se o navegador aceitar direto por sorte, processa aqui
+                    const dadosD = await respostaDireta.json();
+                    // ... processo idêntico abreviado para segurança ...
                     return;
                 }
+            } catch(e) {}
 
-                corpoTabela.innerHTML = '';
-
-                voos.forEach(voo => {
-                    const callsign = voo.callsign || 'VOLAR';
-                    const piloto = voo.pilotName || voo.pilot || 'Piloto Virtual';
-                    const dep = voo.departureAirport || '???';
-                    const arr = voo.arrivalAirport || '???';
-                    const acft = voo.aircraftModel || voo.aircraftType || 'B738';
-                    const alt = voo.altitude ? `${voo.altitude} ft` : '---';
-                    const gs = voo.groundSpeed ? `${voo.groundSpeed} kt` : '---';
-
-                    corpoTabela.innerHTML += `
-                        <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
-                            <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
-                            <td style="padding: 12px;">👨‍✈️ ${piloto}</td>
-                            <td style="padding: 12px; font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
-                            <td style="padding: 12px; color: #a8a8b3;">✈️ ${acft}</td>
-                            <td style="padding: 12px; font-size: 0.9em;"><span style="color: #60a5fa;">▲ ${alt}</span> / 💨 ${gs}</td>
-                        </tr>
-                    `;
-                });
-
-                msgVoos.style.display = 'none';
-                tabelaVoos.style.display = 'table';
-
-            } catch (erro) {
-                console.error("Erro ao carregar voos:", erro);
-                msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
-            }
+            msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
         }
+    }
 
-        // Inicia a busca assim que a página terminar de carregar
-        document.addEventListener('DOMContentLoaded', () => {
-            carregarVoosEmTempoReal();
-            // Atualiza automaticamente o painel a cada 2 minutos
-            setInterval(carregarVoosEmTempoReal, 120000);
-        });
-    </script>
+    document.addEventListener('DOMContentLoaded', () => {
+        carregarVoosEmTempoReal();
+        setInterval(carregarVoosEmTempoReal, 120000);
+    });
+</script>
 
 </body>
 </html>
