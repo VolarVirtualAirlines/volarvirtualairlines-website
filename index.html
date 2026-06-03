@@ -84,39 +84,59 @@
         <div id="dados-aeroporto">Carregando dados da NewSky...</div>
     
         <script>
-          // Substitua pelos seus dados reais
-          const API_KEY = 'VVX_XtasFy7o3xofQ1lKHZOGyzWusgSjXl'; 
-          const URL_API = 'https://newsky.app/api/airline-api/flights/ongoing'; // Exemplo de endpoint da NewSky
+                // CONFIGURAÇÕES DA NEWSKY - AJUSTE AQUI
+                const API_KEY = 'VVX_XtasFy7o3xofQ1lKHZOGyzWusgSjXl'; 
+                const URL_API = 'https://newsky.app/api/airline-api/flights/ongoing';
         
-          async function buscarDadosNewSky() {
-            try {
-              const resposta = await fetch(URL_API, {
-                method: 'GET',
-                headers: {
-                  'Authorization': `Bearer ${API_KEY}`,
-                  'Content-Type': 'application/json'
+                async function buscarDadosNewSky() {
+                    const elementoHtml = document.getElementById('dados-aeroporto');
+        
+                    try {
+                        // Faz a requisição para o servidor da NewSky
+                        const resposta = await fetch(URL_API, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${API_KEY}`,
+                                'Content-Type': 'application/json'
+                            }
+                        });
+        
+                        // TRATATIVA 1: Erros de Acesso ou Erros de Servidor (HTTP status não é 200-299)
+                        if (!resposta.ok) {
+                            if (resposta.status === 401 || resposta.status === 403) {
+                                throw new Error('Chave de API inválida ou sem permissão.');
+                            } else if (resposta.status === 404) {
+                                throw new Error('Link da API não foi encontrado (URL incorreta).');
+                            } else {
+                                throw new Error(`Servidor NewSky respondeu com erro ${resposta.status}.`);
+                            }
+                        }
+        
+                        // Se passou pelo IF acima, a comunicação deu certo
+                        const dados = await resposta.json();
+        
+                        // TRATATIVA 2: Sem voos ativos no momento (Lista vazia)
+                        if (!dados || dados.length === 0) {
+                            elementoHtml.className = "status-mensagem vazio";
+                            elementoHtml.innerHTML = "Nenhum piloto voando no momento pela Volar. ✈️💤";
+                        } 
+                        // CASO DE SUCESSO: Há voos acontecendo
+                        else {
+                            elementoHtml.className = "status-mensagem sucesso";
+                            elementoHtml.innerHTML = `🛫 Temos ${dados.length} voo(s) em andamento neste momento!`;
+                        }
+        
+                    } catch (erro) {
+                        // TRATATIVA 3: Erros críticos de rede, CORS, ou os erros gerados manualmente acima
+                        console.error('Detalhes do erro:', erro);
+                        elementoHtml.className = "status-mensagem erro";
+                        elementoHtml.innerHTML = `⚠️ Erro ao carregar dados: <br><small>${erro.message}</small>`;
+                    }
                 }
-              });
         
-              if (!resposta.ok) throw new Error('Erro ao conectar na API da NewSky');
-        
-              const dados = await resposta.json();
-              
-              // Aqui você manipula o JSON que a NewSky te mandou e exibe no HTML
-              console.log(dados); 
-              document.getElementById('dados-aeroporto').innerHTML = `
-                <p>Voos ativos no momento: ${dados.length}</p>
-              `;
-        
-            } catch (erro) {
-              console.error(erro);
-              document.getElementById('dados-aeroporto').innerHTML = 'Erro ao carregar dados.';
-            }
-          }
-        
-          // Executa a função quando a página abre
-          buscarDadosNewSky();
-        </script>
+                // Executa a função automaticamente assim que a página termina de carregar
+                document.addEventListener('DOMContentLoaded', buscarDadosNewSky);
+            </script>
     </section>
     
     <section id="links" class="section">
