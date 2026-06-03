@@ -158,7 +158,7 @@ body {
 }
 
 /* =====================================
-  FROTA
+   FROTA
 ===================================== */
 
 .frota-container {
@@ -172,6 +172,47 @@ body {
     max-width: 100%;
     height: auto;
     display: block;
+}
+
+/* =====================================
+   LINKS ACESSO (ADICIONADO E PADRONIZADO)
+===================================== */
+
+.links-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.btn-link {
+    color: #1FB5A8; /* Turquesa idêntico ao h2 e menu */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    transition: 0.3s ease;
+    display: inline-block;
+}
+
+/* Efeito Hover com Sombra Iluminada */
+.btn-link:hover {
+    color: #ffffff;
+    background: rgba(31, 181, 168, 0.1); /* Fundo sutil turquesa */
+    
+    /* Efeito de sombra projetada (Glow) */
+    box-shadow: 0 4px 15px rgba(31, 181, 168, 0.4);
+    
+    /* Leve elevação sutil para o estilo Premium */
+    transform: translateY(-2px);
+}
+
+.btn-link:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(31, 181, 168, 0.2);
 }
 
 /* =====================================
@@ -242,6 +283,16 @@ footer p {
     .section p {
 
         font-size: 16px;
+    }
+
+    /* Ajuste para os links em telas menores ficarem bem distribuídos */
+    .links-container {
+        gap: 10px;
+    }
+    
+    .btn-link {
+        font-size: 14px;
+        padding: 8px 14px;
     }
 
 }
