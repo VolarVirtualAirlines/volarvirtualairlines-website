@@ -121,9 +121,8 @@
     </footer>
     
 <script>
-    // Usando uma rota direta alternativa para o fetch não ser barrado pelo navegador
-    const API_KEY_FLIGHTS = "VVX_f8Nehy0irScc3ICtUNtPx2tl7MBus7"; 
-    const URL_VOOS = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://newsky.app/api/airline-api/flights/ongoing");
+    // Agora aponta direto para a função interna do seu Cloudflare Pages
+    const URL_VOOS = "/voos";
 
     async function carregarVoosEmTempoReal() {
         const msgVoos = document.getElementById('mensagem-voos');
@@ -132,16 +131,11 @@
 
         try {
             const resposta = await fetch(URL_VOOS);
+            if (!resposta.ok) throw new Error("Erro ao ler rota interna");
 
-            if (!resposta.ok) throw new Error(`Erro HTTP: ${resposta.status}`);
+            const voos = await resposta.json();
 
-            const jsonBruto = await resposta.json();
-            // O AllOrigins encapsula a resposta dentro de uma propriedade 'contents' como texto
-            const dados = JSON.parse(jsonBruto.contents);
-            
-            const voos = Array.isArray(dados) ? dados : (dados.results || dados.flights || []);
-
-            if (voos.length === 0) {
+            if (!voos || voos.length === 0) {
                 msgVoos.innerHTML = "✈️ Nenhum piloto voando no momento. Que tal iniciar um voo?";
                 tabelaVoos.style.display = 'none';
                 return;
@@ -174,26 +168,13 @@
 
         } catch (erro) {
             console.error("Erro ao carregar voos:", erro);
-            
-            // Tentativa secundária sem proxy caso o AllOrigins falhe
-            try {
-                const respostaDireta = await fetch("https://newsky.app/api/airline-api/flights/ongoing", {
-                    headers: { "Authorization": `Bearer ${API_KEY_FLIGHTS}` }
-                });
-                if (respostaDireta.ok) {
-                    // Se o navegador aceitar direto por sorte, processa aqui
-                    const dadosD = await respostaDireta.json();
-                    // ... processo idêntico abreviado para segurança ...
-                    return;
-                }
-            } catch(e) {}
-
             msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
         }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
         carregarVoosEmTempoReal();
+        // Atualiza a cada 2 minutos
         setInterval(carregarVoosEmTempoReal, 120000);
     });
 </script>
