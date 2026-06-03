@@ -182,17 +182,14 @@
     </footer>
 
 <script>
-    // ================= CONFIGURAÇÕES DA NEWSKY =================
-    // Cole aqui a sua chave que tem permissão de VOOS (flights):
+// ================= CONFIGURAÇÕES DA NEWSKY =================
+    // Mantivemos a sua chave real de voos para o radar funcionar:
     const API_KEY_FLIGHTS = 'VVX_f8Nehy0irScc3ICtUNtPx2tl7MBus7'; 
-
-    // Sua chave de frota real (já deixei configurada aqui para você)
-    const API_KEY_FLEET   = 'VVX_cHqukvBS7KYYsliiPFlMJbKQJFjYsj'; 
 
     const URL_VOOS  = 'https://newsky.app/api/airline-api/flights/ongoing';
     
-    // Usamos o proxy corsproxy.io antes do link da NewSky para evitar bloqueios no GitHub
-    const URL_FROTA = 'https://corsproxy.io/?https://newsky.app/api/airline-api/fleet';
+    // Apontando para a pasta local que o Cloudflare Pages vai gerenciar!
+    const URL_FROTA = '/frota'; 
     // ===========================================================
 
     async function atualizarVoosAtivos() {
@@ -221,13 +218,14 @@
         const tabela = document.getElementById('tabela-frota');
         const corpoTabela = document.getElementById('corpo-tabela-frota');
         try {
-            const resposta = await fetch(URL_FROTA, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${API_KEY_FLEET}`,
-                    'Content-Type': 'application/json'
-                }
-            });
+            // Faz a chamada direto para a rota interna criada pelo Cloudflare Pages
+            const resposta = await fetch(URL_FROTA);
+            
+            if (!resposta.ok) {
+                throw new Error(`Erro ao conectar na rota da frota (Status: ${resposta.status})`);
+            }
+            
+            const dados = await resposta.json();
             
             if (!resposta.ok) {
                 throw new Error(`A NewSky ou o Proxy retornaram erro (Status: ${resposta.status})`);
