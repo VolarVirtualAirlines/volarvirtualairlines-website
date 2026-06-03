@@ -1,39 +1,38 @@
 export async function onRequestGet(context) {
   const url = "https://newsky.app/api/airline-api/fleet";
-  const apiKey = "VVX_cHqukvBS7KYYsliiPFlMJbKQJFjYsj";
+  const apiKey = "VVX_cHqukvBS7KYYsliiPFlMJbKQJFjYsj"; // Sua chave atual
 
   try {
     const response = await fetch(url, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Accept": "application/json"
+        "Authorization": `Bearer ${apiKey}`
       }
     });
 
-    // Se a própria NewSky rejeitar (Chave errada, por exemplo), capturamos aqui
-    if (!response.ok) {
-      const textoErro = await response.text();
-      return new Response(JSON.stringify({ error: `NewSky respondeu com erro ${response.status}: ${textoErro}` }), {
-        status: 200, // Retornamos 200 para o HTML exibir a mensagem real do erro na tela em vez de dar 500
+    // Em vez de tentar ler como JSON direto (o que causa o erro do <), pegamos o texto puro
+    const textoPuro = await response.text();
+
+    // Se a NewSky mandou um HTML (erro), nós enviamos esse texto puro para o site ler
+    if (!response.ok || textoPuro.includes("<html") || textoPuro.includes("<!DOCTYPE")) {
+      // Vamos limpar as tags HTML para você conseguir ler a mensagem de erro na tela
+      const mensagemLimpa = textoPuro.replace(/<[^>]*>/g, ' ').substring(0, 200);
+      return new Response(JSON.stringify({ error: `A NewSky rejeitou o acesso. Resposta do servidor: ${mensagemLimpa}` }), {
+        status: 200,
         headers: { "Content-Type": "application/json" }
       });
     }
 
-    const dados = await response.json();
-
+    // Se veio a lista certa, processa o JSON normalmente
+    const dados = JSON.parse(textoPuro);
     return new Response(JSON.stringify(dados), {
       status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "no-cache"
-      }
+      headers: { "Content-Type": "application/json" }
     });
 
   } catch (error) {
-    // Se falhar o código aqui dentro, ele vai cuspir o erro exato na tela pra gente ler
-    return new Response(JSON.stringify({ error: `Falha interna no Cloudflare: ${error.message}` }), {
-      status: 200, 
+    return new Response(JSON.stringify({ error: `Erro no script: ${error.message}` }), {
+      status: 200,
       headers: { "Content-Type": "application/json" }
     });
   }
