@@ -214,21 +214,34 @@
         }
     }
 
-    async function carregarFrota() {
+async function carregarFrota() {
         const msgFrota = document.getElementById('mensagem-frota');
         const tabela = document.getElementById('tabela-frota');
         const corpoTabela = document.getElementById('corpo-tabela-frota');
         try {
             const resposta = await fetch(URL_FROTA, {
                 method: 'GET',
-                headers: { 'Authorization': `Bearer ${API_KEY_FLEET}`, 'Content-Type': 'application/json' } // Usa a chave de frota
+                headers: { 'Authorization': `Bearer ${API_KEY_FLEET}`, 'Content-Type': 'application/json' }
             });
-            if (!resposta.ok) throw new Error('Verifique os escopos da sua chave de API.');
+            
+            // Tratativa detalhada de erro de resposta
+            if (!resposta.ok) {
+                if (resposta.status === 401 || resposta.status === 403) {
+                    throw new Error(`Não autorizado (Erro ${resposta.status}). Verifique se a sua API_KEY_FLEET está correta e com o escopo "fleet" ativo.`);
+                } else {
+                    throw new Error(`Erro no servidor da NewSky (Status HTTP: ${resposta.status})`);
+                }
+            }
+            
             const dados = await resposta.json();
-            const listaAeronaves = Array.isArray(dados) ? dados : (dados.results || []);
+            
+            // Nova checagem: mostra no console do navegador para inspecionarmos
+            console.log("Dados recebidos da frota NewSky:", dados);
+            
+            const listaAeronaves = Array.isArray(dados) ? dados : (dados.results || dados.fleet || []);
             
             if (listaAeronaves.length === 0) {
-                msgFrota.innerHTML = "Nenhuma aeronave encontrada na frota.";
+                msgFrota.innerHTML = "Nenhuma aeronave encontrada na frota da companhia.";
                 return;
             }
             
@@ -243,8 +256,8 @@
                 
                 corpoTabela.innerHTML += `
                     <tr style="border-bottom: 1px solid #29292e;">
-                        <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${aviao.registration || 'N/A'}</td>
-                        <td style="padding: 12px;">${aviao.type || 'N/A'}</td>
+                        <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${aviao.registration || aviao.reg || 'N/A'}</td>
+                        <td style="padding: 12px;">${aviao.type || aviao.model || 'N/A'}</td>
                         <td style="padding: 12px;">📍 ${aviao.currentAirport || aviao.location || 'Em rota'}</td>
                         <td style="padding: 12px;">${statusBadge}</td>
                     </tr>`;
@@ -252,7 +265,9 @@
             msgFrota.style.display = 'none';
             tabela.style.display = 'table';
         } catch (erro) {
-            msgFrota.innerHTML = `<span style="color: #ff5252;">⚠️ Erro ao carregar a lista de aeronaves.</span>`;
+            console.error("Erro detalhado da frota:", erro);
+            // Agora vai exibir o motivo real na tela
+            msgFrota.innerHTML = `<span style="color: #ff5252;">⚠️ Erro ao carregar a lista de aeronaves:<br><small>${erro.message}</small></span>`;
         }
     }
 
