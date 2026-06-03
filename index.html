@@ -69,15 +69,13 @@
         </div>
     </section>
 
-    <section id="status-frota" class="section">
+<section id="status-frota" class="section">
         <h2>Inventário da Frota em Tempo Real</h2>
         
-        <!-- Bloco 1: Monitor de Voos Ativos (Frase curta) -->
         <div id="dados-voos" style="font-size: 1.2rem; margin-bottom: 20px; font-weight: 500;">
             Conectando ao radar da NewSky...
         </div>
 
-        <!-- Bloco 2: Tabela Dinâmica da Frota -->
         <div style="overflow-x: auto;">
             <table id="tabela-frota" style="display: none; width: 100%; border-collapse: collapse; text-align: left;">
                 <thead>
@@ -89,8 +87,7 @@
                     </tr>
                 </thead>
                 <tbody id="corpo-tabela-frota">
-                    <!-- Os aviões vão aparecer aqui automaticamente via JS -->
-                </tbody>
+                    </tbody>
             </table>
         </div>
 
@@ -184,91 +181,96 @@
         <p>© 2026 Volar Virtual Airlines - Fly Beyond - ICAO: VVX</p>
     </footer>
 
-    <script>
-        // ================= CONFIGURAÇÕES DE CHAVES DA NEWSKY =================
-        const API_KEY_FLIGHTS = 'VVX_f8Nehy0irScc3ICtUNtPx2tl7MBus7'; 
-        // =====================================================================
+<script>
+    // ================= CONFIGURAÇÕES DA NEWSKY =================
+    // Cole aqui a sua chave que tem permissão de VOOS (flights):
+    const API_KEY_FLIGHTS = 'VVX_f8Nehy0irScc3ICtUNtPx2tl7MBus7'; 
+
+    // Sua chave de frota real (já deixei configurada aqui para você)
+    const API_KEY_FLEET   = 'VVX_cHqukvBS7KYYsliiPFlMJbKQJFjYsj'; 
+
+    const URL_VOOS  = 'https://newsky.app/api/airline-api/flights/ongoing';
     
-        const URL_VOOS  = 'https://newsky.app/api/airline-api/flights/ongoing';
-        const URL_FROTA = 'frota.php'; // Aponta para a ponte segura que criamos acima
-    
-        async function atualizarVoosAtivos() {
-            const elementoHtml = document.getElementById('dados-voos');
-            try {
-                const resposta = await fetch(URL_VOOS, {
-                    method: 'GET',
-                    headers: { 'Authorization': `Bearer ${API_KEY_FLIGHTS}`, 'Content-Type': 'application/json' } // Usa a chave de voos
-                });
-                if (!resposta.ok) throw new Error('Verifique os escopos da sua chave de API.');
-                const dados = await resposta.json();
-                const listaVoos = Array.isArray(dados) ? dados : (dados.results || []);
-                
-                if (listaVoos.length === 0) {
-                    elementoHtml.innerHTML = "Nenhum piloto voando no momento pela Volar. ✈️💤";
-                } else {
-                    elementoHtml.innerHTML = `🟢 Temos <strong>${listaVoos.length} voo(s)</strong> em andamento neste momento!`;
-                }
-            } catch (erro) {
-                elementoHtml.innerHTML = `<span style="color: #ff5252;">⚠️ Erro no radar: ${erro.message}</span>`;
+    // Usamos o proxy corsproxy.io antes do link da NewSky para evitar bloqueios no GitHub
+    const URL_FROTA = 'https://corsproxy.io/?' + encodeURIComponent('https://newsky.app/api/airline-api/fleet');
+    // ===========================================================
+
+    async function atualizarVoosAtivos() {
+        const elementoHtml = document.getElementById('dados-voos');
+        try {
+            const resposta = await fetch(URL_VOOS, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${API_KEY_FLIGHTS}`, 'Content-Type': 'application/json' }
+            });
+            if (!resposta.ok) throw new Error('Verifique a chave ou permissões de voos.');
+            const dados = await resposta.json();
+            const listaVoos = Array.isArray(dados) ? dados : (dados.results || []);
+            
+            if (listaVoos.length === 0) {
+                elementoHtml.innerHTML = "Nenhum piloto voando no momento pela Volar. ✈️💤";
+            } else {
+                elementoHtml.innerHTML = `🟢 Temos <strong>${listaVoos.length} voo(s)</strong> em andamento neste momento!`;
             }
+        } catch (erro) {
+            elementoHtml.innerHTML = `<span style="color: #ff5252;">⚠️ Erro no radar: ${erro.message}</span>`;
         }
-    
-        async function carregarFrota() {
-                const msgFrota = document.getElementById('mensagem-frota');
-                const tabela = document.getElementById('tabela-frota');
-                const corpoTabela = document.getElementById('corpo-tabela-frota');
-                try {
-                    // Chama a sua ponte em PHP diretamente
-                    const resposta = await fetch(URL_FROTA);
-                    
-                    if (!resposta.ok) {
-                        throw new Error(`Erro ao conectar no servidor (Status HTTP: ${resposta.status})`);
-                    }
-                    
-                    const dados = await resposta.json();
-                    
-                    // Se o próprio PHP retornou uma mensagem de erro interna da NewSky
-                    if (dados.error) {
-                        throw new Error(`${dados.error} (Status: ${dados.status})`);
-                    }
-        
-                    const listaAeronaves = Array.isArray(dados) ? dados : (dados.results || dados.fleet || []);
-                    
-                    if (listaAeronaves.length === 0) {
-                        msgFrota.innerHTML = "Nenhuma aeronave encontrada na frota da companhia.";
-                        return;
-                    }
-                    
-                    corpoTabela.innerHTML = '';
-                    listaAeronaves.forEach(aviao => {
-                        let statusBadge = `<span style="color: #4ade80;">Disponível</span>`;
-                        if (aviao.status === 'BOOKED' || aviao.status === 'FLYING' || aviao.status === 'ONGOING') {
-                            statusBadge = `<span style="color: #60a5fa; font-weight: bold;">Em Voo 🛫</span>`;
-                        } else if (aviao.status === 'MAINTENANCE') {
-                            statusBadge = `<span style="color: #f97316;">Manutenção</span>`;
-                        }
-                        
-                        corpoTabela.innerHTML += `
-                            <tr style="border-bottom: 1px solid #29292e;">
-                                <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${aviao.registration || aviao.reg || 'N/A'}</td>
-                                <td style="padding: 12px;">${aviao.type || aviao.model || 'N/A'}</td>
-                                <td style="padding: 12px;">📍 ${aviao.currentAirport || aviao.location || 'Em rota'}</td>
-                                <td style="padding: 12px;">${statusBadge}</td>
-                            </tr>`;
-                    });
-                    msgFrota.style.display = 'none';
-                    tabela.style.display = 'table';
-                } catch (erro) {
-                    console.error("Erro detalhado da frota:", erro);
-                    msgFrota.innerHTML = `<span style="color: #ff5252;">⚠️ Erro ao carregar a lista de aeronaves:<br><small>${erro.message}</small></span>`;
+    }
+
+    async function carregarFrota() {
+        const msgFrota = document.getElementById('mensagem-frota');
+        const tabela = document.getElementById('tabela-frota');
+        const corpoTabela = document.getElementById('corpo-tabela-frota');
+        try {
+            const resposta = await fetch(URL_FROTA, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${API_KEY_FLEET}`,
+                    'Content-Type': 'application/json'
                 }
+            });
+            
+            if (!resposta.ok) {
+                throw new Error(`A NewSky ou o Proxy retornaram erro (Status: ${resposta.status})`);
             }
-    
-        document.addEventListener('DOMContentLoaded', () => {
-            atualizarVoosAtivos();
-            carregarFrota();
-        });
-    </script>
+            
+            const dados = await resposta.json();
+            const listaAeronaves = Array.isArray(dados) ? dados : (dados.results || dados.fleet || []);
+            
+            if (listaAeronaves.length === 0) {
+                msgFrota.innerHTML = "Nenhuma aeronave encontrada na frota da companhia.";
+                return;
+            }
+            
+            corpoTabela.innerHTML = '';
+            listaAeronaves.forEach(aviao => {
+                let statusBadge = `<span style="color: #4ade80;">Disponível</span>`;
+                if (aviao.status === 'BOOKED' || aviao.status === 'FLYING' || aviao.status === 'ONGOING') {
+                    statusBadge = `<span style="color: #60a5fa; font-weight: bold;">Em Voo 🛫</span>`;
+                } else if (aviao.status === 'MAINTENANCE') {
+                    statusBadge = `<span style="color: #f97316;">Manutenção</span>`;
+                }
+                
+                corpoTabela.innerHTML += `
+                    <tr style="border-bottom: 1px solid #29292e;">
+                        <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${aviao.registration || aviao.reg || 'N/A'}</td>
+                        <td style="padding: 12px;">${aviao.type || aviao.model || 'N/A'}</td>
+                        <td style="padding: 12px;">📍 ${aviao.currentAirport || aviao.location || 'Em rota'}</td>
+                        <td style="padding: 12px;">${statusBadge}</td>
+                    </tr>`;
+            });
+            msgFrota.style.display = 'none';
+            tabela.style.display = 'table';
+        } catch (erro) {
+            console.error("Erro detalhado da frota:", erro);
+            msgFrota.innerHTML = `<span style="color: #ff5252;">⚠️ Erro ao carregar a lista de aeronaves:<br><small>${erro.message}</small></span>`;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        atualizarVoosAtivos();
+        carregarFrota();
+    });
+</script>
     
 </body>
 </html>
