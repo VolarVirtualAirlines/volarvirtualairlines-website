@@ -192,7 +192,7 @@
     const URL_VOOS  = 'https://newsky.app/api/airline-api/flights/ongoing';
     
     // Usamos o proxy corsproxy.io antes do link da NewSky para evitar bloqueios no GitHub
-    const URL_FROTA = 'https://corsproxy.io/?' + encodeURIComponent('https://newsky.app/api/airline-api/fleet');
+    const URL_FROTA = 'https://corsproxy.io/?https://newsky.app/api/airline-api/fleet';
     // ===========================================================
 
     async function atualizarVoosAtivos() {
