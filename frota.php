@@ -8,7 +8,7 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 // INSIRA A SUA CHAVE DE FROTA REAL AQUI DENTRO DAS ASPAS
-$apiKey = 'SUA_CHAVE_DE_FROTA_AQUI'; 
+$apiKey = 'VVX_cHqukvBS7KYYsliiPFlMJbKQJFjYsj'; 
 
 $url = 'https://newsky.app/api/airline-api/fleet';
 
