@@ -213,25 +213,26 @@
         }
     }
 
-    async function carregarFrota() {
+async function carregarFrota() {
         const msgFrota = document.getElementById('mensagem-frota');
         const tabela = document.getElementById('tabela-frota');
         const corpoTabela = document.getElementById('corpo-tabela-frota');
         try {
-            // Faz a chamada direto para a rota interna criada pelo Cloudflare Pages
+            // Faz a chamada para a rota interna do Cloudflare Pages
             const resposta = await fetch(URL_FROTA);
             
             if (!resposta.ok) {
                 throw new Error(`Erro ao conectar na rota da frota (Status: ${resposta.status})`);
             }
             
+            // DECLARAÇÃO ÚNICA: Pegamos o JSON da resposta
             const dados = await resposta.json();
             
-            if (!resposta.ok) {
-                throw new Error(`A NewSky ou o Proxy retornaram erro (Status: ${resposta.status})`);
+            if (dados.error) {
+                throw new Error(`${dados.error}`);
             }
-            
-            const dados = await resposta.json();
+
+            // Identifica onde estão os aviões dentro do JSON recebido
             const listaAeronaves = Array.isArray(dados) ? dados : (dados.results || dados.fleet || []);
             
             if (listaAeronaves.length === 0) {
