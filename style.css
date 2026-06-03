@@ -19,31 +19,22 @@ body {
 }
 
 /* =====================================
-   HEADER
+   HEADER & NAVBAR
 ===================================== */
 
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
-
     width: 100%;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     padding: 15px 40px;
-
     background: rgba(5, 14, 24, 0.92);
     backdrop-filter: blur(12px);
-
     z-index: 1000;
 }
-
-/* =====================================
-   LOGO MENU
-===================================== */
 
 .logo {
     height: 60px;
@@ -51,7 +42,7 @@ body {
 }
 
 /* =====================================
-   MENU
+   MENU DE NAVEGAÇÃO
 ===================================== */
 
 .menu {
@@ -71,10 +62,7 @@ body {
     color: #1FB5A8;
 }
 
-/* =====================================
-   BOTÃO ENTRAR NA VA
-===================================== */
-
+/* Botão Entrar na VA (Navbar) */
 .btn-va {
     background: #1FB5A8;
     padding: 10px 18px;
@@ -92,64 +80,43 @@ body {
 ===================================== */
 
 .hero {
-
     min-height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* Espaço reduzido entre menu e logo principal */
     padding-top: 100px;
-
     padding-left: 20px;
     padding-right: 20px;
 }
 
-/* Logo principal */
-
 .hero-logo {
-
     width: 88vw;
     max-width: 1400px;
-
     height: auto;
-
     display: block;
-
     margin-top: 5px;
 }
 
 /* =====================================
-   SEÇÕES
+   SEÇÕES GERAIS
 ===================================== */
 
 .section {
-
     padding: 60px 30px;
-
     text-align: center;
 }
 
 .section h2 {
-
     color: #1FB5A8;
-
     font-size: 38px;
-
     margin: 10px 0 20px 0;
 }
 
 .section p {
-
     max-width: 900px;
-
     margin: auto;
-
     line-height: 1.8;
-
     font-size: 18px;
-
     color: #d5dce5;
 }
 
@@ -157,8 +124,25 @@ body {
     background: #0d1d2e;
 }
 
+/* Blocos de Idiomas (Quem Somos) */
+.lang-block {
+    margin-bottom: 30px;
+}
+
+.lang-block:last-child {
+    margin-bottom: 0; /* Remove o espaço extra no último bloco */
+}
+
+.lang-block p strong {
+    color: #1FB5A8;
+    font-size: 14px;
+    letter-spacing: 2px;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
 /* =====================================
-  FROTA
+   FROTA
 ===================================== */
 
 .frota-container {
@@ -166,6 +150,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
+    margin-top: 20px;
 }
 
 .frota-img {
@@ -175,21 +160,50 @@ body {
 }
 
 /* =====================================
+   LINKS ÚTEIS (Adicionado & Centralizado)
+===================================== */
+
+.links-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.btn-link {
+    text-decoration: none;
+    background: #1FB5A8;       /* Identidade visual unificada */
+    color: #050e18;            /* Contraste premium usando o dark da sua paleta */
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efeito Hover nos Links externos */
+.btn-link:hover {
+    background: #17998d;
+    transform: translateY(-3px); /* Leve elevação ao passar o mouse */
+    box-shadow: 0 6px 15px rgba(31, 181, 168, 0.4); /* Glow suave na cor da VA */
+}
+
+/* =====================================
    FOOTER
 ===================================== */
 
 footer {
-
     text-align: center;
-
     padding: 30px;
-
     background: #050e18;
 }
 
 footer p {
-
     color: #9ba9b8;
+    font-size: 14px;
 }
 
 /* =====================================
@@ -197,15 +211,12 @@ footer p {
 ===================================== */
 
 @media (max-width: 992px) {
-
     .hero-logo {
         width: 92vw;
     }
-
 }
 
 @media (max-width: 768px) {
-
     .navbar {
         flex-direction: column;
         gap: 15px;
@@ -223,25 +234,26 @@ footer p {
     }
 
     .hero {
-
         padding-top: 130px;
     }
 
     .hero-logo {
-
         width: 95vw;
-
         margin-top: 0;
     }
 
     .section h2 {
-
         font-size: 30px;
     }
 
     .section p {
-
         font-size: 16px;
     }
 
+    /* Ajuste para os botões de links ocuparem mais espaço em telas pequenas */
+    .btn-link {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
 }
