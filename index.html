@@ -78,6 +78,45 @@
           style="border:none;">
         </iframe>
     </section>
+
+    <section id="Voos On-Line" class="section">
+        <div id="dados-aeroporto">Carregando dados da NewSky...</div>
+    
+        <script>
+          // Substitua pelos seus dados reais
+          const API_KEY = 'VVX_XtasFy7o3xofQ1lKHZOGyzWusgSjXl'; 
+          const URL_API = 'https://newsky.app/api/airline-api/flights/ongoing'; // Exemplo de endpoint da NewSky
+        
+          async function buscarDadosNewSky() {
+            try {
+              const resposta = await fetch(URL_API, {
+                method: 'GET',
+                headers: {
+                  'Authorization': `Bearer ${API_KEY}`,
+                  'Content-Type': 'application/json'
+                }
+              });
+        
+              if (!resposta.ok) throw new Error('Erro ao conectar na API da NewSky');
+        
+              const dados = await resposta.json();
+              
+              // Aqui você manipula o JSON que a NewSky te mandou e exibe no HTML
+              console.log(dados); 
+              document.getElementById('dados-aeroporto').innerHTML = `
+                <p>Voos ativos no momento: ${dados.length}</p>
+              `;
+        
+            } catch (erro) {
+              console.error(erro);
+              document.getElementById('dados-aeroporto').innerHTML = 'Erro ao carregar dados.';
+            }
+          }
+        
+          // Executa a função quando a página abre
+          buscarDadosNewSky();
+        </script>
+    </section>
     
     <section id="links" class="section">
         <h2>Acesse / Access / Acceder</h2>
