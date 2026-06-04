@@ -19,30 +19,7 @@ body {
 }
 
 /* =====================================
-   HEADER
-===================================== */
-
-/*.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 15px 40px;
-
-    background: rgba(5, 14, 24, 0.92);
-    backdrop-filter: blur(12px);
-
-    z-index: 1000;
-}*/
-
-/* =====================================
-   CONFIGURAÇÃO DO MENU TRANSPARENTE
+   HEADER- MENU
 ===================================== */
 
 .navbar {
