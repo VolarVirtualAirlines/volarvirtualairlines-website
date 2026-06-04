@@ -22,7 +22,7 @@ body {
    HEADER
 ===================================== */
 
-.navbar {
+/*.navbar {
     position: fixed;
     top: 0;
     left: 0;
@@ -39,6 +39,48 @@ body {
     backdrop-filter: blur(12px);
 
     z-index: 1000;
+}*/
+
+/* =====================================
+   CONFIGURAÇÃO DO MENU TRANSPARENTE
+===================================== */
+
+.navbar {
+    background-color: transparent !important; /* Remove qualquer cor de fundo */
+    position: absolute;   /* Faz o menu flutuar por cima do banner/imagem do topo */
+    top: 0;
+    left: 0;
+    width: 100%;          /* Garante que o menu ocupe toda a largura da tela */
+    z-index: 1000;        /* Garante que o menu fique sempre na frente do conteúdo */
+    
+    /* Caso o seu tema antigo tenha colocado bordas ou sombras, isso remove: */
+    border: none !important;
+    box-shadow: none !important;
+
+    /* Alinhamento interno (opcional, caso precise juntar logo e menu nas pontas) */
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 20px 50px;   /* Ajuste o espaço interno como achar melhor */
+    box-sizing: border-box;
+}
+
+/* Mantendo o seu código original do menu logo abaixo */
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.menu a:hover {
+    color: #1FB5A8;
 }
 
 /* =====================================
