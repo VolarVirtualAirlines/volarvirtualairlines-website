@@ -202,40 +202,46 @@
                     }
                     */
                     
-                    // =========================================================
-                    // 5. TRATAMENTO DO STATUS DO VOO (Ajustado para os 3 Status Oficiais)
-                    // =========================================================
-                    let statusTexto = "📋 Em Preparação";
-                    let statusCor = "#1FB5A8"; // Turquesa Volar padrão
-                    
-                    // Lógica baseada estritamente nas chaves reais da NewSky
-                    const rawStatus = (voo.status || voo.phase || "").toLowerCase().trim();
-                    
-                    if (voo.arrTimeAct !== null && voo.arrTimeAct !== undefined && voo.arrTimeAct !== "") {
-                        statusTexto = "🛬 Pousado";
-                        statusCor = "#a8a8b3"; // Cinza
-                    } 
-                    // 1. Status Oficial: Preparing
-                    else if (rawStatus === "preparing") {
-                        statusTexto = "📋 Em Preparação";
-                        statusCor = "#e9c46a"; // Amarelo/Laranja claro
-                    } 
-                    // 2. Status Oficial: Enroute
-                    else if (rawStatus === "enroute") {
-                        statusTexto = "✈️ Em Rota 1";
-                        statusCor = "#1FB5A8"; // Turquesa Volar
-                    } 
-                    // 3. Status Oficial: Landing
-                    else if (rawStatus === "landing") {
-                        statusTexto = "📉 Pousando / Aproximação";
-                        statusCor = "#60a5fa"; // Azul claro
-                    } 
-                    // Caso geral de segurança (Fallback seguro se o voo estiver ativo)
-                    else {
-                        statusTexto = "✈️ Em Rota 2";
-                        statusCor = "#1FB5A8"; // Turquesa Volar
-                    }
+// =========================================================
+// 5. TRATAMENTO DO STATUS DO VOO (Ajustado para os 3 Status Oficiais)
+// =========================================================
+let statusTexto = "📋 Em Preparação";
+let statusCor = "#e9c46a"; // Começa com o amarelo de preparação por segurança
 
+// 🔍 ESPIÃO: Copie isso para ver no F12 o que a NewSky realmente está mandando!
+console.log("PROPRIEDADES DE STATUS DA NEWSKY:", {
+    status: voo.status,
+    phase: voo.phase,
+    objeto_completo_voo: voo
+});
+
+// Lógica baseada estritamente nas chaves reais da NewSky
+const rawStatus = (voo.status || voo.phase || "").toLowerCase().trim();
+
+if (voo.arrTimeAct !== null && voo.arrTimeAct !== undefined && voo.arrTimeAct !== "") {
+    statusTexto = "🛬 Pousado";
+    statusCor = "#a8a8b3"; // Cinza
+} 
+// 1. Status Oficial: Preparing
+else if (rawStatus === "preparing") {
+    statusTexto = "📋 Em Preparação";
+    statusCor = "#e9c46a"; // Amarelo/Laranja claro
+} 
+// 2. Status Oficial: Enroute
+else if (rawStatus === "enroute") {
+    statusTexto = "✈️ Em Rota 1";
+    statusCor = "#1FB5A8"; // Turquesa Volar
+} 
+// 3. Status Oficial: Landing
+else if (rawStatus === "landing") {
+    statusTexto = "📉 Pousando / Aproximação";
+    statusCor = "#60a5fa"; // Azul claro
+} 
+// CASO GERAL DE SEGURANÇA (Corrigido: se não reconhecer o status, assume solo/preparação)
+else {
+    statusTexto = "📋 Em Preparação (Não Reconhecido)";
+    statusCor = "#e9c46a"; // Mantém amarelo no portão
+}
                     
                     corpoTabela.innerHTML += `
                         <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
