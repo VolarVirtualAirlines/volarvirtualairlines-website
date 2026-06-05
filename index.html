@@ -203,53 +203,40 @@
                     */
                     
                     // =========================================================
-                    // 5. TRATAMENTO DO STATUS DO VOO (Corrigido)
+                    // 5. TRATAMENTO DO STATUS DO VOO (Ajustado para os 3 Status Oficiais)
                     // =========================================================
-                    let statusTexto = "✈️ Em Rota"; // Fallback padrão mais seguro para voo ativo
+                    let statusTexto = "✈️ Em Rota";
                     let statusCor = "#1FB5A8"; // Turquesa Volar padrão
                     
-                    // 1. Isolamos as strings de fase e status da NewSky
-                    const rawPhase = String(voo.phase || "").toLowerCase().trim();
-                    const rawStatus = String(voo.status || "").toLowerCase().trim();
+                    // Lógica baseada estritamente nas chaves reais da NewSky
+                    const rawStatus = (voo.status || voo.phase || "").toLowerCase().trim();
                     
-                    // 2. Captura robusta da telemetria da NewSky
-                    const simData = voo.simData || {};
-                    const velocidade = Number(simData.groundSpeed || voo.groundSpeed || simData.gs || voo.gs || 0);
-                    const altitude = Number(simData.altitude || voo.altitude || simData.alt || voo.alt || 0);
-                    
-                    // 3. ÁRVORE DE DECISÃO REORGANIZADA POR PRIORIDADE DINÂMICA
                     if (voo.arrTimeAct !== null && voo.arrTimeAct !== undefined && voo.arrTimeAct !== "") {
                         statusTexto = "🛬 Pousado";
                         statusCor = "#a8a8b3"; // Cinza
                     } 
-                    // PRIORIDADE 1: Se o avião estiver nitidamente voando por telemetria ou fase ativa
-                    else if (rawPhase === "climb" || rawPhase === "climbing" || (velocidade > 35 && altitude > 500)) {
-                        statusTexto = "🛫 Subindo";
-                        statusCor = "#4ade80"; // Verde
-                    } 
-                    else if (rawPhase === "descending" || rawPhase === "descent" || rawPhase === "approach") {
-                        statusTexto = "📉 Descendo / Aproximação";
-                        statusCor = "#60a5fa"; // Azul claro
-                    } 
-                    else if (rawPhase === "enroute" || rawPhase === "cruise" || altitude > 4000) {
-                        statusTexto = "✈️ Em Rota";
-                        statusCor = "#1FB5A8"; // Turquesa Volar
-                    } 
-                    // PRIORIDADE 2: Movimento em solo (Táxi / Corrida de decolagem)
-                    else if (rawPhase === "taxi" || rawPhase === "pushback" || (velocidade >= 2 && velocidade <= 35 && altitude < 500)) {
-                        statusTexto = "🚜 Táxi / Pushback";
-                        statusCor = "#f4a261"; // Laranja
-                    } 
-                    // PRIORIDADE 3: Preparação (Só entra aqui se o avião estiver parado E a API confirmar solo)
-                    else if (rawPhase === "boarding" || rawPhase === "preflight" || rawPhase === "gate" || rawStatus === "preflight" || (velocidade < 2 && altitude < 500)) {
+                    // 1. Status Oficial: Preparing
+                    else if (rawStatus === "preparing") {
                         statusTexto = "📋 Em Preparação";
                         statusCor = "#e9c46a"; // Amarelo/Laranja claro
                     } 
-                    // Caso geral de segurança (Se houver telemetria mas nenhuma string bater)
+                    // 2. Status Oficial: Enroute
+                    else if (rawStatus === "enroute") {
+                        statusTexto = "✈️ Em Rota";
+                        statusCor = "#1FB5A8"; // Turquesa Volar
+                    } 
+                    // 3. Status Oficial: Landing
+                    else if (rawStatus === "landing") {
+                        statusTexto = "📉 Pousando / Aproximação";
+                        statusCor = "#60a5fa"; // Azul claro
+                    } 
+                    // Caso geral de segurança (Fallback seguro se o voo estiver ativo)
                     else {
                         statusTexto = "✈️ Em Rota";
                         statusCor = "#1FB5A8"; // Turquesa Volar
-                    }                    
+                    }
+
+                    
                     corpoTabela.innerHTML += `
                         <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
                             <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
