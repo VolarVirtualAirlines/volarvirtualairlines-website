@@ -56,7 +56,7 @@
             <p><strong>ES</strong></p>
             <p>
                 VOLAR nació del deseo de unir a los entusiastas de la aviación en una comunidad vibrante y colaborativa. 
-                Con operaciones en rutas nacionales e internacionales, ofrecemos una estructura organizada, 
+                Con operaciones en rutas nacionais e internacionales, ofrecemos una estructura organizada, 
                 soporte continuo y herramientas modernas para hacer que cada vuelo sea inolvidable.
             </p>
         </div>
@@ -79,31 +79,32 @@
         </iframe>
     </section>
 
-    <!-- NOVA SEÇÃO DE VOOS EM TEMPO REAL -->
     <section id="voos-reais" class="section" style="padding: 20px; background: #121214; border-radius: 8px; margin-top: 20px;">
         <h2>Painel de Voos em Tempo Real</h2>
         
-        <!-- Mensagem de carregamento ou "Nenhum voo" -->
         <div id="mensagem-voos" style="color: #a8a8b3; text-align: center; padding: 20px; font-size: 1.1em;">
             Carregando voos em andamento...
         </div>
 
-        <!-- Tabela oculta que só aparece se houver voos -->
-        <table id="tabela-voos" style="width: 100%; border-collapse: collapse; text-align: left; display: none; color: #e1e1e6;">
-            <thead>
-                <tr style="border-bottom: 2px solid #29292e; color: #00b0ff;">
-                    <th style="padding: 12px;">Callsign</th>
-                    <th style="padding: 12px;">Piloto</th>
-                    <th style="padding: 12px;">Rota</th>
-                    <th style="padding: 12px;">Aeronave</th>
-                    <th style="padding: 12px;">Status</th>
-                </tr>
-            </thead> 
-            
-            <tbody id="corpo-tabela-voos">
-                <!-- Os voos entrarão aqui dinamicamente -->
-            </tbody>
-        </table>
+        <div style="overflow-x: auto;">
+            <table id="tabela-voos" style="width: 100%; border-collapse: collapse; text-align: left; display: none; color: #e1e1e6; font-size: 0.95em;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #29292e; color: #00b0ff;">
+                        <th style="padding: 12px;">Callsign</th>
+                        <th style="padding: 12px;">Piloto</th>
+                        <th style="padding: 12px;">Rota</th>
+                        <th style="padding: 12px;">Aeronave</th>
+                        <th style="padding: 12px;">Tipo</th>
+                        <th style="padding: 12px;">Simulador</th>
+                        <th style="padding: 12px;">Rede</th>
+                        <th style="padding: 12px;">Status</th>
+                    </tr>
+                </thead> 
+                
+                <tbody id="corpo-tabela-voos">
+                    </tbody>
+            </table>
+        </div>
     </section>
     
     <section id="links" class="section">
@@ -151,7 +152,7 @@
                 corpoTabela.innerHTML = '';
         
                 voos.forEach(voo => {
-                    // 1. MONTANDO O CALLSIGN (Ex: VVX5806)
+                    // 1. MONTANDO O CALLSIGN (Ex: VVX4112)
                     const prefixo = voo.airline?.icao || 'VVX';
                     const numeroVoo = voo.flightNumber || '';
                     const callsign = numeroVoo ? `${prefixo}${numeroVoo}` : 'VOLAR';
@@ -166,74 +167,76 @@
                     // 4. PEGANDO O IDENT DA AERONAVE (Ex: B738)
                     const acft = voo.aircraft?.airframe?.ident || 'B738';
 
-                    /*
-                    // =========================================================
-                    // 5. TRATAMENTO DO STATUS DO VOO (Substituindo Alt/Vel)
-                    // =========================================================
-                    let statusTexto = "Em Andamento";
-                    let statusCor = "#00b0ff"; // Azul padrão
-        
-                    // Lógica baseada nas chaves comuns da NewSky (status, phase ou arrTimeAct)
-                    const rawStatus = (voo.status || voo.phase || "").toLowerCase();
-        
-                    if (voo.arrTimeAct !== null && voo.arrTimeAct !== undefined) {
+                    // 5. PROCESSAMENTO DOS NOVOS CAMPOS ADICIONADOS
+                    // Tipo de Voo
+                    let tipoVooTexto = "✈️ Comercial";
+                    if (voo.type === "pax") tipoVooTexto = "👥 Passagens";
+                    else if (voo.type === "cargo") tipoVooTexto = "📦 Carga";
+                    if (voo.charter === true) tipoVooTexto = "⭐ Fretado";
+
+                    // Simulador
+                    let simuladorTexto = String(voo.simulator || "MSFS").toUpperCase();
+                    if (simuladorTexto === "MSFS") simuladorTexto = "MSFS 2020";
+                    else if (simuladorTexto === "XPLANE" || simuladorTexto === "XP11" || simuladorTexto === "XP12") simuladorTexto = "X-Plane";
+                    else if (simuladorTexto === "P3D") simuladorTexto = "Prepar3D";
+                    else if (simuladorTexto === "FSX") simuladorTexto = "FSX";
+
+                    // Rede Online com Cores Customizadas
+                    let redeTexto = "Offline";
+                    let redeCor = "#505059";
+                    if (voo.network && voo.network.name) {
+                        const redeNome = voo.network.name.toLowerCase();
+                        if (redeNome === "ivao") {
+                            redeTexto = "IVAO";
+                            redeCor = "#0d6efd"; // Azul oficial IVAO
+                        } else if (redeNome === "vatsim") {
+                            redeTexto = "VATSIM";
+                            redeCor = "#e67e22"; // Laranja oficial VATSIM
+                        } else {
+                            redeTexto = redeNome.toUpperCase();
+                            redeCor = "#1FB5A8";
+                        }
+                    }
+
+                    // 6. TRATAMENTO INTELIGENTE DO STATUS DO VOO (Mapeamento Oficial NewSky)
+                    let statusTexto = "📋 Em Preparação";
+                    let statusCor = "#e9c46a"; // Amarelo de preparação por padrão
+
+                    const simData = voo.simData || {};
+                    const velocidade = Number(simData.groundSpeed || voo.groundSpeed || simData.gs || voo.gs || 0);
+                    const altitude = Number(simData.altitude || voo.altitude || simData.alt || voo.alt || 0);
+
+                    const jaDecolou = voo.depTimeAct !== null && voo.depTimeAct !== undefined && voo.depTimeAct !== "";
+                    const jaPousou = voo.arrTimeAct !== null && voo.arrTimeAct !== undefined && voo.arrTimeAct !== "";
+
+                    if (jaPousou) {
                         statusTexto = "🛬 Pousado";
                         statusCor = "#a8a8b3"; // Cinza
-                    } else if (rawStatus === "boarding" || rawStatus === "preflight" || rawStatus === "gate") {
-                        statusTexto = "📋 Pré-Voo / Embarque";
-                        statusCor = "#e9c46a"; // Amarelo/Laranja claro
-                    } else if (rawStatus === "taxi" || rawStatus === "pushback") {
-                        statusTexto = "🚜 Táxi / Pushback";
-                        statusCor = "#f4a261"; // Laranja
-                    } else if (rawStatus === "climb" || rawStatus === "climbing") {
-                        statusTexto = "🛫 Subindo";
-                        statusCor = "#4ade80"; // Verde
-                    } else if (rawStatus === "enroute" || rawStatus === "cruise") {
-                        statusTexto = "✈️ Em Rota (Cruzeiro)";
-                        statusCor = "#1FB5A8"; // Turquesa Volar
-                    } else if (rawStatus === "descending" || rawStatus === "descent" || rawStatus === "approach") {
-                        statusTexto = "📉 Descendo / Aproximação";
-                        statusCor = "#60a5fa"; // Azul claro
-                    } else {
-                        // Caso a API não envie o texto mapeado acima, fazemos um cálculo inteligente:
-                        // Se o piloto acabou de conectar (menos de 10 minutos), está em solo pré-voo
-                        statusTexto = "✈️ Em Rota";
-                        statusCor = "#1FB5A8"; // Turquesa Volar
-                    }
-                    */
-                                                            
-                    // =========================================================
-                    // XEQUE-MATE: Exibindo o JSON Inteiro na Tela
-                    // =========================================================
-                    setTimeout(() => {
-                        let debugDiv = document.getElementById("debug-api");
-                        if (!debugDiv) {
-                            debugDiv = document.createElement("div");
-                            debugDiv.id = "debug-api";
-                            debugDiv.style = "position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,0.95); color: #00ff00; padding: 15px; font-family: monospace; z-index: 9999; font-size: 11px; border-radius: 5px; border: 1px solid #00ff00; max-height: 80vh; max-width: 450px; overflow-y: auto; white-space: pre-wrap; line-height: 1.3;";
-                            document.body.appendChild(debugDiv);
+                    } 
+                    else if (jaDecolou) {
+                        // Se houve carimbo de saída, refinamos usando telemetria básica do simulador
+                        if (altitude > 2000 || velocidade > 50) {
+                            statusTexto = "✈️ Em Rota";
+                            statusCor = "#1FB5A8"; // Turquesa Volar
+                        } else {
+                            statusTexto = "🚜 Táxi / Pushback";
+                            statusCor = "#f4a261"; // Laranja
                         }
-                    
-                        // Filtra propriedades muito gigantes (como listas de passageiros pesadas) para não travar a tela
-                        const filtroDebug = {};
-                        Object.keys(voo).forEach(key => {
-                            if (key !== 'passengerList' && key !== 'paxList') {
-                                filtroDebug[key] = voo[key];
-                            }
-                        });
-                    
-                        debugDiv.innerHTML = `<b>[JSON BRUTO DO VOO]</b><br>${JSON.stringify(filtroDebug, null, 2)}`;
-                    }, 1000);
-
-
-                    
-                    
+                    } else {
+                        statusTexto = "📋 Em Preparação";
+                        statusCor = "#e9c46a"; // Amarelo
+                    }
+                                                                            
+                    // 7. RENDERIZAÇÃO COMPLETA DA LINHA NA TABELA
                     corpoTabela.innerHTML += `
-                        <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
+                        <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01); transition: background 0.2s;">
                             <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
                             <td style="padding: 12px;">👨‍✈️ ${piloto}</td>
                             <td style="padding: 12px; font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
                             <td style="padding: 12px; color: #a8a8b3;">✈️ ${acft}</td>
+                            <td style="padding: 12px; font-size: 0.9em; color: #ccc;">${tipoVooTexto}</td>
+                            <td style="padding: 12px; font-size: 0.9em;"><span style="background: #29292e; padding: 4px 8px; border-radius: 4px; border: 1px solid #3e3e42;">${simuladorTexto}</span></td>
+                            <td style="padding: 12px; font-size: 0.85em; font-weight: bold;"><span style="background: ${redeCor}; color: #fff; padding: 4px 8px; border-radius: 4px;">${redeTexto}</span></td>
                             <td style="padding: 12px; font-weight: bold; color: ${statusCor};">${statusTexto}</td>
                         </tr>
                     `;
@@ -250,7 +253,7 @@
         
         document.addEventListener('DOMContentLoaded', () => {
             carregarVoosEmTempoReal();
-            // Atualiza a cada 2 minutos
+            // Atualiza a cada 2 minutos de forma limpa
             setInterval(carregarVoosEmTempoReal, 120000);
         });
     
