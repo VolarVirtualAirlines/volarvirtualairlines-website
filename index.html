@@ -123,72 +123,54 @@
     <script>
         // Agora aponta direto para a função interna do seu Cloudflare Pages
         const URL_VOOS = "/voos";
-/*
+        
         async function carregarVoosEmTempoReal() {
             const msgVoos = document.getElementById('mensagem-voos');
             const tabelaVoos = document.getElementById('tabela-voos');
             const corpoTabela = document.getElementById('corpo-tabela-voos');
-    
+        
             try {
                 const resposta = await fetch(URL_VOOS);
                 if (!resposta.ok) throw new Error("Erro ao ler rota interna");
-    
+        
                 const dados = await resposta.json();
-    
-                // Garante a leitura correta se os dados vierem envelopados ou se forem uma lista direta
-                let voos = [];
+        
+                // Extrai a lista de voos baseada na resposta real da API
+                let voos = dados.results || dados.flights || dados.data || [];
                 if (Array.isArray(dados)) {
                     voos = dados;
-                } else if (dados && typeof dados === 'object') {
-                    voos = dados.flights || dados.results || dados.data || [];
                 }
-    
+        
                 if (voos.length === 0) {
                     msgVoos.innerHTML = "✈️ Nenhum piloto voando no momento. Que tal iniciar um voo?";
                     tabelaVoos.style.display = 'none';
                     return;
                 }
-    
+        
                 corpoTabela.innerHTML = '';
-    
+        
                 voos.forEach(voo => {
-                    // 1. RESOLVENDO O CALLSIGN
-                    const callsign = voo.callsign || 'VOLAR';
-    
-                    // 2. RESOLVENDO O PILOTO (Se for objeto, pega .name. Se for string, usa ela mesma)
-                    let piloto = 'Piloto Virtual';
-                    if (voo.pilot) {
-                        piloto = typeof voo.pilot === 'object' ? (voo.pilot.name || voo.pilot.username) : voo.pilot;
-                    } else if (voo.pilotName) {
-                        piloto = voo.pilotName;
-                    }
-    
-                    // 3. RESOLVENDO A ROTA / AEROPORTOS (Geralmente objetos .departure e .arrival com .icao dentro)
-                    let dep = '???';
-                    if (voo.departure) {
-                        dep = typeof voo.departure === 'object' ? (voo.departure.icao || voo.departure.code) : voo.departure;
-                    } else if (voo.departureAirport) {
-                        dep = typeof voo.departureAirport === 'object' ? voo.departureAirport.icao : voo.departureAirport;
-                    }
-    
-                    let arr = '???';
-                    if (voo.arrival) {
-                        arr = typeof voo.arrival === 'object' ? (voo.arrival.icao || voo.arrival.code) : voo.arrival;
-                    } else if (voo.arrivalAirport) {
-                        arr = typeof voo.arrivalAirport === 'object' ? voo.arrivalAirport.icao : voo.arrivalAirport;
-                    }
-    
-                    // 4. RESOLVENDO A AERONAVE
-                    const acft = voo.aircraftModel || voo.aircraftType || (voo.aircraft ? voo.aircraft.name : 'B738');
-    
-                    // 5. RESOLVENDO ALTITUDE E VELOCIDADE (Evitando o '---' se o voo estiver em progresso)
-                    // NewSky costuma mandar em 'altitude' ou dentro de um objeto de telemetria 'lastLog'
-                    const altitudeValor = voo.altitude !== undefined ? voo.altitude : (voo.lastLog?.altitude);
-                    const alt = (altitudeValor !== undefined && altitudeValor !== null) ? `${altitudeValor.toLocaleString()} ft` : '0 ft';
-    
-                    const gsValor = voo.groundSpeed || voo.gs || (voo.lastLog?.groundSpeed);
-                    const gs = (gsValor !== undefined && gsValor !== null) ? `${gsValor} kt` : '0 kt';
-    
+                    // 1. MONTANDO O CALLSIGN (Ex: VVX5806)
+                    const prefixo = voo.airline?.icao || 'VVX';
+                    const numeroVoo = voo.flightNumber || '';
+                    const callsign = numeroVoo ? `${prefixo}${numeroVoo}` : 'VOLAR';
+        
+                    // 2. PEGANDO O NOME DO PILOTO
+                    const piloto = voo.pilot?.fullname || 'Piloto Virtual';
+        
+                    // 3. PEGANDO OS ICAOS DE DEPARTURE E ARRIVAL
+                    const dep = voo.dep?.icao || '???';
+                    const arr = voo.arr?.icao || '???';
+        
+                    // 4. PEGANDO O IDENT DA AERONAVE (Ex: B738)
+                    const acft = voo.aircraft?.airframe?.ident || 'B738';
+        
+                    // 5. ALTITUDE E VELOCIDADE 
+                    // Como o objeto atual do radar de voos ativos não trouxe telemetria de nós 'altitude' e 'gs' na raiz,
+                    // colocamos trações ou 0 para segurança se o rastreador estiver atualizando em outra rota/evento.
+                    const alt = voo.altitude !== undefined ? `${voo.altitude.toLocaleString()} ft` : '---';
+                    const gs = voo.groundSpeed || voo.gs ? `${voo.groundSpeed || voo.gs} kt` : '---';
+        
                     corpoTabela.innerHTML += `
                         <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
                             <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
@@ -199,37 +181,15 @@
                         </tr>
                     `;
                 });
-    
+        
                 msgVoos.style.display = 'none';
                 tabelaVoos.style.display = 'table';
-    
+        
             } catch (erro) {
                 console.error("Erro ao carregar voos:", erro);
                 msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
             }
-        } */
-
-    async function carregarVoosEmTempoReal() {
-        const msgVoos = document.getElementById('mensagem-voos');
-        const tabelaVoos = document.getElementById('tabela-voos');
-        const corpoTabela = document.getElementById('corpo-tabela-voos');
-    
-        try {
-            const resposta = await fetch(URL_VOOS);
-            if (!resposta.ok) throw new Error("Erro ao ler rota interna");
-    
-            const dados = await resposta.json();
-            
-            // ISSO VAI MOSTRAR OS DADOS REAIS NA SUA TELA PARA AGENTE COPIAR OS NOMES CERTOS:
-            msgVoos.innerHTML = `<pre style="text-align:left; background:#000; color:#4ade80; padding:15px; overflow:auto; font-size:12px; max-height:300px;">${JSON.stringify(dados, null, 2)}</pre>`;
-            tabelaVoos.style.display = 'none';
-            return;
-    
-        } catch (erro) {
-            console.error("Erro ao carregar voos:", erro);
-            msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Erro ao interceptar dados.</span>`;
         }
-    }
         
         document.addEventListener('DOMContentLoaded', () => {
             carregarVoosEmTempoReal();
