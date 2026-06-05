@@ -203,56 +203,55 @@
                     */
 
                     // =========================================================
-                    // 5. TRATAMENTO DO STATUS DO VOO (Refinado NewSky)
+                    // 5. TRATAMENTO DO STATUS DO VOO (Ajustado Pós-Teste)
                     // =========================================================
                     let statusTexto = "Em Andamento";
                     let statusCor = "#1FB5A8"; // Turquesa Volar padrão
                     
-                    // 1. Priorizamos a FASE de voo, que é mais precisa que o status global.
-                    // Se a NewSky enviar como número, convertemos para string se necessário.
+                    // 1. Isolamos as strings de fase e status da NewSky
                     const rawPhase = String(voo.phase || "").toLowerCase();
                     const rawStatus = String(voo.status || "").toLowerCase();
                     
-                    // Pegamos dados de telemetria básicos para segurança (ajuste os nomes das variáveis se o seu JSON for diferente)
-                    const velocidade = Number(voo.groundSpeed || voo.gs || 0);
-                    const altitude = Number(voo.altitude || voo.alt || 0);
+                    // 2. Captura correta da telemetria da NewSky (geralmente dentro de voo.simData)
+                    // Tentamos ler de 'voo.simData', se não existir, tentamos do 'voo' direto, ou vira 0.
+                    const simData = voo.simData || {};
+                    const velocidade = Number(simData.groundSpeed || voo.groundSpeed || simData.gs || voo.gs || 0);
+                    const altitude = Number(simData.altitude || voo.altitude || simData.alt || voo.alt || 0);
                     
-                    // 2. ÁRVORE DE DECISÃO DE STATUS
+                    // 3. ÁRVORE DE DECISÃO CORRIGIDA
                     if (voo.arrTimeAct !== null && voo.arrTimeAct !== undefined) {
                         statusTexto = "🛬 Pousado";
                         statusCor = "#a8a8b3"; // Cinza
                     } 
-                    // Tratamento para Pré-Voo / Preparação / Embarque
-                    else if (rawPhase === "boarding" || rawPhase === "preflight" || rawPhase === "gate" || rawStatus === "preflight" || (velocidade < 2 && altitude < 500 && rawPhase !== "completed")) {
-                        statusTexto = "📋 Em Preparação";
-                        statusCor = "#e9c46a"; // Amarelo/Laranja claro
+                    // Se a API disser explicitamente que está subindo, descendo ou em cruzeiro, NUNCA trava em preparação
+                    else if (rawPhase === "climb" || rawPhase === "climbing") {
+                        statusTexto = "🛫 Subindo";
+                        statusCor = "#4ade80"; // Verde
+                    } 
+                    else if (rawPhase === "descending" || rawPhase === "descent" || rawPhase === "approach") {
+                        statusTexto = "📉 Descendo / Aproximação";
+                        statusCor = "#60a5fa"; // Azul claro
+                    } 
+                    else if (rawPhase === "enroute" || rawPhase === "cruise" || altitude > 5000) {
+                        statusTexto = "✈️ Em Rota";
+                        statusCor = "#1FB5A8"; // Turquesa Volar
                     } 
                     // Tratamento para Táxi ou Pushback
                     else if (rawPhase === "taxi" || rawPhase === "pushback" || (velocidade >= 2 && velocidade < 35 && altitude < 500)) {
                         statusTexto = "🚜 Táxi / Pushback";
                         statusCor = "#f4a261"; // Laranja
                     } 
-                    // Subida
-                    else if (rawPhase === "climb" || rawPhase === "climbing") {
-                        statusTexto = "🛫 Subindo";
-                        statusCor = "#4ade80"; // Verde
+                    // Tratamento para Pré-Voo / Preparação / Embarque (Só entra aqui se não for nenhuma das fases de voo acima)
+                    else if (rawPhase === "boarding" || rawPhase === "preflight" || rawPhase === "gate" || rawStatus === "preflight" || (velocidade < 2 && altitude < 500)) {
+                        statusTexto = "📋 Em Preparação";
+                        statusCor = "#e9c46a"; // Amarelo/Laranja claro
                     } 
-                    // Descida / Aproximação
-                    else if (rawPhase === "descending" || rawPhase === "descent" || rawPhase === "approach") {
-                        statusTexto = "📉 Descendo / Aproximação";
-                        statusCor = "#60a5fa"; // Azul claro
-                    } 
-                    // Cruzeiro / Em Rota (Garante que só entra aqui se realmente estiver voando alto ou na fase de cruzeiro)
-                    else if (rawPhase === "enroute" || rawPhase === "cruise" || altitude > 5000) {
-                        statusTexto = "✈️ Em Rota";
-                        statusCor = "#1FB5A8"; // Turquesa Volar
-                    } 
-                    // Caso caia em qualquer limbo da API
+                    // Caso geral de segurança
                     else {
                         statusTexto = "✈️ Em Rota";
                         statusCor = "#1FB5A8"; // Turquesa Volar
                     }
-        
+                    
                     corpoTabela.innerHTML += `
                         <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
                             <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
