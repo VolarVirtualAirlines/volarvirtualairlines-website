@@ -149,7 +149,7 @@
         
                 corpoTabela.innerHTML = '';
         
-                voos.forEach(voo => {
+/*                voos.forEach(voo => {
                     // 1. MONTANDO O CALLSIGN (Ex: VVX5806)
                     const prefixo = voo.airline?.icao || 'VVX';
                     const numeroVoo = voo.flightNumber || '';
@@ -170,6 +170,61 @@
                     // colocamos trações ou 0 para segurança se o rastreador estiver atualizando em outra rota/evento.
                     const alt = voo.altitude !== undefined ? `${voo.altitude.toLocaleString()} ft` : '---';
                     const gs = voo.groundSpeed || voo.gs ? `${voo.groundSpeed || voo.gs} kt` : '---';
+        
+                    corpoTabela.innerHTML += `
+                        <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
+                            <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
+                            <td style="padding: 12px;">👨‍✈️ ${piloto}</td>
+                            <td style="padding: 12px; font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
+                            <td style="padding: 12px; color: #a8a8b3;">✈️ ${acft}</td>
+                            <td style="padding: 12px; font-size: 0.9em;"><span style="color: #60a5fa;">▲ ${alt}</span> / 💨 ${gs}</td>
+                        </tr>
+                    `;
+                }); */
+
+                voos.forEach(voo => {
+                    // 1. MONTANDO O CALLSIGN (Ex: VVX5806)
+                    const prefixo = voo.airline?.icao || 'VVX';
+                    const numeroVoo = voo.flightNumber || '';
+                    const callsign = numeroVoo ? `${prefixo}${numeroVoo}` : 'VOLAR';
+        
+                    // 2. PEGANDO O NOME DO PILOTO
+                    const piloto = voo.pilot?.fullname || 'Piloto Virtual';
+        
+                    // 3. PEGANDO OS ICAOS DE DEPARTURE E ARRIVAL
+                    const dep = voo.dep?.icao || '???';
+                    const arr = voo.arr?.icao || '???';
+        
+                    // 4. PEGANDO O IDENT DA AERONAVE (Ex: B738)
+                    const acft = voo.aircraft?.airframe?.ident || 'B738';
+        
+                    // =========================================================
+                    // 5. ALTITUDE E VELOCIDADE (Ajustado para ler a API NewSky)
+                    // =========================================================
+                    
+                    // Tenta pegar a altitude da raiz ou de dentro do lastState
+                    let altitudeValor = 0;
+                    if (voo.altitude !== undefined && voo.altitude !== null) {
+                        altitudeValor = voo.altitude;
+                    } else if (voo.lastState?.altitude !== undefined && voo.lastState?.altitude !== null) {
+                        altitudeValor = voo.lastState.altitude;
+                    } else if (voo.lastState?.location?.alt !== undefined && voo.lastState?.location?.alt !== null) {
+                        altitudeValor = voo.lastState.location.alt;
+                    }
+                    const alt = `${altitudeValor.toLocaleString()} ft`;
+        
+                    // Tenta pegar a velocidade (ground speed) da raiz ou do lastState
+                    let velocidadeValor = 0;
+                    if (voo.groundSpeed !== undefined && voo.groundSpeed !== null) {
+                        velocidadeValor = voo.groundSpeed;
+                    } else if (voo.gs !== undefined && voo.gs !== null) {
+                        velocidadeValor = voo.gs;
+                    } else if (voo.lastState?.groundSpeed !== undefined && voo.lastState?.groundSpeed !== null) {
+                        velocidadeValor = voo.lastState.groundSpeed;
+                    } else if (voo.lastState?.location?.gs !== undefined && voo.lastState?.location?.gs !== null) {
+                        velocidadeValor = voo.lastState.location.gs;
+                    }
+                    const gs = `${velocidadeValor} kt`;
         
                     corpoTabela.innerHTML += `
                         <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
