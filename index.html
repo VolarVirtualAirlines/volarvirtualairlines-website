@@ -201,47 +201,53 @@
                         statusCor = "#1FB5A8"; // Turquesa Volar
                     }
                     */
+                                        
+                    // =========================================================
+                    // 5. TRATAMENTO DO STATUS DO VOO (Telemetria + Raio-X do JSON)
+                    // =========================================================
+                    let statusTexto = "📋 Em Preparação";
+                    let statusCor = "#e9c46a";
                     
-// =========================================================
-// 5. TRATAMENTO DO STATUS DO VOO (Ajustado para os 3 Status Oficiais)
-// =========================================================
-let statusTexto = "📋 Em Preparação";
-let statusCor = "#e9c46a"; // Começa com o amarelo de preparação por segurança
+                    const simData = voo.simData || {};
+                    const velocidade = Number(simData.groundSpeed || voo.groundSpeed || simData.gs || voo.gs || 0);
+                    const altitude = Number(simData.altitude || voo.altitude || simData.alt || voo.alt || 0);
+                    
+                    // Lógica temporária por telemetria para o painel ficar bonito no seu voo
+                    if (voo.arrTimeAct !== null && voo.arrTimeAct !== undefined && voo.arrTimeAct !== "") {
+                        statusTexto = "🛬 Pousado";
+                        statusCor = "#a8a8b3";
+                    } else if (altitude > 2500) {
+                        statusTexto = "✈️ Em Rota";
+                        statusCor = "#1FB5A8";
+                    } else if (velocidade > 3) {
+                        statusTexto = "🚜 Táxi / Pushback";
+                        statusCor = "#f4a261";
+                    } else {
+                        statusTexto = "📋 Em Preparação";
+                        statusCor = "#e9c46a";
+                    }
+                    
+                    // 📋 O RAIO-X DO JSON: Vamos injetar os dados brutos num elemento da tela
+                    // Certifique-se de que existe um elemento com id "debug-status" no seu HTML, 
+                    // ou use o código abaixo para forçar a exibição no topo da página:
+                    setTimeout(() => {
+                        let debugDiv = document.getElementById("debug-api");
+                        if (!debugDiv) {
+                            debugDiv = document.createElement("div");
+                            debugDiv.id = "debug-api";
+                            debugDiv.style = "position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,0.85); color: #00ff00; padding: 10px; font-family: monospace; z-index: 9999; font-size: 11px; border-radius: 5px; border: 1px solid #00ff00;";
+                            document.body.appendChild(debugDiv);
+                        }
+                        // Mostra o que está vindo nas variáveis e o objeto do voo resumido
+                        debugDiv.innerHTML = `
+                            <b>[DEBUG NEWSKY]</b><br>
+                            voo.status: "${voo.status}"<br>
+                            voo.phase: "${voo.phase}"<br>
+                            voo.state: "${voo.state}"<br>
+                            keys do objeto: ${Object.keys(voo).slice(0, 8).join(', ')}...
+                        `;
+                    }, 1000);
 
-// 🔍 ESPIÃO: Copie isso para ver no F12 o que a NewSky realmente está mandando!
-console.log("PROPRIEDADES DE STATUS DA NEWSKY:", {
-    status: voo.status,
-    phase: voo.phase,
-    objeto_completo_voo: voo
-});
-
-// Lógica baseada estritamente nas chaves reais da NewSky
-const rawStatus = (voo.status || voo.phase || "").toLowerCase().trim();
-
-if (voo.arrTimeAct !== null && voo.arrTimeAct !== undefined && voo.arrTimeAct !== "") {
-    statusTexto = "🛬 Pousado";
-    statusCor = "#a8a8b3"; // Cinza
-} 
-// 1. Status Oficial: Preparing
-else if (rawStatus === "preparing") {
-    statusTexto = "📋 Em Preparação";
-    statusCor = "#e9c46a"; // Amarelo/Laranja claro
-} 
-// 2. Status Oficial: Enroute
-else if (rawStatus === "enroute") {
-    statusTexto = "✈️ Em Rota 1";
-    statusCor = "#1FB5A8"; // Turquesa Volar
-} 
-// 3. Status Oficial: Landing
-else if (rawStatus === "landing") {
-    statusTexto = "📉 Pousando / Aproximação";
-    statusCor = "#60a5fa"; // Azul claro
-} 
-// CASO GERAL DE SEGURANÇA (Corrigido: se não reconhecer o status, assume solo/preparação)
-else {
-    statusTexto = "📋 Em Preparação (Não Reconhecido)";
-    statusCor = "#e9c46a"; // Mantém amarelo no portão
-}
                     
                     corpoTabela.innerHTML += `
                         <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
