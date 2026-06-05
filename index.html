@@ -55,7 +55,7 @@
         <div class="lang-block" lang="es">
             <p><strong>ES</strong></p>
             <p>
-                VOLAR nació del deseo de unir a los entusiastas de la aviación en una comunidad vibrante y colaborativa. 
+                VOLAR nació del desejo de unir a los entusiastas de la aviación en una comunidad vibrante y colaborativa. 
                 Con operaciones en rutas nacionais e internacionales, ofrecemos una estructura organizada, 
                 soporte continuo y herramientas modernas para hacer que cada vuelo sea inolvidable.
             </p>
@@ -79,13 +79,16 @@
         </iframe>
     </section>
 
+    <!-- NOVA SEÇÃO DE VOOS EM TEMPO REAL -->
     <section id="voos-reais" class="section" style="padding: 20px; background: #121214; border-radius: 8px; margin-top: 20px;">
         <h2>Painel de Voos em Tempo Real</h2>
         
+        <!-- Mensagem de carregamento ou "Nenhum voo" -->
         <div id="mensagem-voos" style="color: #a8a8b3; text-align: center; padding: 20px; font-size: 1.1em;">
             Carregando voos em andamento...
         </div>
 
+        <!-- Tabela oculta que só aparece se houver voos -->
         <div style="overflow-x: auto;">
             <table id="tabela-voos" style="width: 100%; border-collapse: collapse; text-align: left; display: none; color: #e1e1e6; font-size: 0.95em;">
                 <thead>
@@ -97,12 +100,12 @@
                         <th style="padding: 12px;">Tipo</th>
                         <th style="padding: 12px;">Simulador</th>
                         <th style="padding: 12px;">Rede</th>
-                        <th style="padding: 12px;">Status</th>
                     </tr>
                 </thead> 
                 
                 <tbody id="corpo-tabela-voos">
-                    </tbody>
+                    <!-- Os voos entrarão aqui dinamicamente -->
+                </tbody>
             </table>
         </div>
     </section>
@@ -123,7 +126,6 @@
     </footer>
     
     <script>
-        // Agora aponta direto para a função interna do seu Cloudflare Pages
         const URL_VOOS = "/voos";
 
         async function carregarVoosEmTempoReal() {
@@ -137,7 +139,6 @@
         
                 const dados = await resposta.json();
         
-                // Extrai a lista de voos baseada na resposta real da API
                 let voos = dados.results || dados.flights || dados.data || [];
                 if (Array.isArray(dados)) {
                     voos = dados;
@@ -152,22 +153,17 @@
                 corpoTabela.innerHTML = '';
         
                 voos.forEach(voo => {
-                    // 1. MONTANDO O CALLSIGN (Ex: VVX4112)
                     const prefixo = voo.airline?.icao || 'VVX';
                     const numeroVoo = voo.flightNumber || '';
                     const callsign = numeroVoo ? `${prefixo}${numeroVoo}` : 'VOLAR';
         
-                    // 2. PEGANDO O NOME DO PILOTO
                     const piloto = voo.pilot?.fullname || 'Piloto Virtual';
         
-                    // 3. PEGANDO OS ICAOS DE DEPARTURE E ARRIVAL
                     const dep = voo.dep?.icao || '???';
                     const arr = voo.arr?.icao || '???';
         
-                    // 4. PEGANDO O IDENT DA AERONAVE (Ex: B738)
                     const acft = voo.aircraft?.airframe?.ident || 'B738';
 
-                    // 5. PROCESSAMENTO DOS NOVOS CAMPOS ADICIONADOS
                     // Tipo de Voo
                     let tipoVooTexto = "✈️ Comercial";
                     if (voo.type === "pax") tipoVooTexto = "👥 Passagens";
@@ -179,57 +175,27 @@
                     if (simuladorTexto === "MSFS") simuladorTexto = "MSFS 2020";
                     else if (simuladorTexto === "XPLANE" || simuladorTexto === "XP11" || simuladorTexto === "XP12") simuladorTexto = "X-Plane";
                     else if (simuladorTexto === "P3D") simuladorTexto = "Prepar3D";
-                    else if (simuladorTexto === "FSX") simuladorTexto = "FSX";
 
-                    // Rede Online com Cores Customizadas
+                    // Rede Online
                     let redeTexto = "Offline";
                     let redeCor = "#505059";
                     if (voo.network && voo.network.name) {
                         const redeNome = voo.network.name.toLowerCase();
                         if (redeNome === "ivao") {
                             redeTexto = "IVAO";
-                            redeCor = "#0d6efd"; // Azul oficial IVAO
+                            redeCor = "#0d6efd";
                         } else if (redeNome === "vatsim") {
                             redeTexto = "VATSIM";
-                            redeCor = "#e67e22"; // Laranja oficial VATSIM
+                            redeCor = "#e67e22";
                         } else {
                             redeTexto = redeNome.toUpperCase();
                             redeCor = "#1FB5A8";
                         }
                     }
-
-                    // 6. TRATAMENTO INTELIGENTE DO STATUS DO VOO (Mapeamento Oficial NewSky)
-                    let statusTexto = "📋 Em Preparação";
-                    let statusCor = "#e9c46a"; // Amarelo de preparação por padrão
-
-                    const simData = voo.simData || {};
-                    const velocidade = Number(simData.groundSpeed || voo.groundSpeed || simData.gs || voo.gs || 0);
-                    const altitude = Number(simData.altitude || voo.altitude || simData.alt || voo.alt || 0);
-
-                    const jaDecolou = voo.depTimeAct !== null && voo.depTimeAct !== undefined && voo.depTimeAct !== "";
-                    const jaPousou = voo.arrTimeAct !== null && voo.arrTimeAct !== undefined && voo.arrTimeAct !== "";
-
-                    if (jaPousou) {
-                        statusTexto = "🛬 Pousado";
-                        statusCor = "#a8a8b3"; // Cinza
-                    } 
-                    else if (jaDecolou) {
-                        // Se houve carimbo de saída, refinamos usando telemetria básica do simulador
-                        if (altitude > 2000 || velocidade > 50) {
-                            statusTexto = "✈️ Em Rota";
-                            statusCor = "#1FB5A8"; // Turquesa Volar
-                        } else {
-                            statusTexto = "🚜 Táxi / Pushback";
-                            statusCor = "#f4a261"; // Laranja
-                        }
-                    } else {
-                        statusTexto = "📋 Em Preparação";
-                        statusCor = "#e9c46a"; // Amarelo
-                    }
                                                                             
-                    // 7. RENDERIZAÇÃO COMPLETA DA LINHA NA TABELA
+                    // Renderização sem a coluna Status
                     corpoTabela.innerHTML += `
-                        <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01); transition: background 0.2s;">
+                        <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
                             <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
                             <td style="padding: 12px;">👨‍✈️ ${piloto}</td>
                             <td style="padding: 12px; font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
@@ -237,7 +203,6 @@
                             <td style="padding: 12px; font-size: 0.9em; color: #ccc;">${tipoVooTexto}</td>
                             <td style="padding: 12px; font-size: 0.9em;"><span style="background: #29292e; padding: 4px 8px; border-radius: 4px; border: 1px solid #3e3e42;">${simuladorTexto}</span></td>
                             <td style="padding: 12px; font-size: 0.85em; font-weight: bold;"><span style="background: ${redeCor}; color: #fff; padding: 4px 8px; border-radius: 4px;">${redeTexto}</span></td>
-                            <td style="padding: 12px; font-weight: bold; color: ${statusCor};">${statusTexto}</td>
                         </tr>
                     `;
                 });
@@ -253,7 +218,6 @@
         
         document.addEventListener('DOMContentLoaded', () => {
             carregarVoosEmTempoReal();
-            // Atualiza a cada 2 minutos de forma limpa
             setInterval(carregarVoosEmTempoReal, 120000);
         });
     
