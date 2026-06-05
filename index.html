@@ -201,53 +201,33 @@
                         statusCor = "#1FB5A8"; // Turquesa Volar
                     }
                     */
-                                        
+                                                            
                     // =========================================================
-                    // 5. TRATAMENTO DO STATUS DO VOO (Telemetria + Raio-X do JSON)
+                    // ATUALIZAÇÃO DO ESPIÃO (Investigando as Subchaves)
                     // =========================================================
-                    let statusTexto = "📋 Em Preparação";
-                    let statusCor = "#e9c46a";
-                    
-                    const simData = voo.simData || {};
-                    const velocidade = Number(simData.groundSpeed || voo.groundSpeed || simData.gs || voo.gs || 0);
-                    const altitude = Number(simData.altitude || voo.altitude || simData.alt || voo.alt || 0);
-                    
-                    // Lógica temporária por telemetria para o painel ficar bonito no seu voo
-                    if (voo.arrTimeAct !== null && voo.arrTimeAct !== undefined && voo.arrTimeAct !== "") {
-                        statusTexto = "🛬 Pousado";
-                        statusCor = "#a8a8b3";
-                    } else if (altitude > 2500) {
-                        statusTexto = "✈️ Em Rota";
-                        statusCor = "#1FB5A8";
-                    } else if (velocidade > 3) {
-                        statusTexto = "🚜 Táxi / Pushback";
-                        statusCor = "#f4a261";
-                    } else {
-                        statusTexto = "📋 Em Preparação";
-                        statusCor = "#e9c46a";
-                    }
-                    
-                    // 📋 O RAIO-X DO JSON: Vamos injetar os dados brutos num elemento da tela
-                    // Certifique-se de que existe um elemento com id "debug-status" no seu HTML, 
-                    // ou use o código abaixo para forçar a exibição no topo da página:
                     setTimeout(() => {
                         let debugDiv = document.getElementById("debug-api");
                         if (!debugDiv) {
                             debugDiv = document.createElement("div");
                             debugDiv.id = "debug-api";
-                            debugDiv.style = "position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,0.85); color: #00ff00; padding: 10px; font-family: monospace; z-index: 9999; font-size: 11px; border-radius: 5px; border: 1px solid #00ff00;";
+                            debugDiv.style = "position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,0.9); color: #00ff00; padding: 10px; font-family: monospace; z-index: 9999; font-size: 11px; border-radius: 5px; border: 1px solid #00ff00; line-height: 1.4;";
                             document.body.appendChild(debugDiv);
                         }
-                        // Mostra o que está vindo nas variáveis e o objeto do voo resumido
+                    
+                        // Buscando possíveis locais do status dentro de schedule ou pilot
+                        const statusNoSchedule = voo.schedule ? (voo.schedule.status || voo.schedule.phase || voo.schedule.state) : "não tem";
+                        const statusNoType = voo.type ? (voo.type.status || voo.type.name) : "não tem";
+                        
                         debugDiv.innerHTML = `
-                            <b>[DEBUG NEWSKY]</b><br>
-                            voo.status: "${voo.status}"<br>
-                            voo.phase: "${voo.phase}"<br>
-                            voo.state: "${voo.state}"<br>
-                            keys do objeto: ${Object.keys(voo).slice(0, 8).join(', ')}...
+                            <b>[INVESTIGAÇÃO NEWSKY]</b><br>
+                            Tentativa 1 (voo.schedule.status): "${statusNoSchedule}"<br>
+                            Tentativa 2 (voo.type.status): "${statusNoType}"<br>
+                            <br>
+                            <b>Campos dentro de voo.schedule:</b><br>
+                            ${voo.schedule ? Object.keys(voo.schedule).slice(0, 6).join(', ') : 'vazio'}<br>
                         `;
                     }, 1000);
-
+                    
                     
                     corpoTabela.innerHTML += `
                         <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
