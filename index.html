@@ -197,7 +197,7 @@
             setInterval(carregarVoosEmTempoReal, 120000);
         }); */
 
-        async function carregarVoosEmTempoReal() {
+       async function carregarVoosEmTempoReal() {
     const msgVoos = document.getElementById('mensagem-voos');
     const tabelaVoos = document.getElementById('tabela-voos');
     const corpoTabela = document.getElementById('corpo-tabela-voos');
@@ -208,9 +208,14 @@
 
         const dados = await resposta.json();
 
-        let voos = dados.results || dados.flights || dados.data || [];
-        if (Array.isArray(dados)) {
+        // Extrai a lista de voos com segurança
+        let voos = [];
+        if (dados && dados.results) {
+            voos = dados.results;
+        } else if (Array.isArray(dados)) {
             voos = dados;
+        } else if (dados && dados.flights) {
+            voos = dados.flights;
         }
 
         if (voos.length === 0) {
@@ -222,61 +227,58 @@
         corpoTabela.innerHTML = '';
 
         voos.forEach(voo => {
-            // 1. CALLSIGN
+            // 1. CALLSIGN (Ex: VVX5806)
             const prefixo = voo.airline?.icao || 'VVX';
             const numeroVoo = voo.flightNumber || '';
             const callsign = numeroVoo ? `${prefixo}${numeroVoo}` : 'VOLAR';
 
-            // 2. PILOTO
+            // 2. PILOTO (Lendo o .fullname do JSON)
             const piloto = voo.pilot?.fullname || 'Piloto Virtual';
 
-            // 3. ROTA
+            // 3. ROTA (Lendo de .dep.icao e .arr.icao do JSON)
             const dep = voo.dep?.icao || '???';
             const arr = voo.arr?.icao || '???';
 
-            // 4. AERONAVE
+            // 4. AERONAVE (Lendo de .aircraft.airframe.ident do JSON)
             const acft = voo.aircraft?.airframe?.ident || 'B738';
 
-            // 5. TELEMETRIA AVANÇADA (ALTITUDE)
-            // Tenta ler da raiz, do lastState, do lastLog ou assume 0 se o piloto estiver conectado mas no gate
+            // 5. ALTITUDE (À prova de falhas)
             let altitudeFinal = 0;
             if (voo.altitude !== undefined && voo.altitude !== null) {
                 altitudeFinal = voo.altitude;
-            } else if (voo.lastState?.altitude !== undefined) {
-                altitudeFinal = voo.lastState.altitude;
-            } else if (voo.lastLog?.altitude !== undefined) {
-                altitudeFinal = voo.lastLog.altitude;
             } else if (voo.lastState?.location?.alt !== undefined) {
                 altitudeFinal = voo.lastState.location.alt;
+            } else if (voo.lastState?.altitude !== undefined) {
+                altitudeFinal = voo.lastState.altitude;
             }
-            const alt = `${altitudeFinal.toLocaleString()} ft`;
+            const alt = altitudeFinal > 0 ? `${altitudeFinal.toLocaleString()} ft` : '0 ft';
 
-            // 6. TELEMETRIA AVANÇADA (VELOCIDADE - GROUND SPEED)
+            // 6. VELOCIDADE (À prova de falhas)
             let velocidadeFinal = 0;
             if (voo.groundSpeed !== undefined && voo.groundSpeed !== null) {
                 velocidadeFinal = voo.groundSpeed;
             } else if (voo.gs !== undefined && voo.gs !== null) {
                 velocidadeFinal = voo.gs;
-            } else if (voo.lastState?.groundSpeed !== undefined) {
-                velocidadeFinal = voo.lastState.groundSpeed;
-            } else if (voo.lastLog?.groundSpeed !== undefined) {
-                velocidadeFinal = voo.lastLog.groundSpeed;
             } else if (voo.lastState?.location?.gs !== undefined) {
                 velocidadeFinal = voo.lastState.location.gs;
+            } else if (voo.lastState?.groundSpeed !== undefined) {
+                velocidadeFinal = voo.lastState.groundSpeed;
             }
-            const gs = `${velocidadeFinal} kt`;
+            const gs = velocidadeFinal > 0 ? `${velocidadeFinal} kt` : '0 kt';
 
+            // Monta a linha na tabela
             corpoTabela.innerHTML += `
                 <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
                     <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
                     <td style="padding: 12px;">👨‍✈️ ${piloto}</td>
-                    <td style="padding: 12px; font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
+                    <td style="padding: 12px; font-weight: 500;">... <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
                     <td style="padding: 12px; color: #a8a8b3;">✈️ ${acft}</td>
                     <td style="padding: 12px; font-size: 0.9em;"><span style="color: #60a5fa;">▲ ${alt}</span> / 💨 ${gs}</td>
                 </tr>
             `;
         });
 
+        // ESCONDE O CARREGANDO E MOSTRA A TABELA DESTRACADA
         msgVoos.style.display = 'none';
         tabelaVoos.style.display = 'table';
 
@@ -285,6 +287,8 @@
         msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
     }
 }
+    
+    
     </script>
 
 </body>
