@@ -120,73 +120,101 @@
         <p>© 2026 Volar Virtual Airlines - Fly Beyond - ICAO: VVX</p>
     </footer>
     
-<script>
-    // Agora aponta direto para a função interna do seu Cloudflare Pages
-    const URL_VOOS = "/voos";
-
-async function carregarVoosEmTempoReal() {
-        const msgVoos = document.getElementById('mensagem-voos');
-        const tabelaVoos = document.getElementById('tabela-voos');
-        const corpoTabela = document.getElementById('corpo-tabela-voos');
-
-        try {
-            const resposta = await fetch(URL_VOOS);
-            if (!resposta.ok) throw new Error("Erro ao ler rota interna");
-
-            const dados = await resposta.json();
-
-            // Garante a leitura correta se os dados vierem envelopados ou se forem uma lista direta
-            let voos = [];
-            if (Array.isArray(dados)) {
-                voos = dados;
-            } else if (dados && typeof dados === 'object') {
-                voos = dados.flights || dados.results || dados.data || [];
+    <script>
+        // Agora aponta direto para a função interna do seu Cloudflare Pages
+        const URL_VOOS = "/voos";
+    
+        async function carregarVoosEmTempoReal() {
+            const msgVoos = document.getElementById('mensagem-voos');
+            const tabelaVoos = document.getElementById('tabela-voos');
+            const corpoTabela = document.getElementById('corpo-tabela-voos');
+    
+            try {
+                const resposta = await fetch(URL_VOOS);
+                if (!resposta.ok) throw new Error("Erro ao ler rota interna");
+    
+                const dados = await resposta.json();
+    
+                // Garante a leitura correta se os dados vierem envelopados ou se forem uma lista direta
+                let voos = [];
+                if (Array.isArray(dados)) {
+                    voos = dados;
+                } else if (dados && typeof dados === 'object') {
+                    voos = dados.flights || dados.results || dados.data || [];
+                }
+    
+                if (voos.length === 0) {
+                    msgVoos.innerHTML = "✈️ Nenhum piloto voando no momento. Que tal iniciar um voo?";
+                    tabelaVoos.style.display = 'none';
+                    return;
+                }
+    
+                corpoTabela.innerHTML = '';
+    
+                voos.forEach(voo => {
+                    // 1. RESOLVENDO O CALLSIGN
+                    const callsign = voo.callsign || 'VOLAR';
+    
+                    // 2. RESOLVENDO O PILOTO (Se for objeto, pega .name. Se for string, usa ela mesma)
+                    let piloto = 'Piloto Virtual';
+                    if (voo.pilot) {
+                        piloto = typeof voo.pilot === 'object' ? (voo.pilot.name || voo.pilot.username) : voo.pilot;
+                    } else if (voo.pilotName) {
+                        piloto = voo.pilotName;
+                    }
+    
+                    // 3. RESOLVENDO A ROTA / AEROPORTOS (Geralmente objetos .departure e .arrival com .icao dentro)
+                    let dep = '???';
+                    if (voo.departure) {
+                        dep = typeof voo.departure === 'object' ? (voo.departure.icao || voo.departure.code) : voo.departure;
+                    } else if (voo.departureAirport) {
+                        dep = typeof voo.departureAirport === 'object' ? voo.departureAirport.icao : voo.departureAirport;
+                    }
+    
+                    let arr = '???';
+                    if (voo.arrival) {
+                        arr = typeof voo.arrival === 'object' ? (voo.arrival.icao || voo.arrival.code) : voo.arrival;
+                    } else if (voo.arrivalAirport) {
+                        arr = typeof voo.arrivalAirport === 'object' ? voo.arrivalAirport.icao : voo.arrivalAirport;
+                    }
+    
+                    // 4. RESOLVENDO A AERONAVE
+                    const acft = voo.aircraftModel || voo.aircraftType || (voo.aircraft ? voo.aircraft.name : 'B738');
+    
+                    // 5. RESOLVENDO ALTITUDE E VELOCIDADE (Evitando o '---' se o voo estiver em progresso)
+                    // NewSky costuma mandar em 'altitude' ou dentro de um objeto de telemetria 'lastLog'
+                    const altitudeValor = voo.altitude !== undefined ? voo.altitude : (voo.lastLog?.altitude);
+                    const alt = (altitudeValor !== undefined && altitudeValor !== null) ? `${altitudeValor.toLocaleString()} ft` : '0 ft';
+    
+                    const gsValor = voo.groundSpeed || voo.gs || (voo.lastLog?.groundSpeed);
+                    const gs = (gsValor !== undefined && gsValor !== null) ? `${gsValor} kt` : '0 kt';
+    
+                    corpoTabela.innerHTML += `
+                        <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
+                            <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
+                            <td style="padding: 12px;">👨‍✈️ ${piloto}</td>
+                            <td style="padding: 12px; font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
+                            <td style="padding: 12px; color: #a8a8b3;">✈️ ${acft}</td>
+                            <td style="padding: 12px; font-size: 0.9em;"><span style="color: #60a5fa;">▲ ${alt}</span> / 💨 ${gs}</td>
+                        </tr>
+                    `;
+                });
+    
+                msgVoos.style.display = 'none';
+                tabelaVoos.style.display = 'table';
+    
+            } catch (erro) {
+                console.error("Erro ao carregar voos:", erro);
+                msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
             }
-
-            if (voos.length === 0) {
-                msgVoos.innerHTML = "✈️ Nenhum piloto voando no momento. Que tal iniciar um voo?";
-                tabelaVoos.style.display = 'none';
-                return;
-            }
-
-            corpoTabela.innerHTML = '';
-
-            voos.forEach(voo => {
-                // Mapeia os parâmetros da NewSky de forma flexível
-                const callsign = voo.callsign || 'VOLAR';
-                const piloto = voo.pilotName || voo.pilot || 'Piloto Virtual';
-                const dep = voo.departureAirport || voo.dep || '???';
-                const arr = voo.arrivalAirport || voo.arr || '???';
-                const acft = voo.aircraftModel || voo.aircraftType || 'B738';
-                const alt = voo.altitude ? `${voo.altitude} ft` : '---';
-                const gs = voo.groundSpeed || voo.gs ? `${voo.groundSpeed || voo.gs} kt` : '---';
-
-                corpoTabela.innerHTML += `
-                    <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
-                        <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
-                        <td style="padding: 12px;">👨‍✈️ ${piloto}</td>
-                        <td style="padding: 12px; font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
-                        <td style="padding: 12px; color: #a8a8b3;">✈️ ${acft}</td>
-                        <td style="padding: 12px; font-size: 0.9em;"><span style="color: #60a5fa;">▲ ${alt}</span> / 💨 ${gs}</td>
-                    </tr>
-                `;
-            });
-
-            msgVoos.style.display = 'none';
-            tabelaVoos.style.display = 'table';
-
-        } catch (erro) {
-            console.error("Erro ao carregar voos:", erro);
-            msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
         }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        carregarVoosEmTempoReal();
-        // Atualiza a cada 2 minutos
-        setInterval(carregarVoosEmTempoReal, 120000);
-    });
-</script>
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarVoosEmTempoReal();
+            // Atualiza a cada 2 minutos
+            setInterval(carregarVoosEmTempoReal, 120000);
+        });
+    </script>
 
 </body>
 </html>
