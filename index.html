@@ -203,30 +203,29 @@
                     */
                                                             
                     // =========================================================
-                    // ATUALIZAÇÃO DO ESPIÃO (Investigando as Subchaves)
+                    // XEQUE-MATE: Exibindo o JSON Inteiro na Tela
                     // =========================================================
                     setTimeout(() => {
                         let debugDiv = document.getElementById("debug-api");
                         if (!debugDiv) {
                             debugDiv = document.createElement("div");
                             debugDiv.id = "debug-api";
-                            debugDiv.style = "position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,0.9); color: #00ff00; padding: 10px; font-family: monospace; z-index: 9999; font-size: 11px; border-radius: 5px; border: 1px solid #00ff00; line-height: 1.4;";
+                            debugDiv.style = "position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,0.95); color: #00ff00; padding: 15px; font-family: monospace; z-index: 9999; font-size: 11px; border-radius: 5px; border: 1px solid #00ff00; max-height: 80vh; max-width: 450px; overflow-y: auto; white-space: pre-wrap; line-height: 1.3;";
                             document.body.appendChild(debugDiv);
                         }
                     
-                        // Buscando possíveis locais do status dentro de schedule ou pilot
-                        const statusNoSchedule = voo.schedule ? (voo.schedule.status || voo.schedule.phase || voo.schedule.state) : "não tem";
-                        const statusNoType = voo.type ? (voo.type.status || voo.type.name) : "não tem";
-                        
-                        debugDiv.innerHTML = `
-                            <b>[INVESTIGAÇÃO NEWSKY]</b><br>
-                            Tentativa 1 (voo.schedule.status): "${statusNoSchedule}"<br>
-                            Tentativa 2 (voo.type.status): "${statusNoType}"<br>
-                            <br>
-                            <b>Campos dentro de voo.schedule:</b><br>
-                            ${voo.schedule ? Object.keys(voo.schedule).slice(0, 6).join(', ') : 'vazio'}<br>
-                        `;
+                        // Filtra propriedades muito gigantes (como listas de passageiros pesadas) para não travar a tela
+                        const filtroDebug = {};
+                        Object.keys(voo).forEach(key => {
+                            if (key !== 'passengerList' && key !== 'paxList') {
+                                filtroDebug[key] = voo[key];
+                            }
+                        });
+                    
+                        debugDiv.innerHTML = `<b>[JSON BRUTO DO VOO]</b><br>${JSON.stringify(filtroDebug, null, 2)}`;
                     }, 1000);
+
+
                     
                     
                     corpoTabela.innerHTML += `
