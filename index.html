@@ -96,9 +96,10 @@
                     <th style="padding: 12px;">Piloto</th>
                     <th style="padding: 12px;">Rota</th>
                     <th style="padding: 12px;">Aeronave</th>
-                    <th style="padding: 12px;">Altitude / Vel.</th>
+                    <th style="padding: 12px;">Status</th>
                 </tr>
-            </thead>
+            </thead> 
+            
             <tbody id="corpo-tabela-voos">
                 <!-- Os voos entrarão aqui dinamicamente -->
             </tbody>
@@ -149,39 +150,6 @@
         
                 corpoTabela.innerHTML = '';
         
-/*                voos.forEach(voo => {
-                    // 1. MONTANDO O CALLSIGN (Ex: VVX5806)
-                    const prefixo = voo.airline?.icao || 'VVX';
-                    const numeroVoo = voo.flightNumber || '';
-                    const callsign = numeroVoo ? `${prefixo}${numeroVoo}` : 'VOLAR';
-        
-                    // 2. PEGANDO O NOME DO PILOTO
-                    const piloto = voo.pilot?.fullname || 'Piloto Virtual';
-        
-                    // 3. PEGANDO OS ICAOS DE DEPARTURE E ARRIVAL
-                    const dep = voo.dep?.icao || '???';
-                    const arr = voo.arr?.icao || '???';
-        
-                    // 4. PEGANDO O IDENT DA AERONAVE (Ex: B738)
-                    const acft = voo.aircraft?.airframe?.ident || 'B738';
-        
-                    // 5. ALTITUDE E VELOCIDADE 
-                    // Como o objeto atual do radar de voos ativos não trouxe telemetria de nós 'altitude' e 'gs' na raiz,
-                    // colocamos trações ou 0 para segurança se o rastreador estiver atualizando em outra rota/evento.
-                    const alt = voo.altitude !== undefined ? `${voo.altitude.toLocaleString()} ft` : '---';
-                    const gs = voo.groundSpeed || voo.gs ? `${voo.groundSpeed || voo.gs} kt` : '---';
-        
-                    corpoTabela.innerHTML += `
-                        <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
-                            <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
-                            <td style="padding: 12px;">👨‍✈️ ${piloto}</td>
-                            <td style="padding: 12px; font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
-                            <td style="padding: 12px; color: #a8a8b3;">✈️ ${acft}</td>
-                            <td style="padding: 12px; font-size: 0.9em;"><span style="color: #60a5fa;">▲ ${alt}</span> / 💨 ${gs}</td>
-                        </tr>
-                    `;
-                }); */
-
                 voos.forEach(voo => {
                     // 1. MONTANDO O CALLSIGN (Ex: VVX5806)
                     const prefixo = voo.airline?.icao || 'VVX';
@@ -197,66 +165,48 @@
         
                     // 4. PEGANDO O IDENT DA AERONAVE (Ex: B738)
                     const acft = voo.aircraft?.airframe?.ident || 'B738';
-/*        
-                    // =========================================================
-                    // 5. ALTITUDE E VELOCIDADE (Ajustado para ler a API NewSky)
-                    // =========================================================
-                    
-                    // Tenta pegar a altitude da raiz ou de dentro do lastState
-                    let altitudeValor = 0;
-                    if (voo.altitude !== undefined && voo.altitude !== null) {
-                        altitudeValor = voo.altitude;
-                    } else if (voo.lastState?.altitude !== undefined && voo.lastState?.altitude !== null) {
-                        altitudeValor = voo.lastState.altitude;
-                    } else if (voo.lastState?.location?.alt !== undefined && voo.lastState?.location?.alt !== null) {
-                        altitudeValor = voo.lastState.location.alt;
-                    }
-                    const alt = `${altitudeValor.toLocaleString()} ft`;
         
-                    // Tenta pegar a velocidade (ground speed) da raiz ou do lastState
-                    let velocidadeValor = 0;
-                    if (voo.groundSpeed !== undefined && voo.groundSpeed !== null) {
-                        velocidadeValor = voo.groundSpeed;
-                    } else if (voo.gs !== undefined && voo.gs !== null) {
-                        velocidadeValor = voo.gs;
-                    } else if (voo.lastState?.groundSpeed !== undefined && voo.lastState?.groundSpeed !== null) {
-                        velocidadeValor = voo.lastState.groundSpeed;
-                    } else if (voo.lastState?.location?.gs !== undefined && voo.lastState?.location?.gs !== null) {
-                        velocidadeValor = voo.lastState.location.gs;
-                    }
-                    const gs = `${velocidadeValor} kt`; */
-
                     // =========================================================
-                    // 5. ALTITUDE E VELOCIDADE (Ajustado para o formato real NewSky)
+                    // 5. TRATAMENTO DO STATUS DO VOO (Substituindo Alt/Vel)
                     // =========================================================
-                    
-                    // Busca 'alt' dentro de voo.lastState
-                    let altitudeValor = 0;
-                    if (voo.lastState?.alt !== undefined && voo.lastState?.alt !== null) {
-                        altitudeValor = voo.lastState.alt;
-                    } else if (voo.altitude !== undefined) {
-                        altitudeValor = voo.altitude;
-                    }
-                    const alt = `${altitudeValor.toLocaleString()} ft`;
+                    let statusTexto = "Em Andamento";
+                    let statusCor = "#00b0ff"; // Azul padrão
         
-                    // Busca 'gs' dentro de voo.lastState
-                    let velocidadeValor = 0;
-                    if (voo.lastState?.gs !== undefined && voo.lastState?.gs !== null) {
-                        velocidadeValor = voo.lastState.gs;
-                    } else if (voo.groundSpeed !== undefined) {
-                        velocidadeValor = voo.groundSpeed;
-                    } else if (voo.gs !== undefined) {
-                        velocidadeValor = voo.gs;
+                    // Lógica baseada nas chaves comuns da NewSky (status, phase ou arrTimeAct)
+                    const rawStatus = (voo.status || voo.phase || "").toLowerCase();
+        
+                    if (voo.arrTimeAct !== null && voo.arrTimeAct !== undefined) {
+                        statusTexto = "🛬 Pousado";
+                        statusCor = "#a8a8b3"; // Cinza
+                    } else if (rawStatus === "boarding" || rawStatus === "preflight" || rawStatus === "gate") {
+                        statusTexto = "📋 Pré-Voo / Embarque";
+                        statusCor = "#e9c46a"; // Amarelo/Laranja claro
+                    } else if (rawStatus === "taxi" || rawStatus === "pushback") {
+                        statusTexto = "🚜 Táxi / Pushback";
+                        statusCor = "#f4a261"; // Laranja
+                    } else if (rawStatus === "climb" || rawStatus === "climbing") {
+                        statusTexto = "🛫 Subindo";
+                        statusCor = "#4ade80"; // Verde
+                    } else if (rawStatus === "enroute" || rawStatus === "cruise") {
+                        statusTexto = "✈️ Em Rota (Cruzeiro)";
+                        statusCor = "#1FB5A8"; // Turquesa Volar
+                    } else if (rawStatus === "descending" || rawStatus === "descent" || rawStatus === "approach") {
+                        statusTexto = "📉 Descendo / Aproximação";
+                        statusCor = "#60a5fa"; // Azul claro
+                    } else {
+                        // Caso a API não envie o texto mapeado acima, fazemos um cálculo inteligente:
+                        // Se o piloto acabou de conectar (menos de 10 minutos), está em solo pré-voo
+                        statusTexto = "✈️ Em Rota";
+                        statusCor = "#1FB5A8"; // Turquesa Volar
                     }
-                    const gs = `${velocidadeValor} kt`;
         
                     corpoTabela.innerHTML += `
                         <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
                             <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
                             <td style="padding: 12px;">👨‍✈️ ${piloto}</td>
-                            <td style="padding: 12px; font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
+                            <td style="padding: 12px; font-weight: 500;">往 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
                             <td style="padding: 12px; color: #a8a8b3;">✈️ ${acft}</td>
-                            <td style="padding: 12px; font-size: 0.9em;"><span style="color: #60a5fa;">▲ ${alt}</span> / 💨 ${gs}</td>
+                            <td style="padding: 12px; font-weight: bold; color: ${statusCor};">${statusTexto}</td>
                         </tr>
                     `;
                 });
