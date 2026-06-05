@@ -123,7 +123,7 @@
     <script>
         // Agora aponta direto para a função interna do seu Cloudflare Pages
         const URL_VOOS = "/voos";
-        
+/*        
         async function carregarVoosEmTempoReal() {
             const msgVoos = document.getElementById('mensagem-voos');
             const tabelaVoos = document.getElementById('tabela-voos');
@@ -195,7 +195,96 @@
             carregarVoosEmTempoReal();
             // Atualiza a cada 2 minutos
             setInterval(carregarVoosEmTempoReal, 120000);
+        }); */
+
+        async function carregarVoosEmTempoReal() {
+    const msgVoos = document.getElementById('mensagem-voos');
+    const tabelaVoos = document.getElementById('tabela-voos');
+    const corpoTabela = document.getElementById('corpo-tabela-voos');
+
+    try {
+        const resposta = await fetch(URL_VOOS);
+        if (!resposta.ok) throw new Error("Erro ao ler rota interna");
+
+        const dados = await resposta.json();
+
+        let voos = dados.results || dados.flights || dados.data || [];
+        if (Array.isArray(dados)) {
+            voos = dados;
+        }
+
+        if (voos.length === 0) {
+            msgVoos.innerHTML = "✈️ Nenhum piloto voando no momento. Que tal iniciar um voo?";
+            tabelaVoos.style.display = 'none';
+            return;
+        }
+
+        corpoTabela.innerHTML = '';
+
+        voos.forEach(voo => {
+            // 1. CALLSIGN
+            const prefixo = voo.airline?.icao || 'VVX';
+            const numeroVoo = voo.flightNumber || '';
+            const callsign = numeroVoo ? `${prefixo}${numeroVoo}` : 'VOLAR';
+
+            // 2. PILOTO
+            const piloto = voo.pilot?.fullname || 'Piloto Virtual';
+
+            // 3. ROTA
+            const dep = voo.dep?.icao || '???';
+            const arr = voo.arr?.icao || '???';
+
+            // 4. AERONAVE
+            const acft = voo.aircraft?.airframe?.ident || 'B738';
+
+            // 5. TELEMETRIA AVANÇADA (ALTITUDE)
+            // Tenta ler da raiz, do lastState, do lastLog ou assume 0 se o piloto estiver conectado mas no gate
+            let altitudeFinal = 0;
+            if (voo.altitude !== undefined && voo.altitude !== null) {
+                altitudeFinal = voo.altitude;
+            } else if (voo.lastState?.altitude !== undefined) {
+                altitudeFinal = voo.lastState.altitude;
+            } else if (voo.lastLog?.altitude !== undefined) {
+                altitudeFinal = voo.lastLog.altitude;
+            } else if (voo.lastState?.location?.alt !== undefined) {
+                altitudeFinal = voo.lastState.location.alt;
+            }
+            const alt = `${altitudeFinal.toLocaleString()} ft`;
+
+            // 6. TELEMETRIA AVANÇADA (VELOCIDADE - GROUND SPEED)
+            let velocidadeFinal = 0;
+            if (voo.groundSpeed !== undefined && voo.groundSpeed !== null) {
+                velocidadeFinal = voo.groundSpeed;
+            } else if (voo.gs !== undefined && voo.gs !== null) {
+                velocidadeFinal = voo.gs;
+            } else if (voo.lastState?.groundSpeed !== undefined) {
+                velocidadeFinal = voo.lastState.groundSpeed;
+            } else if (voo.lastLog?.groundSpeed !== undefined) {
+                velocidadeFinal = voo.lastLog.groundSpeed;
+            } else if (voo.lastState?.location?.gs !== undefined) {
+                velocidadeFinal = voo.lastState.location.gs;
+            }
+            const gs = `${velocidadeFinal} kt`;
+
+            corpoTabela.innerHTML += `
+                <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
+                    <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
+                    <td style="padding: 12px;">👨‍✈️ ${piloto}</td>
+                    <td style="padding: 12px; font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
+                    <td style="padding: 12px; color: #a8a8b3;">✈️ ${acft}</td>
+                    <td style="padding: 12px; font-size: 0.9em;"><span style="color: #60a5fa;">▲ ${alt}</span> / 💨 ${gs}</td>
+                </tr>
+            `;
         });
+
+        msgVoos.style.display = 'none';
+        tabelaVoos.style.display = 'table';
+
+    } catch (erro) {
+        console.error("Erro ao carregar voos:", erro);
+        msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
+    }
+}
     </script>
 
 </body>
