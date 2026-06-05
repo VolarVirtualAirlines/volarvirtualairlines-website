@@ -123,7 +123,7 @@
     <script>
         // Agora aponta direto para a função interna do seu Cloudflare Pages
         const URL_VOOS = "/voos";
-    
+/*
         async function carregarVoosEmTempoReal() {
             const msgVoos = document.getElementById('mensagem-voos');
             const tabelaVoos = document.getElementById('tabela-voos');
@@ -207,8 +207,30 @@
                 console.error("Erro ao carregar voos:", erro);
                 msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
             }
-        }
+        } */
+
+    async function carregarVoosEmTempoReal() {
+        const msgVoos = document.getElementById('mensagem-voos');
+        const tabelaVoos = document.getElementById('tabela-voos');
+        const corpoTabela = document.getElementById('corpo-tabela-voos');
     
+        try {
+            const resposta = await fetch(URL_VOOS);
+            if (!resposta.ok) throw new Error("Erro ao ler rota interna");
+    
+            const dados = await resposta.json();
+            
+            // ISSO VAI MOSTRAR OS DADOS REAIS NA SUA TELA PARA AGENTE COPIAR OS NOMES CERTOS:
+            msgVoos.innerHTML = `<pre style="text-align:left; background:#000; color:#4ade80; padding:15px; overflow:auto; font-size:12px; max-height:300px;">${JSON.stringify(dados, null, 2)}</pre>`;
+            tabelaVoos.style.display = 'none';
+            return;
+    
+        } catch (erro) {
+            console.error("Erro ao carregar voos:", erro);
+            msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Erro ao interceptar dados.</span>`;
+        }
+    }
+        
         document.addEventListener('DOMContentLoaded', () => {
             carregarVoosEmTempoReal();
             // Atualiza a cada 2 minutos
