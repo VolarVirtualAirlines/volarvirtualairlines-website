@@ -315,3 +315,66 @@ footer p {
     }
 
 }
+
+/* =====================================
+   PAINEL DE VOOS EM TEMPO REAL
+===================================== */
+
+#voos-reais {
+    background: #0d1d2e; /* Combinando com o tom escuro das suas outras seções dark */
+    border-radius: 12px;
+    margin: 40px auto;
+    max-width: 1400px; /* Alinha com o limite máximo da sua logo principal */
+    padding: 30px 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Container para permitir rolagem horizontal apenas na tabela se visualizada em celular */
+.tabela-responsiva {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 15px;
+}
+
+#tabela-voos {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    color: #e1e1e6;
+    min-width: 600px; /* Garante que os dados não fiquem espremidos em telas pequenas */
+}
+
+#tabela-voos th {
+    color: #1FB5A8; /* Padronizado com o turquesa da Volar */
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    padding: 14px 12px;
+    border-bottom: 2px solid #162a3f;
+}
+
+#tabela-voos td {
+    padding: 14px 12px;
+    vertical-align: middle;
+}
+
+/* Efeito sutil de linha ao passar o mouse */
+#corpo-tabela-voos tr {
+    border-bottom: 1px solid #162a3f;
+    background: rgba(255, 255, 255, 0.01);
+    transition: background 0.2s ease;
+}
+
+#corpo-tabela-voos tr:hover {
+    background: rgba(31, 181, 168, 0.04); /* Destaque sutil com o turquesa da VA */
+}
+
+#mensagem-voos {
+    color: #9ba9b8;
+    text-align: center;
+    padding: 30px;
+    font-size: 17px;
+    font-weight: 500;
+}
