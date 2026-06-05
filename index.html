@@ -197,7 +197,7 @@
         
                     // 4. PEGANDO O IDENT DA AERONAVE (Ex: B738)
                     const acft = voo.aircraft?.airframe?.ident || 'B738';
-        
+/*        
                     // =========================================================
                     // 5. ALTITUDE E VELOCIDADE (Ajustado para ler a API NewSky)
                     // =========================================================
@@ -223,6 +223,30 @@
                         velocidadeValor = voo.lastState.groundSpeed;
                     } else if (voo.lastState?.location?.gs !== undefined && voo.lastState?.location?.gs !== null) {
                         velocidadeValor = voo.lastState.location.gs;
+                    }
+                    const gs = `${velocidadeValor} kt`; */
+
+                    // =========================================================
+                    // 5. ALTITUDE E VELOCIDADE (Ajustado para o formato real NewSky)
+                    // =========================================================
+                    
+                    // Busca 'alt' dentro de voo.lastState
+                    let altitudeValor = 0;
+                    if (voo.lastState?.alt !== undefined && voo.lastState?.alt !== null) {
+                        altitudeValor = voo.lastState.alt;
+                    } else if (voo.altitude !== undefined) {
+                        altitudeValor = voo.altitude;
+                    }
+                    const alt = `${altitudeValor.toLocaleString()} ft`;
+        
+                    // Busca 'gs' dentro de voo.lastState
+                    let velocidadeValor = 0;
+                    if (voo.lastState?.gs !== undefined && voo.lastState?.gs !== null) {
+                        velocidadeValor = voo.lastState.gs;
+                    } else if (voo.groundSpeed !== undefined) {
+                        velocidadeValor = voo.groundSpeed;
+                    } else if (voo.gs !== undefined) {
+                        velocidadeValor = voo.gs;
                     }
                     const gs = `${velocidadeValor} kt`;
         
