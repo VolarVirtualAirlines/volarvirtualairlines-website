@@ -197,7 +197,7 @@
             setInterval(carregarVoosEmTempoReal, 120000);
         }); */
 
-       async function carregarVoosEmTempoReal() {
+async function carregarVoosEmTempoReal() {
     const msgVoos = document.getElementById('mensagem-voos');
     const tabelaVoos = document.getElementById('tabela-voos');
     const corpoTabela = document.getElementById('corpo-tabela-voos');
@@ -287,11 +287,6 @@
         msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
     }
 }
-            
-        document.addEventListener('DOMContentLoaded', () => {
-            carregarVoosEmTempoReal();
-            // Atualiza a cada 2 minutos
-            setInterval(carregarVoosEmTempoReal, 120000);
     
     </script>
 
