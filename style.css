@@ -43,25 +43,30 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    /* Adiciona espaçamento no topo para compensar a barra que agora é fixa */
+    padding-top: 110px; 
 }
 
 /* =====================================
-   HEADER - MENU
+   HEADER - MENU (AJUSTADO PARA FIXO)
 ===================================== */
 
 .navbar {
-    background-color: transparent !important;
-    position: absolute;   
+    background-color: rgba(2, 6, 23, 0.85) !important; /* Fundo escuro sutil para dar leitura na rolagem */
+    backdrop-filter: blur(12px); /* Efeito blur sofisticado na barra superior */
+    -webkit-backdrop-filter: blur(12px);
+    position: fixed !important;  /* CRÍTICO: Fixa o menu no topo ao rolar a página */
     top: 0;
     left: 0;
     width: 100%;          
-    z-index: 1000;        
-    border: none !important;
-    box-shadow: none !important;
+    z-index: 1000 !important;        
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4) !important;
     display: flex;
     justify-content: space-between; 
     align-items: center;
-    padding: 25px 50px;   
+    padding: 20px 50px;   
+    transition: all 0.3s ease;
 }
 
 .logo {
@@ -115,21 +120,19 @@ body {
 }
 
 /* =====================================
-   HERO & BACKGROUND SLIDER (AJUSTADO E DISSOLVENTE)
+   HERO & BACKGROUND SLIDER (ESTRUTURA DE CORPO FLUTUANTE)
 ===================================== */
 
 .hero {
     position: relative;
-    min-height: 100vh;
+    min-height: calc(100vh - 110px); /* Ajusta a altura descontando o menu fixo */
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden; 
     background: var(--midnight-dark);
-    padding-top: 100px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 40px 20px; /* Limpeza de paddings agressivos antigos */
 }
 
 /* Container principal dos backgrounds */
@@ -153,7 +156,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     
-    /* Estado inicial correto para efeito Fade puro (sem translação/movimento horizontal) */
+    /* Estado inicial correto para efeito Fade puro */
     opacity: 0;
     z-index: 1;
     transition: opacity 1000ms ease-in-out; 
@@ -171,16 +174,69 @@ body {
     z-index: 2;
 }
 
-/* Logo central fixada com prioridade máxima acima dos fundos */
-.hero-logo {
+/* =====================================
+   NOVO CONTAINER FLUTUANTE SOBRE O SLIDER
+===================================== */
+
+.hero-floating-box {
     position: relative;
-    z-index: 10; 
-    width: 88vw;
-    max-width: 1400px;
-    height: auto;
-    display: block;
-    margin-top: 5px;
-    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.8));
+    z-index: 10; /* Fica acima do z-index 3 dos slides ativos */
+    text-align: center;
+    max-width: 850px;
+    width: 100%;
+    padding: 50px 40px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.hero-floating-box h1 {
+    font-family: var(--font-headers);
+    font-size: 3.2rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.hero-floating-box p {
+    font-family: var(--font-body);
+    font-size: 1.15rem;
+    color: var(--text-main);
+    line-height: 1.7;
+    margin-bottom: 35px;
+    max-width: 100%; /* Permite usar a largura total do container interno */
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Novo Botão Cadastre-se na Hero */
+.btn-cadastro-hero {
+    display: inline-block;
+    font-family: var(--font-headers);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    color: #ffffff;
+    padding: 16px 45px;
+    border: 2px solid var(--turquoise);
+    border-radius: 6px;
+    background: rgba(0, 229, 255, 0.02);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.1);
+}
+
+.btn-cadastro-hero:hover {
+    background: var(--turquoise);
+    color: var(--night-blue);
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
+    transform: translateY(-2px);
 }
 
 /* =====================================
@@ -358,7 +414,7 @@ body {
     font-weight: 500;
 }
 
-/* Classe utilitária para Destaques em Ouro (ex: Patentes ou Números) */
+/* Classe utilitária para Destaques em Ouro */
 .gold-highlight {
     color: var(--gold-premium);
     font-weight: 600;
@@ -382,20 +438,18 @@ footer p {
 }
 
 /* =====================================
-   RESPONSIVO
+   RESPONSIVO (ADAPTAÇÕES CRÍTICAS)
 ===================================== */
 
-@media (max-width: 992px) {
-    .hero-logo {
-        width: 92vw;
-    }
-}
-
 @media (max-width: 768px) {
+    body {
+        padding-top: 160px; /* Aumenta o recuo superior já que o menu móvel quebra em duas linhas */
+    }
+
     .navbar {
         flex-direction: column;
-        gap: 20px;
-        padding: 25px 20px;
+        gap: 15px;
+        padding: 20px;
     }
 
     .menu {
@@ -409,12 +463,30 @@ footer p {
     }
 
     .hero {
-        padding-top: 150px;
+        min-height: auto;
+        padding-top: 20px;
+        padding-bottom: 40px;
     }
 
-    .hero-logo {
-        width: 95vw;
-        margin-top: 0;
+    /* Ajuste da Caixa Flutuante em telas menores */
+    .hero-floating-box {
+        padding: 35px 20px;
+        width: 100%;
+    }
+
+    .hero-floating-box h1 {
+        font-size: 2rem;
+    }
+
+    .hero-floating-box p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 25px;
+    }
+
+    .btn-cadastro-hero {
+        padding: 14px 35px;
+        font-size: 0.85rem;
     }
 
     .section h2 {
