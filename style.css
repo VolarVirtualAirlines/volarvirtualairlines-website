@@ -304,4 +304,138 @@ body {
     margin: 50px auto;
     max-width: 1400px;
     padding: 35px 25px;
-    box-shadow: 0 12px 40px 0 rgba(
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+}
+
+.tabela-responsiva {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 20px;
+}
+
+#tabela-voos {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    color: var(--text-main);
+    min-width: 600px;
+}
+
+#tabela-voos th {
+    color: var(--turquoise);
+    font-family: var(--font-headers);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.8px;
+    padding: 16px 14px;
+    border-bottom: 2px solid rgba(0, 229, 255, 0.2);
+}
+
+#tabela-voos td {
+    padding: 16px 14px;
+    vertical-align: middle;
+    font-size: 15px;
+}
+
+/* Efeito sutil de linha ao passar o mouse */
+#corpo-tabela-voos tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.005);
+    transition: background 0.2s ease;
+}
+
+#corpo-tabela-voos tr:hover {
+    background: rgba(0, 229, 255, 0.04);
+}
+
+#mensagem-voos {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 35px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Classe utilitária para Destaques em Ouro (ex: Patentes ou Números) */
+.gold-highlight {
+    color: var(--gold-premium);
+    font-weight: 600;
+}
+
+/* =====================================
+   FOOTER
+===================================== */
+
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--midnight-dark);
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+footer p {
+    color: var(--text-muted);
+    font-size: 14px;
+    letter-spacing: 0.3px;
+}
+
+/* =====================================
+   RESPONSIVO
+===================================== */
+
+@media (max-width: 992px) {
+    .hero-logo {
+        width: 92vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 20px;
+        padding: 25px 20px;
+    }
+
+    .menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 18px;
+    }
+
+    .logo {
+        height: 50px;
+    }
+
+    .hero {
+        padding-top: 150px;
+    }
+
+    .hero-logo {
+        width: 95vw;
+        margin-top: 0;
+    }
+
+    .section h2 {
+        font-size: 30px;
+    }
+
+    .section p {
+        font-size: 16px;
+    }
+
+    .links-container {
+        gap: 12px;
+    }
+    
+    .btn-link {
+        font-size: 14px;
+        padding: 10px 18px;
+    }
+    
+    #voos-reais {
+        padding: 20px 15px;
+        margin: 30px 15px;
+    }
+}
