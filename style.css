@@ -52,9 +52,16 @@ body {
 ===================================== */
 
 .navbar {
+    
+    /*
     background-color: rgba(2, 6, 23, 0.85) !important; /* Fundo escuro sutil para dar leitura na rolagem */
+    /*
     backdrop-filter: blur(12px); /* Efeito blur sofisticado na barra superior */
-    -webkit-backdrop-filter: blur(12px);
+    
+    background-color: transparent !important; /* ⬅️ ALTERADO: Remove o fundo escuro e deixa 100% transparente */
+    backdrop-filter: none !important;        /* ⬅️ ALTERADO: Remove o efeito de vidro/desfoque */
+   
+   -webkit-backdrop-filter: blur(12px);
     position: fixed !important;  /* CRÍTICO: Fixa o menu no topo ao rolar a página */
     top: 0;
     left: 0;
