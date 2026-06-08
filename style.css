@@ -704,15 +704,47 @@ footer p {
     border-bottom: 2px solid rgba(0, 229, 255, 0.1);
 }
 
+/* Centraliza o cabeçalho e as células da 4ª coluna (Ícone Liverie) */
+.tabela-frota th:nth-child(4),
+.tabela-frota td:nth-child(4) {
+    text-align: center;
+}
+
 .tabela-frota td {
     padding: 14px 15px;
     color: var(--text-main);
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     font-size: 0.95rem;
+    vertical-align: middle; /* Garante alinhamento vertical com o ícone */
 }
 
 .tabela-frota tr:hover {
     background: rgba(255, 255, 255, 0.04);
+}
+
+/* Ajuste da miniatura do ícone */
+.liverie-preview {
+    margin: 0 auto;
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    transition: transform 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.liverie-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.liverie-preview:hover {
+    transform: scale(1.6);
+    z-index: 10;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .badge-sim {
