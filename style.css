@@ -684,6 +684,12 @@ footer p {
    ESTILO DA TABELA DE FROTA
 ===================================== */
 
+.tabela-responsiva {
+    width: 100%;
+    overflow-x: auto; /* Adicione aqui */
+    -webkit-overflow-scrolling: touch; /* Opcional: melhora o scroll em dispositivos móveis */
+}
+
 .tabela-frota {
     width: 100%;
     border-collapse: collapse;
