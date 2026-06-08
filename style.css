@@ -43,8 +43,8 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
-    /* Adiciona espaçamento no topo para compensar a barra que agora é fixa */
-    padding-top: 110px; 
+    /* Adiciona espaçamento no topo herdado do layout original do HTML */
+    padding-top: 80px; 
 }
 
 /* =====================================
@@ -125,14 +125,14 @@ body {
 
 .hero {
     position: relative;
-    min-height: calc(100vh - 110px); /* Ajusta a altura descontando o menu fixo */
+    min-height: calc(100vh - 80px); /* Ajustado de acordo com o padding-top de 80px original */
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden; 
     background: var(--midnight-dark);
-    padding: 40px 20px; /* Limpeza de paddings agressivos antigos */
+    padding: 40px 20px; 
 }
 
 /* Container principal dos backgrounds */
@@ -210,7 +210,7 @@ body {
     color: var(--text-main);
     line-height: 1.7;
     margin-bottom: 35px;
-    max-width: 100%; /* Permite usar a largura total do container interno */
+    max-width: 100%; 
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -443,7 +443,7 @@ footer p {
 
 @media (max-width: 768px) {
     body {
-        padding-top: 160px; /* Aumenta o recuo superior já que o menu móvel quebra em duas linhas */
+        padding-top: 160px; /* Mantido conforme seu design system para quebra de linhas móvel */
     }
 
     .navbar {
