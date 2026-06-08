@@ -58,7 +58,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;        
-    z-index: 1000 !important;       
+    z-index: 1000 !important;        
     border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4) !important;
     display: flex;
@@ -228,7 +228,7 @@ body {
 .dark { background: var(--section-dark); border-top: 1px solid rgba(255, 255, 255, 0.03); border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
 
 /* =====================================
-   SEÇÃO PARCEIROS (NOVA)
+   SEÇÃO PARCEIROS
 ===================================== */
 
 .parceiros-container {
@@ -276,6 +276,41 @@ body {
 }
 
 /* =====================================
+   SEÇÃO LINKS ÚTEIS (ESTILIZAÇÃO)
+===================================== */
+
+.links-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-link {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: var(--font-headers);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-link:hover {
+    background: var(--turquoise);
+    color: var(--night-blue);
+    border-color: var(--turquoise);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 229, 255, 0.25);
+}
+
+/* =====================================
    PAINEL DE VOOS E DEMAIS
 ===================================== */
 
@@ -290,8 +325,6 @@ body {
     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
 }
 
-/* ... (restante dos estilos: .tabela-responsiva, .volar-social-grid, etc., mantidos iguais) ... */
-
 /* =====================================
    FOOTER & RESPONSIVO
 ===================================== */
@@ -302,4 +335,17 @@ footer { text-align: center; padding: 40px 20px; background: var(--midnight-dark
     body { padding-top: 160px; }
     .navbar { flex-direction: column; gap: 15px; padding: 20px; }
     .volar-social-grid { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 600px) {
+    .links-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 20px;
+    }
+    .btn-link {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
 }
