@@ -704,15 +704,15 @@ footer p {
     border-bottom: 2px solid rgba(0, 229, 255, 0.1);
 }
 
-/* Ajuste da largura da coluna Preview - Dobrada */
+/* Ajuste da largura da coluna Preview - Dobrada novamente */
 .tabela-frota th:nth-child(4),
 .tabela-frota td:nth-child(4) {
     text-align: center;
-    width: 320px;
+    width: 480px; 
 }
 
 .tabela-frota td {
-    padding: 14px 15px;
+    padding: 20px 15px; /* Aumentei um pouco o padding para dar respiro à altura da linha */
     color: var(--text-main);
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     font-size: 0.95rem;
@@ -723,12 +723,12 @@ footer p {
     background: rgba(255, 255, 255, 0.04);
 }
 
-/* Ajuste da miniatura do ícone - Proporção Retangular Ampliada */
+/* Ajuste da miniatura do ícone - Dimensões grandes */
 .liverie-preview {
     margin: 0 auto;
-    width: 240px;  
-    height: 85px;
-    border-radius: 10px;
+    width: 400px;  
+    height: 140px;
+    border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--glass-border);
     transition: all 0.4s ease;
@@ -743,14 +743,14 @@ footer p {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    padding: 8px;
+    padding: 12px;
 }
 
 .liverie-preview:hover {
-    transform: scale(1.15);
+    transform: scale(1.05); /* Zoom mais sutil devido ao tamanho grande */
     z-index: 50;
     cursor: pointer;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
     border-color: var(--turquoise);
 }
 
