@@ -425,20 +425,35 @@ body {
 }
 
 /* =====================================
-   FOOTER
+   FOOTER REFINADO
 ===================================== */
 
 footer {
     text-align: center;
-    padding: 40px 20px;
+    padding: 60px 20px 40px 20px; /* Um pouco mais de padding em cima */
     background: var(--midnight-dark);
-    border-top: 1px solid rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-logo {
+    height: 50px; /* Tamanho discreto e elegante */
+    width: auto;
+    filter: grayscale(0.2) brightness(0.9); /* Sutilmente desaturado para não competir com a navegação */
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
 }
 
 footer p {
     color: var(--text-muted);
-    font-size: 14px;
-    letter-spacing: 0.3px;
+    font-size: 13px;
+    letter-spacing: 0.5px;
 }
 
 /* =====================================
