@@ -737,7 +737,9 @@ footer p {
 .liverie-preview img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* Muda de 'cover' (que corta) para 'contain' (que mostra a imagem toda) */
+    object-fit: contain; 
+    padding: 5px; /* Adiciona um respiro entre a imagem e a borda do quadrado */
 }
 
 .liverie-preview:hover {
