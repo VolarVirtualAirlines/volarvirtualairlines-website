@@ -641,16 +641,16 @@ footer p {
 }
 
 /* =====================================
-   SEÇÃO PLATAFORMAS (Ajustado para lado a lado)
+   SEÇÃO PLATAFORMAS (AJUSTADA)
 ===================================== */
 
 .sim-container {
     display: flex;
-    justify-content: center; /* Centraliza os dois */
-    align-items: stretch;    /* Faz com que ambos tenham a mesma altura */
-    gap: 40px;               /* Espaçamento generoso entre eles */
+    justify-content: center;
+    align-items: stretch;    
+    gap: 40px;               
     margin-top: 40px;
-    flex-wrap: wrap;         /* Garante responsividade */
+    flex-wrap: wrap;         
 }
 
 .sim-card {
@@ -658,8 +658,24 @@ footer p {
     border: 1px solid var(--glass-border);
     border-radius: 12px;
     padding: 30px;
-    width: 380px;            /* Largura definida para caberem confortavelmente lado a lado */
+    width: 420px;            /* Aumentamos levemente para acomodar melhor o MSFS */
     text-align: center;
+    transition: all 0.3s ease;
+    display: flex;           /* Adicionado para ajudar no alinhamento vertical */
+    flex-direction: column;  /* Organiza os itens de cima para baixo */
+    align-items: center;     /* Centraliza o logo horizontalmente */
+}
+
+.sim-logo {
+    max-width: 100%;         /* Impede que o logo ultrapasse a borda do card */
+    height: 50px;            /* Mantém uma altura consistente */
+    object-fit: contain;     /* Garante que o logo não fique distorcido */
+    margin-bottom: 20px;
+    filter: brightness(1) grayscale(0.2);
     transition: all 0.3s ease;
 }
 
+.sim-card:hover .sim-logo {
+    filter: brightness(1) grayscale(0);
+    transform: scale(1.05);
+}
