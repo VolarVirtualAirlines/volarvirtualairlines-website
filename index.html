@@ -30,8 +30,17 @@
         </nav>
     </header>
 
-    <!-- Banner Principal (Aeronave / Identidade de Entrada) -->
+    <!-- Banner Principal (Com Slider de Fundo Dinâmico que preenche toda a tela) -->
     <section class="hero">
+        <!-- Container dos Slides de Fundo -->
+        <div class="hero-slider">
+            <div class="slide active" style="background-image: linear-gradient(rgba(10, 17, 40, 0.45), rgba(2, 6, 23, 0.75)), url('assets/slide1.jpg');"></div>
+            <div class="slide" style="background-image: linear-gradient(rgba(10, 17, 40, 0.45), rgba(2, 6, 23, 0.75)), url('assets/slide2.jpg');"></div>
+            <div class="slide" style="background-image: linear-gradient(rgba(10, 17, 40, 0.45), rgba(2, 6, 23, 0.75)), url('assets/slide3.jpg');"></div>
+            <div class="slide" style="background-image: linear-gradient(rgba(10, 17, 40, 0.45), rgba(2, 6, 23, 0.75)), url('assets/slide4.jpg');"></div>
+        </div>
+
+        <!-- Logotipo Principal centralizado fixado por cima das imagens -->
         <img src="assets/logo-primary.png" alt="Volar - Fly Beyond" class="hero-logo">
     </section>
 
@@ -88,7 +97,7 @@
         </div>
     </section>
 
-    <!-- PAINEL DE VOOS EM TEMPO REAL (Puxando os novos estilos de vidro fosco do CSS) -->
+    <!-- PAINEL DE VOOS EM TEMPO REAL -->
     <section id="voos-reais">
         <h2>Painel de Voos em Tempo Real</h2>
         
@@ -136,7 +145,7 @@
         <p>© 2026 Volar Virtual Airlines - Fly Beyond - ICAO: VVX</p>
     </footer>
     
-    <!-- Lógica de Atualização Automatizada do Radar -->
+    <!-- Lógica de Atualização Automatizada do Radar e Slider -->
     <script>
         const URL_VOOS = "/voos";
 
@@ -205,7 +214,7 @@
                             redeCor = "var(--turquoise)";
                         }
                     }
-                                                                                                    
+                                                                                                                                                                                
                     // Renderização das linhas da tabela usando as variáveis CSS globais
                     corpoTabela.innerHTML += `
                         <tr>
@@ -228,11 +237,44 @@
                 msgVoos.innerHTML = `<span style="color: #ff5252; font-weight: 600;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
             }
         }
+
+        // Lógica do Slider de Fundo da Seção Hero
+        function iniciarHeroSlider() {
+            const slides = document.querySelectorAll('.hero-slider .slide');
+            let slideAtual = 0;
+
+            if (slides.length === 0) return;
+
+            setInterval(() => {
+                const slideAnterior = slides[slideAtual];
+                
+                // Avança o índice e rotaciona ao chegar no fim (0, 1, 2, 3...)
+                slideAtual = (slideAtual + 1) % slides.length;
+                const proximoSlide = slides[slideAtual];
+
+                // Remove estados ativos e empurra o slide anterior para a direita (exit)
+                slideAnterior.classList.remove('active');
+                slideAnterior.classList.add('exit');
+
+                // Prepara e traz o próximo slide vindo da esquerda para o centro (active)
+                proximoSlide.classList.remove('exit');
+                proximoSlide.classList.add('active');
+
+                // Limpa a classe de saída após o término da animação do CSS (1s)
+                setTimeout(() => {
+                    slideAnterior.classList.remove('exit');
+                }, 1000);
+
+            }, 5000); // Intervalo exato de 5 segundos requisitado
+        }
         
-        // Inicialização e atualização de 2 em 2 minutos
+        // Inicialização combinada do radar e do slider em paralelo
         document.addEventListener('DOMContentLoaded', () => {
             carregarVoosEmTempoReal();
             setInterval(carregarVoosEmTempoReal, 120000);
+            
+            // Ativa a rotação automática dos planos de fundo
+            iniciarHeroSlider();
         });
     </script>
 
