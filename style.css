@@ -515,3 +515,19 @@ footer p {
         margin: 30px 15px;
     }
 }
+
+/* Ajustes para a nova seção consolidada */
+#sobre-nos .lang-block h3 {
+    color: var(--turquoise);
+    font-family: var(--font-headers);
+    font-size: 1.5rem;
+    margin: 30px 0 10px 0;
+}
+
+#sobre-nos .lang-block h3:first-child {
+    margin-top: 0; /* Remove margem do primeiro título */
+}
+
+#sobre-nos .lang-block p {
+    margin-bottom: 20px;
+}
