@@ -289,6 +289,31 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
+/* Ajustes para a nova seção unificada Sobre Nós */
+.sobre-nos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.sobre-nos-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+
+.sobre-nos-highlight {
+    font-size: 20px;
+    line-height: 1.8;
+    color: var(--turquoise);
+    font-weight: 600;
+    margin-top: 10px;
+    font-family: var(--font-headers);
+}
+
 /* =====================================
    FROTA
 ===================================== */
