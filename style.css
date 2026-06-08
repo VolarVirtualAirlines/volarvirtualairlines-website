@@ -639,3 +639,27 @@ footer p {
         padding: 12px 20px;
     }
 }
+
+/* =====================================
+   SEÇÃO PLATAFORMAS (Ajustado para lado a lado)
+===================================== */
+
+.sim-container {
+    display: flex;
+    justify-content: center; /* Centraliza os dois */
+    align-items: stretch;    /* Faz com que ambos tenham a mesma altura */
+    gap: 40px;               /* Espaçamento generoso entre eles */
+    margin-top: 40px;
+    flex-wrap: wrap;         /* Garante responsividade */
+}
+
+.sim-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 30px;
+    width: 380px;            /* Largura definida para caberem confortavelmente lado a lado */
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
