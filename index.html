@@ -5,12 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Volar Virtual Airlines | Fly Beyond</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Importação de Fontes Premium (Montserrat e Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link class="css-file" rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
 </head>
     
 <body>
 
+    <!-- Menu Superior Flutuante -->
     <header class="navbar">
         <div class="logo-container">
             <a href="#">
@@ -27,15 +30,17 @@
         </nav>
     </header>
 
+    <!-- Banner Principal (Aeronave / Identidade de Entrada) -->
     <section class="hero">
         <img src="assets/logo-primary.png" alt="Volar - Fly Beyond" class="hero-logo">
     </section>
 
-    <section id="quem-somos" class="section">
+    <!-- Quem Somos -->
+    <section id="quem-somos" class="section dark">
         <h2>Quem Somos</h2>
 
-        <div class="lang-block" lang="pt-BR">
-            <p><strong>PT</strong></p>
+        <div class="lang-block" lang="pt-BR" style="margin-bottom: 25px;">
+            <p><span class="gold-highlight">PT</span></p>
             <p>
                 A VOLAR nasceu do desejo de unir entusiastas da aviação em uma comunidade vibrante e colaborativa. 
                 Com operações em rotas nacionais e internacionais, oferecemos um ambiente estruturado, 
@@ -43,8 +48,8 @@
             </p>
         </div>
 
-        <div class="lang-block" lang="en">
-            <p><strong>EN</strong></p>
+        <div class="lang-block" lang="en" style="margin-bottom: 25px;">
+            <p><span class="gold-highlight">EN</span></p>
             <p>
                 VOLAR was born from the desire to unite aviation enthusiasts in a vibrant and collaborative community. 
                 With operations across national and international routes, we offer a structured environment, 
@@ -53,7 +58,7 @@
         </div>
 
         <div class="lang-block" lang="es">
-            <p><strong>ES</strong></p>
+            <p><span class="gold-highlight">ES</span></p>
             <p>
                 VOLAR nació del desejo de unir a los entusiastas de la aviación en una comunidad vibrante y colaborativa. 
                 Con operaciones en rutas nacionais e internacionales, ofrecemos una estructura organizada, 
@@ -62,6 +67,7 @@
         </div>
     </section>
 
+    <!-- Nossa Frota -->
     <section id="frota" class="section">
         <h2>Nossa Frota</h2>
         <div class="frota-container">
@@ -69,47 +75,51 @@
         </div>
     </section>
   
-    <section id="mapa" class="section">
+    <!-- Radar / Mapa Live Tracker -->
+    <section id="mapa" class="section dark">
         <h2>Mapa de Voos On-Line</h2>
-        <iframe 
-          src="http://newsky.app/airline/public/map?style=dark&token=VVX_gFOhy8XuCKJLZ0DUhhHj9kpDUi55Zq" 
-          width="100%" 
-          height="600px" 
-          style="border:none;">
-        </iframe>
+        <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.4); border: 1px solid var(--glass-border); margin-top: 25px;">
+            <iframe 
+              src="http://newsky.app/airline/public/map?style=dark&token=VVX_gFOhy8XuCKJLZ0DUhhHj9kpDUi55Zq" 
+              width="100%" 
+              height="600px" 
+              style="border:none; display: block;">
+            </iframe>
+        </div>
     </section>
 
-    <!-- NOVA SEÇÃO DE VOOS EM TEMPO REAL -->
-    <section id="voos-reais" class="section" style="padding: 20px; background: #121214; border-radius: 8px; margin-top: 20px;">
+    <!-- PAINEL DE VOOS EM TEMPO REAL (Puxando os novos estilos de vidro fosco do CSS) -->
+    <section id="voos-reais">
         <h2>Painel de Voos em Tempo Real</h2>
         
-        <!-- Mensagem de carregamento ou "Nenhum voo" -->
-        <div id="mensagem-voos" style="color: #a8a8b3; text-align: center; padding: 20px; font-size: 1.1em;">
+        <!-- Mensagem dinamicamente controlada -->
+        <div id="mensagem-voos">
             Carregando voos em andamento...
         </div>
 
-        <!-- Tabela oculta que só aparece se houver voos -->
-        <div style="overflow-x: auto;">
-            <table id="tabela-voos" style="width: 100%; border-collapse: collapse; text-align: left; display: none; color: #e1e1e6; font-size: 0.95em;">
+        <!-- Tabela responsiva com dados do radar -->
+        <div class="tabela-responsiva">
+            <table id="tabela-voos">
                 <thead>
-                    <tr style="border-bottom: 2px solid #29292e; color: #00b0ff;">
-                        <th style="padding: 12px;">Callsign</th>
-                        <th style="padding: 12px;">Piloto</th>
-                        <th style="padding: 12px;">Rota</th>
-                        <th style="padding: 12px;">Aeronave</th>
-                        <th style="padding: 12px;">Tipo</th>
-                        <th style="padding: 12px;">Simulador</th>
-                        <th style="padding: 12px;">Rede</th>
+                    <tr>
+                        <th>Callsign</th>
+                        <th>Piloto</th>
+                        <th>Rota</th>
+                        <th>Aeronave</th>
+                        <th>Tipo</th>
+                        <th>Simulador</th>
+                        <th>Rede</th>
                     </tr>
                 </thead> 
                 
                 <tbody id="corpo-tabela-voos">
-                    <!-- Os voos entrarão aqui dinamicamente -->
+                    <!-- Injeção via JavaScript -->
                 </tbody>
             </table>
         </div>
     </section>
     
+    <!-- Links de Acesso Externo -->
     <section id="links" class="section">
         <h2>Acesse / Access / Acceder</h2>
       
@@ -121,10 +131,12 @@
         </div>
     </section>
     
+    <!-- Rodapé -->
     <footer>
         <p>© 2026 Volar Virtual Airlines - Fly Beyond - ICAO: VVX</p>
     </footer>
     
+    <!-- Lógica de Atualização Automatizada do Radar -->
     <script>
         const URL_VOOS = "/voos";
 
@@ -164,22 +176,22 @@
         
                     const acft = voo.aircraft?.airframe?.ident || 'B738';
 
-                    // Tipo de Voo
+                    // Definições de Tipo de Operação
                     let tipoVooTexto = "✈️ Comercial";
                     if (voo.type === "pax") tipoVooTexto = "👥 Passageiros";
                     else if (voo.type === "cargo") tipoVooTexto = "📦 Carga";
                     if (voo.charter === true) tipoVooTexto = "⭐ Fretado";
 
-                    // Simulador
+                    // Tratamento dos Simuladores de Voo
                     let simuladorTexto = String(voo.simulator || "MSFS").toUpperCase();
                     if (simuladorTexto === "MSFS") simuladorTexto = "MSFS";
                     else if (simuladorTexto === "XP" || simuladorTexto === "XP11" || simuladorTexto === "XP12") simuladorTexto = "X-Plane";
                     else if (simuladorTexto === "P3D") simuladorTexto = "Prepar3D";
                     else if (simuladorTexto === "FSX") simuladorTexto = "FSX";
 
-                    // Rede Online
+                    // Redes Online com estilizações em sintonia com a identidade visual
                     let redeTexto = "Offline";
-                    let redeCor = "#505059";
+                    let redeCor = "#2d3748";
                     if (voo.network && voo.network.name) {
                         const redeNome = voo.network.name.toLowerCase();
                         if (redeNome === "ivao") {
@@ -190,20 +202,20 @@
                             redeCor = "#e67e22";
                         } else {
                             redeTexto = redeNome.toUpperCase();
-                            redeCor = "#1FB5A8";
+                            redeCor = "var(--turquoise)";
                         }
                     }
-                                                                            
-                    // Renderização sem a coluna Status
+                                                                                                    
+                    // Renderização das linhas da tabela usando as variáveis CSS globais
                     corpoTabela.innerHTML += `
-                        <tr style="border-bottom: 1px solid #29292e; background: rgba(255,255,255,0.01);">
-                            <td style="padding: 12px; font-weight: bold; color: #00b0ff;">${callsign}</td>
-                            <td style="padding: 12px;">👨‍✈️ ${piloto}</td>
-                            <td style="padding: 12px; font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
-                            <td style="padding: 12px; color: #a8a8b3;">✈️ ${acft}</td>
-                            <td style="padding: 12px; font-size: 0.9em; color: #ccc;">${tipoVooTexto}</td>
-                            <td style="padding: 12px; font-size: 0.9em;"><span style="background: #29292e; padding: 4px 8px; border-radius: 4px; border: 1px solid #3e3e42;">${simuladorTexto}</span></td>
-                            <td style="padding: 12px; font-size: 0.85em; font-weight: bold;"><span style="background: ${redeCor}; color: #fff; padding: 4px 8px; border-radius: 4px;">${redeTexto}</span></td>
+                        <tr>
+                            <td style="font-weight: bold; color: var(--turquoise); font-family: var(--font-headers);">${callsign}</td>
+                            <td>👨‍✈️ ${piloto}</td>
+                            <td style="font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
+                            <td style="color: var(--text-muted); font-weight: 500;">✈️ ${acft}</td>
+                            <td style="color: var(--text-muted); font-size: 0.9em;">${tipoVooTexto}</td>
+                            <td><span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.08); font-size: 0.85em;">${simuladorTexto}</span></td>
+                            <td><span style="background: ${redeCor}; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.85em; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">${redeTexto}</span></td>
                         </tr>
                     `;
                 });
@@ -213,15 +225,15 @@
         
             } catch (erro) {
                 console.error("Erro ao carregar voos:", erro);
-                msgVoos.innerHTML = `<span style="color: #ff5252;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
+                msgVoos.innerHTML = `<span style="color: #ff5252; font-weight: 600;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
             }
         }
         
+        // Inicialização e atualização de 2 em 2 minutos
         document.addEventListener('DOMContentLoaded', () => {
             carregarVoosEmTempoReal();
             setInterval(carregarVoosEmTempoReal, 120000);
         });
-    
     </script>
 
 </body>
