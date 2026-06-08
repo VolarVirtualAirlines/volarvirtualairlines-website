@@ -52,11 +52,10 @@ body {
 ===================================== */
 
 .navbar {
-    
     background-color: rgba(2, 6, 23, 0.85) !important; /* Fundo escuro sutil para dar leitura na rolagem */
     backdrop-filter: blur(12px); /* Efeito blur sofisticado na barra superior */
        
-   -webkit-backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     position: fixed !important;  /* CRÍTICO: Fixa o menu no topo ao rolar a página */
     top: 0;
     left: 0;
@@ -425,6 +424,36 @@ body {
 }
 
 /* =====================================
+   SEÇÃO DE REDES SOCIAIS (NOVA)
+===================================== */
+
+.volar-social-grid {
+    transition: all 0.3s ease;
+}
+
+.volar-social-card {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Efeito dinâmico sofisticado ao passar o mouse nos cards */
+.volar-social-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(0, 229, 255, 0.3) !important;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Transição suave nos svgs internos dos cards */
+.volar-social-card:hover .volar-icon-wrapper svg {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 8px currentColor);
+}
+
+.volar-icon-wrapper svg {
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* =====================================
    FOOTER
 ===================================== */
 
@@ -513,5 +542,12 @@ footer p {
     #voos-reais {
         padding: 20px 15px;
         margin: 30px 15px;
+    }
+
+    /* Ajuste da Grid de Redes Sociais no Mobile */
+    .volar-social-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+        padding: 0 10px !important;
     }
 }
