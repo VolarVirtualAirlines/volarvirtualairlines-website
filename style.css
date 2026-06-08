@@ -264,10 +264,13 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
+/* Ajuste preciso para as logos dos parceiros */
 .parceiro-card img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+    max-width: 100%;       /* A imagem nunca será maior que o cartão */
+    max-height: 80px;      /* Altura máxima para não ficar grande demais */
+    width: auto;           /* Mantém a proporção original da logo */
+    height: auto;
+    object-fit: contain;   /* Garante que a logo inteira apareça sem cortar */
     transition: transform 0.3s ease;
 }
 
