@@ -8,114 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
     <link class="css-file" rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
-    
-    <!-- Estilos específicos inseridos para garantir o funcionamento independente do CSS externo -->
-    <style>
-        /* Força o menu a ficar fixo no topo da tela */
-        .navbar {
-            position: fixed !important;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000 !important;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Compensação no topo para as seções não sumirem por baixo do menu fixo */
-        body {
-            padding-top: 80px;
-        }
-
-        /* Configuração da seção pai do Slider para suportar o conteúdo flutuante absoluto */
-        .hero {
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Caixa Container Flutuante Centralizada sobre o Slider */
-        .hero-floating-box {
-            position: absolute;
-            z-index: 20;
-            text-align: center;
-            max-width: 850px;
-            width: 90%;
-            padding: 40px 30px;
-            background: rgba(2, 6, 23, 0.55); /* Camada escura translúcida elegante */
-            backdrop-filter: blur(10px); /* Efeito de vidro fosco */
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            box-sizing: border-box;
-        }
-
-        .hero-floating-box h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: #ffffff;
-            margin: 0 0 20px 0;
-            text-transform: uppercase;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero-floating-box p {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.2rem;
-            color: #e2e8f0;
-            line-height: 1.6;
-            margin: 0 0 30px 0;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Botão Premium Cadastre-se */
-        .btn-cadastro-hero {
-            display: inline-block;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            text-decoration: none;
-            letter-spacing: 1px;
-            color: #ffffff;
-            padding: 15px 40px;
-            border: 2px solid var(--turquoise, #00e5ff);
-            border-radius: 6px;
-            background: rgba(0, 229, 255, 0.03);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.1);
-        }
-
-        .btn-cadastro-hero:hover {
-            background: var(--turquoise, #00e5ff);
-            color: #020617; /* Inverte para a cor escura da marca */
-            box-shadow: 0 0 25px rgba(0, 229, 255, 0.45);
-            transform: translateY(-2px);
-        }
-
-        /* Responsividade para Dispositivos Móveis */
-        @media (max-width: 768px) {
-            .hero-floating-box {
-                padding: 30px 20px;
-                width: 92%;
-            }
-            .hero-floating-box h1 {
-                font-size: 2.2rem;
-            }
-            .hero-floating-box p {
-                font-size: 1rem;
-                line-height: 1.5;
-            }
-            .btn-cadastro-hero {
-                padding: 12px 30px;
-                font-size: 0.85rem;
-            }
-        }
-    </style>
 </head>
     
 <body>
@@ -147,10 +39,9 @@
             <div class="slide" style="background-image: linear-gradient(rgba(10, 17, 40, 0.45), rgba(2, 6, 23, 0.75)), url('assets/slider/slider_5.jpg');"></div>
         </div>
 
-        <!-- Conteúdo Fixo Flutuante centralizado perfeitamente sobre o Slider -->
         <div class="hero-floating-box">
-            <h1>O Destino de <span style="color: var(--turquoise, #00e5ff);">Quem Ama Voar</span></h1>
-            <p>Prepare o seu cockpit, alinhe na pista e eleve a sua paixão pela aviação virtual a novos patamares. Faça parte de uma comunidade unida pelo mesmo horizonte: cadastre-se, escolha a sua rota, voe com propósito e divirta-se!</p>
+            <h1>O Destino de <span style="color: var(--turquoise);">Quem Ama Voar</span></h1>
+            <p>Prepare o seu cockpit, alinhe na pista e eleve a sua paixão pela aviação virtual a novos patamares. Faça parte de uma comunidade unida pelo mesmo horizon: cadastre-se, escolha a sua rota, voe com propósito e divirta-se!</p>
             <a href="https://newsky.app/pilot/login" target="_blank" rel="noopener noreferrer" class="btn-cadastro-hero">Cadastre-se</a>
         </div>
     </section>
@@ -201,7 +92,7 @@
         </div>
     </section>
 
-    <section id="voos-reais">
+    <section id="voos-reais" class="section">
         <h2>Painel de Voos em Tempo Real</h2>
         
         <div id="mensagem-voos">
@@ -307,7 +198,7 @@
                             redeCor = "var(--turquoise)";
                         }
                     }
-                                                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                                                                                                        
                     corpoTabela.innerHTML += `
                         <tr>
                             <td style="font-weight: bold; color: var(--turquoise); font-family: var(--font-headers);">${callsign}</td>
