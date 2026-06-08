@@ -567,3 +567,52 @@ footer p {
         height: 60px;
     }
 }
+
+/* =====================================
+   SEÇÃO REDES SOCIAIS
+===================================== */
+
+.social-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-family: var(--font-headers);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.social-link i {
+    font-size: 1.5rem;
+    color: var(--turquoise);
+}
+
+.social-link:hover {
+    background: rgba(0, 229, 255, 0.1);
+    border-color: var(--turquoise);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .social-container {
+        gap: 15px;
+    }
+    .social-link {
+        padding: 12px 20px;
+    }
+}
