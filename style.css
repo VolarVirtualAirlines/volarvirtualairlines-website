@@ -1,6 +1,6 @@
-/* =====================================
-   CONTAINER FLUTUANTE SOBRE O SLIDER (TOTALMENTE TRANSPARENTE)
-   ===================================== */
+/* ==========================================================================
+   CONTAINER FLUTUANTE SOBRE O SLIDER (100% TRANSPARENTE E LIMPO)
+   ========================================================================== */
 
 .hero-floating-box {
     position: relative;
@@ -8,12 +8,12 @@
     text-align: center;
     max-width: 850px;
     width: 100%;
-    padding: 50px 40px;
-    background: transparent; /* 100% transparente para exibir o slider livremente */
-    backdrop-filter: none; /* Remove o efeito de vidro fosco */
-    -webkit-backdrop-filter: none;
-    border: none; /* Remove as bordas para limpar totalmente o visual */
-    box-shadow: none; /* Remove a sombra da caixa para não marcar as bordas */
+    padding: 0; /* Removido o padding para eliminar qualquer tamanho físico da caixa */
+    background: transparent !important; /* Força transparência total */
+    backdrop-filter: none !important; /* Garante a remoção do efeito de vidro */
+    -webkit-backdrop-filter: none !important;
+    border: none !important; /* Remove qualquer linha de borda residual */
+    box-shadow: none !important; /* Remove qualquer sombra da caixa antiga */
 }
 
 .hero-floating-box h1 {
@@ -24,8 +24,8 @@
     color: #ffffff;
     margin-bottom: 20px;
     text-transform: uppercase;
-    /* Sombra reforçada no texto para garantir leitura perfeita sobre as fotos */
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85), 0 2px 4px rgba(0, 0, 0, 0.95);
+    /* Sombra reforçada e nítida nas letras para leitura perfeita sobre o slider */
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 1);
 }
 
 .hero-floating-box p {
@@ -35,6 +35,6 @@
     line-height: 1.7;
     margin-bottom: 35px;
     max-width: 100%;
-    /* Sombra reforçada no texto para garantir leitura perfeita sobre as fotos */
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.85), 0 2px 4px rgba(0, 0, 0, 0.95);
+    /* Sombra reforçada e nítida nas letras para leitura perfeita sobre o slider */
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 1);
 }
