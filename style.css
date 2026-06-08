@@ -584,7 +584,7 @@ footer p {
 }
 
 /* =====================================
-   SEÇÃO REDES SOCIAIS
+   SEÇÃO REDES SOCIAIS (ATUALIZADA)
 ===================================== */
 
 .social-container {
@@ -611,17 +611,25 @@ footer p {
     transition: all 0.3s ease;
 }
 
+/* Ícones começam com a cor neutra do site */
 .social-link i {
     font-size: 1.5rem;
-    color: var(--turquoise);
+    color: var(--text-muted); /* Cinza azulado neutro */
+    transition: all 0.3s ease;
 }
 
+/* Efeito Hover: Muda o fundo e a cor específica de cada rede */
 .social-link:hover {
-    background: rgba(0, 229, 255, 0.1);
-    border-color: var(--turquoise);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--text-muted);
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
+
+/* Cores específicas no hover */
+.social-link:hover .fa-instagram { color: #E1306C; }
+.social-link:hover .fa-tiktok { color: #ffffff; } /* TikTok branco para contrastar no fundo dark */
+.social-link:hover .fa-discord { color: #5865F2; }
 
 @media (max-width: 768px) {
     .social-container {
