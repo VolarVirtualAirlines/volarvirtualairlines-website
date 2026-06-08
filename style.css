@@ -708,7 +708,7 @@ footer p {
 .tabela-frota th:nth-child(4),
 .tabela-frota td:nth-child(4) {
     text-align: center;
-    width: 200px;
+    width: 260px;
 }
 
 .tabela-frota td {
@@ -723,12 +723,12 @@ footer p {
     background: rgba(255, 255, 255, 0.04);
 }
 
-/* Ajuste da miniatura do ícone - Proporção Retangular */
+/* Ajuste da miniatura do ícone - Proporção Retangular Ampliada */
 .liverie-preview {
     margin: 0 auto;
-    width: 120px;  
-    height: 45px;
-    border-radius: 6px;
+    width: 180px;  
+    height: 65px;
+    border-radius: 8px;
     overflow: hidden;
     border: 1px solid var(--glass-border);
     transition: all 0.4s ease;
@@ -743,14 +743,14 @@ footer p {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    padding: 4px;
+    padding: 6px; /* Aumentei um pouco o padding para o avião não tocar as bordas */
 }
 
 .liverie-preview:hover {
-    transform: scale(1.3);
+    transform: scale(1.2);
     z-index: 50;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     border-color: var(--turquoise);
 }
 
