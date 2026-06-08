@@ -21,6 +21,8 @@
 
         <nav class="menu">
             <a href="#quem-somos">Quem Somos</a>
+            <a href="#nossa-comunidade">Nossa Comunidade</a>
+            <a href="#pronto-para-decolar">Pronto para Decolar?</a>
             <a href="assets/VOLAR_CARGO_ROTAS.png" target="_blank" rel="noopener noreferrer">Volar Cargo</a>
             <a href="#frota">Frota</a>
             <a href="#links">Links</a>
@@ -36,8 +38,6 @@
             <div class="slide" style="background-image: linear-gradient(rgba(10, 17, 40, 0.45), rgba(2, 6, 23, 0.75)), url('assets/slider/slider_4.jpg');"></div>
             <div class="slide" style="background-image: linear-gradient(rgba(10, 17, 40, 0.45), rgba(2, 6, 23, 0.75)), url('assets/slider/slider_5.jpg');"></div>
         </div>
-
-        <img src="assets/LOGO_VOLAR_750X600.png" alt="Volar - Fly Beyond" class="hero-logo">
     </section>
 
     <section id="quem-somos" class="section dark">
@@ -46,27 +46,71 @@
         <div class="lang-block" lang="pt-BR" style="margin-bottom: 25px;">
             <p><span class="gold-highlight">PT</span></p>
             <p>
-                A VOLAR nasceu do desejo de unir entusiastas da aviação em uma comunidade vibrante e colaborativa. 
-                Com operações em rotas nacionais e internacionais, oferecemos um ambiente estruturado, 
-                suporte contínuo e ferramentas modernas para tornar cada voo inesquecível.
+                Quem somos: texto A
             </p>
         </div>
 
         <div class="lang-block" lang="en" style="margin-bottom: 25px;">
             <p><span class="gold-highlight">EN</span></p>
             <p>
-                VOLAR was born from the desire to unite aviation enthusiasts in a vibrant and collaborative community. 
-                With operations across national and international routes, we offer a structured environment, 
-                continuous support, and modern tools to make every flight unforgettable.
+                Who we are: text A
             </p>
         </div>
 
         <div class="lang-block" lang="es">
             <p><span class="gold-highlight">ES</span></p>
             <p>
-                VOLAR nació del desejo de unir a los antes de la aviación en una comunidad vibrante y colaborativa. 
-                Con operaciones en rutas nacionais e internacionales, ofrecemos una estructura organizada, 
-                soporte continuo y herramientas modernas para hacer que cada vuelo sea inolvidable.
+                Quiénes somos: texto A
+            </p>
+        </div>
+    </section>
+
+    <section id="nossa-comunidade" class="section">
+        <h2>Nossa Comunidade</h2>
+
+        <div class="lang-block" lang="pt-BR" style="margin-bottom: 25px;">
+            <p><span class="gold-highlight">PT</span></p>
+            <p>
+                Nossa Comunidade: Texto B
+            </p>
+        </div>
+
+        <div class="lang-block" lang="en" style="margin-bottom: 25px;">
+            <p><span class="gold-highlight">EN</span></p>
+            <p>
+                Our Community: Text B
+            </p>
+        </div>
+
+        <div class="lang-block" lang="es">
+            <p><span class="gold-highlight">ES</span></p>
+            <p>
+                Nuestra Comunidad: Texto B
+            </p>
+        </div>
+    </section>
+
+    <section id="pronto-para-decolar" class="section dark">
+        <h2>Pronto para decolar?</h2>
+
+        <div class="lang-block" lang="pt-BR" style="margin-bottom: 25px;">
+            <p><span class="gold-highlight">PT</span></p>
+            <p>
+                Pronto para decolar: Texto C
+            </p>
+        </div>
+
+        <div class="lang-block" lang="en" style="margin-bottom: 25px;">
+            <p><span class="gold-highlight">EN</span></p>
+            <p>
+                Ready for takeoff: Text C
+            </p>
+        </div>
+
+        <div class="lang-block" lang="es">
+            <p><span class="gold-highlight">ES</span></p>
+            <p>
+                ¿Listo para despegar?: Texto C
             </p>
         </div>
     </section>
@@ -112,7 +156,7 @@
                 </thead> 
                 
                 <tbody id="corpo-tabela-voos">
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </section>
@@ -234,32 +278,25 @@
             setInterval(() => {
                 const slideAnterior = slides[slideAtual];
                 
-                // Rotaciona o índice do carrossel sequencialmente
                 slideAtual = (slideAtual + 1) % slides.length;
                 const proximoSlide = slides[slideAtual];
 
-                // Remove o estado ativo do slide antigo e o marca para saída
                 slideAnterior.classList.remove('active');
                 slideAnterior.classList.add('exit');
 
-                // Garante que o novo slide não tenha resíduos de saída e o ativa
                 proximoSlide.classList.remove('exit');
                 proximoSlide.classList.add('active');
 
-                // Limpa as marcações antigas após o encerramento da transição (1s)
                 setTimeout(() => {
                     slideAnterior.classList.remove('exit');
                 }, 1000);
 
-            }, 5000); // Intervalo exato de 5 segundos
+            }, 5000);
         }
         
-        // Inicialização combinada do radar e do slider em paralelo
         document.addEventListener('DOMContentLoaded', () => {
             carregarVoosEmTempoReal();
             setInterval(carregarVoosEmTempoReal, 120000);
-            
-            // Ativa a rotação automática dos planos de fundo
             iniciarHeroSlider();
         });
     </script>
