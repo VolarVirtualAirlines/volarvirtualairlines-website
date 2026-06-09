@@ -797,3 +797,68 @@ footer p {
 .tabela-frota td:last-child {
     text-align: center;
 }
+
+/* =====================================
+   AJUSTES PARA A SEÇÃO VOOS RECENTES
+===================================== */
+
+#voos-recentes {
+    background: var(--midnight-dark);
+    padding: 80px 30px;
+}
+
+#tabela-voos-recentes {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    color: var(--text-main);
+    min-width: 800px; /* Garante que a tabela tenha respiro */
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+#tabela-voos-recentes th {
+    color: var(--turquoise);
+    font-family: var(--font-headers);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.8px;
+    padding: 20px 25px;
+    border-bottom: 2px solid rgba(0, 229, 255, 0.2);
+}
+
+#tabela-voos-recentes td {
+    padding: 18px 25px;
+    vertical-align: middle;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+#corpo-tabela-voos-recentes tr:hover {
+    background: rgba(0, 229, 255, 0.06);
+}
+
+#mensagem-voos-recentes {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+/* Responsividade específica para a nova seção */
+@media (max-width: 768px) {
+    #voos-recentes {
+        padding: 40px 15px;
+    }
+    
+    #tabela-voos-recentes th, 
+    #tabela-voos-recentes td {
+        padding: 12px 15px;
+    }
+}
