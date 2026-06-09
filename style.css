@@ -770,3 +770,30 @@ footer p {
     border: 1px solid var(--glass-border);
     display: inline-block;
 }
+
+/* Botão de Download na Tabela */
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: rgba(0, 229, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    color: var(--turquoise);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-download:hover {
+    background: var(--turquoise);
+    color: var(--night-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+}
+
+/* Ajuste fino na tabela para centralizar o botão */
+.tabela-frota td:last-child {
+    text-align: center;
+}
