@@ -797,20 +797,3 @@ footer p {
 .tabela-frota td:last-child {
     text-align: center;
 }
-
-.lang-selector {
-    display: flex;
-    gap: 10px;
-    margin-left: 20px;
-    align-items: center;
-}
-
-.lang-selector a {
-    font-size: 1.2rem;
-    transition: transform 0.2s ease;
-    text-decoration: none;
-}
-
-.lang-selector a:hover {
-    transform: scale(1.2); /* Efeito de zoom ao passar o mouse */
-}
