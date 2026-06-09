@@ -20,12 +20,24 @@
             </a>
         </div>
 
-        <nav class="menu">
-            <a href="#sobre-nos">Sobre Nós</a>
-            <a href="assets/VOLAR_CARGO_ROTAS.png" target="_blank" rel="noopener noreferrer">Volar Cargo</a>
-            <a href="#frota">Frota</a>
-            <a href="#parceiros">Parceiros</a> <a href="#links">Links</a>
-            <a href="https://newsky.app/pilot/login" target="_blank" rel="noopener noreferrer" class="btn-va">Crew Room</a>
+        <nav class="navbar">
+            <!-- Logo e outros elementos do seu header aqui... -->
+            
+            <div class="menu">
+                <a href="#sobre-nos" data-i18n="nav_about">Sobre Nós</a>
+                <a href="assets/VOLAR_CARGO_ROTAS.png" target="_blank" rel="noopener noreferrer" data-i18n="nav_cargo">Volar Cargo</a>
+                <a href="#frota" data-i18n="nav_fleet">Frota</a>
+                <a href="#parceiros" data-i18n="nav_partners">Parceiros</a> 
+                <a href="#links" data-i18n="nav_links">Links</a>
+                <a href="https://newsky.app/pilot/login" target="_blank" rel="noopener noreferrer" class="btn-va" data-i18n="nav_crew">Crew Room</a>
+                
+                <!-- Seletor de Idiomas -->
+                <div class="lang-selector">
+                    <a href="#" onclick="changeLanguage('pt')" title="Português">🇧🇷</a>
+                    <a href="#" onclick="changeLanguage('en')" title="English">🇺🇸</a>
+                    <a href="#" onclick="changeLanguage('es')" title="Español">🇪🇸</a>
+                </div>
+            </div>
         </nav>
         
     </header>
