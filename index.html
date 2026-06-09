@@ -242,7 +242,7 @@
         </div>
     </footer>
     
-    <script>
+<script>
         const URL_VOOS = "/voos";
 
         async function carregarVoosEmTempoReal() {
@@ -275,10 +275,8 @@
                     const callsign = numeroVoo ? `${prefixo}${numeroVoo}` : 'VOLAR';
         
                     const piloto = voo.pilot?.fullname || 'Piloto Virtual';
-        
                     const dep = voo.dep?.icao || '???';
                     const arr = voo.arr?.icao || '???';
-        
                     const acft = voo.aircraft?.airframe?.ident || 'B738';
 
                     let tipoVooTexto = "✈️ Comercial";
@@ -307,7 +305,7 @@
                             redeCor = "var(--turquoise)";
                         }
                     }
-                                                                                                                                                                                                                                                                                                                                                                                                        
+                                            
                     corpoTabela.innerHTML += `
                         <tr>
                             <td style="font-weight: bold; color: var(--turquoise); font-family: var(--font-headers);">${callsign}</td>
@@ -359,6 +357,20 @@
             carregarVoosEmTempoReal();
             setInterval(carregarVoosEmTempoReal, 120000);
             iniciarHeroSlider();
+
+            // Lógica para abrir imagem da liverie em tela cheia
+            document.querySelectorAll('.liverie-preview img').forEach(img => {
+                img.addEventListener('click', () => {
+                    const novaJanela = window.open("", "_blank");
+                    novaJanela.document.write(`
+                        <html>
+                            <body style="margin:0; background:#020617; display:flex; align-items:center; justify-content:center; height:100vh;">
+                                <img src="${img.src}" style="max-width:95%; max-height:95%; border: 1px solid #00E5FF;">
+                            </body>
+                        </html>
+                    `);
+                });
+            });
         });
     </script>
 
