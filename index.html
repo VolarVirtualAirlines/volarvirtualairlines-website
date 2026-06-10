@@ -431,7 +431,7 @@
                 const data = await response.json();
                
                 // LOG PARA VOCÊ ANALISAR NO CONSOLE DO NAVEGADOR
-                console.log("JSON BRUTO COMPLETO:", data)
+                /*console.log("JSON BRUTO COMPLETO:", data)*/
                 
                 // Verificação de erro vindo do seu proxy
                 if (data.error) {
@@ -465,7 +465,7 @@
                             → 
                             <span style="color: #FF9100;">🛬 ${voo.arr?.icao || '---'}</span>
                         </td>
-                        <td>✈️ ${voo.aircraft?.airframe?.icao || 'N/A'}</td>
+                        <td>✈️ ${voo.aircraft?.airframe?.ident || 'N/A'}</td>
                         <td>${dataFormatada}</td>
                         <td><span class="badge-tipo">${voo.type?.toUpperCase() === 'PAX' ? '👤 Passageiros' : '📦 Carga'}</span></td>
                         <td><span class="badge-sim">${voo.simulator?.toUpperCase() || 'N/A'}</span></td>
