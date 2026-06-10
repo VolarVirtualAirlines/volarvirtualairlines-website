@@ -409,9 +409,10 @@
             });
         });
 
-         /**
-         * Função para carregar e exibir os voos recentes da API Newsky
+        /**
+        * Função para carregar e exibir os voos recentes da API Newsky
          */
+        /*
         async function carregarVoosRecentes() {
             const container = document.getElementById('corpo-tabela-voos-recentes');
             const mensagem = document.getElementById('mensagem-voos-recentes');
@@ -466,7 +467,37 @@
         }
         
         // Garanta que esta função seja chamada ao carregar a página
-        document.addEventListener('DOMContentLoaded', carregarVoosRecentes);
+        document.addEventListener('DOMContentLoaded', carregarVoosRecentes);*/
+
+    async function carregarVoosRecentes() {
+    const container = document.getElementById('corpo-tabela-voos-recentes');
+    const mensagem = document.getElementById('mensagem-voos-recentes');
+    
+    try {
+        const response = await fetch('/voos_recentes');
+        const data = await response.json(); // Vamos ver o que vem aqui
+        
+        // --- MODO DE DEPURAÇÃO: EXIBIR JSON NA TELA ---
+        console.log("JSON Retornado pela API:", data);
+        
+        const debugBox = document.createElement('pre');
+        debugBox.style.background = '#0a2e0a'; // Verde escuro
+        debugBox.style.color = '#00ff00';      // Verde claro (estilo terminal)
+        debugBox.style.padding = '20px';
+        debugBox.style.textAlign = 'left';
+        debugBox.style.overflowX = 'auto';
+        debugBox.textContent = JSON.stringify(data, null, 2);
+        
+        mensagem.innerHTML = '<strong>Debug: JSON Bruto da API</strong><br>';
+        mensagem.appendChild(debugBox);
+        // ----------------------------------------------
+
+        // (O restante do código de preenchimento fica parado enquanto debugamos)
+    } catch (error) {
+        console.error('Erro:', error);
+        mensagem.textContent = "Erro ao capturar JSON: " + error.message;
+    }
+}
   
     </script>
 
