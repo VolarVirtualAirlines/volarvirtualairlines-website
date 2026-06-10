@@ -488,24 +488,24 @@
 
         // Botão voltar ao topo - Corrigido para rodar após o carregamento do DOM
         document.addEventListener('DOMContentLoaded', () => {
-            const btnTopo = document.getElementById("btn-voltar-topo");
-
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    btnTopo.style.display = "block";
-                } else {
-                    btnTopo.style.display = "none";
-                }
-            });
-
-            btnTopo.addEventListener("click", () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
+                const btnTopo = document.getElementById("btn-voltar-topo");
+        
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 400) {
+                        btnTopo.style.display = "flex"; // Isso garante o alinhamento centralizado
+                    } else {
+                        btnTopo.style.display = "none";
+                    }
+                });
+        
+                btnTopo.addEventListener("click", () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
                 });
             });
-        });
-    
+            
     </script>
     
     <button id="btn-voltar-topo" title="Voltar ao topo">
