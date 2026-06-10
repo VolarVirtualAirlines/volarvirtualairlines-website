@@ -1,6 +1,6 @@
 export async function onRequestGet(context) {
   const url = "https://newsky.app/api/pilot/nextflight";
-  const apiKey = "VVX_QAjMAXVPxcO8yTcYQ7L6qEl6tncNLO";
+  const apiKey = "VVX_p5oqMUJd8e8B2g6vkZ7MFxOxAgP5AW";
 
   try {
     const response = await fetch(url, {
