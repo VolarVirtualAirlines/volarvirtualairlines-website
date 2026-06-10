@@ -1,10 +1,10 @@
 export async function onRequestGet(context) {
   const url = "https://newsky.app/api/airline-api/flights/recent";
-  const apiKey = "VVX_p5oqMUJd8e8B2g6vkZ7MFxOxAgP5AW";
+  const apiKey = "VVX_QAjMAXVPxcO8yTcYQ7L6qEl6tncNLO";
 
   try {
     const response = await fetch(url, {
-      method: "GET",
+      method: "POST",
       headers: {
         // Mudamos de "Authorization: Bearer" para "x-api-key"
         "x-api-key": apiKey,
