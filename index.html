@@ -224,6 +224,7 @@
                             <th>Aeronave</th>
                             <th>Data/Hora</th>
                             <th>Tipo</th>
+                            <th>Simuladot</th>
                             <th>Rede</th>
                         </tr>
                     </thead>
@@ -459,13 +460,11 @@
                         <td>✈️ ${voo.dep?.icao || '---'} → 🛬 ${voo.arr?.icao || '---'}</td>
                         <td>✈️ ${voo.aircraft?.airframe?.icao || 'N/A'}</td>
                         <td>${dataFormatada}</td>
-                        <td>
-                            <span class="badge-tipo">${voo.type?.toUpperCase() === 'PAX' ? '👤 Passageiros' : '📦 Carga'}</span>
-                        </td>
-                        <td>
-                            <span class="badge-rede">${voo.network?.name?.toUpperCase() || 'OFFLINE'}</span>
-                        </td>
+                        <td><span class="badge-tipo">${voo.type?.toUpperCase() === 'PAX' ? '👤 Passageiros' : '📦 Carga'}</span></td>
+                        <td><span class="badge-sim">${voo.simulator?.toUpperCase() || 'N/A'}</span></td>
+                        <td><span class="badge-rede">${voo.network?.name?.toUpperCase() || 'OFFLINE'}</span></td>
                     `;
+                    
                     container.appendChild(row);
                 });
         
