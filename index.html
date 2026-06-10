@@ -408,6 +408,61 @@
                 });
             });
         });
+
+         /**
+         * Função para carregar e exibir os voos recentes da API Newsky
+         */
+        async function carregarVoosRecentes() {
+            const container = document.getElementById('corpo-tabela-voos-recentes');
+            const mensagem = document.getElementById('mensagem-voos-recentes');
+            
+            try {
+                // Substitua pelo seu Bearer Token real ou método de autenticação
+                const response = await fetch('https://newsky.app/api/airline-api/flights/recent', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer SEU_TOKEN_AQUI',
+                        'Content-Type': 'application/json'
+                    }
+                });
+        
+                if (!response.ok) throw new Error('Erro ao buscar dados da API');
+        
+                const data = await response.json();
+                const voos = data.results; // Assumindo que 'results' é o array retornado
+        
+                if (voos.length === 0) {
+                    mensagem.textContent = "Nenhum voo recente encontrado.";
+                    return;
+                }
+        
+                // Limpa a mensagem de carregamento e o corpo da tabela
+                mensagem.style.display = 'none';
+                container.innerHTML = '';
+        
+                // Preenche a tabela com os dados
+                voos.forEach(voo => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${voo.callsign || 'N/A'}</td>
+                        <td>${voo.pilotName || 'N/A'}</td>
+                        <td>${voo.departureAirport} → ${voo.arrivalAirport}</td>
+                        <td>${voo.aircraftType || 'N/A'}</td>
+                        <td>${new Date(voo.departureTime).toLocaleString()}</td>
+                        <td>${voo.status || 'Finalizado'}</td>
+                    `;
+                    container.appendChild(row);
+                });
+        
+            } catch (error) {
+                console.error('Erro:', error);
+                mensagem.textContent = "Não foi possível carregar os voos no momento.";
+            }
+        }
+        
+        // Inicializa a função ao carregar a página
+        document.addEventListener('DOMContentLoaded', carregarVoosRecentes);
+  
     </script>
 
 </body>
