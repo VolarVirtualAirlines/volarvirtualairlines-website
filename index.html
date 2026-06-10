@@ -469,35 +469,27 @@
         // Garanta que esta função seja chamada ao carregar a página
         document.addEventListener('DOMContentLoaded', carregarVoosRecentes);*/
 
-    async function carregarVoosRecentes() {
-    const container = document.getElementById('corpo-tabela-voos-recentes');
+async function carregarVoosRecentes() {
+    console.log("Tentando carregar voos..."); // Deve aparecer no F12 -> Console
     const mensagem = document.getElementById('mensagem-voos-recentes');
-    
+    mensagem.textContent = "Tentando conectar com o servidor...";
+
     try {
         const response = await fetch('/voos_recentes');
-        const data = await response.json(); // Vamos ver o que vem aqui
+        const data = await response.json();
         
-        // --- MODO DE DEPURAÇÃO: EXIBIR JSON NA TELA ---
-        console.log("JSON Retornado pela API:", data);
+        console.log("Dados recebidos:", data); // Veja o que aparece aqui
+        mensagem.textContent = "Sucesso! Verifique o console (F12).";
         
-        const debugBox = document.createElement('pre');
-        debugBox.style.background = '#0a2e0a'; // Verde escuro
-        debugBox.style.color = '#00ff00';      // Verde claro (estilo terminal)
-        debugBox.style.padding = '20px';
-        debugBox.style.textAlign = 'left';
-        debugBox.style.overflowX = 'auto';
-        debugBox.textContent = JSON.stringify(data, null, 2);
-        
-        mensagem.innerHTML = '<strong>Debug: JSON Bruto da API</strong><br>';
-        mensagem.appendChild(debugBox);
-        // ----------------------------------------------
-
-        // (O restante do código de preenchimento fica parado enquanto debugamos)
     } catch (error) {
-        console.error('Erro:', error);
-        mensagem.textContent = "Erro ao capturar JSON: " + error.message;
+        console.error("Erro na função:", error);
+        mensagem.textContent = "Erro crítico: " + error.message;
     }
 }
+
+// Chame manualmente no console do navegador se não disparar
+window.carregarVoosRecentes = carregarVoosRecentes;
+carregarVoosRecentes();
   
     </script>
 
