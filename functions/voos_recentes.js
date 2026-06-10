@@ -6,30 +6,37 @@ export async function onRequestGet(context) {
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        // Mudamos de "Authorization: Bearer" para "x-api-key"
-        "x-api-key": apiKey,
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
         "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        skip: 0,
+        count: 100
+      })
+    });
+
+    const text = await response.text();
+
+    return new Response(text, {
+      status: response.status,
+      headers: {
+        "Content-Type": "application/json"
       }
     });
 
-    // Se o status for 401, a Newsky exige o header x-api-key
-    if (response.status === 401) {
-       return new Response(JSON.stringify({ error: "Chave não aceita neste endpoint" }), {
-        status: 401,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-
-    const data = await response.json();
-    return new Response(JSON.stringify(data), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
-
   } catch (error) {
-    return new Response(JSON.stringify({ error: true, message: error.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-    });
+    return new Response(
+      JSON.stringify({
+        error: true,
+        message: error.message
+      }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
   }
 }
