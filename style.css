@@ -912,19 +912,27 @@ footer p {
    BOTÃO VOLTAR AO TOPO
 ===================================== */
 
+/* =====================================
+   BOTÃO VOLTAR AO TOPO
+===================================== */
+
 #btn-voltar-topo {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    display: none; 
+    display: none; /* O JavaScript vai mudar isso para 'flex' quando necessário */
     width: 50px;
     height: 50px;
     
-    /* Ajustes para o efeito Transparente/Glass */
-    background: rgba(10, 25, 47, 0.6); /* Cor de fundo com transparência */
-    backdrop-filter: blur(10px);        /* Efeito de desfoque */
+    /* Centralização do ícone */
+    align-items: center;
+    justify-content: center;
+    
+    /* Efeito Glass */
+    background: rgba(10, 25, 47, 0.6);
+    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 229, 255, 0.3); /* Borda fina para destacar */
+    border: 1px solid rgba(0, 229, 255, 0.3);
     
     color: var(--turquoise);
     border-radius: 50%;
@@ -936,7 +944,8 @@ footer p {
 }
 
 #btn-voltar-topo:hover {
-    background: rgba(0, 229, 255, 0.2); /* Fica um pouco mais claro no hover */
-    transform: translateY(-5px);       /* Pequeno salto para cima ao passar o mouse */
+    background: rgba(0, 229, 255, 0.2);
+    transform: translateY(-5px);
     border-color: var(--turquoise);
+    color: #ffffff;
 }
