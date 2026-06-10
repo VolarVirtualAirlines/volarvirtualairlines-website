@@ -1,5 +1,4 @@
 export async function onRequestGet(context) {
-  // URL corrigida conforme o site oficial
   const url = "https://newsky.app/api/pilot/nextflight";
   const apiKey = "VVX_QAjMAXVPxcO8yTcYQ7L6qEl6tncNLO";
 
@@ -7,13 +6,21 @@ export async function onRequestGet(context) {
     const response = await fetch(url, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${apiKey}`,
+        // Mudamos de "Authorization: Bearer" para "x-api-key"
+        "x-api-key": apiKey,
         "Accept": "application/json"
       }
     });
 
-    const data = await response.json(); // Tenta converter direto para JSON
+    // Se o status for 401, a Newsky exige o header x-api-key
+    if (response.status === 401) {
+       return new Response(JSON.stringify({ error: "Chave não aceita neste endpoint" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
 
+    const data = await response.json();
     return new Response(JSON.stringify(data), {
       status: 200,
       headers: { "Content-Type": "application/json" }
