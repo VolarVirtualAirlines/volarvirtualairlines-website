@@ -945,3 +945,48 @@ footer p {
     border-color: var(--turquoise);
     color: #ffffff;
 }
+
+/* =====================================
+   BOTÃO DE SUPORTE FLUTUANTE
+===================================== */
+
+#btn-suporte {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 55px;
+    height: 55px;
+    
+    /* Centralização da imagem */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Efeito Glass */
+    background: rgba(10, 25, 47, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    overflow: hidden; /* Garante que a imagem respeite o círculo */
+}
+
+#btn-suporte img {
+    width: 60%; /* Ajuste o tamanho da imagem dentro do botão conforme necessário */
+    height: auto;
+    object-fit: contain;
+}
+
+#btn-suporte:hover {
+    background: rgba(0, 229, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+    border-color: var(--turquoise);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+}
