@@ -512,11 +512,59 @@
         ↑
     </button>
 
-    <!-- Botão de Suporte Flutuante -->
-    <a href="https://discord.gg/fnvf8KYgzy" target="_blank" rel="noopener noreferrer" id="btn-suporte" title="Precisa de ajuda?">
+    <!-- BOTÃO DE SUPORTE FLUTUANTE (Atualizado para abrir o formulário) -->
+    <button type="button" id="btn-suporte" title="Precisa de ajuda?">
         <img src="assets/support/support_icon.png" alt="Suporte">
         <span class="label-suporte">Precisa de ajuda?</span>
-    </a>
+    </button>
+    
+    <!-- MODAL DA CENTRAL DE ATENDIMENTO -->
+    <div id="modal-suporte" class="modal-suporte-container">
+        <div class="modal-suporte-content">
+            <!-- Botão para fechar o modal -->
+            <button type="button" class="btn-fechar-modal" id="fechar-suporte">&times;</button>
+            
+            <div class="modal-header">
+                <h3>Central de Atendimento</h3>
+                <p>Volar Virtual Airlines</p>
+            </div>
+    
+            <!-- FORMULÁRIO CONFIGURADO PARA O STATICFORMS -->
+            <form action="https://api.staticforms.xyz/submit" method="post" id="form-suporte">
+                
+                <!-- Chave de Acesso da Volar (COLE SUA KEY AQUI) -->
+                <input type="hidden" name="accessKey" value="SUA_CHAVE_AQUI">
+                
+                <!-- Campo Anti-Spam / Honeypot (Obrigatório, deve ficar invisível para humanos) -->
+                <input type="text" name="honeypot" style="display:none">
+                
+                <!-- Assunto do e-mail que você vai receber -->
+                <input type="hidden" name="subject" value="Novo contato da Central de Atendimento - Volar VA">
+    
+                <!-- Campo: Nome Completo -->
+                <div class="input-group">
+                    <label for="sup-nome">Nome Completo</label>
+                    <input type="text" id="sup-nome" name="name" placeholder="Digite seu nome" required>
+                </div>
+    
+                <!-- Campo: E-mail de Contato -->
+                <div class="input-group">
+                    <label for="sup-email">E-mail de Contato</label>
+                    <input type="email" id="sup-email" name="email" placeholder="seu-email@exemplo.com" required>
+                </div>
+    
+                <!-- Campo: Mensagem -->
+                <div class="input-group">
+                    <label for="sup-mensagem">Mensagem</label>
+                    <textarea id="sup-mensagem" name="message" rows="4" placeholder="Como podemos ajudar você hoje, piloto?" required></textarea>
+                </div>
+    
+                <!-- Botão Enviar -->
+                <button type="submit" class="btn-enviar-suporte">Enviar Mensagem</button>
+                
+            </form>
+    </div>
+</div>
     
 </body>
 </html>
