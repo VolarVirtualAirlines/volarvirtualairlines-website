@@ -429,7 +429,10 @@
                 if (!response.ok) throw new Error('Erro ao buscar dados do servidor');
         
                 const data = await response.json();
-        
+               
+                // LOG PARA VOCÊ ANALISAR NO CONSOLE DO NAVEGADOR
+                console.log("JSON BRUTO COMPLETO:", data)
+                
                 // Verificação de erro vindo do seu proxy
                 if (data.error) {
                     throw new Error(data.message);
