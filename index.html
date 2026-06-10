@@ -223,12 +223,13 @@
                             <th>Rota</th>
                             <th>Aeronave</th>
                             <th>Data/Hora</th>
-                            <th>Status</th>
+                            <th>Tipo</th>
+                            <th>Rede</th>
                         </tr>
-                    </thead> 
-                    
+                    </thead>
                     <tbody id="corpo-tabela-voos-recentes">
-                        </tbody>
+                        <!-- JS injetará aqui -->
+                    </tbody>
                 </table>
             </div>
     </section>
@@ -411,14 +412,12 @@
 
         /**
         * Função para carregar e exibir os voos recentes da API Newsky
-         */
-        /*
+        */
         async function carregarVoosRecentes() {
             const container = document.getElementById('corpo-tabela-voos-recentes');
             const mensagem = document.getElementById('mensagem-voos-recentes');
-            
+        
             try {
-                // Agora chamamos o seu proxy local!
                 const response = await fetch('/voos_recentes', {
                     method: 'GET',
                     headers: {
@@ -429,14 +428,14 @@
                 if (!response.ok) throw new Error('Erro ao buscar dados do servidor');
         
                 const data = await response.json();
-                
+        
                 // Verificação de erro vindo do seu proxy
                 if (data.error) {
                     throw new Error(data.message);
                 }
         
-                // O 'results' é o array que a API da Newsky costuma retornar
-                const voos = data.results || []; 
+                // 'results' é o array vindo da API
+                const voos = data.results || [];
         
                 if (voos.length === 0) {
                     mensagem.textContent = "Nenhum voo recente encontrado.";
@@ -447,15 +446,22 @@
                 container.innerHTML = '';
         
                 voos.forEach(voo => {
+                    // Formatação da Data: DD/MM/AAAA HH:mm
+                    const dataObj = new Date(voo.depTime);
+                    const dataFormatada = dataObj.toLocaleDateString('pt-BR') + ' ' + 
+                                          dataObj.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+        
                     const row = document.createElement('tr');
-                    // Ajuste os campos abaixo de acordo com o JSON real que o seu proxy está recebendo
+                    
+                    // Mapeamento ajustado à estrutura do seu JSON
                     row.innerHTML = `
-                        <td>${voo.callsign || 'N/A'}</td>
-                        <td>${voo.pilotName || 'N/A'}</td>
-                        <td>${voo.departureAirport} → ${voo.arrivalAirport}</td>
-                        <td>${voo.aircraftType || 'N/A'}</td>
-                        <td>${new Date(voo.departureTime).toLocaleString()}</td>
-                        <td>${voo.status || 'Finalizado'}</td>
+                        <td>VVX${voo.flightNumber || 'N/A'}</td>
+                        <td>${voo.pilot?.fullname || 'N/A'}</td>
+                        <td>${voo.dep?.icao || '---'} → ${voo.arr?.icao || '---'}</td>
+                        <td>${voo.aircraft?.airframe?.icao || 'N/A'}</td>
+                        <td>${dataFormatada}</td>
+                        <td>${voo.type?.toUpperCase() || 'N/A'}</td>
+                        <td>${voo.network?.name?.toUpperCase() || 'OFFLINE'}</td>
                     `;
                     container.appendChild(row);
                 });
@@ -467,29 +473,7 @@
         }
         
         // Garanta que esta função seja chamada ao carregar a página
-        document.addEventListener('DOMContentLoaded', carregarVoosRecentes);*/
-
-async function carregarVoosRecentes() {
-    console.log("Tentando carregar voos..."); // Deve aparecer no F12 -> Console
-    const mensagem = document.getElementById('mensagem-voos-recentes');
-    mensagem.textContent = "Tentando conectar com o servidor...";
-
-    try {
-        const response = await fetch('/voos_recentes');
-        const data = await response.json();
-        
-        console.log("Dados recebidos:", data); // Veja o que aparece aqui
-        mensagem.textContent = "Sucesso! Verifique o console (F12).";
-        
-    } catch (error) {
-        console.error("Erro na função:", error);
-        mensagem.textContent = "Erro crítico: " + error.message;
-    }
-}
-
-// Chame manualmente no console do navegador se não disparar
-window.carregarVoosRecentes = carregarVoosRecentes;
-carregarVoosRecentes();
+        document.addEventListener('DOMContentLoaded', carregarVoosRecentes);
   
     </script>
 
