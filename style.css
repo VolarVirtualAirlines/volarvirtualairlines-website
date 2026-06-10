@@ -809,7 +809,7 @@ footer p {
 
 #tabela-voos-recentes {
     width: 100%;
-    border-collapse: separate; /* Alterado para separate para melhor visual das bordas arredondadas */
+    border-collapse: separate; 
     border-spacing: 0;
     text-align: left;
     color: var(--text-main);
@@ -838,14 +838,24 @@ footer p {
     vertical-align: middle;
     font-size: 14px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    white-space: nowrap; /* Impede que o texto quebre e desalinhe a linha */
+    white-space: nowrap; 
+}
+
+/* Centralização para as colunas de badges */
+#tabela-voos-recentes th:nth-child(6), /* Tipo */
+#tabela-voos-recentes td:nth-child(6),
+#tabela-voos-recentes th:nth-child(7), /* Simulador */
+#tabela-voos-recentes td:nth-child(7),
+#tabela-voos-recentes th:nth-child(8), /* Rede */
+#tabela-voos-recentes td:nth-child(8) {
+    text-align: center;
 }
 
 #corpo-tabela-voos-recentes tr:hover {
     background: rgba(0, 229, 255, 0.04);
 }
 
-/* Estilos das Badges (Padrão do Painel de Voos) */
+/* Estilos das Badges */
 
 .badge-tipo {
     background: rgba(255, 255, 255, 0.05);
@@ -857,8 +867,19 @@ footer p {
     display: inline-block;
 }
 
+.badge-sim {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-main);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border: 1px solid var(--glass-border);
+    display: inline-block;
+}
+
 .badge-rede {
-    background: #2563eb; /* Azul padrão IVAO */
+    background: #2563eb; 
     color: white;
     padding: 4px 12px;
     border-radius: 6px;
