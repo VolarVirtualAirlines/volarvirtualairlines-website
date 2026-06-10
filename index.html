@@ -446,22 +446,25 @@
                 container.innerHTML = '';
         
                 voos.forEach(voo => {
-                    // Formatação da Data: DD/MM/AAAA HH:mm
+                    // Tratamento básico
                     const dataObj = new Date(voo.depTime);
                     const dataFormatada = dataObj.toLocaleDateString('pt-BR') + ' ' + 
                                           dataObj.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
-        
+                
                     const row = document.createElement('tr');
                     
-                    // Mapeamento ajustado à estrutura do seu JSON
                     row.innerHTML = `
-                        <td>VVX${voo.flightNumber || 'N/A'}</td>
-                        <td>${voo.pilot?.fullname || 'N/A'}</td>
-                        <td>${voo.dep?.icao || '---'} → ${voo.arr?.icao || '---'}</td>
-                        <td>${voo.aircraft?.airframe?.icao || 'N/A'}</td>
+                        <td style="color: var(--turquoise); font-weight: bold;">VVX${voo.flightNumber || 'N/A'}</td>
+                        <td>👤 ${voo.pilot?.fullname || 'N/A'}</td>
+                        <td>✈️ ${voo.dep?.icao || '---'} → 🛬 ${voo.arr?.icao || '---'}</td>
+                        <td>✈️ ${voo.aircraft?.airframe?.icao || 'N/A'}</td>
                         <td>${dataFormatada}</td>
-                        <td>${voo.type?.toUpperCase() || 'N/A'}</td>
-                        <td>${voo.network?.name?.toUpperCase() || 'OFFLINE'}</td>
+                        <td>
+                            <span class="badge-tipo">${voo.type?.toUpperCase() === 'PAX' ? '👤 Passageiros' : '📦 Carga'}</span>
+                        </td>
+                        <td>
+                            <span class="badge-rede">${voo.network?.name?.toUpperCase() || 'OFFLINE'}</span>
+                        </td>
                     `;
                     container.appendChild(row);
                 });
