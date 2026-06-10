@@ -979,9 +979,10 @@ footer p {
 }
 
 #btn-suporte img {
-    width: 60%; /* Ajuste o tamanho da imagem dentro do botão conforme necessário */
-    height: auto;
-    object-fit: contain;
+    width: 100%;       /* Faz a imagem expandir para preencher 100% da largura */
+    height: 100%;      /* Faz a imagem expandir para preencher 100% da altura */
+    object-fit: cover; /* Garante que a imagem preencha o círculo sem distorcer */
+    display: block;    /* Remove espaços reservados de elementos inline */
 }
 
 #btn-suporte:hover {
