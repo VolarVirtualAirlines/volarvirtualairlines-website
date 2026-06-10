@@ -486,23 +486,23 @@
         // Garanta que esta função seja chamada ao carregar a página
         document.addEventListener('DOMContentLoaded', carregarVoosRecentes);
 
-        // Botão voltar ao topo
-        const btnTopo = document.getElementById("btn-voltar-topo");
-        
-        // Mostra o botão quando rolar 300px para baixo
-        window.onscroll = function() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                btnTopo.style.display = "block";
-            } else {
-                btnTopo.style.display = "none";
-            }
-        };
-        
-        // Ao clicar, sobe suavemente
-        btnTopo.addEventListener("click", function() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth" // Isso garante a rolagem suave
+        // Botão voltar ao topo - Corrigido para rodar após o carregamento do DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnTopo = document.getElementById("btn-voltar-topo");
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    btnTopo.style.display = "block";
+                } else {
+                    btnTopo.style.display = "none";
+                }
+            });
+
+            btnTopo.addEventListener("click", () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
             });
         });
     
