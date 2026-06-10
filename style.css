@@ -809,10 +809,11 @@ footer p {
 
 #tabela-voos-recentes {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate; /* Alterado para separate para melhor visual das bordas arredondadas */
+    border-spacing: 0;
     text-align: left;
     color: var(--text-main);
-    min-width: 800px; /* Garante que a tabela tenha respiro */
+    min-width: 900px; 
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -837,10 +838,34 @@ footer p {
     vertical-align: middle;
     font-size: 14px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    white-space: nowrap; /* Impede que o texto quebre e desalinhe a linha */
 }
 
 #corpo-tabela-voos-recentes tr:hover {
-    background: rgba(0, 229, 255, 0.06);
+    background: rgba(0, 229, 255, 0.04);
+}
+
+/* Estilos das Badges (Padrão do Painel de Voos) */
+
+.badge-tipo {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #cecece;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: inline-block;
+}
+
+.badge-rede {
+    background: #2563eb; /* Azul padrão IVAO */
+    color: white;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
 }
 
 #mensagem-voos-recentes {
@@ -851,14 +876,13 @@ footer p {
     font-style: italic;
 }
 
-/* Responsividade específica para a nova seção */
+/* Responsividade */
 @media (max-width: 768px) {
     #voos-recentes {
         padding: 40px 15px;
     }
     
-    #tabela-voos-recentes th, 
-    #tabela-voos-recentes td {
-        padding: 12px 15px;
+    .tabela-responsiva {
+        overflow-x: auto;
     }
 }
