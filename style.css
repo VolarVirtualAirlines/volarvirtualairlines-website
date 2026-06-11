@@ -1397,3 +1397,43 @@ footer p {
         padding: 28px 22px;
     }
 }
+
+/* =====================================
+   SELOS DE COMPATIBILIDADE
+===================================== */
+
+.sim-badge {
+    display: inline-block;
+    margin: 12px 0 18px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(31, 181, 168, 0.12);
+    border: 1px solid rgba(31, 181, 168, 0.25);
+    color: var(--turquoise);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.sim-aircraft-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.sim-aircraft-list span {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+
+.sim-aircraft-list span:hover {
+    border-color: var(--turquoise);
+    color: #ffffff;
+}
