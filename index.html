@@ -617,25 +617,13 @@
                 const agora = new Date();
                 const inicio = new Date(comunicado.inicio);
                 const fim = new Date(comunicado.fim);
-            /*
+            
                 if (agora >= inicio && agora <= fim) {
                     modalAnnouncement.classList.add('active');
                     document.body.style.overflow = 'hidden';
                 }
-            */
-
-            console.log("=== TESTE MODAL VOLAR ===");
-            console.log("Agora:", agora);
-            console.log("Início:", inicio);
-            console.log("Fim:", fim);
-            console.log("Dentro do período:", agora >= inicio && agora <= fim);
             
-            if (agora >= inicio && agora <= fim) {
-                console.log("Abrindo modal...");
-                modalAnnouncement.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-            
+           
             btnFecharAnnouncement.addEventListener('click', () => {
                     modalAnnouncement.classList.remove('active');
                     document.body.style.overflow = '';
