@@ -600,6 +600,34 @@
                     }
                 });
             });
+
+            /* ==========================================================================
+               MODAL DE COMUNICADO IMPORTANTE - VOLAR VIRTUAL AIRLINES
+               ========================================================================== */
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                const modalAnnouncement = document.getElementById('modal-announcement');
+                const btnFecharAnnouncement = document.getElementById('fechar-announcement');
+            
+                const comunicado = {
+                    inicio: "2026-06-11T00:00:00",
+                    fim: "2026-06-16T23:59:59"
+                };
+            
+                const agora = new Date();
+                const inicio = new Date(comunicado.inicio);
+                const fim = new Date(comunicado.fim);
+            
+                if (agora >= inicio && agora <= fim) {
+                    modalAnnouncement.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            
+                btnFecharAnnouncement.addEventListener('click', () => {
+                    modalAnnouncement.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
     
     </script>
     
