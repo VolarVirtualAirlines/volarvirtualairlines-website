@@ -1,1 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volar Cargo | Volar Virtual Airlines</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo-container">
+        <a href="index.html">
+            <img src="assets/LOGO_WEBSITE.png" alt="Logotipo Volar Virtual Airlines" class="logo">
+        </a>
+    </div>
+
+    <nav class="menu">
+        <a href="index.html">Home</a>
+        <a href="index.html#sobre-nos">Sobre Nós</a>
+        <a href="cargo.html">Volar Cargo</a>
+        <a href="frota.html">Frota</a>
+        <a href="index.html#mapa">Online</a>
+        <a href="index.html#parceiros">Parceiros</a>
+        <a href="index.html#links">Links</a>
+        <a href="https://newsky.app/pilot/login" target="_blank" rel="noopener noreferrer" class="btn-va">Crew Room</a>
+    </nav>
+</header>
+
+<section class="section dark cargo-premium">
+    <h2>Volar Cargo</h2>
+
+    <p class="cargo-intro">
+        A Volar Cargo é a divisão cargueira da Volar Virtual Airlines, criada para ampliar nossas operações
+        e oferecer aos pilotos uma experiência dedicada ao transporte virtual de cargas em rotas nacionais
+        e internacionais.
+    </p>
+
+    <div class="cargo-cards">
+        <div class="cargo-card">
+            <i class="fas fa-boxes-stacked"></i>
+            <h3>Operações Cargueiras</h3>
+            <p>Voos dedicados ao transporte de cargas, conectando centros logísticos e aeroportos estratégicos.</p>
+        </div>
+
+        <div class="cargo-card">
+            <i class="fas fa-route"></i>
+            <h3>Rotas Dedicadas</h3>
+            <p>Malha cargueira planejada para operações regulares, expansão logística e voos especiais.</p>
+        </div>
+
+        <div class="cargo-card">
+            <i class="fas fa-plane"></i>
+            <h3>B737-800BCF</h3>
+            <p>Aeronave cargueira da Volar para operações com alto desempenho, alcance e flexibilidade operacional.</p>
+        </div>
+
+        <div class="cargo-card">
+            <i class="fas fa-desktop"></i>
+            <h3>Integração NewSky</h3>
+            <p>Gerenciamento de voos, pilotos, frota, rotas e estatísticas dentro da plataforma NewSky.App.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section cargo-routes">
+    <h2>Rotas Volar Cargo</h2>
+
+    <p class="cargo-intro">
+        Confira a malha de rotas cargueiras da Volar, planejada para conectar importantes pontos operacionais
+        e oferecer novas possibilidades de voo aos nossos pilotos.
+    </p>
+
+    <div class="cargo-map-box">
+        <img src="assets/VOLAR_CARGO_ROTAS.png" alt="Mapa de rotas Volar Cargo">
+    </div>
+
+    <div class="links-container">
+        <a href="https://newsky.app/pilot/login" target="_blank" rel="noopener noreferrer" class="btn-link">
+            Acessar Crew Room
+        </a>
+        <a href="frota.html" class="btn-link">
+            Ver Frota
+        </a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <img src="assets/LOGO_WEBSITE.png" alt="Volar Virtual Airlines Logo" class="footer-logo">
+        <p>© 2026 Volar Virtual Airlines - Fly Beyond - ICAO: VVX</p>
+    </div>
+</footer>
+
+<button id="btn-voltar-topo" title="Voltar ao topo">↑</button>
+
+<!-- BOTÃO DE SUPORTE FLUTUANTE -->
+<button type="button" id="btn-suporte" title="Precisa de ajuda?">
+    <img src="assets/support/support_icon.png" alt="Suporte">
+    <span class="label-suporte">Precisa de ajuda?</span>
+</button>
+
+<!-- MODAL DA CENTRAL DE ATENDIMENTO -->
+<div id="modal-suporte" class="modal-suporte-container">
+    <div class="modal-suporte-content">
+        <button type="button" class="btn-fechar-modal" id="fechar-suporte">&times;</button>
+
+        <div class="modal-header">
+            <h3>Central de Atendimento</h3>
+            <p>Volar Virtual Airlines</p>
+        </div>
+
+        <form action="https://api.staticforms.dev/submit" method="POST" id="form-suporte">
+            <input type="hidden" name="apiKey" value="sf_1f0637f6ba466017621733fb">
+            <input type="text" name="honeypot" style="display:none">
+            <input type="hidden" name="subject" value="Volar Virtual Airlines Suporte submission">
+
+            <div class="input-group">
+                <label for="sup-nome">Nome Completo</label>
+                <input type="text" id="sup-nome" name="name" placeholder="Digite seu nome" required>
+            </div>
+
+            <div class="input-group">
+                <label for="sup-email">E-mail de Contato</label>
+                <input type="email" id="sup-email" name="email" placeholder="seu-email@exemplo.com" required>
+            </div>
+
+            <div class="input-group">
+                <label for="sup-mensagem">Mensagem</label>
+                <textarea id="sup-mensagem" name="message" rows="4" placeholder="Como podemos ajudar você hoje, piloto?" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-enviar-suporte">Enviar Mensagem</button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btnTopo = document.getElementById("btn-voltar-topo");
+
+    window.addEventListener('scroll', () => {
+        btnTopo.style.display = window.scrollY > 400 ? "flex" : "none";
+    });
+
+    btnTopo.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+});
+</script>
+
+<script src="assets/js/support.js"></script>
+
+</body>
+</html>
