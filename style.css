@@ -1819,3 +1819,21 @@ footer p {
         padding: 28px 22px;
     }
 }
+
+/* =====================================
+   LOGO VOLAR CARGO
+===================================== */
+
+.cargo-logo {
+    display: block;
+    margin: 0 auto 25px auto;
+    max-width: 260px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.35));
+    transition: all 0.3s ease;
+}
+
+.cargo-logo:hover {
+    transform: scale(1.03);
+}
