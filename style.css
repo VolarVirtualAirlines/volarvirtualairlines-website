@@ -2091,3 +2091,9 @@ footer p {
     border-color: rgba(74,222,128,0.20);
     background: rgba(74,222,128,0.03);
 }
+
+.coluna-voo {
+    color: #D4AF37;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
