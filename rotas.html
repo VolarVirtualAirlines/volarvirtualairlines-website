@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotas Oficiais | Volar Virtual Airlines</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo-container">
+        <a href="index.html">
+            <img src="assets/LOGO_WEBSITE.png" alt="Volar Virtual Airlines" class="logo">
+        </a>
+    </div>
+
+    <nav class="menu">
+        <a href="index.html">Home</a>
+        <a href="cargo.html">Volar Cargo</a>
+        <a href="frota.html">Frota</a>
+        <a href="rotas.html">Rotas</a>
+        <a href="https://newsky.app/pilot/login" target="_blank" class="btn-va">Crew Room</a>
+    </nav>
+</header>
+
+<section class="section dark rotas-premium">
+
+    <h2>Rotas Oficiais</h2>
+
+    <p class="rotas-intro">
+        Consulte a malha oficial da Volar Virtual Airlines.
+        Utilize os filtros para localizar voos, aeroportos e operações específicas.
+    </p>
+
+    <div class="rotas-filtros">
+
+        <input
+            type="text"
+            id="busca-rotas"
+            placeholder="Buscar voo, origem ou destino..."
+        >
+
+        <select id="filtro-tipo">
+            <option value="todos">Todas as Operações</option>
+            <option value="passenger">Passageiros</option>
+            <option value="cargo">Cargo</option>
+        </select>
+
+    </div>
+
+    <div class="tabela-rotas-container">
+
+        <table class="tabela-rotas">
+
+            <thead>
+                <tr>
+                    <th>Voo</th>
+                    <th>Origem</th>
+                    <th>Destino</th>
+                    <th>Tipo</th>
+                    <th>Duração</th>
+                    <th>Aeronave</th>
+                </tr>
+            </thead>
+
+            <tbody id="corpo-tabela-rotas">
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-content">
+        <img src="assets/LOGO_WEBSITE.png" alt="Volar Virtual Airlines" class="footer-logo">
+        <p>© 2026 Volar Virtual Airlines - Fly Beyond - ICAO: VVX</p>
+    </div>
+</footer>
+
+<button id="btn-voltar-topo" title="Voltar ao topo">↑</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btnTopo = document.getElementById("btn-voltar-topo");
+
+    window.addEventListener('scroll', () => {
+        btnTopo.style.display = window.scrollY > 400 ? "flex" : "none";
+    });
+
+    btnTopo.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+});
+</script>
+
+<script src="assets/js/routes.js"></script>
+<script src="assets/js/support.js"></script>
+
+</body>
+</html>
