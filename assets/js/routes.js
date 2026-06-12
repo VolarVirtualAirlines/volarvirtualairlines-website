@@ -6,40 +6,72 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let rotas = [];
 
-    const resposta = await fetch("assets/data/routes.csv");
-    const texto = await resposta.text();
+    try {
+        const resposta = await fetch("assets/data/routes.csv");
+        const texto = await resposta.text();
 
-    const linhas = texto
-        .split("\n")
-        .map(l => l.trim())
-        .filter(l => l && !l.startsWith("#"));
+        const linhas = texto
+            .split(/\r?\n/)
+            .map(l => l.trim())
+            .filter(l => l && !l.startsWith("#"));
 
-    const cabecalho = linhas[0].split(",");
-    const dados = linhas.slice(1);
+        const cabecalho = linhas[0].split(",").map(c => c.trim());
+        const dados = linhas.slice(1);
 
-    rotas = dados.map(linha => {
-        const valores = linha.split(",");
-        const rota = {};
-        cabecalho.forEach((coluna, i) => {
-            rota[coluna] = valores[i];
+        rotas = dados.map(linha => {
+            const valores = linha.split(",");
+            const rota = {};
+
+            cabecalho.forEach((coluna, i) => {
+                rota[coluna] = valores[i] ? valores[i].trim() : "";
+            });
+
+            return rota;
         });
-        return rota;
-    });
+
+        renderizarRotas();
+
+    } catch (erro) {
+        console.error("Erro ao carregar routes.csv:", erro);
+        tabela.innerHTML = `
+            <tr>
+                <td colspan="6">Não foi possível carregar as rotas oficiais.</td>
+            </tr>
+        `;
+    }
+
+    function rotaEstaAtiva(rota) {
+        const ativo = String(rota.active || "").toLowerCase();
+        return ativo === "true" || ativo === "1" || ativo === "yes" || ativo === "active";
+    }
 
     function renderizarRotas() {
-        const origem = filtroOrigem.value.toLowerCase();
-        const destino = filtroDestino.value.toLowerCase();
-        const tipo = filtroTipo.value;
+        const origem = filtroOrigem.value.toLowerCase().trim();
+        const destino = filtroDestino.value.toLowerCase().trim();
+        const tipo = filtroTipo.value.toLowerCase();
 
         const filtradas = rotas.filter(rota => {
-            const passaOrigem = !origem || rota.dep.toLowerCase().includes(origem);
-            const passaDestino = !destino || rota.arr.toLowerCase().includes(destino);
-            const passaTipo = tipo === "todos" || rota.type === tipo;
+            const dep = String(rota.dep || "").toLowerCase();
+            const arr = String(rota.arr || "").toLowerCase();
+            const tipoRota = String(rota.type || "").toLowerCase();
 
-            return passaOrigem && passaDestino && passaTipo && rota.active === "true";
+            const passaOrigem = !origem || dep.includes(origem);
+            const passaDestino = !destino || arr.includes(destino);
+            const passaTipo = tipo === "todos" || tipoRota === tipo;
+
+            return passaOrigem && passaDestino && passaTipo && rotaEstaAtiva(rota);
         });
 
         tabela.innerHTML = "";
+
+        if (filtradas.length === 0) {
+            tabela.innerHTML = `
+                <tr>
+                    <td colspan="6">Nenhuma rota encontrada para os filtros selecionados.</td>
+                </tr>
+            `;
+            return;
+        }
 
         filtradas.forEach(rota => {
             tabela.innerHTML += `
@@ -58,6 +90,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     filtroOrigem.addEventListener("input", renderizarRotas);
     filtroDestino.addEventListener("input", renderizarRotas);
     filtroTipo.addEventListener("change", renderizarRotas);
-
-    renderizarRotas();
 });
