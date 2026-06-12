@@ -95,9 +95,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         filtradas.forEach(rota => {
             tabela.innerHTML += `
                 <tr>
-                    <td>VVX${rota.number}</td>
-                    <td>${rota.dep}</td>
-                    <td>${rota.arr}</td>
+                    <td class="coluna-voo">VVX${rota.number}</td>
+                    <td>🛫 <span style="color: #4ade80;">${rota.dep}</span></td>
+                    <td>🛬 <span style="color: #f97316;">${rota.arr}</span></td>
                     <td>${rota.type === "cargo" ? "📦 Cargo" : "👥 Passageiros"}</td>
                     <td>${rota.duration} min</td>
                     <td>${rota.airframes || "Todos"}</td>
