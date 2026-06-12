@@ -45,22 +45,39 @@ document.addEventListener("DOMContentLoaded", async () => {
         return ativo === "true" || ativo === "1" || ativo === "yes" || ativo === "active";
     }
 
-    function renderizarRotas() {
-        const origem = filtroOrigem.value.toLowerCase().trim();
-        const destino = filtroDestino.value.toLowerCase().trim();
-        const tipo = filtroTipo.value.toLowerCase();
+function renderizarRotas() {
+    const origem = filtroOrigem.value.toLowerCase().trim();
+    const destino = filtroDestino.value.toLowerCase().trim();
+    const tipo = filtroTipo.value.toLowerCase();
 
-        const filtradas = rotas.filter(rota => {
-            const dep = String(rota.dep || "").toLowerCase();
-            const arr = String(rota.arr || "").toLowerCase();
-            const tipoRota = String(rota.type || "").toLowerCase();
+    const filtradas = rotas.filter(rota => {
+        const dep = String(rota.dep || "").toLowerCase();
+        const arr = String(rota.arr || "").toLowerCase();
+        const tipoRota = String(rota.type || "").toLowerCase();
 
-            const passaOrigem = !origem || dep.includes(origem);
-            const passaDestino = !destino || arr.includes(destino);
-            const passaTipo = tipo === "todos" || tipoRota === tipo;
+        const passaOrigem = !origem || dep.includes(origem);
+        const passaDestino = !destino || arr.includes(destino);
+        const passaTipo = tipo === "todos" || tipoRota === tipo;
 
-            return passaOrigem && passaDestino && passaTipo && rotaEstaAtiva(rota);
-        });
+        return passaOrigem && passaDestino && passaTipo && rotaEstaAtiva(rota);
+    });
+
+    const totalRotas = rotas.filter(rotaEstaAtiva).length;
+
+    const totalPax = rotas.filter(r =>
+        rotaEstaAtiva(r) &&
+        String(r.type || "").toLowerCase() === "pax"
+    ).length;
+
+    const totalCargo = rotas.filter(r =>
+        rotaEstaAtiva(r) &&
+        String(r.type || "").toLowerCase() === "cargo"
+    ).length;
+
+    document.getElementById("total-rotas").textContent = totalRotas;
+    document.getElementById("total-pax").textContent = totalPax;
+    document.getElementById("total-cargo").textContent = totalCargo;
+    document.getElementById("total-filtrado").textContent = filtradas.length;
 
         tabela.innerHTML = "";
 
