@@ -2110,7 +2110,7 @@ footer p {
     background: linear-gradient(
         90deg,
         transparent,
-        rgba(255,255,255,0.46),
+        rgba(255,255,255,0.45),
         transparent
     );
 }
