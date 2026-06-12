@@ -2049,36 +2049,47 @@ footer p {
 
 .btn-filtro-rotas,
 .btn-limpar-rotas {
-    height: 46px;
-    min-width: 140px;
-
+    height: 48px;
+    min-width: 160px;
+    padding: 0 18px;
     border-radius: 12px;
     border: 1px solid var(--glass-border);
-
     font-family: var(--font-headers);
     font-size: 0.85rem;
     font-weight: 700;
-
     cursor: pointer;
     transition: all 0.3s ease;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .btn-filtro-rotas {
     background: var(--turquoise);
-    color: #001529;
+    color: var(--night-blue);
+    box-shadow: 0 0 18px rgba(0, 229, 255, 0.18);
 }
 
 .btn-filtro-rotas:hover {
+    background: var(--turquoise-hover);
     transform: translateY(-2px);
-    box-shadow: 0 0 15px rgba(0,229,255,0.35);
+    box-shadow: 0 0 24px rgba(0, 229, 255, 0.35);
 }
 
 .btn-limpar-rotas {
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
     color: var(--text-main);
 }
 
 .btn-limpar-rotas:hover {
     border-color: var(--turquoise);
     color: var(--turquoise);
+    transform: translateY(-2px);
+}
+
+.btn-filtro-rotas i,
+.btn-limpar-rotas i {
+    font-size: 0.9rem;
 }
