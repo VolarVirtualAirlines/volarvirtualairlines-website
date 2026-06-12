@@ -63,27 +63,35 @@
 
 </div>
 
-    <div class="rotas-filtros">
-    
-        <input
-            type="text"
-            id="filtro-origem"
-            placeholder="Filtrar origem. Ex: SBGR"
-        >
-    
-        <input
-            type="text"
-            id="filtro-destino"
-            placeholder="Filtrar destino. Ex: SBEG"
-        >
-    
-        <select id="filtro-tipo">
-            <option value="todos">Todas as Operações</option>
-            <option value="pax">Passageiros</option>
-            <option value="cargo">Cargo</option>
-        </select>
-    
-    </div>
+<div class="rotas-filtros">
+
+    <input
+        type="text"
+        id="filtro-origem"
+        placeholder="Filtrar origem. Ex: SBGR"
+    >
+
+    <input
+        type="text"
+        id="filtro-destino"
+        placeholder="Filtrar destino. Ex: SBEG"
+    >
+
+    <select id="filtro-tipo">
+        <option value="todos">Todas as Operações</option>
+        <option value="pax">Passageiros</option>
+        <option value="cargo">Cargo</option>
+    </select>
+
+    <button type="button" id="btn-filtrar-rotas" class="btn-filtro-rotas">
+        Filtrar Rotas
+    </button>
+
+    <button type="button" id="btn-limpar-rotas" class="btn-limpar-rotas">
+        Limpar
+    </button>
+
+</div>
 
     <div class="tabela-rotas-container">
 
