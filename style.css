@@ -1877,6 +1877,50 @@ footer p {
     font-size: 15px;
 }
 
+.btn-filtro-rotas,
+.btn-limpar-rotas {
+    height: 48px;
+    min-width: 140px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border-radius: 14px;
+
+    font-family: var(--font-headers);
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-filtro-rotas {
+    background: rgba(0,229,255,0.12);
+    border: 1px solid rgba(0,229,255,0.35);
+    color: var(--turquoise);
+}
+
+.btn-filtro-rotas:hover {
+    background: rgba(0,229,255,0.22);
+    border-color: var(--turquoise);
+    transform: translateY(-2px);
+}
+
+.btn-limpar-rotas {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+}
+
+.btn-limpar-rotas:hover {
+    border-color: var(--turquoise);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
 .rotas-filtros input:focus,
 .rotas-filtros select:focus {
     outline: none;
@@ -2043,6 +2087,7 @@ footer p {
     color: #4ADE80;
 }
 
+.card-filtrado {
     border-color: rgba(74,222,128,0.20);
     background: rgba(74,222,128,0.03);
 }
