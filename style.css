@@ -2101,3 +2101,16 @@ footer p {
     font-weight: 700;
     letter-spacing: 0.5px;
 }
+
+.rotas-divider {
+    width: 120px;
+    height: 1px;
+    margin: 35px auto 45px auto;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.45),
+        transparent
+    );
+}
