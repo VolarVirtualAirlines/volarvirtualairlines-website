@@ -2007,3 +2007,39 @@ footer p {
         grid-template-columns: 1fr;
     }
 }
+
+/* =====================================
+   CORES DOS CARDS DE ESTATÍSTICAS
+===================================== */
+
+.card-total span {
+    color: #00E5FF;
+}
+
+.card-total {
+    border-color: rgba(0,229,255,0.20);
+}
+
+.card-pax span {
+    color: #4DA3FF;
+}
+
+.card-pax {
+    border-color: rgba(77,163,255,0.20);
+}
+
+.card-cargo span {
+    color: #D4AF37;
+}
+
+.card-cargo {
+    border-color: rgba(212,175,55,0.20);
+}
+
+.card-filtrado span {
+    color: #4ADE80;
+}
+
+.card-filtrado {
+    border-color: rgba(74,222,128,0.20);
+}
