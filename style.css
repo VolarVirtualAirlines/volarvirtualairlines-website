@@ -2093,7 +2093,11 @@ footer p {
 }
 
 .coluna-voo {
-    color: #D4AF37;
+    font-weight: 700;
+}
+
+.flight-number {
+    color: #D4AF37 !important;
     font-weight: 700;
     letter-spacing: 0.5px;
 }
