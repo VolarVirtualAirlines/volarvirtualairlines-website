@@ -1948,3 +1948,8 @@ footer p {
         max-width: 420px;
     }
 }
+
+.rotas-filtros select option {
+    background: #0A1128;
+    color: #ffffff;
+}
