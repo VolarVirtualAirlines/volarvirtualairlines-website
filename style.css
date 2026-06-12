@@ -1953,3 +1953,57 @@ footer p {
     background: #0A2342;
     color: #ffffff;
 }
+
+/* =====================================
+   ESTATÍSTICAS DE ROTAS
+===================================== */
+
+.rotas-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
+}
+
+.rota-stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.rota-stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0,229,255,0.35);
+    background: rgba(0,229,255,0.05);
+}
+
+.rota-stat-card span {
+    display: block;
+    font-family: var(--font-headers);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--turquoise);
+    margin-bottom: 8px;
+}
+
+.rota-stat-card p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+@media (max-width: 900px) {
+    .rotas-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .rotas-stats {
+        grid-template-columns: 1fr;
+    }
+}
