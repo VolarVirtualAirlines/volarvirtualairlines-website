@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const tabela = document.getElementById("corpo-tabela-rotas");
-    const busca = document.getElementById("busca-rotas");
+    const filtroOrigem = document.getElementById("filtro-origem");
+    const filtroDestino = document.getElementById("filtro-destino");
     const filtroTipo = document.getElementById("filtro-tipo");
 
     let rotas = [];
@@ -26,14 +27,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     function renderizarRotas() {
-        const termo = busca.value.toLowerCase();
+        const origem = filtroOrigem.value.toLowerCase();
+        const destino = filtroDestino.value.toLowerCase();
         const tipo = filtroTipo.value;
 
         const filtradas = rotas.filter(rota => {
-            const textoRota = `${rota.number} ${rota.dep} ${rota.arr} ${rota.type}`.toLowerCase();
-            const passaBusca = textoRota.includes(termo);
+            const passaOrigem = !origem || rota.dep.toLowerCase().includes(origem);
+            const passaDestino = !destino || rota.arr.toLowerCase().includes(destino);
             const passaTipo = tipo === "todos" || rota.type === tipo;
-            return passaBusca && passaTipo && rota.active === "true";
+
+            return passaOrigem && passaDestino && passaTipo && rota.active === "true";
         });
 
         tabela.innerHTML = "";
@@ -52,7 +55,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    busca.addEventListener("input", renderizarRotas);
+    filtroOrigem.addEventListener("input", renderizarRotas);
+    filtroDestino.addEventListener("input", renderizarRotas);
     filtroTipo.addEventListener("change", renderizarRotas);
 
     renderizarRotas();
