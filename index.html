@@ -498,7 +498,7 @@
                     
                     row.innerHTML = `
                         <td style="color: var(--turquoise); font-weight: bold;">VVX${voo.flightNumber || 'N/A'}</td>
-                        <td>👤 ${voo.pilot?.fullname || 'N/A'}</td>
+                        <td>👨‍✈️ ${voo.pilot?.fullname || 'N/A'}</td>
                         <td>
                             <span style="color: #00E676;">✈️ ${voo.dep?.icao || '---'}</span> 
                             → 
@@ -506,7 +506,7 @@
                         </td>
                         <td>✈️ ${voo.aircraft?.airframe?.ident || 'N/A'}</td>
                         <td>${dataFormatada}</td>
-                        <td><span class="badge-tipo">${voo.type?.toUpperCase() === 'PAX' ? '👤 Passageiros' : '📦 Carga'}</span></td>
+                        <td><span class="badge-tipo">${voo.type?.toUpperCase() === 'PAX' ? '👥 Passageiros' : '📦 Carga'}</span></td>
                         <td><span class="badge-sim">${voo.simulator?.toUpperCase() || 'N/A'}</span></td>
                         <td><span class="badge-rede">${voo.network?.name?.toUpperCase() || 'OFFLINE'}</span></td>
                     `;
