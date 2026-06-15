@@ -1,6 +1,6 @@
 # Newsky Schedule Export
 # Airline: VVX - VOLAR VIRTUAL AIRLINES
-# Date: 2026-06-15 17:17z
+# Date: 2026-06-15 18:30z
 #
 # <- use hash to add comments.
 # Remember to respect headers and proper CSV formatting!
@@ -462,7 +462,6 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 4256,SBCF,SBCY,pax,115,true,true,true,true,true,true,true,pax,true
 8016,SBGR,SUMU,pax,160,true,true,true,true,true,true,true,pax,true
 8117,SUMU,SBGR,pax,160,true,true,true,true,true,true,true,pax,true
-8096,SBGR,SCEL,pax,255,true,true,true,true,true,true,true,pax,true
 8097,SCEL,SBGR,pax,235,true,true,true,true,true,true,true,pax,true
 7645,SUMU,SBGL,pax,165,true,true,true,true,true,true,true,pax,true
 7644,SBGL,SUMU,pax,60,true,true,true,true,true,true,true,pax,true
@@ -470,12 +469,10 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1801,SBSV,SUMU,pax,275,true,true,true,true,true,true,true,pax,true
 1931,SUMU,SBFL,pax,110,true,true,true,true,true,true,true,pax,true
 1930,SBFL,SUMU,pax,120,true,true,true,true,true,true,true,pax,true
-776,SCEL,SBGL,pax,250,true,true,true,true,true,true,true,pax,true
-775,SBGL,SCEL,pax,280,true,true,true,true,true,true,true,pax,true
-510,SCEL,SBFL,pax,198,true,true,true,true,true,true,true,pax,true
-511,SBFL,SCEL,pax,218,true,true,true,true,true,true,true,pax,true
-783,SCEL,SBCT,pax,200,true,true,true,true,true,true,true,pax,true
-782,SBCT,SCEL,pax,226,true,true,true,true,true,true,true,pax,true
+510,SCEL,SBFL,pax,198,true,true,true,true,true,true,true,A20N,true
+511,SBFL,SCEL,pax,218,true,true,true,true,true,true,true,A20N,true
+783,SCEL,SBCT,pax,200,true,true,true,true,true,true,true,A20N,true
+782,SBCT,SCEL,pax,226,true,true,true,true,true,true,true,A20N,true
 740,SCEL,SBPA,pax,180,true,true,true,true,true,true,true,A20N,true
 741,SBPA,SCEL,pax,195,true,true,true,true,true,true,true,A20N,true
 628C,SBGR,SBEG,cargo,211,true,true,true,true,true,true,true,cargo,true
@@ -603,3 +600,15 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 9485,SBSG,SAEZ,pax,350,true,true,true,true,true,true,true,B738,true
 7659,SAEZ,SBGL,pax,175,true,true,true,true,true,true,true,B738,true
 7658,SBGL,SAEZ,pax,210,true,true,true,true,true,true,true,B738,true
+750,SCEL,SBGR,pax,235,true,true,true,true,true,true,true,A20N,true
+751,SBGR,SCEL,pax,255,true,true,true,true,true,true,true,A20N,true
+776,SCEL,SBGL,pax,250,true,true,true,true,true,true,true,A20N,true
+775,SBGL,SCEL,pax,280,true,true,true,true,true,true,true,A20N,true
+9004,SCEL,SBGR,pax,235,true,true,true,true,true,true,true,B738,true
+9005,SBGR,SCEL,pax,255,true,true,true,true,true,true,true,B738,true
+9006,SCEL,SBGL,pax,250,true,true,true,true,true,true,true,B738,true
+9007,SBGL,SCEL,pax,280,true,true,true,true,true,true,true,B738,true
+9010,SCEL,SBFL,pax,198,true,true,true,true,true,true,true,B738,true
+9011,SBFL,SCEL,pax,218,true,true,true,true,true,true,true,B738,true
+6805,SCEL,SBCT,pax,200,true,true,true,true,true,true,true,B738,true
+9013,SBCT,SCEL,pax,226,true,true,true,true,true,true,true,B738,true
