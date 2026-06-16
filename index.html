@@ -362,6 +362,39 @@
                     const arr = voo.arr?.icao || '???';
                     const acft = voo.aircraft?.airframe?.ident || 'B738';
 
+                    function formatarHorario(dataISO) {
+                        if (!dataISO) return "—";
+                    
+                        return new Date(dataISO).toLocaleTimeString('pt-BR', {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                    }
+                    
+                    function calcularDuracao(inicio, fim = null) {
+                        if (!inicio) return "—";
+                    
+                        const inicioData = new Date(inicio);
+                        const fimData = fim ? new Date(fim) : new Date();
+                    
+                        const diffMs = fimData - inicioData;
+                    
+                        const horas = Math.floor(diffMs / 3600000);
+                        const minutos = Math.floor((diffMs % 3600000) / 60000);
+                    
+                        return `${String(horas).padStart(2, '0')}h${String(minutos).padStart(2, '0')}min`;
+                    }
+                    
+                    const horarioPartida = formatarHorario(voo.depTimeAct);
+                    const horarioChegada = formatarHorario(voo.arrTimeAct);
+                    
+                    const duracaoVoo = calcularDuracao(
+                        voo.depTimeAct,
+                        voo.arrTimeAct || null
+                    );
+                    
+                    const progressoVoo = voo.arrTimeAct ? 100 : 50;
+                    
                     let tipoVooTexto = "✈️ Comercial";
                     if (voo.type === "pax") tipoVooTexto = "👥 Passageiros";
                     else if (voo.type === "cargo") tipoVooTexto = "📦 Carga";
@@ -396,8 +429,25 @@
                             <td style="font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
                             <td style="color: var(--text-muted); font-weight: 500;">✈️ ${acft}</td>
                             <td style="color: var(--text-muted); font-size: 0.9em;">${tipoVooTexto}</td>
+                            
+                            <td style="font-weight: 600;">⏱️ ${duracaoVoo}</td>
+                            
+                            <td>🕒 ${horarioPartida}</td>
+                            
+                            <td>
+                                <div class="progresso-container">
+                                    <span class="progresso-texto">${progressoVoo}%</span>
+                                    <div class="progresso-barra">
+                                        <div class="progresso-preenchimento" style="width: ${progressoVoo}%;"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                            <td>🛬 ${horarioChegada}</td>
+                            
                             <td><span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.08); font-size: 0.85em;">${simuladorTexto}</span></td>
-                            <td><span style="background: ${redeCor}; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.85em; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">${redeTexto}</span></td>
+                            
+                            <td><span style="background: ${redeCor}; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.85em; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">${redeTexto}</span></td>                        
                         </tr>
                     `;
                 });
