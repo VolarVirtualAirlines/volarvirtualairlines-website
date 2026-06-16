@@ -165,18 +165,14 @@
         <div class="tabela-responsiva">
             <table id="tabela-voos">
                 <thead>
-                     <tr>
-                         <th>Callsign</th>
-                         <th>Piloto</th>
-                         <th>Rota</th>
-                         <th>Aeronave</th>
-                         <th>Tipo</th>
-                         <th>Duração</th>
-                         <th>Hora Partida</th>
-                         <th>Progresso</th>
-                         <th>Hora Chegada</th>
-                         <th>Simulador</th>
-                         <th>Rede</th>
+                    <tr>
+                        <th>Callsign</th>
+                        <th>Piloto</th>
+                        <th>Rota</th>
+                        <th>Aeronave</th>
+                        <th>Tipo</th>
+                        <th>Simulador</th>
+                        <th>Rede</th>
                     </tr>
                 </thead> 
                 
@@ -196,7 +192,7 @@
             <div class="tabela-responsiva">
                 <table id="tabela-voos-recentes">
                     <thead>
-                         <tr>
+                        <tr>
                             <th>Callsign</th>
                             <th>Piloto</th>
                             <th>Rota</th>
@@ -325,74 +321,7 @@
     
 <script>
         const URL_VOOS = "/voos";
-        let rotasOficiais = [];
 
-        async function carregarRotasOficiais() {
-        try {
-            const response = await fetch('/assets/data/routes.csv');
-            const texto = await response.text();
-    
-            const linhas = texto.trim().split('\n');
-            const cabecalho = linhas.shift().split(',').map(col => col.trim());
-    
-            rotasOficiais = linhas.map(linha => {
-                const valores = linha.split(',').map(valor => valor.trim());
-                const rota = {};
-    
-                cabecalho.forEach((coluna, index) => {
-                    rota[coluna] = valores[index];
-                });
-    
-                return rota;
-            });
-    
-            console.log("Rotas oficiais carregadas:", rotasOficiais);
-    
-            } catch (error) {
-                console.error("Erro ao carregar routes.csv:", error);
-                rotasOficiais = [];
-            }
-        }
-
-        function encontrarRotaOficial(numeroVoo, origem, destino) {
-        return rotasOficiais.find(rota => {
-            return String(rota.number).trim() === String(numeroVoo).trim()
-                && String(rota.dep).trim().toUpperCase() === String(origem).trim().toUpperCase()
-                && String(rota.arr).trim().toUpperCase() === String(destino).trim().toUpperCase()
-                && String(rota.active).trim().toLowerCase() === "true";
-                });
-        }
-
-        function formatarDuracaoMinutos(minutos) {
-            if (!minutos || isNaN(minutos)) return "—";
-        
-            const horas = Math.floor(minutos / 60);
-            const mins = minutos % 60;
-        
-            return `${String(horas).padStart(2, '0')}h${String(mins).padStart(2, '0')}min`;
-        }
-        
-        function calcularHoraChegadaPrevista(partidaISO, duracaoMinutos) {
-            if (!partidaISO || !duracaoMinutos || isNaN(duracaoMinutos)) return null;
-        
-            const partida = new Date(partidaISO);
-            return new Date(partida.getTime() + duracaoMinutos * 60000).toISOString();
-        }
-        
-        function calcularProgressoPrevisto(partidaISO, chegadaRealISO, duracaoMinutos) {
-            if (!partidaISO || !duracaoMinutos || isNaN(duracaoMinutos)) return 0;
-        
-            if (chegadaRealISO) return 100;
-        
-            const partida = new Date(partidaISO);
-            const agora = new Date();
-        
-            const minutosDecorridos = (agora - partida) / 60000;
-            const progresso = Math.round((minutosDecorridos / duracaoMinutos) * 100);
-        
-            return Math.min(Math.max(progresso, 0), 99);
-        }
-    
         async function carregarVoosEmTempoReal() {
             const msgVoos = document.getElementById('mensagem-voos');
             const tabelaVoos = document.getElementById('tabela-voos');
@@ -405,8 +334,7 @@
                 const dados = await resposta.json();
 
                 // LOG PARA VOCÊ ANALISAR NO CONSOLE DO NAVEGADOR
-                // console.log("JSON BRUTO COMPLETO:", dados)
-                console.log(JSON.stringify(dados, null, 2));
+                console.log("JSON BRUTO COMPLETO:", dados)
         
                 let voos = dados.results || dados.flights || dados.data || [];
                 if (Array.isArray(dados)) {
@@ -431,71 +359,6 @@
                     const arr = voo.arr?.icao || '???';
                     const acft = voo.aircraft?.airframe?.ident || 'B738';
 
-                function formatarHorario(dataISO) {
-                    if (!dataISO) return "—";
-                
-                    const data = new Date(dataISO);
-                
-                    const horaLocal = data.toLocaleTimeString('pt-BR', {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-                
-                    const horaZulu = data.toLocaleTimeString('pt-BR', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        timeZone: 'UTC'
-                    });
-                
-                    return `
-                        <div class="hora-voo">
-                            <span>${horaLocal}</span>
-                            <small>${horaZulu}Z</small>
-                        </div>
-                    `;
-                }
-                    
-                    function calcularDuracao(inicio, fim = null) {
-                        if (!inicio) return "—";
-                    
-                        const inicioData = new Date(inicio);
-                        const fimData = fim ? new Date(fim) : new Date();
-                    
-                        const diffMs = fimData - inicioData;
-                    
-                        const horas = Math.floor(diffMs / 3600000);
-                        const minutos = Math.floor((diffMs % 3600000) / 60000);
-                    
-                        return `${String(horas).padStart(2, '0')}h${String(minutos).padStart(2, '0')}min`;
-                    }
-                    
-                    const rotaOficial = encontrarRotaOficial(numeroVoo, dep, arr);
-                    
-                    const duracaoPrevistaMinutos = rotaOficial
-                        ? parseInt(rotaOficial.duration, 10)
-                        : null;
-                    
-                    const chegadaPrevistaISO = calcularHoraChegadaPrevista(
-                        voo.depTimeAct,
-                        duracaoPrevistaMinutos
-                    );
-                    
-                    const horarioPartida = formatarHorario(voo.depTimeAct);
-                    
-                    const horarioChegada = formatarHorario(
-                        voo.arrTimeAct || chegadaPrevistaISO
-                    );
-                    
-                    const duracaoVoo = duracaoPrevistaMinutos
-                        ? formatarDuracaoMinutos(duracaoPrevistaMinutos)
-                        : calcularDuracao(voo.depTimeAct, voo.arrTimeAct || null);
-                    
-                    const progressoVoo = calcularProgressoPrevisto(
-                        voo.depTimeAct,
-                        voo.arrTimeAct,
-                        duracaoPrevistaMinutos
-                    );
-                    
                     let tipoVooTexto = "✈️ Comercial";
                     if (voo.type === "pax") tipoVooTexto = "👥 Passageiros";
                     else if (voo.type === "cargo") tipoVooTexto = "📦 Carga";
@@ -530,25 +393,8 @@
                             <td style="font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
                             <td style="color: var(--text-muted); font-weight: 500;">✈️ ${acft}</td>
                             <td style="color: var(--text-muted); font-size: 0.9em;">${tipoVooTexto}</td>
-                            
-                            <td style="font-weight: 600;">⏱️ ${duracaoVoo}</td>
-                            
-                            <td>🕒 ${horarioPartida}</td>
-                            
-                            <td>
-                                <div class="progresso-container">
-                                    <span class="progresso-texto">${progressoVoo}%</span>
-                                    <div class="progresso-barra">
-                                        <div class="progresso-preenchimento" style="width: ${progressoVoo}%;"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            
-                            <td>🛬 ${horarioChegada}</td>
-                            
                             <td><span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.08); font-size: 0.85em;">${simuladorTexto}</span></td>
-                            
-                            <td><span style="background: ${redeCor}; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.85em; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">${redeTexto}</span></td>                        
+                            <td><span style="background: ${redeCor}; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.85em; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">${redeTexto}</span></td>
                         </tr>
                     `;
                 });
@@ -587,8 +433,7 @@
             }, 5000);
         }
         
-        document.addEventListener('DOMContentLoaded', async () => {
-            await carregarRotasOficiais();
+        document.addEventListener('DOMContentLoaded', () => {
             carregarVoosEmTempoReal();
             setInterval(carregarVoosEmTempoReal, 120000);
             iniciarHeroSlider();
