@@ -362,7 +362,8 @@ body {
     border: 1px solid var(--glass-border);
     border-radius: 14px;
     margin: 50px auto;
-    max-width: 1400px;
+    width: 96%;
+    max-width: 1800px;
     padding: 35px 25px;
     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
 }
@@ -379,7 +380,7 @@ body {
     border-collapse: collapse;
     text-align: left;
     color: var(--text-main);
-    min-width: 1180px;
+    min-width: 100%;
     table-layout: auto;
 }
 
