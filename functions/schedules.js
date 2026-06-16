@@ -11,7 +11,18 @@ export async function onRequestGet(context) {
       }
     });
 
-    const data = await response.json();
+    const texto = await response.text();
+    
+    return new Response(JSON.stringify({
+      status: response.status,
+      contentType: response.headers.get("content-type"),
+      bodyStart: texto.slice(0, 500)
+    }), {
+      status: response.status,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
 
     return new Response(JSON.stringify(data), {
       status: response.status,
