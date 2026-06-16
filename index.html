@@ -365,14 +365,29 @@
                     const arr = voo.arr?.icao || '???';
                     const acft = voo.aircraft?.airframe?.ident || 'B738';
 
-                    function formatarHorario(dataISO) {
-                        if (!dataISO) return "—";
-                    
-                        return new Date(dataISO).toLocaleTimeString('pt-BR', {
-                            hour: '2-digit',
-                            minute: '2-digit'
-                        });
-                    }
+                function formatarHorario(dataISO) {
+                    if (!dataISO) return "—";
+                
+                    const data = new Date(dataISO);
+                
+                    const horaLocal = data.toLocaleTimeString('pt-BR', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                
+                    const horaZulu = data.toLocaleTimeString('pt-BR', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        timeZone: 'UTC'
+                    });
+                
+                    return `
+                        <div class="hora-voo">
+                            <span>${horaLocal}</span>
+                            <small>${horaZulu}Z</small>
+                        </div>
+                    `;
+                }
                     
                     function calcularDuracao(inicio, fim = null) {
                         if (!inicio) return "—";
