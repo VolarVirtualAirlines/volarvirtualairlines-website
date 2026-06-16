@@ -362,8 +362,7 @@ body {
     border: 1px solid var(--glass-border);
     border-radius: 14px;
     margin: 50px auto;
-    width: 96%;
-    max-width: 1800px;
+    max-width: 1400px;
     padding: 35px 25px;
     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
 }
@@ -380,8 +379,7 @@ body {
     border-collapse: collapse;
     text-align: left;
     color: var(--text-main);
-    min-width: 100%;
-    table-layout: auto;
+    min-width: 600px;
 }
 
 #tabela-voos th {
@@ -399,26 +397,6 @@ body {
     padding: 16px 14px;
     vertical-align: middle;
     font-size: 15px;
-}
-
-#tabela-voos th,
-#tabela-voos td {
-    white-space: nowrap;
-}
-
-#tabela-voos th:nth-child(2),
-#tabela-voos td:nth-child(2) {
-    min-width: 130px;
-}
-
-#tabela-voos th:nth-child(3),
-#tabela-voos td:nth-child(3) {
-    min-width: 120px;
-}
-
-#tabela-voos th:nth-child(8),
-#tabela-voos td:nth-child(8) {
-    min-width: 160px;
 }
 
 /* Efeito sutil de linha ao passar o mouse */
@@ -2187,57 +2165,4 @@ footer p {
         rgba(255,255,255,0.45),
         transparent
     );
-}
-
-/* =====================================
-   BARRA DE PROGRESSO DOS VOOS
-===================================== */
-
-.progresso-container {
-    min-width: 140px;
-}
-
-.progresso-texto {
-    display: block;
-    font-size: 12px;
-    margin-bottom: 4px;
-    color: #d5dce5;
-    font-weight: 600;
-}
-
-.progresso-barra {
-    width: 100%;
-    height: 8px;
-    background: rgba(255,255,255,0.10);
-    border-radius: 999px;
-    overflow: hidden;
-}
-
-.progresso-preenchimento {
-    height: 100%;
-    background: #1FB5A8;
-    border-radius: 999px;
-    transition: width 0.5s ease;
-}
-
-/* =====================================
-   HORÁRIOS DOS VOOS
-===================================== */
-
-.hora-voo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    line-height: 1.2;
-}
-
-.hora-voo span {
-    font-weight: 600;
-    color: #ffffff;
-}
-
-.hora-voo small {
-    font-size: 11px;
-    color: #9ca3af;
-    margin-top: 2px;
 }
