@@ -6,40 +6,59 @@ export async function onRequestGet(context) {
     const response = await fetch(url, {
       method: "GET",
       headers: {
-        "x-api-key": apiKey,
+        "Authorization": `Bearer ${apiKey}`,
         "Accept": "application/json"
       }
     });
 
-    const texto = await response.text();
-    
-    return new Response(JSON.stringify({
-      status: response.status,
-      contentType: response.headers.get("content-type"),
-      bodyStart: texto.slice(0, 500)
-    }), {
-      status: response.status,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
+    const textoPuro = await response.text();
+    const textoLimpo = textoPuro.trim();
 
-    return new Response(JSON.stringify(data), {
-      status: response.status,
+    const ehJsonValido =
+      textoLimpo.startsWith("{") ||
+      textoLimpo.startsWith("[");
+
+    if (
+      !response.ok ||
+      textoLimpo.includes("<html") ||
+      textoLimpo.includes("<!DOCTYPE") ||
+      !ehJsonValido
+    ) {
+      return new Response(
+        JSON.stringify({
+          error: true,
+          status: response.status,
+          contentType: response.headers.get("content-type"),
+          message: textoLimpo.substring(0, 500)
+        }),
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+    }
+
+    return new Response(textoPuro, {
+      status: 200,
       headers: {
         "Content-Type": "application/json"
       }
     });
 
   } catch (error) {
-    return new Response(JSON.stringify({
-      error: true,
-      message: error.message
-    }), {
-      status: 500,
-      headers: {
-        "Content-Type": "application/json"
+    return new Response(
+      JSON.stringify({
+        error: true,
+        message: error.message
+      }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
-    });
+    );
   }
 }
