@@ -1,5 +1,6 @@
 export async function onRequestGet(context) {
-  const url = "https://newsky.app/api/airline-api/schedules";
+  /*const url = "https://newsky.app/api/airline-api/schedules";*/
+  const url = "https://newsky.app/api/airline-api/operations";
   const apiKey = "VVX_SqTQ2IyNfTDT0SJBaaRMOXcTjnGkny";
 
   try {
