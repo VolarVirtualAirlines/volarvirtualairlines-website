@@ -379,7 +379,8 @@ body {
     border-collapse: collapse;
     text-align: left;
     color: var(--text-main);
-    min-width: 600px;
+    min-width: 1180px;
+    table-layout: auto;
 }
 
 #tabela-voos th {
@@ -397,6 +398,26 @@ body {
     padding: 16px 14px;
     vertical-align: middle;
     font-size: 15px;
+}
+
+#tabela-voos th,
+#tabela-voos td {
+    white-space: nowrap;
+}
+
+#tabela-voos th:nth-child(2),
+#tabela-voos td:nth-child(2) {
+    min-width: 130px;
+}
+
+#tabela-voos th:nth-child(3),
+#tabela-voos td:nth-child(3) {
+    min-width: 120px;
+}
+
+#tabela-voos th:nth-child(8),
+#tabela-voos td:nth-child(8) {
+    min-width: 160px;
 }
 
 /* Efeito sutil de linha ao passar o mouse */
