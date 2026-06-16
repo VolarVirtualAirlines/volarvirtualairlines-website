@@ -2197,3 +2197,25 @@ footer p {
     border-radius: 999px;
     transition: width 0.5s ease;
 }
+
+/* =====================================
+   HORÁRIOS DOS VOOS
+===================================== */
+
+.hora-voo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.2;
+}
+
+.hora-voo span {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.hora-voo small {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 2px;
+}
