@@ -332,6 +332,9 @@
                 if (!resposta.ok) throw new Error("Erro ao ler rota interna");
         
                 const dados = await resposta.json();
+
+                // LOG PARA VOCÊ ANALISAR NO CONSOLE DO NAVEGADOR
+                console.log("JSON BRUTO COMPLETO:", data)
         
                 let voos = dados.results || dados.flights || dados.data || [];
                 if (Array.isArray(dados)) {
