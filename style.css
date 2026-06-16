@@ -2166,3 +2166,34 @@ footer p {
         transparent
     );
 }
+
+/* =====================================
+   BARRA DE PROGRESSO DOS VOOS
+===================================== */
+
+.progresso-container {
+    min-width: 140px;
+}
+
+.progresso-texto {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: #d5dce5;
+    font-weight: 600;
+}
+
+.progresso-barra {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.10);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progresso-preenchimento {
+    height: 100%;
+    background: #1FB5A8;
+    border-radius: 999px;
+    transition: width 0.5s ease;
+}
