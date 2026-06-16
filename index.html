@@ -339,7 +339,8 @@
                 const dados = await resposta.json();
 
                 // LOG PARA VOCÊ ANALISAR NO CONSOLE DO NAVEGADOR
-                console.log("JSON BRUTO COMPLETO:", dados)
+                // console.log("JSON BRUTO COMPLETO:", dados)
+                console.dir(dados, { depth: null });
         
                 let voos = dados.results || dados.flights || dados.data || [];
                 if (Array.isArray(dados)) {
