@@ -325,7 +325,74 @@
     
 <script>
         const URL_VOOS = "/voos";
+        let rotasOficiais = [];
 
+        async function carregarRotasOficiais() {
+        try {
+            const response = await fetch('/assets/data/routes.csv');
+            const texto = await response.text();
+    
+            const linhas = texto.trim().split('\n');
+            const cabecalho = linhas.shift().split(',').map(col => col.trim());
+    
+            rotasOficiais = linhas.map(linha => {
+                const valores = linha.split(',').map(valor => valor.trim());
+                const rota = {};
+    
+                cabecalho.forEach((coluna, index) => {
+                    rota[coluna] = valores[index];
+                });
+    
+                return rota;
+            });
+    
+            console.log("Rotas oficiais carregadas:", rotasOficiais);
+    
+            } catch (error) {
+                console.error("Erro ao carregar routes.csv:", error);
+                rotasOficiais = [];
+            }
+        }
+
+        function encontrarRotaOficial(numeroVoo, origem, destino) {
+        return rotasOficiais.find(rota => {
+            return String(rota.number).trim() === String(numeroVoo).trim()
+                && String(rota.dep).trim().toUpperCase() === String(origem).trim().toUpperCase()
+                && String(rota.arr).trim().toUpperCase() === String(destino).trim().toUpperCase()
+                && String(rota.active).trim().toLowerCase() === "true";
+                });
+        }
+
+        function formatarDuracaoMinutos(minutos) {
+            if (!minutos || isNaN(minutos)) return "—";
+        
+            const horas = Math.floor(minutos / 60);
+            const mins = minutos % 60;
+        
+            return `${String(horas).padStart(2, '0')}h${String(mins).padStart(2, '0')}min`;
+        }
+        
+        function calcularHoraChegadaPrevista(partidaISO, duracaoMinutos) {
+            if (!partidaISO || !duracaoMinutos || isNaN(duracaoMinutos)) return null;
+        
+            const partida = new Date(partidaISO);
+            return new Date(partida.getTime() + duracaoMinutos * 60000).toISOString();
+        }
+        
+        function calcularProgressoPrevisto(partidaISO, chegadaRealISO, duracaoMinutos) {
+            if (!partidaISO || !duracaoMinutos || isNaN(duracaoMinutos)) return 0;
+        
+            if (chegadaRealISO) return 100;
+        
+            const partida = new Date(partidaISO);
+            const agora = new Date();
+        
+            const minutosDecorridos = (agora - partida) / 60000;
+            const progresso = Math.round((minutosDecorridos / duracaoMinutos) * 100);
+        
+            return Math.min(Math.max(progresso, 0), 99);
+        }
+    
         async function carregarVoosEmTempoReal() {
             const msgVoos = document.getElementById('mensagem-voos');
             const tabelaVoos = document.getElementById('tabela-voos');
@@ -402,15 +469,32 @@
                         return `${String(horas).padStart(2, '0')}h${String(minutos).padStart(2, '0')}min`;
                     }
                     
-                    const horarioPartida = formatarHorario(voo.depTimeAct);
-                    const horarioChegada = formatarHorario(voo.arrTimeAct);
+                    const rotaOficial = encontrarRotaOficial(numeroVoo, dep, arr);
                     
-                    const duracaoVoo = calcularDuracao(
+                    const duracaoPrevistaMinutos = rotaOficial
+                        ? parseInt(rotaOficial.duration, 10)
+                        : null;
+                    
+                    const chegadaPrevistaISO = calcularHoraChegadaPrevista(
                         voo.depTimeAct,
-                        voo.arrTimeAct || null
+                        duracaoPrevistaMinutos
                     );
                     
-                    const progressoVoo = voo.arrTimeAct ? 100 : 50;
+                    const horarioPartida = formatarHorario(voo.depTimeAct);
+                    
+                    const horarioChegada = formatarHorario(
+                        voo.arrTimeAct || chegadaPrevistaISO
+                    );
+                    
+                    const duracaoVoo = duracaoPrevistaMinutos
+                        ? formatarDuracaoMinutos(duracaoPrevistaMinutos)
+                        : calcularDuracao(voo.depTimeAct, voo.arrTimeAct || null);
+                    
+                    const progressoVoo = calcularProgressoPrevisto(
+                        voo.depTimeAct,
+                        voo.arrTimeAct,
+                        duracaoPrevistaMinutos
+                    );
                     
                     let tipoVooTexto = "✈️ Comercial";
                     if (voo.type === "pax") tipoVooTexto = "👥 Passageiros";
@@ -503,7 +587,8 @@
             }, 5000);
         }
         
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            await carregarRotasOficiais();
             carregarVoosEmTempoReal();
             setInterval(carregarVoosEmTempoReal, 120000);
             iniciarHeroSlider();
