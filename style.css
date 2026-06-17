@@ -2227,6 +2227,19 @@ footer p {
     margin-bottom: 10px;
 }
 
+.modal-aeronave-edition {
+    margin: 8px 0 18px 0;
+
+    color: #C2A46A;
+
+    font-family: var(--font-headers);
+    font-size: 1rem;
+    font-weight: 600;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
 .badge-categoria {
     display: inline-block;
 
