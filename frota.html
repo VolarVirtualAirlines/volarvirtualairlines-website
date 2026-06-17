@@ -364,6 +364,18 @@ const dadosAeronaves = {
     }
 };
 
+function getLiveryEdition(row) {
+    const livery = row.children[4]?.textContent.trim().toUpperCase();
+    const tipo = row.children[2]?.textContent.trim().toLowerCase();
+
+    if (livery === "WHITE") return "Volar White Edition";
+    if (livery === "BLUE") return "Volar Blue Edition";
+    if (livery === "TURQUOISE" && tipo.includes("carga")) return "Volar Turquoise Cargo Edition";
+    if (livery === "TURQUOISE") return "Volar Turquoise Edition";
+
+    return "Volar Edition";
+}
+    
 document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
     const aeronave = row.children[1]?.textContent.trim().replace(" BCF", "BCF");
     const preview = row.querySelector(".liverie-preview");
@@ -376,6 +388,7 @@ document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
         const dados = dadosAeronaves[aeronave];
 
         document.getElementById("modal-aeronave-titulo").textContent = dados.titulo;
+        document.getElementById("modal-aeronave-edition").textContent = getLiveryEdition(row);
         document.getElementById("modal-aeronave-categoria").textContent = dados.categoria;
         document.getElementById("modal-aeronave-img").src = dados.imagem;
         document.getElementById("modal-aeronave-img").alt = dados.titulo;
