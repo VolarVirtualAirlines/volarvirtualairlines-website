@@ -364,6 +364,16 @@ const dadosAeronaves = {
     }
 };
 
+function getImagemLivery(row) {
+    const img = row.querySelector(".liverie-preview img");
+
+    if (img && img.getAttribute("src")) {
+        return img.getAttribute("src");
+    }
+
+    return "";
+}
+
 function getLiveryEdition(row) {
     const livery = row.children[4]?.textContent.trim().toUpperCase();
     const tipo = row.children[2]?.textContent.trim().toLowerCase();
@@ -390,7 +400,7 @@ document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
         document.getElementById("modal-aeronave-titulo").textContent = dados.titulo;
         document.getElementById("modal-aeronave-edition").textContent = getLiveryEdition(row);
         document.getElementById("modal-aeronave-categoria").textContent = dados.categoria;
-        document.getElementById("modal-aeronave-img").src = dados.imagem;
+        document.getElementById("modal-aeronave-img").src = getImagemLivery(row);
         document.getElementById("modal-aeronave-img").alt = dados.titulo;
 
         const infoContainer = document.getElementById("modal-aeronave-info");
