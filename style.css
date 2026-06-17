@@ -2302,3 +2302,38 @@ footer p {
         font-size: 26px;
     }
 }
+
+.modal-aeronave-actions {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.btn-modal-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    background: #1FB5A8;
+    color: #0A2342;
+
+    padding: 14px 28px;
+    border-radius: 10px;
+
+    font-family: var(--font-headers);
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    transition: all 0.3s ease;
+}
+
+.btn-modal-download:hover {
+    background: #26d4c5;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(31,181,168,0.35);
+}
+
+.btn-modal-download i {
+    font-size: 15px;
+}
