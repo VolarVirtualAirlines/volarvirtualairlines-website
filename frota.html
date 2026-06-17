@@ -292,6 +292,120 @@ document.addEventListener('DOMContentLoaded', () => {
    
 </script>
 
+<script>
+const dadosAeronaves = {
+    "A320N": {
+        titulo: "Airbus A320neo",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/A320N_WHITE.png",
+        info: {
+            "Fabricante": "Airbus",
+            "Tipo": "Passageiros",
+            "Capacidade": "180 PAX",
+            "Volume de Carga": "24 m³",
+            "Carga Máxima": "6.500 kg",
+            "Motores": "PW1100G-JM / LEAP-1A",
+            "MTOW": "79.000 kg",
+            "Alcance": "3.400 nm",
+            "Cruzeiro": "Mach 0.78",
+            "Teto Operacional": "39.100 ft"
+        }
+    },
+    "B737-800": {
+        titulo: "Boeing 737-800",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/B738_BLUE.png",
+        info: {
+            "Fabricante": "Boeing",
+            "Tipo": "Passageiros",
+            "Capacidade": "184 PAX",
+            "Volume de Carga": "24 m³",
+            "Carga Máxima": "6.300 kg",
+            "Motores": "CFM56-7B",
+            "MTOW": "79.015 kg",
+            "Alcance": "2.935 nm",
+            "Cruzeiro": "Mach 0.785",
+            "Teto Operacional": "41.000 ft"
+        }
+    },
+    "B737-800BCF": {
+        titulo: "Boeing 737-800BCF",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/B738BCF_TURQUOISE.png",
+        info: {
+            "Fabricante": "Boeing",
+            "Tipo": "Carga",
+            "Volume de Carga": "180 m³",
+            "Carga Máxima": "20.760 kg",
+            "Motores": "CFM56-7B",
+            "MTOW": "79.015 kg",
+            "Alcance": "2.000 nm",
+            "Cruzeiro": "Mach 0.785",
+            "Teto Operacional": "41.000 ft"
+        }
+    },
+    "E195": {
+        titulo: "Embraer 195",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/E195_WHITE.png",
+        info: {
+            "Fabricante": "Embraer",
+            "Tipo": "Passageiros",
+            "Capacidade": "122 PAX",
+            "Volume de Carga": "16 m³",
+            "Carga Máxima": "4.100 kg",
+            "Motores": "GE CF34-10E",
+            "MTOW": "52.290 kg",
+            "Alcance": "2.200 nm",
+            "Cruzeiro": "Mach 0.82",
+            "Teto Operacional": "41.000 ft"
+        }
+    }
+};
+
+document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
+    const aeronave = row.children[1]?.textContent.trim().replace(" BCF", "BCF");
+    const preview = row.querySelector(".liverie-preview");
+
+    if (!preview || !dadosAeronaves[aeronave]) return;
+
+    preview.style.cursor = "pointer";
+
+    preview.addEventListener("click", () => {
+        const dados = dadosAeronaves[aeronave];
+
+        document.getElementById("modal-aeronave-titulo").textContent = dados.titulo;
+        document.getElementById("modal-aeronave-categoria").textContent = dados.categoria;
+        document.getElementById("modal-aeronave-img").src = dados.imagem;
+        document.getElementById("modal-aeronave-img").alt = dados.titulo;
+
+        const infoContainer = document.getElementById("modal-aeronave-info");
+        infoContainer.innerHTML = "";
+
+        Object.entries(dados.info).forEach(([label, valor]) => {
+            infoContainer.innerHTML += `
+                <div class="modal-item">
+                    <span>${label}</span>
+                    <span>${valor}</span>
+                </div>
+            `;
+        });
+
+        document.getElementById("modal-aeronave").style.display = "flex";
+    });
+});
+
+document.getElementById("fechar-aeronave").addEventListener("click", () => {
+    document.getElementById("modal-aeronave").style.display = "none";
+});
+
+document.getElementById("modal-aeronave").addEventListener("click", (e) => {
+    if (e.target.id === "modal-aeronave") {
+        document.getElementById("modal-aeronave").style.display = "none";
+    }
+});
+</script>
+    
 <script src="assets/js/support.js"></script>
     
 </body>
