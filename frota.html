@@ -413,6 +413,17 @@ document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
         document.getElementById("modal-aeronave-img").src = getImagemLivery(row);
         document.getElementById("modal-aeronave-img").alt = dados.titulo;
 
+        const linkDownload = row.querySelector(".btn-download");
+        const botaoDownload = document.getElementById("modal-aeronave-download");
+        
+        if (linkDownload && linkDownload.href) {
+            botaoDownload.href = linkDownload.href;
+            botaoDownload.style.display = "inline-flex";
+        } else {
+            botaoDownload.removeAttribute("href");
+            botaoDownload.style.display = "none";
+        }
+        
         const infoContainer = document.getElementById("modal-aeronave-info");
         infoContainer.innerHTML = "";
 
