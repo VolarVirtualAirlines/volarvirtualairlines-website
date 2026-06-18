@@ -2237,6 +2237,15 @@ footer p {
     margin-bottom: 20px;
 }
 
+.modal-aeronave-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
 .modal-aeronave-header h3 {
     font-size: 34px;
     color: #fff;
