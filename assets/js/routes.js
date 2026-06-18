@@ -6,7 +6,34 @@ document.addEventListener("DOMContentLoaded", async () => {
     const btnFiltrar = document.getElementById("btn-filtrar-rotas");
     const btnLimpar = document.getElementById("btn-limpar-rotas");
 
+    const loadingRotas = document.getElementById("loading-rotas");
+    const loadingBarra = document.getElementById("loading-barra");
+    const loadingPercentual = document.getElementById("loading-percentual");
+    const conteudoRotas = document.getElementById("conteudo-rotas");
+
     let rotas = [];
+    let progresso = 0;
+
+    const intervaloLoading = setInterval(() => {
+        if (progresso < 90) {
+            progresso += Math.floor(Math.random() * 8) + 3;
+            if (progresso > 90) progresso = 90;
+
+            loadingBarra.style.width = `${progresso}%`;
+            loadingPercentual.textContent = `${progresso}%`;
+        }
+    }, 180);
+
+    function finalizarLoading() {
+        progresso = 100;
+        loadingBarra.style.width = "100%";
+        loadingPercentual.textContent = "100%";
+
+        setTimeout(() => {
+            loadingRotas.style.display = "none";
+            conteudoRotas.classList.remove("conteudo-rotas-oculto");
+        }, 450);
+    }
 
     try {
         const resposta = await fetch("assets/data/routes.csv");
@@ -33,8 +60,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         renderizarRotas();
 
+        clearInterval(intervaloLoading);
+        finalizarLoading();
+
     } catch (erro) {
+        clearInterval(intervaloLoading);
+
         console.error("Erro ao carregar routes.csv:", erro);
+
+        loadingRotas.style.display = "none";
+        conteudoRotas.classList.remove("conteudo-rotas-oculto");
+
         tabela.innerHTML = `
             <tr>
                 <td colspan="6">Não foi possível carregar as rotas oficiais.</td>
