@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         setTimeout(() => {
             loadingRotas.style.display = "none";
             conteudoRotas.classList.remove("conteudo-rotas-oculto");
-        }, 450);
+        }, 1200);
     }
 
     try {
@@ -59,7 +59,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         renderizarRotas();
-
+        
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
         clearInterval(intervaloLoading);
         finalizarLoading();
 
