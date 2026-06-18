@@ -2353,3 +2353,18 @@ footer p {
 .btn-modal-download i {
     font-size: 15px;
 }
+
+.modal-aeronave-descricao {
+    max-width: 720px;
+
+    margin: 25px auto 30px auto;
+
+    color: #d5dce5;
+
+    text-align: center;
+
+    font-size: 1rem;
+    line-height: 1.8;
+
+    opacity: 0.95;
+}
