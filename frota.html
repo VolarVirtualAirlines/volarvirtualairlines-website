@@ -436,19 +436,42 @@ document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
             `;
         });
 
-        document.getElementById("modal-aeronave").style.display = "flex";
-    });
-});
+        const modal = document.getElementById("modal-aeronave");
+        
+        modal.style.display = "flex";
+        
+        setTimeout(() => {
+            modal.classList.add("active");
+        }, 10);
+            });
+        });
 
-document.getElementById("fechar-aeronave").addEventListener("click", () => {
-    document.getElementById("modal-aeronave").style.display = "none";
-});
+        document.getElementById("fechar-aeronave").addEventListener("click", () => {
+        
+            const modal = document.getElementById("modal-aeronave");
+        
+            modal.classList.remove("active");
+        
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 350);
+        
+        });
 
-document.getElementById("modal-aeronave").addEventListener("click", (e) => {
-    if (e.target.id === "modal-aeronave") {
-        document.getElementById("modal-aeronave").style.display = "none";
-    }
-});
+        document.getElementById("modal-aeronave").addEventListener("click", (e) => {
+        
+            if (e.target.id === "modal-aeronave") {
+        
+                const modal = document.getElementById("modal-aeronave");
+        
+                modal.classList.remove("active");
+        
+                setTimeout(() => {
+                    modal.style.display = "none";
+                }, 350);
+            }
+        
+        });
 </script>
     
 <script src="assets/js/support.js"></script>
