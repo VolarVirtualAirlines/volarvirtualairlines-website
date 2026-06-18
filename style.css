@@ -2280,7 +2280,10 @@ footer p {
 .modal-aeronave-img {
     width: 100%;
     max-width: 660px;
+    max-height: 180px;
 
+    object-fit: contain;
+   
     display: block;
     margin: 0 auto 18px auto;
 
