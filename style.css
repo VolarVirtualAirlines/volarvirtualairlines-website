@@ -2195,14 +2195,14 @@ footer p {
 .modal-aeronave-content {
     width: 100%;
     max-width: 900px;
-    max-height: 90vh;
+    max-height: 88vh;
     overflow-y: auto;
 
     background: #0A2342;
     border: 1px solid rgba(31,181,168,.3);
     border-radius: 18px;
 
-    padding: 30px;
+    padding: 24px 30px;
     position: relative;
 
     box-shadow: 0 0 40px rgba(0,0,0,.45);
@@ -2270,10 +2270,10 @@ footer p {
 
 .modal-aeronave-img {
     width: 100%;
-    max-width: 700px;
+    max-width: 660px;
 
     display: block;
-    margin: 0 auto 25px auto;
+    margin: 0 auto 18px auto;
 
     border-radius: 12px;
     background: #fff;
@@ -2355,16 +2355,11 @@ footer p {
 }
 
 .modal-aeronave-descricao {
-    max-width: 720px;
-
-    margin: 25px auto 30px auto;
-
+    max-width: 700px;
+    margin: 16px auto 22px auto;
     color: #d5dce5;
-
     text-align: center;
-
-    font-size: 1rem;
-    line-height: 1.8;
-
+    font-size: 0.95rem;
+    line-height: 1.6;
     opacity: 0.95;
 }
