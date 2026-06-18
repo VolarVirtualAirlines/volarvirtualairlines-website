@@ -2208,7 +2208,7 @@ footer p {
     box-shadow: 0 0 40px rgba(0,0,0,.45);
 
    transform: scale(0.94) translateY(18px);
-   transition: transform 0.35s ease;
+   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .modal-aeronave-container.active .modal-aeronave-content {
