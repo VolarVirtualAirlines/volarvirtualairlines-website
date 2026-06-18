@@ -418,6 +418,7 @@ document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
         document.getElementById("modal-aeronave-categoria").textContent = dados.categoria;
         document.getElementById("modal-aeronave-img").src = getImagemLivery(row);
         document.getElementById("modal-aeronave-img").alt = dados.titulo;
+        document.getElementById("modal-aeronave-descricao").textContent = dados.descricao;
 
         const linkDownload = row.querySelector(".btn-download");
         const botaoDownload = document.getElementById("modal-aeronave-download");
