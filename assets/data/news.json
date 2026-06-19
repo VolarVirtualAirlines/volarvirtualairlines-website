@@ -3,7 +3,7 @@
     "date": "2026-06-19",
     "tag": "DISCORD",
     "color": "#5865F2",
-    "title": "Discord Oficial da Volar",
+    "title": "🟠 Discord Oficial da Volar",
     "summary": "Nosso servidor oficial já está disponível para todos os pilotos.",
     "image": "assets/news/2026-06-19-discord.png",
     "link": "https://discord.gg/fnvf8KYgzy"
@@ -12,8 +12,8 @@
   {
     "date": "2026-06-19",
     "tag": "FROTA",
-    "color": "#EAB308",
-    "title": "EMBRAER 195",
+    "color": "#2FA8A0",
+    "title": "✈️ EMBRAER 195",
     "summary": "Bem vindo ao Empbraer 195 na frota da Volar",
     "image": "assets/news/2026-06-19-E195.png"
   },
@@ -22,7 +22,7 @@
     "date": "2026-06-19",
     "tag": "AIRAC",
     "color": "#FFD700",
-    "title": "AIRAC 2606",
+    "title": "📡 AIRAC 2606",
     "summary": "Novo ciclo AIRAC 2606",
     "image": "assets/news/2026-06-19-AIRAC2606.png"
   }
