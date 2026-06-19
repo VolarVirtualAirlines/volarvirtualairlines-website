@@ -2554,3 +2554,59 @@ footer p {
         height: 200px;
     }
 }
+
+/* ==========================================================================
+   MENU CENTRALIZADO - DROPDOWN DESKTOP
+   ========================================================================== */
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.menu-dropdown {
+    position: relative;
+}
+
+.menu-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.menu-dropdown-toggle i {
+    font-size: 0.75rem;
+}
+
+.menu-dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    background: rgba(2, 6, 23, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 9999;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.menu-dropdown-content a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+.menu-dropdown-content a:hover {
+    background: rgba(31, 181, 168, 0.14);
+    color: var(--turquoise);
+}
+
+.menu-dropdown:hover .menu-dropdown-content {
+    display: flex;
+}
