@@ -7,5 +7,15 @@
     "summary": "Nosso servidor oficial já está disponível para todos os pilotos.",
     "image": "assets/news/2026-06-19-discord.png",
     "link": "https://discord.gg/fnvf8KYgzy"
+  },
+
+  {
+    "date": "2026-06-19",
+    "tag": "FROTA",
+    "color": "#5865F2",
+    "title": "EMBRAER 195",
+    "summary": "Bem vindo ao Empbraer 195 na frota da Volar",
+    "image": "assets/news/2026-06-19-E195.png",
+    "link": ""
   }
 ]
