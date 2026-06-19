@@ -16,5 +16,14 @@
     "title": "EMBRAER 195",
     "summary": "Bem vindo ao Empbraer 195 na frota da Volar",
     "image": "assets/news/2026-06-19-E195.png"
+  },
+
+    {
+    "date": "2026-06-19",
+    "tag": "AIRAC",
+    "color": "#FFD700",
+    "title": "AIRAC 2606",
+    "summary": "Novo ciclo AIRAC 2606",
+    "image": "assets/news/2026-06-19-AIRC2606.png"
   }
 ]
