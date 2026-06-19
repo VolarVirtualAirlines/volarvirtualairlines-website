@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volar News | Volar Virtual Airlines</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link class="css-file" rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo-container">
+        <a href="index.html">
+            <img src="assets/LOGO_WEBSITE.png" alt="Logotipo Volar Virtual Airlines" class="logo">
+        </a>
+    </div>
+
+    <nav class="menu">
+        <a href="index.html">Home</a>
+        <a href="index.html#sobre-nos">Sobre Nós</a>
+        <a href="cargo.html">Volar Cargo</a>
+        <a href="frota.html">Frota</a>
+        <a href="rotas.html">Rotas</a>
+        <a href="news.html">Volar News</a>
+        <a href="index.html#mapa">Online</a>
+        <a href="index.html#parceiros">Parceiros</a>
+        <a href="index.html#links">Links</a>
+        <a href="https://newsky.app/pilot/login" target="_blank" rel="noopener noreferrer" class="btn-va">Crew Room</a>
+    </nav>
+</header>
+
+<section class="section dark news-premium">
+    <h2>Volar News</h2>
+
+    <p class="news-intro">
+        Acompanhe os comunicados, novidades, atualizações operacionais e notícias oficiais da
+        Volar Virtual Airlines.
+    </p>
+
+    <div id="mensagem-news" class="news-message">
+        Carregando notícias...
+    </div>
+
+    <div id="news-container" class="news-container">
+        <!-- Cards inseridos via JavaScript -->
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <img src="assets/LOGO_WEBSITE.png" alt="Volar Virtual Airlines Logo" class="footer-logo">
+        <p>© 2026 Volar Virtual Airlines - Fly Beyond - ICAO: VVX - All Rights Reserved</p>
+    </div>
+</footer>
+
+<button id="btn-voltar-topo" title="Voltar ao topo">
+    ↑
+</button>
+
+<!-- BOTÃO DE SUPORTE FLUTUANTE -->
+<button type="button" id="btn-suporte" title="Precisa de ajuda?">
+    <img src="assets/support/support_icon.png" alt="Suporte">
+    <span class="label-suporte">Precisa de ajuda?</span>
+</button>
+
+<!-- MODAL DA CENTRAL DE ATENDIMENTO -->
+<div id="modal-suporte" class="modal-suporte-container">
+    <div class="modal-suporte-content">
+        <button type="button" class="btn-fechar-modal" id="fechar-suporte">&times;</button>
+
+        <div class="modal-header">
+            <h3>Central de Atendimento</h3>
+            <p>Volar Virtual Airlines</p>
+        </div>
+
+        <form action="https://api.staticforms.dev/submit" method="POST" id="form-suporte">
+            <input type="hidden" name="apiKey" value="sf_1f0637f6ba466017621733fb">
+            <input type="text" name="honeypot" style="display:none">
+            <input type="hidden" name="subject" value="Volar Virtual Airlines Suporte submission">
+
+            <div class="input-group">
+                <label for="sup-nome">Nome Completo</label>
+                <input type="text" id="sup-nome" name="name" placeholder="Digite seu nome" required>
+            </div>
+
+            <div class="input-group">
+                <label for="sup-email">E-mail de Contato</label>
+                <input type="email" id="sup-email" name="email" placeholder="seu-email@exemplo.com" required>
+            </div>
+
+            <div class="input-group">
+                <label for="sup-mensagem">Mensagem</label>
+                <textarea id="sup-mensagem" name="message" rows="4" placeholder="Como podemos ajudar você hoje, piloto?" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-enviar-suporte">Enviar Mensagem</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    async function carregarNews() {
+        const container = document.getElementById("news-container");
+        const mensagem = document.getElementById("mensagem-news");
+
+        try {
+            const response = await fetch("assets/data/news.json");
+
+            if (!response.ok) {
+                throw new Error("Erro ao carregar news.json");
+            }
+
+            let noticias = await response.json();
+
+            noticias = noticias
+                .filter(noticia =>
+                    noticia.image &&
+                    noticia.image.trim() !== "" &&
+                    noticia.title &&
+                    noticia.date
+                )
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 10);
+
+            if (noticias.length === 0) {
+                mensagem.textContent = "Nenhuma notícia disponível no momento.";
+                return;
+            }
+
+            mensagem.style.display = "none";
+            container.innerHTML = "";
+
+            noticias.forEach(noticia => {
+                const dataFormatada = new Date(noticia.date + "T00:00:00").toLocaleDateString("pt-BR");
+
+                const linkFinal = noticia.link && noticia.link.trim() !== ""
+                    ? noticia.link
+                    : noticia.image;
+
+                const card = document.createElement("a");
+                card.href = linkFinal;
+                card.target = "_blank";
+                card.rel = "noopener noreferrer";
+                card.className = "news-card";
+
+                card.innerHTML = `
+                    <div class="news-img-box">
+                        <img src="${noticia.image}" alt="${noticia.title}">
+                    </div>
+
+                    <div class="news-content">
+                        <span class="news-tag" style="background: ${noticia.color || '#2FA8A0'};">
+                            ${noticia.tag || 'VOLAR'}
+                        </span>
+
+                        <span class="news-date">
+                            ${dataFormatada}
+                        </span>
+
+                        <h3>${noticia.title}</h3>
+
+                        <p>${noticia.summary || ''}</p>
+
+                        <span class="news-read-more">
+                            Ver notícia <i class="fas fa-arrow-up-right-from-square"></i>
+                        </span>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+
+        } catch (error) {
+            console.error("Erro ao carregar Volar News:", error);
+            mensagem.textContent = "Não foi possível carregar as notícias no momento.";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", carregarNews);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const btnTopo = document.getElementById("btn-voltar-topo");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 400) {
+                btnTopo.style.display = "flex";
+            } else {
+                btnTopo.style.display = "none";
+            }
+        });
+
+        btnTopo.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    });
+</script>
+
+<script src="assets/js/support.js"></script>
+
+</body>
+</html>
