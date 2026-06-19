@@ -94,4 +94,25 @@ menuContainer.innerHTML = `
         });
     });
 });
+
+function ajustarAncoraAoCarregar() {
+    if (!window.location.hash) return;
+
+    const idSecao = window.location.hash.replace("#", "");
+    const alvo = document.getElementById(idSecao);
+
+    if (!alvo) return;
+
+    setTimeout(() => {
+        const alturaMenu = document.querySelector(".navbar").offsetHeight;
+        const posicaoAlvo = alvo.getBoundingClientRect().top + window.scrollY - alturaMenu;
+
+        window.scrollTo({
+            top: posicaoAlvo,
+            behavior: "smooth"
+        });
+    }, 700);
+}
+
+ajustarAncoraAoCarregar();
 });
