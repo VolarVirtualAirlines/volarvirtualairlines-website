@@ -2637,3 +2637,34 @@ footer p {
 .footer-links span {
     color: rgba(255,255,255,0.25);
 }
+
+/* ==========================================================================
+   PÁGINAS LEGAIS
+   ========================================================================== */
+
+.legal-content {
+    max-width: 900px;
+    margin: 40px auto 0 auto;
+    text-align: left;
+}
+
+.legal-content h3 {
+    color: var(--text-light);
+    margin-top: 35px;
+    margin-bottom: 15px;
+}
+
+.legal-content p {
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.legal-content ul {
+    margin: 15px 0 20px 25px;
+    padding-left: 20px;
+}
+
+.legal-content li {
+    margin-bottom: 10px;
+    color: var(--text-muted);
+}
