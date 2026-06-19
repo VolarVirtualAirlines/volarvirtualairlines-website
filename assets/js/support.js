@@ -4,6 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const btnSuporte = document.getElementById('btn-suporte');
+    const footerSuporteLink = document.getElementById('footer-suporte-link');
     const modalSuporte = document.getElementById('modal-suporte');
     const btnFecharSuporte = document.getElementById('fechar-suporte');
     const formSuporte = document.getElementById('form-suporte');
@@ -18,6 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
         modalSuporte.classList.add('active');
         document.body.style.overflow = 'hidden';
     });
+
+   if (footerSuporteLink) {
+    footerSuporteLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        modalSuporte.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+   }
 
     btnFecharSuporte.addEventListener('click', fecharModalSuporte);
 
