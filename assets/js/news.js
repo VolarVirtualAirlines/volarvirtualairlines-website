@@ -36,16 +36,13 @@
                     ? noticia.link
                     : noticia.image;
 
-                const card = document.createElement("a");
-                card.href = linkFinal;
-                card.target = "_blank";
-                card.rel = "noopener noreferrer";
+                const card = document.createElement("article");
                 card.className = "news-card";
 
                 card.innerHTML = `
-                    <div class="news-img-box">
+                    <a href="${noticia.image}" target="_blank" rel="noopener noreferrer" class="news-img-box">
                         <img src="${noticia.image}" alt="${noticia.title}">
-                    </div>
+                    </a>
 
                     <div class="news-content">
                         <span class="news-tag" style="background: ${noticia.color || '#2FA8A0'};">
@@ -60,9 +57,9 @@
 
                         <p>${noticia.summary || ''}</p>
 
-                        <span class="news-read-more">
+                        <a href="${linkFinal}" target="_blank" rel="noopener noreferrer" class="news-read-more">
                             Ver notícia <i class="fas fa-arrow-up-right-from-square"></i>
-                        </span>
+                        </a>
                     </div>
                 `;
 
