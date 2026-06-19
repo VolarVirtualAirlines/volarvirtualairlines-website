@@ -2,6 +2,16 @@
 VOLAR NEWS - PADRÃO DE TAGS OFICIAIS
 =================================================
 
+🟢 OPERACOES   #22C55E
+🔵 SITE        #3B82F6
+🟣 EVENTOS     #A855F7
+🟠 DISCORD     #F97316
+✈️ FROTA       #2FA8A0
+🔴 IVAO        #EF4444
+🟤 CARGO       #C08457
+🔷 TOUR        #06B6D4
+📡 AIRAC       #FFD700
+
 🟢 OPERACOES
 Cor: #22C55E
 Uso: Operações, rotas, voos, malha aérea, procedimentos.
@@ -19,7 +29,7 @@ Cor: #F97316
 Uso: Discord, comunicação, suporte e comunidade.
 
 🟡 FROTA
-Cor: #EAB308
+Cor: #2FA8A0
 Uso: Novas aeronaves, liveries e atualizações da frota.
 
 🔴 IVAO
