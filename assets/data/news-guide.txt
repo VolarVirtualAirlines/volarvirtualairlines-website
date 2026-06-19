@@ -34,6 +34,9 @@ Uso: Volar Cargo, operações cargueiras e expansão logística.
 Cor: #06B6D4
 Uso: Tours, desafios e programas especiais para pilotos.
 
+🟨 AIRAC       #FFD700
+Uso: Atualização de AIRAC
+
 =================================================
 EXEMPLO DE USO NO NEWS.JSON
 =================================================
