@@ -2440,3 +2440,117 @@ footer p {
     line-height: 1.6;
     opacity: 0.95;
 }
+
+/* ==========================================================================
+   VOLAR NEWS
+   ========================================================================== */
+
+.news-premium {
+    min-height: 100vh;
+}
+
+.news-intro {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    text-align: center;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
+.news-message {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+.news-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.news-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--turquoise);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+}
+
+.news-img-box {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.news-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.news-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.news-tag {
+    align-self: flex-start;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
+
+.news-date {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.news-content h3 {
+    color: #fff;
+    margin: 0;
+    font-size: 1.15rem;
+}
+
+.news-content p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.news-read-more {
+    margin-top: auto;
+    color: var(--turquoise);
+    font-weight: 600;
+}
+
+.news-read-more i {
+    margin-left: 6px;
+}
+
+@media (max-width: 768px) {
+    .news-container {
+        grid-template-columns: 1fr;
+    }
+
+    .news-img-box {
+        height: 200px;
+    }
+}
