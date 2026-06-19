@@ -8,4 +8,14 @@
     "image": "assets/news/2026-06-19-discord.png",
     "link": "https://discord.gg/fnvf8KYgzy"
   }
+
+    {
+    "date": "2026-06-19",
+    "tag": "FROTA",
+    "color": "#5865F2",
+    "title": "Embraer 195",
+    "summary": "Bem vindo ao Embraer 195 na frota da Volar",
+    "image": "assets/news/2026-06-19-195.png",
+    "link": ""
+  }
 ]
