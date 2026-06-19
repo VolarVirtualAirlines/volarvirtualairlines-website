@@ -24,15 +24,4 @@ document.addEventListener("DOMContentLoaded", () => {
         </footer>
     `;
 
-    const suporteLink = document.getElementById("footer-suporte-link");
-    const modalSuporte = document.getElementById("modal-suporte");
-
-    if (suporteLink && modalSuporte) {
-        suporteLink.addEventListener("click", (event) => {
-            event.preventDefault();
-            modalSuporte.classList.add("active");
-            document.body.style.overflow = "hidden";
-        });
-    }
-
 });
