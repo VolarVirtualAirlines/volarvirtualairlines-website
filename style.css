@@ -2610,3 +2610,30 @@ footer p {
 .menu-dropdown:hover .menu-dropdown-content {
     display: flex;
 }
+
+/* ==========================================================================
+   FOOTER LINKS
+   ========================================================================== */
+
+.footer-links {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--turquoise);
+}
+
+.footer-links span {
+    color: rgba(255,255,255,0.25);
+}
