@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             <a href="index.html">Home</a>
 
-            <a href="#sobre-nos">Sobre Nós</a>
+            <a href="index.html#sobre-nos">Sobre Nós</a>
 
             <a href="cargo.html">Volar Cargo</a>
 
@@ -17,13 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             <a href="rotas.html">Rotas</a>
 
-            <a href="#mapa">Online</a>
+            <a href="index.html#mapa">Online</a>
 
             <a href="news.html">Volar News</a>
 
-            <a href="#parceiros">Parceiros</a>
+            <a href="index.html#parceiros">Parceiros</a>
 
-            <a href="#links">Links</a>
+            <a href="index.html#links">Links</a>
 
             <a href="https://newsky.app/pilot/login"
                target="_blank"
