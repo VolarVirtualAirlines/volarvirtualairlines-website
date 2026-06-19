@@ -20,13 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'hidden';
     });
 
-   if (footerSuporteLink) {
-    footerSuporteLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        modalSuporte.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-   }
+    if (footerSuporteLink) {
+        footerSuporteLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            modalSuporte.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
 
     btnFecharSuporte.addEventListener('click', fecharModalSuporte);
 
