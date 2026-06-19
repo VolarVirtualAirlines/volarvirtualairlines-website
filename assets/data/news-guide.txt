@@ -1,0 +1,48 @@
+=================================================
+VOLAR NEWS - PADRÃO DE TAGS OFICIAIS
+=================================================
+
+🟢 OPERACOES
+Cor: #22C55E
+Uso: Operações, rotas, voos, malha aérea, procedimentos.
+
+🔵 SITE
+Cor: #3B82F6
+Uso: Atualizações do site, novas funcionalidades e melhorias.
+
+🟣 EVENTOS
+Cor: #A855F7
+Uso: Eventos internos, fly-ins, encontros e campanhas.
+
+🟠 DISCORD
+Cor: #F97316
+Uso: Discord, comunicação, suporte e comunidade.
+
+🟡 FROTA
+Cor: #EAB308
+Uso: Novas aeronaves, liveries e atualizações da frota.
+
+🔴 IVAO
+Cor: #EF4444
+Uso: Certificações, MTLs, eventos IVAO e comunicados oficiais.
+
+🟤 CARGO
+Cor: #C08457
+Uso: Volar Cargo, operações cargueiras e expansão logística.
+
+🔷 TOUR
+Cor: #06B6D4
+Uso: Tours, desafios e programas especiais para pilotos.
+
+=================================================
+EXEMPLO DE USO NO NEWS.JSON
+=================================================
+
+{
+  "date": "2026-06-19",
+  "tag": "DISCORD",
+  "title": "Discord Oficial da Volar",
+  "summary": "Nosso servidor oficial já está disponível para todos os pilotos.",
+  "image": "assets/news/2026-06-19-discord.png",
+  "link": "https://discord.gg/fnvf8KYgzy"
+}
