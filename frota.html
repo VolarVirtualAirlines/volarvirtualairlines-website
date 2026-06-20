@@ -522,6 +522,9 @@ function filtrarFrota() {
     const tipo = filtroTipo.value;
     const desenvolvedor = filtroDesenvolvedor.value;
     const simulador = filtroSimulador.value;
+    const contadorFrota = document.getElementById("contador-frota");
+
+    let totalVisivel = 0;
 
     linhasFrota.forEach(row => {
         const rowAeronave = row.children[1]?.textContent.trim().toLowerCase();
@@ -536,7 +539,15 @@ function filtrarFrota() {
             (!simulador || rowSimulador === simulador);
 
         row.style.display = exibir ? "" : "none";
+
+        if (exibir) {
+            totalVisivel++;
+        }
     });
+
+    if (contadorFrota) {
+        contadorFrota.textContent = `Mostrando ${totalVisivel} de ${linhasFrota.length} liveries`;
+    }
 }
 
 preencherFiltro(filtroAeronave, 1);
