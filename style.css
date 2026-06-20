@@ -2051,6 +2051,101 @@ footer p {
 }
 
 /* =====================================
+   FILTROS DA FROTA
+===================================== */
+
+.filtros-frota {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.filtros-frota select {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: var(--text-main);
+    min-width: 230px;
+    font-size: 15px;
+}
+
+.filtros-frota select:focus {
+    outline: none;
+    border-color: var(--turquoise);
+}
+
+.filtros-frota select option {
+    background: #0A2342;
+    color: #ffffff;
+}
+
+#btn-limpar-filtros-frota {
+    height: 48px;
+    min-width: 140px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border-radius: 14px;
+
+    font-family: var(--font-headers);
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+}
+
+#btn-limpar-filtros-frota:hover {
+    border-color: var(--turquoise);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.contador-frota {
+    display: inline-block;
+    margin: 0 auto 26px auto;
+    padding: 8px 16px;
+
+    border-radius: 999px;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.25);
+
+    color: var(--turquoise);
+    font-family: var(--font-headers);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+#contador-frota {
+    display: block;
+    width: fit-content;
+}
+
+@media (max-width: 768px) {
+
+    .filtros-frota {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filtros-frota select,
+    #btn-limpar-filtros-frota {
+        width: 100%;
+        max-width: 420px;
+    }
+}
+
+/* =====================================
    ESTATÍSTICAS DE ROTAS
 ===================================== */
 
