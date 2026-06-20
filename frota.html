@@ -44,6 +44,29 @@
         ✅ EM HOMOLOGAÇÃO
         🟢 EM OPERAÇÃO
     -->
+
+        <div class="filtros-frota">
+            <select id="filtro-aeronave">
+                <option value="">Todas as aeronaves</option>
+            </select>
+        
+            <select id="filtro-tipo">
+                <option value="">Todos os tipos</option>
+            </select>
+        
+            <select id="filtro-desenvolvedor">
+                <option value="">Todos os desenvolvedores</option>
+            </select>
+        
+            <select id="filtro-simulador">
+                <option value="">Todos os simuladores</option>
+            </select>
+        
+            <button type="button" id="btn-limpar-filtros-frota">
+                <i class="fas fa-eraser"></i> Limpar
+            </button>
+        </div>
+    
         <div class="tabela-responsiva">
             <table class="tabela-frota">
                 <thead>
@@ -456,6 +479,80 @@ document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
             }
         
         });
+
+    const linhasFrota = document.querySelectorAll(".tabela-frota tbody tr");
+
+const filtroAeronave = document.getElementById("filtro-aeronave");
+const filtroTipo = document.getElementById("filtro-tipo");
+const filtroDesenvolvedor = document.getElementById("filtro-desenvolvedor");
+const filtroSimulador = document.getElementById("filtro-simulador");
+const btnLimparFiltrosFrota = document.getElementById("btn-limpar-filtros-frota");
+
+function limparEmoji(texto) {
+    return texto.replace(/[^\w\s\-\/]/g, "").trim();
+}
+
+function preencherFiltro(select, coluna, limpar = false) {
+    const valores = new Set();
+
+    linhasFrota.forEach(row => {
+        let valor = row.children[coluna]?.textContent.trim();
+
+        if (limpar) {
+            valor = limparEmoji(valor);
+        }
+
+        if (valor) valores.add(valor);
+    });
+
+    [...valores].sort().forEach(valor => {
+        const option = document.createElement("option");
+        option.value = valor.toLowerCase();
+        option.textContent = valor;
+        select.appendChild(option);
+    });
+}
+
+function filtrarFrota() {
+    const aeronave = filtroAeronave.value;
+    const tipo = filtroTipo.value;
+    const desenvolvedor = filtroDesenvolvedor.value;
+    const simulador = filtroSimulador.value;
+
+    linhasFrota.forEach(row => {
+        const rowAeronave = row.children[1]?.textContent.trim().toLowerCase();
+        const rowTipo = limparEmoji(row.children[2]?.textContent.trim()).toLowerCase();
+        const rowDesenvolvedor = row.children[3]?.textContent.trim().toLowerCase();
+        const rowSimulador = row.children[6]?.textContent.trim().toLowerCase();
+
+        const exibir =
+            (!aeronave || rowAeronave === aeronave) &&
+            (!tipo || rowTipo === tipo) &&
+            (!desenvolvedor || rowDesenvolvedor === desenvolvedor) &&
+            (!simulador || rowSimulador === simulador);
+
+        row.style.display = exibir ? "" : "none";
+    });
+}
+
+preencherFiltro(filtroAeronave, 1);
+preencherFiltro(filtroTipo, 2, true);
+preencherFiltro(filtroDesenvolvedor, 3);
+preencherFiltro(filtroSimulador, 6);
+
+[filtroAeronave, filtroTipo, filtroDesenvolvedor, filtroSimulador].forEach(filtro => {
+    filtro.addEventListener("change", filtrarFrota);
+});
+
+btnLimparFiltrosFrota.addEventListener("click", () => {
+    filtroAeronave.value = "";
+    filtroTipo.value = "";
+    filtroDesenvolvedor.value = "";
+    filtroSimulador.value = "";
+
+    filtrarFrota();
+});
+    
 </script>
 
 <script src="assets/js/menu.js"></script>
