@@ -554,7 +554,9 @@ preencherFiltro(filtroAeronave, 1);
 preencherFiltro(filtroTipo, 2, true);
 preencherFiltro(filtroDesenvolvedor, 3);
 preencherFiltro(filtroSimulador, 6);
+filtrarFrota();
 
+    
 [filtroAeronave, filtroTipo, filtroDesenvolvedor, filtroSimulador].forEach(filtro => {
     filtro.addEventListener("change", filtrarFrota);
 });
