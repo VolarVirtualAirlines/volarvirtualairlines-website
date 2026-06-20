@@ -205,6 +205,34 @@
     </div>
 </div>
 
+</div>
+<!-- fim do modal suporte -->
+
+<button id="btn-voltar-topo" title="Voltar ao topo">
+    ↑
+</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const btnTopo = document.getElementById("btn-voltar-topo");
+
+    if (!btnTopo) return;
+
+    window.addEventListener('scroll', () => {
+        btnTopo.style.display = window.scrollY > 400 ? "flex" : "none";
+    });
+
+    btnTopo.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+
+});
+</script>
+    
 <script src="assets/js/menu.js"></script>
 <script src="assets/js/footer.js"></script>
 <script src="assets/js/support.js"></script>
