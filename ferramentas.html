@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferramentas Recomendadas | Volar Virtual Airlines</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo-container">
+        <a href="index.html">
+            <img src="assets/LOGO_WEBSITE.png" alt="Logotipo Volar Virtual Airlines" class="logo">
+        </a>
+    </div>
+
+    <div id="menu-container"></div>
+</header>
+
+<section class="section dark ferramentas-premium">
+    <h2>Ferramentas Recomendadas</h2>
+
+    <p class="ferramentas-intro">
+        A Volar Virtual Airlines utiliza e recomenda ferramentas que auxiliam no planejamento,
+        navegação e preparação dos voos. Algumas fazem parte do fluxo operacional da companhia,
+        enquanto outras são recursos complementares para aprimorar a experiência dos pilotos.
+    </p>
+
+    <h3 class="ferramentas-subtitulo">Ferramentas Oficiais da Volar</h3>
+
+    <div class="ferramentas-cards oficiais">
+        <div class="ferramenta-card">
+            <i class="fas fa-file-alt"></i>
+            <h3>SimBrief</h3>
+            <span>Oficial • Integrado ao NewSky</span>
+            <p>
+                Planejamento operacional de voo utilizado para geração de plano de voo,
+                cálculo de combustível, rota, alternado e informações operacionais.
+            </p>
+        </div>
+
+        <div class="ferramenta-card">
+            <i class="fas fa-cloud-sun"></i>
+            <h3>METAR-TAF</h3>
+            <span>Oficial • Consulta Meteorológica</span>
+            <p>
+                Ferramenta recomendada para consulta de condições meteorológicas,
+                METAR, TAF e análise operacional antes da realização dos voos.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section ferramentas-complementares">
+    <h2>Ferramentas Complementares</h2>
+
+    <p class="ferramentas-intro">
+        Além das ferramentas oficiais, a Volar recomenda alguns recursos complementares
+        que podem auxiliar os pilotos na consulta de cartas, navegação e planejamento visual.
+    </p>
+
+    <div class="ferramentas-cards">
+        <div class="ferramenta-card">
+            <i class="fas fa-map"></i>
+            <h3>Navigraph</h3>
+            <span>Opcional • Recomendado</span>
+            <p>
+                Cartas aeronáuticas, procedimentos SID, STAR, aproximações e AIRAC atualizado
+                para uma experiência mais próxima da aviação real.
+            </p>
+        </div>
+
+        <div class="ferramenta-card">
+            <i class="fas fa-globe-americas"></i>
+            <h3>AISWEB</h3>
+            <span>Consulta • Brasil</span>
+            <p>
+                Fonte oficial brasileira para consulta de cartas aeronáuticas, AIP, NOTAM
+                e publicações operacionais.
+            </p>
+        </div>
+
+        <div class="ferramenta-card">
+            <i class="fas fa-map-location-dot"></i>
+            <h3>ChartFox</h3>
+            <span>Gratuito • Cartas</span>
+            <p>
+                Plataforma gratuita para consulta de cartas aeronáuticas, muito útil para pilotos
+                que não utilizam ferramentas pagas de navegação.
+            </p>
+        </div>
+
+        <div class="ferramenta-card">
+            <i class="fas fa-route"></i>
+            <h3>Little Navmap</h3>
+            <span>Gratuito • Planejamento</span>
+            <p>
+                Ferramenta gratuita para planejamento, acompanhamento e visualização de rotas
+                com recursos avançados de navegação.
+            </p>
+        </div>
+    </div>
+
+    <div class="ferramentas-observacao">
+        <h3>Observação</h3>
+        <p>
+            Algumas ferramentas listadas são opcionais. A Volar Virtual Airlines recomenda sua utilização
+            para aprimorar a experiência operacional dos pilotos, porém seu uso não é obrigatório para
+            participação na companhia.
+        </p>
+    </div>
+
+    <div class="links-container">
+        <a href="https://newsky.app/pilot/login" target="_blank" rel="noopener noreferrer" class="btn-link">
+            Acessar Crew Room
+        </a>
+
+        <a href="rotas.html" class="btn-link">
+            Ver Rotas Oficiais
+        </a>
+    </div>
+</section>
+
+<div id="footer-container"></div>
+
+<button id="btn-voltar-topo" title="Voltar ao topo">↑</button>
+
+<button type="button" id="btn-suporte" title="Precisa de ajuda?">
+    <img src="assets/support/support_icon.png" alt="Suporte">
+    <span class="label-suporte">Precisa de ajuda?</span>
+</button>
+
+<div id="modal-suporte" class="modal-suporte-container">
+    <div class="modal-suporte-content">
+        <button type="button" class="btn-fechar-modal" id="fechar-suporte">&times;</button>
+
+        <div class="modal-header">
+            <h3>Central de Atendimento</h3>
+            <p>Volar Virtual Airlines</p>
+        </div>
+
+        <form action="https://api.staticforms.dev/submit" method="POST" id="form-suporte">
+            <input type="hidden" name="apiKey" value="sf_1f0637f6ba466017621733fb">
+            <input type="text" name="honeypot" style="display:none">
+            <input type="hidden" name="subject" value="Volar Virtual Airlines Suporte submission">
+
+            <div class="input-group">
+                <label for="sup-nome">Nome Completo</label>
+                <input type="text" id="sup-nome" name="name" placeholder="Digite seu nome" required>
+            </div>
+
+            <div class="input-group">
+                <label for="sup-email">E-mail de Contato</label>
+                <input type="email" id="sup-email" name="email" placeholder="seu-email@exemplo.com" required>
+            </div>
+
+            <div class="input-group">
+                <label for="sup-mensagem">Mensagem</label>
+                <textarea id="sup-mensagem" name="message" rows="4" placeholder="Como podemos ajudar você hoje, piloto?" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-enviar-suporte">Enviar Mensagem</button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btnTopo = document.getElementById("btn-voltar-topo");
+
+    window.addEventListener('scroll', () => {
+        btnTopo.style.display = window.scrollY > 400 ? "flex" : "none";
+    });
+
+    btnTopo.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+});
+</script>
+
+<script src="assets/js/menu.js"></script>
+<script src="assets/js/footer.js"></script>
+<script src="assets/js/support.js"></script>
+
+</body>
+</html>
