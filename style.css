@@ -3093,3 +3093,32 @@ footer p {
     font-size: 12px;
     margin-left: 6px;
 }
+
+/* ==========================================================
+   BANNER FERRAMENTAS
+========================================================== */
+
+.ferramentas-banner {
+    max-width: 1400px;
+    margin: 45px auto 10px auto;
+    padding: 0 24px;
+}
+
+.banner-ferramentas {
+    width: 100%;
+    display: block;
+    border-radius: 18px;
+    border: 1px solid rgba(0, 229, 255, 0.18);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 768px) {
+    .ferramentas-banner {
+        margin: 30px auto 5px auto;
+        padding: 0 16px;
+    }
+
+    .banner-ferramentas {
+        border-radius: 12px;
+    }
+}
