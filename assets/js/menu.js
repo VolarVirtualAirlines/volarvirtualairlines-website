@@ -36,12 +36,21 @@ menuContainer.innerHTML = `
 
     <div class="menu-dropdown">
         <a href="#" class="menu-dropdown-toggle">
+            Divisões <i class="fas fa-chevron-down"></i>
+        </a>
+    
+        <div class="menu-dropdown-content">
+            <a href="cargo.html">Volar Cargo</a>
+        </div>
+    </div>
+    
+    <div class="menu-dropdown">
+        <a href="#" class="menu-dropdown-toggle">
             Frota <i class="fas fa-chevron-down"></i>
         </a>
-
+    
         <div class="menu-dropdown-content">
             <a href="frota.html">Frota Volar</a>
-            <a href="cargo.html">Volar Cargo</a>
         </div>
     </div>
 
