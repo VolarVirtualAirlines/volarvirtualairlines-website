@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <div class="menu-dropdown-content">
             <a href="index.html#sobre-nos">Sobre Nós</a>
+            <a href="index.html#hubs">Hubs Operacionais</a>
             <a href="index.html#simuladores">Plataformas</a>
             <a href="news.html">Volar News</a>
         </div>
@@ -117,6 +118,7 @@ const hashAtual = window.location.hash;
 
         if (
             hashAtual === "#sobre-nos" ||
+            hashAtual === "#hubs" ||
             hashAtual === "#simuladores"
         ) {
             menuAtivo = "volar";
@@ -182,6 +184,7 @@ const hashAtual = window.location.hash;
             
             if (
                 idSecao === "sobre-nos" ||
+                idSecao === "hubs" ||
                 idSecao === "simuladores"
             ) {
                 novoMenuAtivo = "volar";
