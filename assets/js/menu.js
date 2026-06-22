@@ -133,10 +133,14 @@ const hashAtual = window.location.hash;
             if (!href.includes("#")) return;
 
             const [pagina, idSecao] = href.split("#");
-
-            const paginaAtual = window.location.pathname.split("/").pop() || "index.html";
-
-            if (pagina && pagina !== paginaAtual) return;
+        
+        let paginaAtualClique = window.location.pathname.split("/").pop() || "index.html";
+        
+        if (!paginaAtualClique.includes(".")) {
+            paginaAtualClique = `${paginaAtualClique}.html`;
+        }
+        
+        if (pagina && pagina !== paginaAtualClique) return;
 
             const alvo = document.getElementById(idSecao);
 
