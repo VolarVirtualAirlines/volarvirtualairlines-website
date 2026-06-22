@@ -4,13 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!menuContainer) return;
 
-menuContainer.innerHTML = `
+    menuContainer.innerHTML = `
 <nav class="menu">
 
-    <a href="index.html">Home</a>
+    <a href="index.html" data-menu="home">Home</a>
 
     <div class="menu-dropdown">
-        <a href="#" class="menu-dropdown-toggle">
+        <a href="#" class="menu-dropdown-toggle" data-menu="volar">
             Volar <i class="fas fa-chevron-down"></i>
         </a>
 
@@ -22,7 +22,7 @@ menuContainer.innerHTML = `
     </div>
 
     <div class="menu-dropdown">
-        <a href="#" class="menu-dropdown-toggle">
+        <a href="#" class="menu-dropdown-toggle" data-menu="operacoes">
             Operações <i class="fas fa-chevron-down"></i>
         </a>
 
@@ -35,7 +35,7 @@ menuContainer.innerHTML = `
     </div>
 
     <div class="menu-dropdown">
-        <a href="#" class="menu-dropdown-toggle">
+        <a href="#" class="menu-dropdown-toggle" data-menu="divisoes">
             Divisões <i class="fas fa-chevron-down"></i>
         </a>
     
@@ -45,7 +45,7 @@ menuContainer.innerHTML = `
     </div>
     
     <div class="menu-dropdown">
-        <a href="#" class="menu-dropdown-toggle">
+        <a href="#" class="menu-dropdown-toggle" data-menu="frota">
             Frota <i class="fas fa-chevron-down"></i>
         </a>
     
@@ -55,7 +55,7 @@ menuContainer.innerHTML = `
     </div>
 
     <div class="menu-dropdown">
-        <a href="#" class="menu-dropdown-toggle">
+        <a href="#" class="menu-dropdown-toggle" data-menu="comunidade">
             Comunidade <i class="fas fa-chevron-down"></i>
         </a>
 
@@ -76,70 +76,97 @@ menuContainer.innerHTML = `
 </nav>
 `;
 
-    document.querySelectorAll('.menu a[href*="#"]').forEach(link => {
     const paginaAtual = window.location.pathname.split("/").pop() || "index.html";
+    const hashAtual = window.location.hash;
 
     const mapaMenuAtivo = {
         "index.html": "home",
         "news.html": "volar",
         "rotas.html": "operacoes",
         "cargo.html": "divisoes",
-        "frota.html": "frota"
+        "frota.html": "frota",
+        "privacy.html": "volar",
+        "terms.html": "volar"
     };
-    
-    const menuAtivo = mapaMenuAtivo[paginaAtual];
-    
+
+    let menuAtivo = mapaMenuAtivo[paginaAtual];
+
+    if (paginaAtual === "index.html" && hashAtual) {
+        if (
+            hashAtual === "#mapa" ||
+            hashAtual === "#voos-reais" ||
+            hashAtual === "#voos-recentes"
+        ) {
+            menuAtivo = "operacoes";
+        }
+
+        if (
+            hashAtual === "#social" ||
+            hashAtual === "#parceiros" ||
+            hashAtual === "#links"
+        ) {
+            menuAtivo = "comunidade";
+        }
+
+        if (
+            hashAtual === "#sobre-nos" ||
+            hashAtual === "#simuladores"
+        ) {
+            menuAtivo = "volar";
+        }
+    }
+
     if (menuAtivo) {
         const itemAtivo = document.querySelector(`[data-menu="${menuAtivo}"]`);
         if (itemAtivo) itemAtivo.classList.add("active");
     }
 
     document.querySelectorAll('.menu a[href*="#"]').forEach(link => {
-    link.addEventListener("click", function (event) {
-        const href = this.getAttribute("href");
+        link.addEventListener("click", function (event) {
+            const href = this.getAttribute("href");
 
-        if (!href.includes("#")) return;
+            if (!href.includes("#")) return;
 
-        const [pagina, idSecao] = href.split("#");
+            const [pagina, idSecao] = href.split("#");
 
-        const paginaAtual = window.location.pathname.split("/").pop() || "index.html";
+            const paginaAtual = window.location.pathname.split("/").pop() || "index.html";
 
-        if (pagina && pagina !== paginaAtual) return;
+            if (pagina && pagina !== paginaAtual) return;
 
+            const alvo = document.getElementById(idSecao);
+
+            if (!alvo) return;
+
+            event.preventDefault();
+
+            const alturaMenu = document.querySelector(".navbar").offsetHeight;
+            const posicaoAlvo = alvo.getBoundingClientRect().top + window.scrollY - alturaMenu;
+
+            window.scrollTo({
+                top: posicaoAlvo,
+                behavior: "smooth"
+            });
+        });
+    });
+
+    function ajustarAncoraAoCarregar() {
+        if (!window.location.hash) return;
+
+        const idSecao = window.location.hash.replace("#", "");
         const alvo = document.getElementById(idSecao);
 
         if (!alvo) return;
 
-        event.preventDefault();
+        setTimeout(() => {
+            const alturaMenu = document.querySelector(".navbar").offsetHeight;
+            const posicaoAlvo = alvo.getBoundingClientRect().top + window.scrollY - alturaMenu;
 
-        const alturaMenu = document.querySelector(".navbar").offsetHeight;
-        const posicaoAlvo = alvo.getBoundingClientRect().top + window.scrollY - alturaMenu;
+            window.scrollTo({
+                top: posicaoAlvo,
+                behavior: "smooth"
+            });
+        }, 700);
+    }
 
-        window.scrollTo({
-            top: posicaoAlvo,
-            behavior: "smooth"
-        });
-    });
-});
-
-function ajustarAncoraAoCarregar() {
-    if (!window.location.hash) return;
-
-    const idSecao = window.location.hash.replace("#", "");
-    const alvo = document.getElementById(idSecao);
-
-    if (!alvo) return;
-
-    setTimeout(() => {
-        const alturaMenu = document.querySelector(".navbar").offsetHeight;
-        const posicaoAlvo = alvo.getBoundingClientRect().top + window.scrollY - alturaMenu;
-
-        window.scrollTo({
-            top: posicaoAlvo,
-            behavior: "smooth"
-        });
-    }, 700);
-}
-
-ajustarAncoraAoCarregar();
+    ajustarAncoraAoCarregar();
 });
