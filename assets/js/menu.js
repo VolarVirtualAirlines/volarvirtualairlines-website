@@ -151,6 +151,40 @@ const hashAtual = window.location.hash;
                 top: posicaoAlvo,
                 behavior: "smooth"
             });
+
+            document.querySelectorAll(".menu .active").forEach(item => {
+                item.classList.remove("active");
+            });
+            
+            let novoMenuAtivo = "home";
+            
+            if (
+                idSecao === "mapa" ||
+                idSecao === "voos-reais" ||
+                idSecao === "voos-recentes"
+            ) {
+                novoMenuAtivo = "operacoes";
+            }
+            
+            if (
+                idSecao === "social" ||
+                idSecao === "parceiros" ||
+                idSecao === "links"
+            ) {
+                novoMenuAtivo = "comunidade";
+            }
+            
+            if (
+                idSecao === "sobre-nos" ||
+                idSecao === "simuladores"
+            ) {
+                novoMenuAtivo = "volar";
+            }
+            
+            const novoItemAtivo = document.querySelector(`[data-menu="${novoMenuAtivo}"]`);
+            if (novoItemAtivo) novoItemAtivo.classList.add("active");
+            
+            history.replaceState(null, "", `#${idSecao}`);
         });
     });
 
