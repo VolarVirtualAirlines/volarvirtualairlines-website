@@ -1501,10 +1501,10 @@ footer p {
 }
 
 .hubs-intro {
-    max-width: 900px;
-    margin: 0 auto 65px auto;
+    max-width: 980px;
+    margin: 0 auto 45px auto;
     font-size: 18px;
-    line-height: 1.8;
+    line-height: 1.9;
     color: var(--text-muted);
 }
 
