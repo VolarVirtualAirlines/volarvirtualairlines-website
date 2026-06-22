@@ -3075,3 +3075,21 @@ footer p {
         padding: 30px 24px;
     }
 }
+
+.ferramenta-link {
+    display: inline-block;
+    margin-top: 18px;
+    color: var(--turquoise);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.ferramenta-link:hover {
+    color: #ffffff;
+}
+
+.ferramenta-link i {
+    font-size: 12px;
+    margin-left: 6px;
+}
