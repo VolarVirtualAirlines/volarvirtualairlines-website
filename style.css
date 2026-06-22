@@ -2974,12 +2974,16 @@ footer p {
     font-weight: 700;
 }
 
-.ferramentas-cards {
-    max-width: 1250px;
-    margin: 35px auto 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+.ferramenta-card {
+    width: 280px;
+
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 34px 28px;
+    text-align: center;
+    transition: all 0.35s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
 }
 
 .ferramentas-oficiais {
