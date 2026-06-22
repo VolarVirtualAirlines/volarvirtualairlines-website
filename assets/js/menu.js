@@ -76,8 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
 </nav>
 `;
 
-    const paginaAtual = window.location.pathname.split("/").pop() || "index.html";
-    const hashAtual = window.location.hash;
+let paginaAtual = window.location.pathname.split("/").pop() || "index.html";
+
+if (!paginaAtual.includes(".")) {
+    paginaAtual = `${paginaAtual}.html`;
+}
+
+const hashAtual = window.location.hash;
 
     const mapaMenuAtivo = {
         "index.html": "home",
