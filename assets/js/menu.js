@@ -77,6 +77,24 @@ menuContainer.innerHTML = `
 `;
 
     document.querySelectorAll('.menu a[href*="#"]').forEach(link => {
+    const paginaAtual = window.location.pathname.split("/").pop() || "index.html";
+
+    const mapaMenuAtivo = {
+        "index.html": "home",
+        "news.html": "volar",
+        "rotas.html": "operacoes",
+        "cargo.html": "divisoes",
+        "frota.html": "frota"
+    };
+    
+    const menuAtivo = mapaMenuAtivo[paginaAtual];
+    
+    if (menuAtivo) {
+        const itemAtivo = document.querySelector(`[data-menu="${menuAtivo}"]`);
+        if (itemAtivo) itemAtivo.classList.add("active");
+    }
+
+    document.querySelectorAll('.menu a[href*="#"]').forEach(link => {
     link.addEventListener("click", function (event) {
         const href = this.getAttribute("href");
 
