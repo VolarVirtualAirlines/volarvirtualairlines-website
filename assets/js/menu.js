@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <div class="menu-dropdown-content">
             <a href="rotas.html">Rotas Oficiais</a>
+            <a href="ferramentas.html">Ferramentas Recomendadas</a>
             <a href="index.html#mapa">Mapa Online</a>
             <a href="index.html#voos-reais">Voos em Tempo Real</a>
             <a href="index.html#voos-recentes">Voos Recentes</a>
@@ -88,6 +89,7 @@ const hashAtual = window.location.hash;
         "index.html": "home",
         "news.html": "volar",
         "rotas.html": "operacoes",
+        "ferramentas.html": "operacoes",
         "cargo.html": "divisoes",
         "frota.html": "frota",
         "privacy.html": "volar",
