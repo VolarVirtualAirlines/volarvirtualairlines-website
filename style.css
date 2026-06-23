@@ -3633,3 +3633,44 @@ footer p {
     color: var(--turquoise);
     font-size: 0.9rem;
 }
+
+/* =====================================
+   STAFF - DOIS CARDS E VICE PRESIDENT
+===================================== */
+
+.staff-container-duo {
+    max-width: 1250px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
+.staff-vice {
+    border-color: rgba(0, 229, 255, 0.26);
+}
+
+.staff-vice .staff-icon {
+    background: rgba(0, 229, 255, 0.08);
+    border-color: rgba(0, 229, 255, 0.32);
+    box-shadow: 0 0 28px rgba(0, 229, 255, 0.10);
+}
+
+.staff-vice .staff-icon i {
+    color: var(--turquoise);
+}
+
+.org-box.vice {
+    border-color: rgba(0, 229, 255, 0.35);
+    background: rgba(0, 229, 255, 0.035);
+}
+
+.org-box.vice i {
+    color: var(--turquoise);
+}
+
+@media (max-width: 900px) {
+    .staff-container-duo {
+        grid-template-columns: 1fr;
+        max-width: 760px;
+    }
+}
