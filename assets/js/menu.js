@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <a href="index.html#hubs">Hubs Operacionais</a>
             <a href="index.html#simuladores">Plataformas</a>
             <a href="news.html">Volar News</a>
+            <a href="staff.html">Staff</a>
         </div>
     </div>
 
@@ -89,6 +90,7 @@ const hashAtual = window.location.hash;
     const mapaMenuAtivo = {
         "index.html": "home",
         "news.html": "volar",
+        "staff.html": "volar",
         "rotas.html": "operacoes",
         "ferramentas.html": "operacoes",
         "cargo.html": "divisoes",
