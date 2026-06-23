@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <span>|</span>
                     <a href="terms.html">Termos de Uso</a>
                     <span>|</span>
+                    <a href="staff.html">Staff</a>
+                    <span>|</span>
                     <a href="#" id="footer-suporte-link">Suporte</a>
                 </div>
             </div>
