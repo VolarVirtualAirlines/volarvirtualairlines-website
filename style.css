@@ -481,7 +481,7 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
 }
 
 .footer-logo {
@@ -2915,12 +2915,13 @@ footer p {
    ========================================================================== */
 
 .footer-links {
-    margin-top: -4px;
+    margin-top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
+    line-height: 1.2;
 }
 
 .footer-links a {
