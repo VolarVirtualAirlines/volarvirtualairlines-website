@@ -12,15 +12,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
-<body>
+<body class="page-vax">
 
-    <!-- Menu -->
+    <!-- MENU GLOBAL -->
     <div id="menu-container"></div>
 
     <main>
 
         <!-- HERO VAX -->
         <section class="vax-hero">
+            <div class="vax-hero-overlay"></div>
+
             <div class="vax-hero-content">
                 <img src="assets/LOGO_VAX.png" alt="Volar Virtual Academy" class="vax-logo">
 
@@ -39,7 +41,9 @@
         <section class="vax-section">
             <div class="section-header">
                 <span class="section-badge">Academia Oficial</span>
+
                 <h2>Excelência em Formação e Desenvolvimento</h2>
+
                 <p>
                     A Volar Virtual Academy Excellence (VAX) foi criada para proporcionar um ambiente
                     estruturado de aprendizado, evolução operacional e aperfeiçoamento contínuo,
@@ -48,7 +52,7 @@
             </div>
         </section>
 
-        <!-- CARDS -->
+        <!-- CARDS PRINCIPAIS -->
         <section class="vax-cards-section">
             <div class="vax-cards-container">
 
@@ -87,24 +91,65 @@
             </div>
         </section>
 
+        <!-- JORNADA -->
+        <section class="vax-journey-section">
+            <div class="section-header">
+                <span class="section-badge">Jornada do Piloto</span>
+
+                <h2>O Primeiro Passo no Ecossistema Volar</h2>
+
+                <p>
+                    A VAX representa o início da jornada de crescimento do piloto dentro da Volar,
+                    preparando seus membros para alcançar os padrões de excelência exigidos pela companhia.
+                </p>
+            </div>
+
+            <div class="vax-journey-container">
+                <div class="vax-step">
+                    <span>01</span>
+                    <h3>Ingresso</h3>
+                    <p>Entrada do piloto no ambiente de formação da academia.</p>
+                </div>
+
+                <div class="vax-step">
+                    <span>02</span>
+                    <h3>Treinamento</h3>
+                    <p>Desenvolvimento técnico, operacional e comportamental.</p>
+                </div>
+
+                <div class="vax-step">
+                    <span>03</span>
+                    <h3>Aperfeiçoamento</h3>
+                    <p>Aplicação prática dos conhecimentos nas operações virtuais.</p>
+                </div>
+
+                <div class="vax-step">
+                    <span>04</span>
+                    <h3>Excelência</h3>
+                    <p>Preparação para os padrões operacionais da Volar Virtual Airlines.</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Botão de Suporte -->
+    <!-- BOTÃO DE SUPORTE -->
     <button id="btn-suporte" class="btn-suporte" aria-label="Central de Atendimento">
         <img src="assets/support/support_icon.png" alt="Suporte Volar">
     </button>
 
-    <!-- Modal de Suporte -->
+    <!-- MODAL DE SUPORTE -->
     <div id="modal-suporte" class="modal-suporte">
         <div class="modal-suporte-content">
-            <button id="fechar-suporte" class="fechar-suporte">&times;</button>
+            <button id="fechar-suporte" class="fechar-suporte" aria-label="Fechar">&times;</button>
 
             <h2>Central de Atendimento</h2>
-            <p>Entre em contato com a equipe da Volar Virtual Airlines.</p>
+            <p>Envie sua mensagem para a equipe da Volar Virtual Airlines.</p>
 
             <form id="form-suporte" action="https://api.staticforms.xyz/submit" method="POST">
                 <input type="hidden" name="accessKey" value="SUA_ACCESS_KEY_AQUI">
                 <input type="hidden" name="subject" value="Novo contato - Volar Virtual Airlines">
+                <input type="hidden" name="replyTo" value="@">
                 <input type="hidden" name="redirectTo" value="">
 
                 <input type="text" name="name" placeholder="Seu nome" required>
@@ -116,19 +161,20 @@
         </div>
     </div>
 
-    <!-- Botão Voltar ao Topo -->
+    <!-- BOTÃO VOLTAR AO TOPO -->
     <button id="btn-voltar-topo" class="btn-voltar-topo" aria-label="Voltar ao topo">
         <i class="fas fa-chevron-up"></i>
     </button>
 
-    <!-- Footer -->
+    <!-- FOOTER GLOBAL -->
     <div id="footer-container"></div>
 
-    <!-- Scripts -->
+    <!-- SCRIPTS GLOBAIS -->
     <script src="assets/js/menu.js"></script>
     <script src="assets/js/footer.js"></script>
     <script src="assets/js/support.js"></script>
     <script src="assets/js/script.js"></script>
 
 </body>
+
 </html>
