@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volar Virtual Academy | Volar Virtual Airlines</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link class="css-file" rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Menu -->
+    <div id="menu-container"></div>
+
+    <main>
+
+        <!-- HERO VAX -->
+        <section class="vax-hero">
+            <div class="vax-hero-content">
+                <img src="assets/LOGO_VAX.png" alt="Volar Virtual Academy" class="vax-logo">
+
+                <span class="section-badge">Volar Virtual Academy Excellence</span>
+
+                <h1>Volar Virtual Academy</h1>
+
+                <p>
+                    A divisão oficial de treinamento, desenvolvimento e aperfeiçoamento de pilotos
+                    da Volar Virtual Airlines.
+                </p>
+            </div>
+        </section>
+
+        <!-- INTRODUÇÃO -->
+        <section class="vax-section">
+            <div class="section-header">
+                <span class="section-badge">Academia Oficial</span>
+                <h2>Excelência em Formação e Desenvolvimento</h2>
+                <p>
+                    A Volar Virtual Academy Excellence (VAX) foi criada para proporcionar um ambiente
+                    estruturado de aprendizado, evolução operacional e aperfeiçoamento contínuo,
+                    permitindo que pilotos desenvolvam suas habilidades e conhecimentos dentro da aviação virtual.
+                </p>
+            </div>
+        </section>
+
+        <!-- CARDS -->
+        <section class="vax-cards-section">
+            <div class="vax-cards-container">
+
+                <div class="vax-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Formação de Pilotos</h3>
+                    <p>
+                        Ambiente dedicado à preparação inicial de novos pilotos dentro do ecossistema Volar.
+                    </p>
+                </div>
+
+                <div class="vax-card">
+                    <i class="fas fa-plane-departure"></i>
+                    <h3>Treinamento Operacional</h3>
+                    <p>
+                        Desenvolvimento de procedimentos, planejamento de voo e padronização operacional.
+                    </p>
+                </div>
+
+                <div class="vax-card">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h3>Homologações</h3>
+                    <p>
+                        Testes de aeronaves, validação de procedimentos e apoio a projetos especiais da companhia.
+                    </p>
+                </div>
+
+                <div class="vax-card">
+                    <i class="fas fa-award"></i>
+                    <h3>Excelência Contínua</h3>
+                    <p>
+                        Incentivo ao aprimoramento constante dos pilotos da Volar Virtual Airlines.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Botão de Suporte -->
+    <button id="btn-suporte" class="btn-suporte" aria-label="Central de Atendimento">
+        <img src="assets/support/support_icon.png" alt="Suporte Volar">
+    </button>
+
+    <!-- Modal de Suporte -->
+    <div id="modal-suporte" class="modal-suporte">
+        <div class="modal-suporte-content">
+            <button id="fechar-suporte" class="fechar-suporte">&times;</button>
+
+            <h2>Central de Atendimento</h2>
+            <p>Entre em contato com a equipe da Volar Virtual Airlines.</p>
+
+            <form id="form-suporte" action="https://api.staticforms.xyz/submit" method="POST">
+                <input type="hidden" name="accessKey" value="SUA_ACCESS_KEY_AQUI">
+                <input type="hidden" name="subject" value="Novo contato - Volar Virtual Airlines">
+                <input type="hidden" name="redirectTo" value="">
+
+                <input type="text" name="name" placeholder="Seu nome" required>
+                <input type="email" name="email" placeholder="Seu e-mail" required>
+                <textarea name="message" placeholder="Digite sua mensagem" required></textarea>
+
+                <button type="submit" class="btn-enviar-suporte">Enviar Mensagem</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Botão Voltar ao Topo -->
+    <button id="btn-voltar-topo" class="btn-voltar-topo" aria-label="Voltar ao topo">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="assets/js/menu.js"></script>
+    <script src="assets/js/footer.js"></script>
+    <script src="assets/js/support.js"></script>
+    <script src="assets/js/script.js"></script>
+
+</body>
+</html>
