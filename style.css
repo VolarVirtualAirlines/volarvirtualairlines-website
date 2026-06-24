@@ -3676,9 +3676,17 @@ footer p {
 }
 
 /* ==========================================================================
-   VOLAR VIRTUAL ACADEMY - AJUSTES ESPECÍFICOS
+   VOLAR VIRTUAL ACADEMY
    ========================================================================== */
 
-.vax-premium .vax-logo {
-    max-width: 550px;
+.vax-banner-container {
+    max-width: 1400px;
+    margin: 0 auto 50px auto;
+}
+
+.vax-banner {
+    width: 100%;
+    display: block;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
 }
