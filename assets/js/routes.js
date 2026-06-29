@@ -116,12 +116,20 @@ document.addEventListener("DOMContentLoaded", async () => {
             const dep = String(rota.dep || "").toLowerCase();
             const arr = String(rota.arr || "").toLowerCase();
             const tipoRota = String(rota.type || "").toLowerCase();
+            const aeronaveRota = String(rota.airframes || "").toLowerCase();
 
             const passaOrigem = !origem || dep.includes(origem);
             const passaDestino = !destino || arr.includes(destino);
             const passaTipo = tipo === "todos" || tipoRota === tipo;
+            const passaOrigem = !origem || dep.includes(origem);
 
-            return passaOrigem && passaDestino && passaTipo && rotaEstaAtiva(rota);
+            return (
+                passaOrigem &&
+                passaDestino &&
+                passaTipo &&
+                passaAeronave &&
+                rotaEstaAtiva(rota)
+);
         });
 
         const totalRotas = rotas.filter(rotaEstaAtiva).length;
