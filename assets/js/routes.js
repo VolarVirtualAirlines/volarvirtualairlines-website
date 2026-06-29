@@ -105,6 +105,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             `;
         });
     }
+
+    function formatarDuracao(minutos) {
+        const totalMinutos = parseInt(minutos, 10);
+    
+        if (isNaN(totalMinutos)) {
+            return "N/D";
+        }
+    
+        const horas = Math.floor(totalMinutos / 60);
+        const mins = totalMinutos % 60;
+    
+        return `${String(horas).padStart(2, "0")}:${String(mins).padStart(2, "0")}`;
+    }
     
     function renderizarRotas() {
         const origem = filtroOrigem.value.toLowerCase().trim();
