@@ -182,6 +182,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         filtroOrigem.value = "";
         filtroDestino.value = "";
         filtroTipo.value = "todos";
+        filtroAeronave.value = "todas";
         renderizarRotas();
     });
 
@@ -198,4 +199,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     filtroTipo.addEventListener("change", renderizarRotas);
+    filtroAeronave.addEventListener("change", renderizarRotas);
 });
