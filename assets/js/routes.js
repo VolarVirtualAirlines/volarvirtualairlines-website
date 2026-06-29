@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <td>🛫 <span style="color: #4ade80;">${rota.dep}</span></td>
                     <td>🛬 <span style="color: #f97316;">${rota.arr}</span></td>
                     <td>${rota.type === "cargo" ? "📦 Cargo" : "👥 Passageiros"}</td>
-                    <td>${rota.duration} min</td>
+                    <td>${formatarDuracao(rota.duration)}</td>
                     <td>${rota.airframes || "Todos"}</td>
                 </tr>
             `;
