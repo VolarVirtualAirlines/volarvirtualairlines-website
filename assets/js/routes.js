@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             return rota;
         });
 
+        popularFiltroAeronaves();
         renderizarRotas();
         
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -86,6 +87,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         return ativo === "true" || ativo === "1" || ativo === "yes" || ativo === "active";
     }
 
+    function popularFiltroAeronaves() {
+        const aeronaves = [...new Set(
+            rotas
+                .filter(rotaEstaAtiva)
+                .map(rota => String(rota.airframes || "").trim())
+                .filter(aeronave => aeronave)
+        )].sort();
+    
+        filtroAeronave.innerHTML = `
+            <option value="todas">Todas as Aeronaves</option>
+        `;
+    
+        aeronaves.forEach(aeronave => {
+            filtroAeronave.innerHTML += `
+                <option value="${aeronave.toLowerCase()}">${aeronave}</option>
+            `;
+        });
+    }
+    
     function renderizarRotas() {
         const origem = filtroOrigem.value.toLowerCase().trim();
         const destino = filtroDestino.value.toLowerCase().trim();
