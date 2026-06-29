@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         popularFiltroAeronaves();
-        renderizarRotas();
+        ;
         
         await new Promise(resolve => setTimeout(resolve, 1000));
         
@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const origem = filtroOrigem.value.toLowerCase().trim();
         const destino = filtroDestino.value.toLowerCase().trim();
         const tipo = filtroTipo.value.toLowerCase();
+        const aeronave = filtroAeronave.value.toLowerCase();
 
         const filtradas = rotas.filter(rota => {
             const dep = String(rota.dep || "").toLowerCase();
