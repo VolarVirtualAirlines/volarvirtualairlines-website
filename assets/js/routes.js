@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const filtroOrigem = document.getElementById("filtro-origem");
     const filtroDestino = document.getElementById("filtro-destino");
     const filtroTipo = document.getElementById("filtro-tipo");
+    const filtroAeronave = document.getElementById("filtro-aeronave");
     const btnFiltrar = document.getElementById("btn-filtrar-rotas");
     const btnLimpar = document.getElementById("btn-limpar-rotas");
 
