@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         popularFiltroAeronaves();
+        renderizarRotas();
         ;
         
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -134,7 +135,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const passaOrigem = !origem || dep.includes(origem);
             const passaDestino = !destino || arr.includes(destino);
             const passaTipo = tipo === "todos" || tipoRota === tipo;
-            const passaOrigem = !origem || dep.includes(origem);
+            const passaAeronave = aeronave === "todas" || aeronaveRota === aeronave;
 
             return (
                 passaOrigem &&
