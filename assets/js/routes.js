@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 passaTipo &&
                 passaAeronave &&
                 rotaEstaAtiva(rota)
-);
+            );
         });
 
         const totalRotas = rotas.filter(rotaEstaAtiva).length;
