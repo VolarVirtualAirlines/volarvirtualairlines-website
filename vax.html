@@ -381,14 +381,14 @@ async function carregarVoosRecentesVAX() {
             const row = document.createElement('tr');
 
             row.innerHTML = `
-                <td style="color: var(--turquoise); font-weight: bold;">VAX${voo.flightNumber || 'N/A'}</td>
+                <td style="color: var(--turquoise); font-weight: bold; font-family: var(--font-headers);">VAX${voo.flightNumber || 'N/A'}</td>
                 <td>👨‍✈️ ${voo.pilot?.fullname || 'N/A'}</td>
                 <td>
                     <span style="color: #00E676;">🛫 ${voo.dep?.icao || '---'}</span> 
                     → 
                     <span style="color: #FF9100;">🛬 ${voo.arr?.icao || '---'}</span>
                 </td>
-                <td>✈️ ${voo.aircraft?.airframe?.ident || 'N/A'}</td>
+                <td style="color: var(--text-muted); font-weight: 500;">✈️ ${voo.aircraft?.airframe?.ident || 'N/A'}</td>
                 <td>${dataFormatada}</td>
                 <td><span class="badge-tipo">${voo.type?.toUpperCase() === 'PAX' ? '👥 Passageiros' : '📦 Carga'}</span></td>
                 <td><span class="badge-sim">${voo.simulator?.toUpperCase() || 'N/A'}</span></td>
