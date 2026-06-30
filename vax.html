@@ -149,6 +149,33 @@
 
 <div id="footer-container"></div>
 
+<section id="vax-voos-reais" class="section">
+    <h2>Painel de Voos em Tempo Real VAX</h2>
+
+    <div id="mensagem-vax-voos">
+        Carregando voos em andamento da VAX...
+    </div>
+
+    <div class="tabela-responsiva">
+        <table id="tabela-vax-voos">
+            <thead>
+                <tr>
+                    <th>Callsign</th>
+                    <th>Piloto</th>
+                    <th>Rota</th>
+                    <th>Aeronave</th>
+                    <th>Tipo</th>
+                    <th>Simulador</th>
+                    <th>Rede</th>
+                </tr>
+            </thead>
+
+            <tbody id="corpo-tabela-vax-voos">
+            </tbody>
+        </table>
+    </div>
+</section>
+    
 <button id="btn-voltar-topo" title="Voltar ao topo">↑</button>
 
 <!-- BOTÃO DE SUPORTE FLUTUANTE -->
@@ -194,8 +221,101 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    carregarVoosVAXEmTempoReal();
+    setInterval(carregarVoosVAXEmTempoReal, 120000);
+   
     const btnTopo = document.getElementById("btn-voltar-topo");
 
+    const URL_VAX_VOOS = "/vax_voos";
+    
+    async function carregarVoosVAXEmTempoReal() {
+        const msgVoos = document.getElementById('mensagem-vax-voos');
+        const tabelaVoos = document.getElementById('tabela-vax-voos');
+        const corpoTabela = document.getElementById('corpo-tabela-vax-voos');
+    
+        try {
+            const resposta = await fetch(URL_VAX_VOOS);
+            if (!resposta.ok) throw new Error("Erro ao ler rota interna da VAX");
+    
+            const dados = await resposta.json();
+    
+            if (dados.error) {
+                throw new Error(dados.message);
+            }
+    
+            let voos = dados.results || dados.flights || dados.data || [];
+            if (Array.isArray(dados)) {
+                voos = dados;
+            }
+    
+            if (voos.length === 0) {
+                msgVoos.innerHTML = "✈️ Nenhum piloto da VAX voando no momento.";
+                tabelaVoos.style.display = 'none';
+                return;
+            }
+    
+            corpoTabela.innerHTML = '';
+    
+            voos.forEach(voo => {
+                const prefixo = voo.airline?.icao || 'VAX';
+                const numeroVoo = voo.flightNumber || '';
+                const callsign = numeroVoo ? `${prefixo}${numeroVoo}` : 'VAX';
+    
+                const piloto = voo.pilot?.fullname || 'Piloto VAX';
+                const dep = voo.dep?.icao || '???';
+                const arr = voo.arr?.icao || '???';
+                const acft = voo.aircraft?.airframe?.ident || 'N/D';
+    
+                let tipoVooTexto = "✈️ Treinamento";
+                if (voo.type === "pax") tipoVooTexto = "👥 Passageiros";
+                else if (voo.type === "cargo") tipoVooTexto = "📦 Carga";
+                if (voo.charter === true) tipoVooTexto = "⭐ Check / Especial";
+    
+                let simuladorTexto = String(voo.simulator || "N/D").toUpperCase();
+                if (simuladorTexto === "XP" || simuladorTexto === "XP11" || simuladorTexto === "XP12") {
+                    simuladorTexto = "X-Plane";
+                }
+    
+                let redeTexto = "OFFLINE";
+                let redeCor = "#2d3748";
+    
+                if (voo.network && voo.network.name) {
+                    const redeNome = voo.network.name.toLowerCase();
+    
+                    if (redeNome === "ivao") {
+                        redeTexto = "IVAO";
+                        redeCor = "#0d6efd";
+                    } else if (redeNome === "vatsim") {
+                        redeTexto = "VATSIM";
+                        redeCor = "#e67e22";
+                    } else {
+                        redeTexto = redeNome.toUpperCase();
+                        redeCor = "var(--turquoise)";
+                    }
+                }
+    
+                corpoTabela.innerHTML += `
+                    <tr>
+                        <td style="font-weight: bold; color: var(--turquoise); font-family: var(--font-headers);">${callsign}</td>
+                        <td>👨‍✈️ ${piloto}</td>
+                        <td style="font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
+                        <td style="color: var(--text-muted); font-weight: 500;">✈️ ${acft}</td>
+                        <td style="color: var(--text-muted); font-size: 0.9em;">${tipoVooTexto}</td>
+                        <td><span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.08); font-size: 0.85em;">${simuladorTexto}</span></td>
+                        <td><span style="background: ${redeCor}; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.85em; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">${redeTexto}</span></td>
+                    </tr>
+                `;
+            });
+    
+            msgVoos.style.display = 'none';
+            tabelaVoos.style.display = 'table';
+    
+        } catch (erro) {
+            console.error("Erro ao carregar voos VAX:", erro);
+            msgVoos.innerHTML = `<span style="color: #ff5252; font-weight: 600;">⚠️ Não foi possível conectar ao radar de voos ativos da VAX no momento.</span>`;
+        }
+    }
+    
     window.addEventListener('scroll', () => {
         btnTopo.style.display = window.scrollY > 400 ? "flex" : "none";
     });
