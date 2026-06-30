@@ -1,4 +1,13 @@
 [
+    {
+    "date": "2026-06-30",
+    "tag": "VAX",
+    "color": "#6366F1",
+    "title": "🎓 Volar Virtual Academy Excelence",
+    "summary": "Conheça a academia oficial de treinamento da Volar Virtual Airlines.",
+    "image": "assets/news/2026-06-30-VAX.png"
+  },
+  
   {
     "date": "2026-06-19",
     "tag": "DISCORD",
