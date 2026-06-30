@@ -11,6 +11,7 @@ VOLAR NEWS - PADRÃO DE TAGS OFICIAIS
 🟤 CARGO       #C08457
 🔷 TOUR        #06B6D4
 📡 AIRAC       #FFD700
+🎓 VAX         #6366F1
 
 🟢 OPERACOES
 Cor: #22C55E
@@ -46,6 +47,9 @@ Uso: Tours, desafios e programas especiais para pilotos.
 
 🟨 AIRAC       #FFD700
 Uso: Atualização de AIRAC
+
+🎓 VAX         #6366F1
+Uso: Atualizações sobre a VAX
 
 =================================================
 EXEMPLO DE USO NO NEWS.JSON
