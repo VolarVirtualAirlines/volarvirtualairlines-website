@@ -391,8 +391,8 @@ async function carregarVoosRecentesVAX() {
                 <td style="color: var(--text-muted); font-weight: 500;">✈️ ${voo.aircraft?.airframe?.ident || 'N/A'}</td>
                 <td>${dataFormatada}</td>
                 <td><span class="badge-tipo">${voo.type?.toUpperCase() === 'PAX' ? '👥 Passageiros' : '📦 Carga'}</span></td>
-                <td><span class="badge-sim">${voo.simulator?.toUpperCase() || 'N/A'}</span></td>
-                <td><span class="badge-rede">${voo.network?.name?.toUpperCase() || 'OFFLINE'}</span></td>
+                <td><span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.08); font-size: 0.85em; font-weight: bold;">${voo.simulator?.toUpperCase() || 'N/A'}</span></td>
+                <td><span style="background: #2563eb; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.85em; font-weight: bold;">${voo.network?.name?.toUpperCase() || 'OFFLINE'}</span></td>
             `;
 
             container.appendChild(row);
