@@ -1,6 +1,6 @@
 # Newsky Schedule Export
 # Airline: VVX - VOLAR VIRTUAL AIRLINES
-# Date: 2026-06-18 22:41z
+# Date: 2026-06-30 00:40z
 #
 # <- use hash to add comments.
 # Remember to respect headers and proper CSV formatting!
@@ -12,7 +12,6 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1021,SBRJ,SBSP,pax,51,true,true,true,true,true,true,true,pax,true
 9604,SBGR,SBPA,pax,86,true,true,true,true,true,true,true,"A20N,B738",true
 9605,SBPA,SBGR,pax,93,true,true,true,true,true,true,true,"A20N,B738",true
-1250,SBGR,SBFL,pax,61,true,true,true,true,true,true,true,pax,true
 1661,SBFL,SBGR,pax,71,true,true,true,true,true,true,true,pax,true
 1225,SBFL,SBSP,pax,55,true,true,true,true,true,true,true,pax,true
 1118,SBGR,SBCT,pax,49,true,true,true,true,true,true,true,pax,true
@@ -40,8 +39,8 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1147,SBMG,SBGR,pax,66,true,true,true,true,true,true,true,pax,true
 1136,SBSP,SBMG,pax,71,true,true,true,true,true,false,true,pax,true
 1137,SBMG,SBSP,pax,54,true,true,true,true,true,false,true,pax,true
-2118,SBGR,SBPF,pax,88,false,true,false,true,false,true,false,pax,true
-2119,SBPF,SBGR,pax,88,false,true,false,true,false,true,false,pax,true
+2118,SBGR,SBPF,pax,88,true,true,true,true,true,true,true,pax,true
+2119,SBPF,SBGR,pax,88,true,true,true,true,true,true,true,pax,true
 1922,SBGR,SBGL,pax,40,true,true,true,true,true,true,true,pax,true
 1929,SBGL,SBGR,pax,56,true,true,true,true,true,true,true,pax,true
 1624,SBSP,SBGL,pax,37,true,true,true,true,true,true,true,pax,true
@@ -120,13 +119,12 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 9144,SBSV,SBPA,pax,208,true,true,true,true,true,true,true,"A20N,B738",true
 9113,SBFL,SBGL,pax,70,true,true,true,true,true,true,true,pax,true
 9042,SBGL,SBFL,pax,75,true,true,true,true,true,true,true,pax,true
-1749,SBFL,SBBR,pax,121,true,true,true,true,true,true,true,pax,true
-1748,SBBR,SBFL,pax,114,true,true,true,true,true,true,true,pax,true
+1749,SBFL,SBBR,pax,121,true,true,true,true,true,true,true,B738,true
+1748,SBBR,SBFL,pax,114,true,true,true,true,true,true,true,B738,true
 1883,SBCT,SBGL,pax,62,true,true,true,true,true,true,true,pax,true
 1882,SBGL,SBCT,pax,72,true,true,true,true,true,true,true,pax,true
 1745,SBCT,SBBR,pax,97,true,true,true,true,true,true,true,pax,true
 1744,SBBR,SBCT,pax,92,true,true,true,true,true,true,true,pax,true
-1987,SBKP,SBSV,pax,116,true,true,true,true,true,true,true,pax,true
 1814,SBBR,SBKP,pax,125,true,true,true,true,true,true,true,pax,true
 1957,SBKP,SBGL,pax,45,true,false,true,true,true,true,true,pax,true
 1992,SBGL,SBKP,pax,49,true,false,true,true,true,true,true,pax,true
@@ -148,7 +146,6 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1934,SBGL,SBVT,pax,49,true,true,true,true,true,true,true,pax,true
 1493,SBVT,SBBR,pax,86,true,true,true,true,true,true,true,pax,true
 1724,SBBR,SBVT,pax,88,true,true,true,true,true,true,true,pax,true
-2129,SBVT,SBSV,pax,73,true,true,true,true,true,true,true,pax,true
 2157,SBSV,SBVT,pax,85,true,true,true,true,true,true,true,pax,true
 9619,SBVT,SBRF,pax,123,true,true,true,true,true,true,true,pax,true
 4314,SBRF,SBVT,pax,122,true,true,true,true,true,true,true,pax,true
@@ -244,7 +241,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 2058,SBGL,SBFI,pax,114,true,true,true,true,true,true,true,pax,true
 2069,SBFI,SBGL,pax,98,true,true,true,true,true,true,true,pax,true
 4780,SBPA,SBFL,pax,45,true,true,true,true,true,true,true,A20N,true
-4781,SBFL,SBPA,pax,48,true,true,true,true,true,true,true,A20N,true
+4781,SBFL,SBPA,pax,50,true,true,true,true,true,true,true,A20N,true
 2165,SBFL,SBCH,pax,50,true,false,true,false,true,false,false,pax,true
 2164,SBCH,SBFL,pax,44,true,false,true,false,true,false,false,pax,true
 4363,SBKP,SBCH,pax,74,true,true,true,true,true,true,true,pax,true
@@ -416,8 +413,8 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 2739,SBCF,SBPA,pax,124,true,true,true,true,true,true,true,A20N,true
 4726,SBFI,SBKP,pax,74,true,true,true,true,true,true,true,pax,true
 2955,SBKP,SBFI,pax,80,true,true,true,true,true,true,true,pax,true
-2896,SBFL,SBCF,pax,86,false,true,true,true,false,false,true,pax,true
-2794,SBCF,SBFL,pax,60,false,true,true,true,false,false,true,pax,true
+2896,SBFL,SBCF,pax,86,true,true,true,true,true,true,true,A20N,true
+2794,SBCF,SBFL,pax,90,true,true,true,true,true,true,true,E195,true
 1851,SBNF,SBGL,pax,63,true,true,true,true,true,true,true,pax,true
 1850,SBGL,SBNF,pax,74,true,true,true,true,true,true,true,pax,true
 4661,SBJV,SBGR,pax,60,true,true,true,true,true,true,true,pax,true
@@ -560,7 +557,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1270,SBSP,SBPA,pax,79,true,true,true,true,true,true,true,B738,true
 1979,SBPA,SBSV,pax,174,true,true,true,true,true,true,true,B738,true
 1978,SBSV,SBPA,pax,208,true,true,true,true,true,true,true,B738,true
-2105,SBPA,SBFL,pax,51,true,true,true,true,true,true,true,B738,true
+2105,SBPA,SBFL,pax,46,true,true,true,true,true,true,true,B738,true
 2104,SBFL,SBPA,pax,51,true,true,true,true,true,true,true,B738,true
 1000,SBPA,SBCT,pax,50,true,true,true,true,true,true,true,B738,true
 1001,SBCT,SBPA,pax,55,true,true,true,true,true,true,true,B738,true
@@ -634,3 +631,25 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 9018,SUMU,SBSV,pax,245,true,true,true,true,true,true,true,B738,true
 9019,SBSV,SUMU,pax,275,true,true,true,true,true,true,true,B738,true
 1930,SBFL,SUMU,pax,120,true,true,true,true,true,true,true,A20N,true
+9206,SBFL,SBKP,pax,63,true,true,true,true,true,true,true,E195,true
+9207,SBKP,SBFL,pax,61,true,true,true,true,true,true,true,E195,true
+2967,SBFL,SBCF,pax,84,true,true,true,true,true,true,true,E195,true
+4349,SBFL,SBCH,pax,47,true,true,true,true,true,true,true,E195,true
+4348,SBCH,SBFL,pax,47,true,true,true,true,true,true,true,E195,true
+3511,SBFL,SBGR,pax,75,true,true,true,true,true,true,true,A20N,true
+3300,SBGR,SBFL,pax,65,true,true,true,true,true,true,true,A20N,true
+3091,SBFL,SBSP,pax,55,true,true,true,true,true,true,true,A20N,true
+3086,SBSP,SBFL,pax,60,true,true,true,true,true,true,true,A20N,true
+9020,SBCF,SBFL,pax,90,true,true,true,true,true,true,true,A20N,true
+3737,SBFL,SBBR,pax,115,true,true,true,true,true,true,true,A20N,true
+3430,SBBR,SBFL,pax,115,true,true,true,true,true,true,true,A20N,true
+2779,SBFL,SBKP,pax,59,true,true,true,true,true,true,true,A20N,true
+2778,SBKP,SBFL,pax,61,true,true,true,true,true,true,true,A20N,true
+1987,SBFL,SBGL,pax,70,true,true,true,true,true,true,true,B738,true
+1982,SBGL,SBFL,pax,75,true,true,true,true,true,true,true,B738,true
+1253,SBFL,SBSP,pax,55,true,true,true,true,true,true,true,B738,true
+1250,SBSP,SBFL,pax,53,true,true,true,true,true,true,true,B738,true
+1145,SBFL,SBGR,pax,71,true,true,true,true,true,true,true,B738,true
+1140,SBGR,SBFL,pax,61,true,true,true,true,true,true,true,B738,true
+2128,SBFL,SBCH,pax,50,true,true,true,true,true,true,true,B738,true
+2129,SBCH,SBFL,pax,44,true,true,true,true,true,true,true,B738,true
