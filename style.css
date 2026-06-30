@@ -964,12 +964,14 @@ footer p {
    AJUSTES PARA A SEÇÃO VOOS RECENTES
 ===================================== */
 
-#voos-recentes {
+#voos-recentes,
+#vax-voos-recentes {
     background: var(--midnight-dark);
     padding: 80px 30px;
 }
 
-#tabela-voos-recentes {
+#tabela-voos-recentes,
+#tabela-vax-voos-recentes {
     width: 100%;
     border-collapse: separate; 
     border-spacing: 0;
@@ -984,7 +986,8 @@ footer p {
     overflow: hidden;
 }
 
-#tabela-voos-recentes th {
+#tabela-voos-recentes th,
+#tabela-vax-voos-recentes th {
     color: var(--turquoise);
     font-family: var(--font-headers);
     font-weight: 700;
@@ -995,7 +998,8 @@ footer p {
     border-bottom: 2px solid rgba(0, 229, 255, 0.2);
 }
 
-#tabela-voos-recentes td {
+#tabela-voos-recentes td,
+#tabela-vax-voos-recentes td {
     padding: 18px 25px;
     vertical-align: middle;
     font-size: 14px;
