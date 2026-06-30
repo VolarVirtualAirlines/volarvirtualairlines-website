@@ -397,7 +397,8 @@ body {
    PAINEL DE VOOS EM TEMPO REAL (GLASSMORPHISM)
 ===================================== */
 
-#voos-reais {
+#voos-reais,
+#vax-voos-reais {
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -416,7 +417,8 @@ body {
     margin-top: 20px;
 }
 
-#tabela-voos {
+#tabela-voos,
+#tabela-vax-voos {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
@@ -424,7 +426,8 @@ body {
     min-width: 600px;
 }
 
-#tabela-voos th {
+#tabela-voos th,
+#tabela-vax-voos th {
     color: var(--turquoise);
     font-family: var(--font-headers);
     font-weight: 700;
@@ -435,24 +438,28 @@ body {
     border-bottom: 2px solid rgba(0, 229, 255, 0.2);
 }
 
-#tabela-voos td {
+#tabela-voos td,
+#tabela-vax-voos td {
     padding: 16px 14px;
     vertical-align: middle;
     font-size: 15px;
 }
 
 /* Efeito sutil de linha ao passar o mouse */
-#corpo-tabela-voos tr {
+#corpo-tabela-voos tr,
+#corpo-tabela-vax-voos tr {
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     background: rgba(255, 255, 255, 0.005);
     transition: background 0.2s ease;
 }
 
-#corpo-tabela-voos tr:hover {
+#corpo-tabela-voos tr:hover,
+#corpo-tabela-vax-voos tr:hover {
     background: rgba(0, 229, 255, 0.04);
 }
 
-#mensagem-voos {
+#mensagem-voos,
+#mensagem-vax-voos {
     color: var(--text-muted);
     text-align: center;
     padding: 35px;
