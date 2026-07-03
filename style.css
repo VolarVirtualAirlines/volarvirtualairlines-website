@@ -1416,7 +1416,7 @@ footer p {
 }
 
 /* =====================================
-   MODAL DE COMUNICADO IMPORTANTE
+   MODAL DE COMUNICADOS IMPORTANTES
 ===================================== */
 
 .modal-announcement-container {
@@ -1451,7 +1451,9 @@ footer p {
     overflow: hidden;
     transform: scale(0.94) translateY(18px);
     transition: transform 0.35s ease;
+
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
@@ -1460,13 +1462,52 @@ footer p {
     transform: scale(1) translateY(0);
 }
 
+.announcement-slider {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 18px;
+}
+
 .announcement-img {
     max-width: 92vw;
-    max-height: 88vh;
+    max-height: 82vh;
     width: auto;
     height: auto;
     display: block;
     object-fit: contain;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.announcement-img.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.announcement-dots {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    padding: 14px 0 16px 0;
+}
+
+.announcement-dot {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.announcement-dot.active {
+    width: 26px;
+    border-radius: 20px;
+    background: #ffffff;
 }
 
 .btn-fechar-announcement {
@@ -1482,7 +1523,7 @@ footer p {
     font-size: 28px;
     line-height: 1;
     cursor: pointer;
-    z-index: 2;
+    z-index: 5;
     transition: all 0.3s ease;
 }
 
@@ -1496,6 +1537,11 @@ footer p {
     .modal-announcement-content {
         width: 94vw;
         border-radius: 14px;
+    }
+
+    .announcement-img {
+        max-width: 94vw;
+        max-height: 78vh;
     }
 
     .btn-fechar-announcement {
