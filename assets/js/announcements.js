@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         setTimeout(() => {
 
-            announcementImg.src = comunicadosValidos[indice].image;
+            announcementImg.src = `${comunicadosValidos[indice].image}?v=${comunicadosValidos[indice].version || 1}`;
             announcementImg.alt = comunicadosValidos[indice].alt;
 
             announcementImg.classList.add("active");
