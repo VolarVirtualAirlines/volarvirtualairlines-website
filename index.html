@@ -655,32 +655,110 @@
             });
     
             /* ==========================================================================
-               MODAL DE COMUNICADO IMPORTANTE - VOLAR VIRTUAL AIRLINES
+               MODAL DE COMUNICADOS IMPORTANTES - VOLAR VIRTUAL AIRLINES
                ========================================================================== */
             
             document.addEventListener('DOMContentLoaded', () => {
                 const modalAnnouncement = document.getElementById('modal-announcement');
                 const btnFecharAnnouncement = document.getElementById('fechar-announcement');
+                const announcementImg = document.getElementById('announcement-img');
+                const dotsContainer = document.getElementById('announcement-dots');
             
-                const comunicado = {
-                    inicio: "2026-06-30T00:00:00",
-                    fim: "2026-07-07T23:59:59"
-                };
+                if (!modalAnnouncement || !btnFecharAnnouncement || !announcementImg || !dotsContainer) return;
+            
+                const comunicados = [
+                    {
+                        imagem: "assets/announcements/announcements.png",
+                        alt: "Comunicado importante Volar Virtual Airlines",
+                        inicio: "2026-06-30T00:00:00",
+                        fim: "2026-07-07T23:59:59"
+                    },
+                    {
+                        imagem: "assets/announcements/announcement-vax.png",
+                        alt: "VAX - Volar Virtual Academy",
+                        inicio: "2026-07-03T00:00:00",
+                        fim: "2026-07-20T23:59:59"
+                    }
+                ];
             
                 const agora = new Date();
-                const inicio = new Date(comunicado.inicio);
-                const fim = new Date(comunicado.fim);
             
-                if (agora >= inicio && agora <= fim) {
-                    modalAnnouncement.classList.add('active');
-                    document.body.style.overflow = 'hidden';
+                const comunicadosValidos = comunicados.filter(comunicado => {
+                    const inicio = new Date(comunicado.inicio);
+                    const fim = new Date(comunicado.fim);
+                    return agora >= inicio && agora <= fim;
+                });
+            
+                if (comunicadosValidos.length === 0) return;
+            
+                let anuncioAtual = 0;
+                let intervaloAnnouncement = null;
+            
+                function mostrarComunicado(index) {
+                    announcementImg.classList.remove('active');
+            
+                    setTimeout(() => {
+                        announcementImg.src = comunicadosValidos[index].imagem;
+                        announcementImg.alt = comunicadosValidos[index].alt;
+                        announcementImg.classList.add('active');
+            
+                        document.querySelectorAll('.announcement-dot').forEach((dot, i) => {
+                            dot.classList.toggle('active', i === index);
+                        });
+                    }, 180);
                 }
             
-           
-            btnFecharAnnouncement.addEventListener('click', () => {
+                function criarIndicadores() {
+                    dotsContainer.innerHTML = '';
+            
+                    if (comunicadosValidos.length <= 1) return;
+            
+                    comunicadosValidos.forEach((_, index) => {
+                        const dot = document.createElement('button');
+                        dot.type = 'button';
+                        dot.className = 'announcement-dot';
+            
+                        if (index === 0) dot.classList.add('active');
+            
+                        dot.addEventListener('click', () => {
+                            anuncioAtual = index;
+                            mostrarComunicado(anuncioAtual);
+                            reiniciarAutoplay();
+                        });
+            
+                        dotsContainer.appendChild(dot);
+                    });
+                }
+            
+                function proximoComunicado() {
+                    anuncioAtual = (anuncioAtual + 1) % comunicadosValidos.length;
+                    mostrarComunicado(anuncioAtual);
+                }
+            
+                function iniciarAutoplay() {
+                    if (comunicadosValidos.length > 1) {
+                        intervaloAnnouncement = setInterval(proximoComunicado, 10000);
+                    }
+                }
+            
+                function reiniciarAutoplay() {
+                    clearInterval(intervaloAnnouncement);
+                    iniciarAutoplay();
+                }
+            
+                btnFecharAnnouncement.addEventListener('click', () => {
                     modalAnnouncement.classList.remove('active');
                     document.body.style.overflow = '';
+                    clearInterval(intervaloAnnouncement);
                 });
+            
+                criarIndicadores();
+                mostrarComunicado(anuncioAtual);
+            
+                modalAnnouncement.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            
+                iniciarAutoplay();
             });
 
     </script>
@@ -744,16 +822,21 @@
     </div>
 </div>
 
-<!-- MODAL DE COMUNICADO IMPORTANTE -->
+<!-- MODAL DE COMUNICADOS IMPORTANTES -->
 <div id="modal-announcement" class="modal-announcement-container">
     <div class="modal-announcement-content">
         <button type="button" class="btn-fechar-announcement" id="fechar-announcement">&times;</button>
 
-        <img 
-            src="assets/announcements/announcements.png" 
-            alt="Comunicado importante Volar Virtual Airlines" 
-            class="announcement-img"
-        >
+        <div class="announcement-slider">
+            <img 
+                id="announcement-img"
+                src="" 
+                alt="Comunicado importante Volar Virtual Airlines" 
+                class="announcement-img"
+            >
+        </div>
+
+        <div id="announcement-dots" class="announcement-dots"></div>
     </div>
 </div>
 
