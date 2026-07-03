@@ -3820,3 +3820,44 @@ footer p {
 .vax-operacoes-card p:last-child {
     margin-bottom: 0;
 }
+
+.announcement-slider {
+    overflow: hidden;
+    border-radius: 18px;
+}
+
+.announcement-img {
+    width: 100%;
+    display: block;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.announcement-img.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.announcement-dots {
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 16px;
+}
+
+.announcement-dot {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.announcement-dot.active {
+    width: 26px;
+    border-radius: 20px;
+    background: #ffffff;
+}
