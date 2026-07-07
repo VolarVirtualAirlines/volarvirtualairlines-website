@@ -12,5 +12,12 @@
         "alt": "Livery B738 Kids Edition",
         "start": "2026-07-03",
         "end": "2026-07-10"
+    },
+    {
+        "image": "assets/announcements/announcements_3.png",
+        "version": 2,
+        "alt": "JOIN Boeing B737-800",
+        "start": "2026-07-07",
+        "end": "2026-07-20"
     }
 ]
