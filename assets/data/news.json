@@ -1,5 +1,13 @@
 [
-      {
+{
+    "date": "2026-07-07",
+    "tag": "FROTA",
+    "color": "#2FA8A0",
+    "title": "✈️ JOIN Boeing 737-800",
+    "summary": "Evolução Operacional B737-800",
+    "image": "assets/news/2026-07-07-join_b738.png"
+  }, 
+ {
     "date": "2026-07-01",
     "tag": "FROTA",
     "color": "#2FA8A0",
