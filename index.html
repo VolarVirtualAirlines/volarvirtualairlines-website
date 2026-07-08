@@ -478,7 +478,7 @@
                     else if (simuladorTexto === "P3D") simuladorTexto = "Prepar3D";
                     else if (simuladorTexto === "FSX") simuladorTexto = "FSX";
 
-                    let redeTexto = "OFFLINE";
+                    let redeTexto = "NEWSKY";
                     let redeCor = "#2d3748";
                     if (voo.network && voo.network.name) {
                         const redeNome = voo.network.name.toLowerCase();
@@ -619,7 +619,7 @@
                         <td>${dataFormatada}</td>
                         <td><span class="badge-tipo">${voo.type?.toUpperCase() === 'PAX' ? '👥 Passageiros' : '📦 Carga'}</span></td>
                         <td><span class="badge-sim">${voo.simulator?.toUpperCase() || 'N/A'}</span></td>
-                        <td><span class="badge-rede">${voo.network?.name?.toUpperCase() || 'OFFLINE'}</span></td>
+                        <td><span class="badge-rede">${voo.network?.name?.toUpperCase() || 'NEWSKY'}</span></td>
                     `;
                     
                     container.appendChild(row);
