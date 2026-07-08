@@ -1,5 +1,12 @@
 [
     {
+        "image": "assets/announcements/announcements_4.png",
+        "version": 1,
+        "alt": "AIRAC 2607",
+        "start": "2026-07-09",
+        "end": "2026-07-19"
+    },
+    {
         "image": "assets/announcements/announcements_1.png",
         "version": 1,
         "alt": "VAX - Volar Virtual Academy",
