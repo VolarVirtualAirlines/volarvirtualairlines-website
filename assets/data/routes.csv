@@ -1,6 +1,6 @@
 # Newsky Schedule Export
 # Airline: VVX - VOLAR VIRTUAL AIRLINES
-# Date: 2026-07-08 02:26z
+# Date: 2026-07-08 02:56z
 #
 # <- use hash to add comments.
 # Remember to respect headers and proper CSV formatting!
@@ -10,8 +10,6 @@
 number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1018,SBSP,SBRJ,pax,43,true,true,true,true,true,true,true,pax,true
 1021,SBRJ,SBSP,pax,51,true,true,true,true,true,true,true,pax,true
-9604,SBGR,SBPA,pax,86,true,true,true,true,true,true,true,"A20N,B738",true
-9605,SBPA,SBGR,pax,93,true,true,true,true,true,true,true,"A20N,B738",true
 1661,SBFL,SBGR,pax,71,true,true,true,true,true,true,true,pax,true
 1225,SBFL,SBSP,pax,55,true,true,true,true,true,true,true,pax,true
 1118,SBGR,SBCT,pax,49,true,true,true,true,true,true,true,pax,true
@@ -114,8 +112,6 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1590,SBGR,SBJE,pax,189,true,true,true,true,true,true,true,pax,true
 1591,SBJE,SBGR,pax,200,true,true,true,true,true,true,true,pax,true
 1797,SBPA,SBBR,pax,133,true,true,true,true,true,true,true,B738,true
-9145,SBPA,SBSV,pax,174,true,true,true,true,true,true,true,"A20N,B738",true
-9144,SBSV,SBPA,pax,208,true,true,true,true,true,true,true,"A20N,B738",true
 9113,SBFL,SBGL,pax,70,true,true,true,true,true,true,true,pax,true
 9042,SBGL,SBFL,pax,75,true,true,true,true,true,true,true,pax,true
 1749,SBFL,SBBR,pax,121,true,true,true,true,true,true,true,B738,true
@@ -660,10 +656,10 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 2226,SBNF,SBCF,pax,80,true,true,true,true,true,true,true,E195,true
 4910,SBKP,SBNF,pax,57,true,true,true,true,true,true,true,E195,true
 2225,SBCF,SBNF,pax,94,true,true,true,true,true,true,true,E195,true
-3305,SBNF,SBGR,pax,65,true,true,true,true,true,true,true,"A320,A20N",true
-3989,SBNF,SBGR,pax,50,true,true,true,true,true,true,true,"A20N,A320",true
-3404,SBGR,SBNF,pax,60,true,true,true,true,true,true,true,"A20N,A320",true
-3988,SBSP,SBNF,pax,50,true,true,true,true,true,true,true,"A20N,A320",true
+3305,SBNF,SBGR,pax,65,true,true,true,true,true,true,true,A20N,true
+3989,SBNF,SBGR,pax,50,true,true,true,true,true,true,true,A20N,true
+3404,SBGR,SBNF,pax,60,true,true,true,true,true,true,true,A20N,true
+3988,SBSP,SBNF,pax,50,true,true,true,true,true,true,true,A20N,true
 1857,SBNF,SBGL,pax,67,true,true,true,true,true,true,true,B738,true
 1231,SBNF,SBGR,pax,63,true,true,true,true,true,true,true,B738,true
 1856,SBGL,SBNF,pax,74,true,true,true,true,true,true,true,B738,true
