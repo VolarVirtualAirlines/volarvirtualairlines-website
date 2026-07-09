@@ -15,6 +15,39 @@ document.addEventListener("DOMContentLoaded", async () => {
     let rotas = [];
     let progresso = 0;
 
+    function separarCSV(linha) {
+        const valores = [];
+        let valorAtual = "";
+        let dentroAspas = false;
+
+        for (let i = 0; i < linha.length; i++) {
+            const char = linha[i];
+
+            if (char === '"') {
+                dentroAspas = !dentroAspas;
+                continue;
+            }
+
+            if (char === "," && !dentroAspas) {
+                valores.push(valorAtual.trim());
+                valorAtual = "";
+                continue;
+            }
+
+            valorAtual += char;
+        }
+
+        valores.push(valorAtual.trim());
+        return valores;
+    }
+
+    function listarAeronaves(airframes) {
+        return String(airframes || "")
+            .split(",")
+            .map(aeronave => aeronave.trim())
+            .filter(aeronave => aeronave);
+    }
+
     const intervaloLoading = setInterval(() => {
         if (progresso < 90) {
             progresso += Math.floor(Math.random() * 8) + 3;
@@ -45,11 +78,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             .map(l => l.trim())
             .filter(l => l && !l.startsWith("#"));
 
-        const cabecalho = linhas[0].split(",").map(c => c.trim());
+        const cabecalho = separarCSV(linhas[0]).map(c => c.trim());
         const dados = linhas.slice(1);
 
         rotas = dados.map(linha => {
-            const valores = linha.split(",");
+            const valores = separarCSV(linha);
             const rota = {};
 
             cabecalho.forEach((coluna, i) => {
@@ -61,9 +94,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         popularFiltroAeronaves();
         renderizarRotas();
-        
+
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
+
         clearInterval(intervaloLoading);
         finalizarLoading();
 
@@ -88,17 +121,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function popularFiltroAeronaves() {
-        const aeronaves = [...new Set(
-            rotas
-                .filter(rotaEstaAtiva)
-                .map(rota => String(rota.airframes || "").trim())
-                .filter(aeronave => aeronave)
-        )].sort();
-    
+        const aeronavesSet = new Set();
+
+        rotas
+            .filter(rotaEstaAtiva)
+            .forEach(rota => {
+                listarAeronaves(rota.airframes).forEach(aeronave => {
+                    aeronavesSet.add(aeronave);
+                });
+            });
+
+        const aeronaves = [...aeronavesSet].sort();
+
         filtroAeronave.innerHTML = `
             <option value="todas">Todas as Aeronaves</option>
         `;
-    
+
         aeronaves.forEach(aeronave => {
             filtroAeronave.innerHTML += `
                 <option value="${aeronave.toLowerCase()}">${aeronave}</option>
@@ -108,17 +146,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function formatarDuracao(minutos) {
         const totalMinutos = parseInt(minutos, 10);
-    
+
         if (isNaN(totalMinutos)) {
             return "N/D";
         }
-    
+
         const horas = Math.floor(totalMinutos / 60);
         const mins = totalMinutos % 60;
-    
+
         return `${String(horas).padStart(2, "0")}:${String(mins).padStart(2, "0")}`;
     }
-    
+
     function renderizarRotas() {
         const origem = filtroOrigem.value.toLowerCase().trim();
         const destino = filtroDestino.value.toLowerCase().trim();
@@ -129,12 +167,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             const dep = String(rota.dep || "").toLowerCase();
             const arr = String(rota.arr || "").toLowerCase();
             const tipoRota = String(rota.type || "").toLowerCase();
-            const aeronaveRota = String(rota.airframes || "").toLowerCase();
+
+            const aeronavesRota = listarAeronaves(rota.airframes)
+                .map(a => a.toLowerCase());
 
             const passaOrigem = !origem || dep.includes(origem);
             const passaDestino = !destino || arr.includes(destino);
             const passaTipo = tipo === "todos" || tipoRota === tipo;
-            const passaAeronave = aeronave === "todas" || aeronaveRota === aeronave;
+            const passaAeronave = aeronave === "todas" || aeronavesRota.includes(aeronave);
 
             return (
                 passaOrigem &&
@@ -174,6 +214,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         filtradas.forEach(rota => {
+            const aeronavesTexto = listarAeronaves(rota.airframes).join(", ") || "Todos";
+
             tabela.innerHTML += `
                 <tr>
                     <td class="coluna-voo">
@@ -183,7 +225,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <td>🛬 <span style="color: #f97316;">${rota.arr}</span></td>
                     <td>${rota.type === "cargo" ? "📦 Cargo" : "👥 Passageiros"}</td>
                     <td>${formatarDuracao(rota.duration)}</td>
-                    <td>${rota.airframes || "Todos"}</td>
+                    <td>${aeronavesTexto}</td>
                 </tr>
             `;
         });
