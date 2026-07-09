@@ -157,6 +157,24 @@ document.addEventListener("DOMContentLoaded", async () => {
         return `${String(horas).padStart(2, "0")}:${String(mins).padStart(2, "0")}`;
     }
 
+    function gerarChipsAeronaves(airframes) {
+        const aeronaves = listarAeronaves(airframes);
+    
+        if (aeronaves.length === 0) {
+            return `<span class="aircraft-chip aircraft-chip-default">Todos</span>`;
+        }
+    
+        return aeronaves.map(aeronave => {
+            const classe = `aircraft-chip-${aeronave.toLowerCase()}`;
+    
+            return `
+                <span class="aircraft-chip ${classe}">
+                    ${aeronave}
+                </span>
+            `;
+        }).join("");
+    }
+    
     function renderizarRotas() {
         const origem = filtroOrigem.value.toLowerCase().trim();
         const destino = filtroDestino.value.toLowerCase().trim();
@@ -214,8 +232,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         filtradas.forEach(rota => {
-            const aeronavesTexto = listarAeronaves(rota.airframes).join(", ") || "Todos";
-
+            const aeronavesHTML = gerarChipsAeronaves(rota.airframes);
+        
             tabela.innerHTML += `
                 <tr>
                     <td class="coluna-voo">
@@ -225,7 +243,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <td>🛬 <span style="color: #f97316;">${rota.arr}</span></td>
                     <td>${rota.type === "cargo" ? "📦 Cargo" : "👥 Passageiros"}</td>
                     <td>${formatarDuracao(rota.duration)}</td>
-                    <td>${aeronavesTexto}</td>
+                    <td class="coluna-aeronaves">${aeronavesHTML}</td>
                 </tr>
             `;
         });
