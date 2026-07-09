@@ -2329,7 +2329,7 @@ footer p {
 }
 
 .tabela-rotas td {
-    padding: 15px;
+    padding: 12px;
     text-align: center;
     border-top: 1px solid rgba(255,255,255,0.05);
     color: var(--text-muted);
