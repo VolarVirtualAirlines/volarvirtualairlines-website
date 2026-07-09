@@ -48,6 +48,23 @@ document.addEventListener("DOMContentLoaded", async () => {
             .filter(aeronave => aeronave);
     }
 
+    function obterClasseChip(aeronave) {
+    
+        const codigo = String(aeronave).toUpperCase();
+    
+        if (codigo.startsWith("E195")) return "aircraft-chip-e195";
+    
+        if (codigo.startsWith("A20")) return "aircraft-chip-a20n";
+    
+        if (codigo.startsWith("B738")) return "aircraft-chip-b738";
+    
+        if (codigo.startsWith("A359")) return "aircraft-chip-a359";
+    
+        if (codigo.startsWith("B77")) return "aircraft-chip-b77w";
+    
+        return "aircraft-chip-default";
+    }
+    
     const intervaloLoading = setInterval(() => {
         if (progresso < 90) {
             progresso += Math.floor(Math.random() * 8) + 3;
@@ -165,7 +182,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     
         return aeronaves.map(aeronave => {
-            const classe = `aircraft-chip-${aeronave.toLowerCase()}`;
+            const classe = obterClasseChip(aeronave);
     
             return `
                 <span class="aircraft-chip ${classe}">
