@@ -666,7 +666,3 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 3045,SBGR,LPPT,pax,600,true,true,true,true,true,true,true,"A359,B77W",true
 3046,LFPG,SBGR,pax,715,true,true,true,true,true,true,true,"A359,B77W",true
 3047,SBGR,LFPG,pax,680,true,true,true,true,true,true,true,"A359,B77W",true
-4000,SBFN,SBGR,pax,206,true,true,true,true,true,true,true,"A320,A20N,B738,B38M",true
-4001,SBFN,SBRF,pax,53,true,true,true,true,true,true,true,"A320,A20N,B738,B38M",true
-4002,SBGR,SBFN,pax,206,true,true,true,true,true,true,true,"A320,A20N,B738,B38M",true
-4003,SBRF,SBFN,pax,53,true,true,true,true,true,true,true,"A320,A20N,B738,B38M",true
