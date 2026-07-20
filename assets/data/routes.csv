@@ -1,6 +1,6 @@
 # Newsky Schedule Export
 # Airline: VVX - VOLAR VIRTUAL AIRLINES
-# Date: 2026-07-16 19:42z
+# Date: 2026-07-20 12:43z
 #
 # <- use hash to add comments.
 # Remember to respect headers and proper CSV formatting!
@@ -666,3 +666,5 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 3045,SBGR,LPPT,pax,600,true,true,true,true,true,true,true,"A359,B77W",true
 3046,LFPG,SBGR,pax,715,true,true,true,true,true,true,true,"A359,B77W",true
 3047,SBGR,LFPG,pax,680,true,true,true,true,true,true,true,"A359,B77W",true
+4000,SBJP,SBBE,pax,140,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195",true
+4001,SBBE,SBJP,pax,140,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195",true
