@@ -52,6 +52,9 @@ Uso: Atualização de AIRAC
 🎓 VAX         #8B5CF6
 Uso: Atualizações sobre a VAX
 
+🤝 PARCEIROS   #EAB308
+Uso: Fechamento de parcerias
+
 =================================================
 EXEMPLO DE USO NO NEWS.JSON
 =================================================
