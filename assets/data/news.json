@@ -1,5 +1,14 @@
 [
 {
+    "date": "2026-07-22",
+    "tag": "SAYINTENTIONS",
+    "color": "#8B5CF6",
+    "title": "Sayintentaions.ai",
+    "summary": "Sayintentaions.ai",
+    "image": "assets/news/2026-07-22-Sayintentions.png"
+},
+    
+{
     "date": "2026-07-08",
     "tag": "AIRAC",
     "color": "#FFD700",
@@ -32,7 +41,7 @@
     "title": "🎓 Volar Virtual Academy Excelence",
     "summary": "Conheça a academia oficial de treinamento da Volar Virtual Airlines.",
     "image": "assets/news/2026-06-30-VAX.png"
-  },
+   },
   
   {
     "date": "2026-06-19",
