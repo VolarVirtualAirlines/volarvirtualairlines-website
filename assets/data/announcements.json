@@ -1,12 +1,5 @@
 [
     {
-        "image": "assets/announcements/announcements_4.png",
-        "version": 1,
-        "alt": "AIRAC 2607",
-        "start": "2026-07-08",
-        "end": "2026-07-18"
-    },
-    {
         "image": "assets/announcements/announcements_1.png",
         "version": 1,
         "alt": "VAX - Volar Virtual Academy",
@@ -26,5 +19,19 @@
         "alt": "JOIN Boeing B737-800",
         "start": "2026-07-07",
         "end": "2026-07-20"
-    }
+    },
+        {
+        "image": "assets/announcements/announcements_4.png",
+        "version": 1,
+        "alt": "AIRAC 2607",
+        "start": "2026-07-08",
+        "end": "2026-07-18"
+    },
+        {
+        "image": "assets/announcements/announcements_5.png",
+        "version": 1,
+        "alt": "SAYINTENTIONS.AI",
+        "start": "2026-07-22",
+        "end": "2026-07-31"
+    },
 ]
