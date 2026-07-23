@@ -1,5 +1,14 @@
 [
 {
+    "date": "2026-07-23",
+    "tag": "FROTA",
+    "color": "#2FA8A0",
+    "title": "✈️ LIVERIES PMDG MSFS2020 / MSFS2024",
+    "summary": "Segregação das liveries para os simuladores MSFS2020 e MSFS2024",
+    "image": "assets/news/2026-07-23-PMDG_2020_2024_OC3.png"
+  }, 
+    
+    {
     "date": "2026-07-22",
     "tag": "SAYINTENTIONS.AI",
     "color": " #EAB308",
@@ -26,6 +35,7 @@
     "summary": "Evolução Operacional B737-800",
     "image": "assets/news/2026-07-07-join_b738.png"
   }, 
+    
  {
     "date": "2026-07-01",
     "tag": "FROTA",
