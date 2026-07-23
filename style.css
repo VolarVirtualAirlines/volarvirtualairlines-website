@@ -489,7 +489,8 @@ footer p {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 0;
+    margin-top: -4px;
+    margin-bottom: 0;
     line-height: 1.4;
 }
 .footer-links a {
