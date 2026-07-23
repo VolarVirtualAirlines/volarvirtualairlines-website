@@ -806,40 +806,65 @@
   }
 
   // ====== EXTRAI DADOS DO VOO ======
-  function extrairPiloto(voo, tipoDefault) {
-    let tipo = tipoDefault;
-    if (voo.airline && voo.airline.icao) {
-      const icao = voo.airline.icao.toUpperCase();
-      if (icao === "VVX") tipo = "VVX";
-      else if (icao === "VAX") tipo = "VAX";
-    }
-    let nome = "PILOTO";
-    if (voo.pilot && voo.pilot.fullname) nome = voo.pilot.fullname;
-    let origem = "???";
-    let destino = "???";
-    if (voo.dep && voo.dep.icao) origem = voo.dep.icao;
-    if (voo.arr && voo.arr.icao) destino = voo.arr.icao;
-    return { nome, origem, destino, tipo };
+function extrairPiloto(voo, tipoDefault) {
+  let tipo = tipoDefault;
+  if (voo.airline && voo.airline.icao) {
+    const icao = voo.airline.icao.toUpperCase();
+    if (icao === "VVX") tipo = "VVX";
+    else if (icao === "VAX") tipo = "VAX";
+  }
+  let nome = "PILOTO";
+  if (voo.pilot && voo.pilot.fullname) nome = voo.pilot.fullname;
+  let origem = "???";
+  let destino = "???";
+  if (voo.dep && voo.dep.icao) origem = voo.dep.icao;
+  if (voo.arr && voo.arr.icao) destino = voo.arr.icao;
+
+  // NOVO: tipo de aeronave
+  let aeronave = "";
+  if (voo.aircraft && voo.aircraft.airframe && voo.aircraft.airframe.ident) {
+    aeronave = voo.aircraft.airframe.ident;
   }
 
-  // ====== CRIA LINHA ======
-  function criarLinha(piloto) {
-    const row = document.createElement("div");
-    row.className = "po-pilot-row";
-    const classeBadge = piloto.tipo === "VVX" ? "po-badge-vvx" : "po-badge-vax";
-    row.innerHTML =
-      '<div class="po-avatar">✈</div>' +
-      '<div class="po-info">' +
-        '<div class="po-name">' + escapeHtml(piloto.nome) + '</div>' +
-        '<div class="po-route">' +
-          escapeHtml(piloto.origem) +
-          ' <span style="opacity:0.5">→</span> ' +
-          escapeHtml(piloto.destino) +
-        '</div>' +
-      '</div>' +
-      '<span class="po-badge ' + classeBadge + '">' + piloto.tipo + '</span>';
-    return row;
+  // NOVO: rede (ivao, vatsim, etc.)
+  let rede = "";
+  if (voo.network && voo.network.name) {
+    rede = voo.network.name.toUpperCase();
   }
+
+  return { nome, origem, destino, tipo, aeronave, rede };
+}
+
+  // ====== CRIA LINHA ======
+function criarLinha(piloto) {
+  const row = document.createElement("div");
+  row.className = "po-pilot-row";
+  const classeBadge = piloto.tipo === "VVX" ? "po-badge-vvx" : "po-badge-vax";
+
+  // Monta as tags extras (aeronave + rede) só se existirem
+  let tagsExtras = "";
+  if (piloto.aeronave) {
+    tagsExtras += '<span class="po-tag po-tag-aircraft">' + escapeHtml(piloto.aeronave) + '</span>';
+  }
+  if (piloto.rede) {
+    tagsExtras += '<span class="po-tag po-tag-network">' + escapeHtml(piloto.rede) + '</span>';
+  }
+
+  row.innerHTML =
+    '<div class="po-avatar">✈</div>' +
+    '<div class="po-info">' +
+      '<div class="po-name">' + escapeHtml(piloto.nome) + '</div>' +
+      '<div class="po-route">' +
+        escapeHtml(piloto.origem) +
+        ' <span style="opacity:0.5">→</span> ' +
+        escapeHtml(piloto.destino) +
+      '</div>' +
+      '<div class="po-tags">' + tagsExtras + '</div>' +
+    '</div>' +
+    '<span class="po-badge ' + classeBadge + '">' + piloto.tipo + '</span>';
+
+  return row;
+}
 
   function escapeHtml(texto) {
     const div = document.createElement("div");
