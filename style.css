@@ -4203,6 +4203,35 @@ footer p {
   gap: 4px;
 }
 
+/* Tags extras: aeronave e rede */
+.po-tags {
+  display: flex;
+  gap: 4px;
+  margin-top: 3px;
+  flex-wrap: wrap;
+}
+
+.po-tag {
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.po-tag-aircraft {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.po-tag-network {
+  background: rgba(255, 152, 0, 0.15);
+  color: #ffb74d;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
 .po-badge {
   font-size: 10px;
   font-weight: 700;
