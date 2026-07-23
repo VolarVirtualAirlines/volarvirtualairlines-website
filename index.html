@@ -832,7 +832,15 @@ function extrairPiloto(voo, tipoDefault) {
     rede = voo.network.name.toUpperCase();
   }
 
-  return { nome, origem, destino, tipo, aeronave, rede };
+  // NOVO: número do voo (callsign)
+  let vooNumero = "";
+  if (voo.airline && voo.airline.icao && voo.flightNumber) {
+    vooNumero = voo.airline.icao + voo.flightNumber;
+  } else if (voo.flightNumber) {
+    vooNumero = voo.flightNumber;
+  }
+
+  return { nome, origem, destino, tipo, aeronave, vooNumero, rede };
 }
 
   // ====== CRIA LINHA ======
@@ -843,6 +851,9 @@ function criarLinha(piloto) {
 
   // Monta as tags extras (aeronave + rede) só se existirem
   let tagsExtras = "";
+   if (piloto.vooNumero) {
+    tagsExtras += '<span class="po-tag po-tag-flight">' + escapeHtml(piloto.vooNumero) + '</span>';
+  }
   if (piloto.aeronave) {
     tagsExtras += '<span class="po-tag po-tag-aircraft">' + escapeHtml(piloto.aeronave) + '</span>';
   }
