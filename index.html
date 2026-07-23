@@ -782,6 +782,142 @@
   <div class="po-list" id="po-list"></div>
 </div>
 
+<script>
+(function() {
+  "use strict";
+
+  // ====== CONFIGURAÇÃO ======
+  const REFRESH_INTERVAL = 60000; // 60 segundos
+
+  // ====== BUSCA OS VOOS DE UMA API ======
+  async function buscarVoos(url) {
+    try {
+      const resp = await fetch(url);
+      if (!resp.ok) return [];
+      const data = await resp.json();
+
+      // Se vier erro da API, retorna vazio
+      if (data.error) return [];
+
+      // Se for array direto
+      if (Array.isArray(data)) return data;
+
+      // Se for objeto com .results
+      if (data.results && Array.isArray(data.results)) return data.results;
+
+      return [];
+    } catch (err) {
+      console.error("Erro ao buscar voos:", url, err);
+      return [];
+    }
+  }
+
+  // ====== EXTRAI OS DADOS DE UM VOO ======
+  function extrairPiloto(voo, tipoDefault) {
+    // Tenta pegar o tipo do airline.icao; se não tiver, usa o default
+    let tipo = tipoDefault;
+    if (voo.airline && voo.airline.icao) {
+      const icao = voo.airline.icao.toUpperCase();
+      if (icao === "VVX") tipo = "VVX";
+      else if (icao === "VAX") tipo = "VAX";
+    }
+
+    // Nome do piloto
+    let nome = "PILOTO";
+    if (voo.pilot && voo.pilot.fullname) {
+      nome = voo.pilot.fullname;
+    }
+
+    // Rota: origem → destino
+    let origem = "???";
+    let destino = "???";
+    if (voo.dep && voo.dep.icao) origem = voo.dep.icao;
+    if (voo.arr && voo.arr.icao) destino = voo.arr.icao;
+
+    // Callsign (opcional, para futuro uso)
+    let callsign = "";
+    if (voo.airline && voo.airline.icao && voo.flightNumber) {
+      callsign = voo.airline.icao + voo.flightNumber;
+    }
+
+    return { nome, origem, destino, tipo, callsign };
+  }
+
+  // ====== MONTA O HTML DE UMA LINHA ======
+  function criarLinha(piloto) {
+    const row = document.createElement("div");
+    row.className = "po-pilot-row";
+
+    const classeBadge = piloto.tipo === "VVX" ? "po-badge-vvx" : "po-badge-vax";
+
+    row.innerHTML =
+      '<div class="po-avatar">✈</div>' +
+      '<div class="po-info">' +
+        '<div class="po-name">' + escapeHtml(piloto.nome) + '</div>' +
+        '<div class="po-route">' +
+          escapeHtml(piloto.origem) +
+          ' <span style="opacity:0.5">→</span> ' +
+          escapeHtml(piloto.destino) +
+        '</div>' +
+      '</div>' +
+      '<span class="po-badge ' + classeBadge + '">' + piloto.tipo + '</span>';
+
+    return row;
+  }
+
+  // ====== ESCAPE HTML (segurança) ======
+  function escapeHtml(texto) {
+    const div = document.createElement("div");
+    div.textContent = texto;
+    return div.innerHTML;
+  }
+
+  // ====== FUNÇÃO PRINCIPAL ======
+  async function atualizarPilotos() {
+    // Busca os dois endpoints ao mesmo tempo
+    const [voosVVX, voosVAX] = await Promise.all([
+      buscarVoos("/voos"),
+      buscarVoos("/vax_voos")
+    ]);
+
+    // Extrai e junta todos os pilotos
+    const pilotosVVX = voosVVX.map(function(v) { return extrairPiloto(v, "VVX"); });
+    const pilotosVAX = voosVAX.map(function(v) { return extrairPiloto(v, "VAX"); });
+    const todosPilotos = pilotosVVX.concat(pilotosVAX);
+
+    const overlay = document.getElementById("pilotos-online");
+    const lista = document.getElementById("po-list");
+    const contador = document.getElementById("po-count");
+
+    // ====== SE NÃO HÁ PILOTOS, ESCONDE O OVERLAY ======
+    if (todosPilotos.length === 0) {
+      overlay.style.display = "none";
+      return;
+    }
+
+    // ====== HÁ PILOTOS: MOSTRA O OVERLAY ======
+    overlay.style.display = "flex";
+
+    // Atualiza o contador
+    contador.textContent = todosPilotos.length;
+
+    // Limpa a lista
+    lista.innerHTML = "";
+
+    // Adiciona cada piloto
+    todosPilotos.forEach(function(piloto) {
+      lista.appendChild(criarLinha(piloto));
+    });
+  }
+
+  // ====== INICIALIZAÇÃO ======
+  // Carrega imediatamente
+  atualizarPilotos();
+
+  // Atualiza a cada 60 segundos
+  setInterval(atualizarPilotos, REFRESH_INTERVAL);
+})();
+</script>
     
 </body>
 </html>
