@@ -787,25 +787,17 @@
 (function() {
   "use strict";
 
-  // ====== CONFIGURAÇÃO ======
-  const REFRESH_INTERVAL = 60000; // 60 segundos
+  const REFRESH_INTERVAL = 60000;
 
-  // ====== BUSCA OS VOOS DE UMA API ======
+  // ====== BUSCA OS VOOS ======
   async function buscarVoos(url) {
     try {
       const resp = await fetch(url);
       if (!resp.ok) return [];
       const data = await resp.json();
-
-      // Se vier erro da API, retorna vazio
       if (data.error) return [];
-
-      // Se for array direto
       if (Array.isArray(data)) return data;
-
-      // Se for objeto com .results
       if (data.results && Array.isArray(data.results)) return data.results;
-
       return [];
     } catch (err) {
       console.error("Erro ao buscar voos:", url, err);
@@ -813,44 +805,28 @@
     }
   }
 
-  // ====== EXTRAI OS DADOS DE UM VOO ======
+  // ====== EXTRAI DADOS DO VOO ======
   function extrairPiloto(voo, tipoDefault) {
-    // Tenta pegar o tipo do airline.icao; se não tiver, usa o default
     let tipo = tipoDefault;
     if (voo.airline && voo.airline.icao) {
       const icao = voo.airline.icao.toUpperCase();
       if (icao === "VVX") tipo = "VVX";
       else if (icao === "VAX") tipo = "VAX";
     }
-
-    // Nome do piloto
     let nome = "PILOTO";
-    if (voo.pilot && voo.pilot.fullname) {
-      nome = voo.pilot.fullname;
-    }
-
-    // Rota: origem → destino
+    if (voo.pilot && voo.pilot.fullname) nome = voo.pilot.fullname;
     let origem = "???";
     let destino = "???";
     if (voo.dep && voo.dep.icao) origem = voo.dep.icao;
     if (voo.arr && voo.arr.icao) destino = voo.arr.icao;
-
-    // Callsign (opcional, para futuro uso)
-    let callsign = "";
-    if (voo.airline && voo.airline.icao && voo.flightNumber) {
-      callsign = voo.airline.icao + voo.flightNumber;
-    }
-
-    return { nome, origem, destino, tipo, callsign };
+    return { nome, origem, destino, tipo };
   }
 
-  // ====== MONTA O HTML DE UMA LINHA ======
+  // ====== CRIA LINHA ======
   function criarLinha(piloto) {
     const row = document.createElement("div");
     row.className = "po-pilot-row";
-
     const classeBadge = piloto.tipo === "VVX" ? "po-badge-vvx" : "po-badge-vax";
-
     row.innerHTML =
       '<div class="po-avatar">✈</div>' +
       '<div class="po-info">' +
@@ -862,60 +838,110 @@
         '</div>' +
       '</div>' +
       '<span class="po-badge ' + classeBadge + '">' + piloto.tipo + '</span>';
-
     return row;
   }
 
-  // ====== ESCAPE HTML (segurança) ======
   function escapeHtml(texto) {
     const div = document.createElement("div");
     div.textContent = texto;
     return div.innerHTML;
   }
 
+  // ====== CONTROLE DE FECHAR ======
+  var overlayFechado = false;
+
+  function configurarBotaoFechar() {
+    var btn = document.getElementById("po-close-btn");
+    if (btn) {
+      btn.addEventListener("click", function(e) {
+        e.stopPropagation();
+        var overlay = document.getElementById("pilotos-online");
+        overlay.style.display = "none";
+        overlayFechado = true;
+      });
+    }
+  }
+
+  // ====== DRAG (ARRASTAR) ======
+  function configurarDrag() {
+    var overlay = document.getElementById("pilotos-online");
+    var handle = document.getElementById("po-drag-handle");
+    if (!overlay || !handle) return;
+
+    var arrastando = false;
+    var offsetX = 0;
+    var offsetY = 0;
+
+    handle.addEventListener("mousedown", function(e) {
+      // Não inicia drag se clicou no botão fechar
+      if (e.target.classList.contains("po-close")) return;
+
+      arrastando = true;
+      var rect = overlay.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      overlay.style.transition = "none";
+    });
+
+    document.addEventListener("mousemove", function(e) {
+      if (!arrastando) return;
+      var novoX = e.clientX - offsetX;
+      var novoY = e.clientY - offsetY;
+
+      // Limita dentro da janela (não deixa sair da tela)
+      var maxX = window.innerWidth - overlay.offsetWidth;
+      var maxY = window.innerHeight - overlay.offsetHeight;
+      novoX = Math.max(0, Math.min(novoX, maxX));
+      novoY = Math.max(0, Math.min(novoY, maxY));
+
+      overlay.style.left = novoX + "px";
+      overlay.style.top = novoY + "px";
+    });
+
+    document.addEventListener("mouseup", function() {
+      arrastando = false;
+      overlay.style.transition = "";
+    });
+  }
+
   // ====== FUNÇÃO PRINCIPAL ======
   async function atualizarPilotos() {
-    // Busca os dois endpoints ao mesmo tempo
-    const [voosVVX, voosVAX] = await Promise.all([
+    // Se o usuário fechou manualmente, não reabre sozinho
+    if (overlayFechado) return;
+
+    var voosVVX, voosVAX;
+    var resultados = await Promise.all([
       buscarVoos("/voos"),
       buscarVoos("/vax_voos")
     ]);
+    voosVVX = resultados[0];
+    voosVAX = resultados[1];
 
-    // Extrai e junta todos os pilotos
-    const pilotosVVX = voosVVX.map(function(v) { return extrairPiloto(v, "VVX"); });
-    const pilotosVAX = voosVAX.map(function(v) { return extrairPiloto(v, "VAX"); });
-    const todosPilotos = pilotosVVX.concat(pilotosVAX);
+    var pilotosVVX = voosVVX.map(function(v) { return extrairPiloto(v, "VVX"); });
+    var pilotosVAX = voosVAX.map(function(v) { return extrairPiloto(v, "VAX"); });
+    var todosPilotos = pilotosVVX.concat(pilotosVAX);
 
-    const overlay = document.getElementById("pilotos-online");
-    const lista = document.getElementById("po-list");
-    const contador = document.getElementById("po-count");
+    var overlay = document.getElementById("pilotos-online");
+    var lista = document.getElementById("po-list");
+    var contador = document.getElementById("po-count");
 
-    // ====== SE NÃO HÁ PILOTOS, ESCONDE O OVERLAY ======
     if (todosPilotos.length === 0) {
       overlay.style.display = "none";
       return;
     }
 
-    // ====== HÁ PILOTOS: MOSTRA O OVERLAY ======
     overlay.style.display = "flex";
-
-    // Atualiza o contador
     contador.textContent = todosPilotos.length;
-
-    // Limpa a lista
     lista.innerHTML = "";
-
-    // Adiciona cada piloto
     todosPilotos.forEach(function(piloto) {
       lista.appendChild(criarLinha(piloto));
     });
   }
 
   // ====== INICIALIZAÇÃO ======
-  // Carrega imediatamente
+  configurarBotaoFechar();
+  configurarDrag();
   atualizarPilotos();
-
-  // Atualiza a cada 60 segundos
   setInterval(atualizarPilotos, REFRESH_INTERVAL);
 })();
 </script>
