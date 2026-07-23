@@ -4232,6 +4232,12 @@ footer p {
   border: 1px solid rgba(255, 152, 0, 0.3);
 }
 
+.po-tag-flight {
+  background: rgba(156, 39, 176, 0.15);
+  color: #ce93d8;
+  border: 1px solid rgba(156, 39, 176, 0.3);
+}
+
 .po-badge {
   font-size: 10px;
   font-weight: 700;
