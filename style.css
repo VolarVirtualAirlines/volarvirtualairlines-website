@@ -4071,7 +4071,6 @@ footer p {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* Cabeçalho do overlay */
 .po-header {
   display: flex;
   align-items: center;
@@ -4079,9 +4078,14 @@ footer p {
   padding: 12px 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(0, 0, 0, 0.25);
+  cursor: grab;
+  user-select: none;
 }
 
-/* Bolinha vermelha pulsante (LIVE) */
+.po-header:active {
+  cursor: grabbing;
+}
+
 .po-live-dot {
   width: 8px;
   height: 8px;
@@ -4112,7 +4116,30 @@ footer p {
   border-radius: 10px;
 }
 
-/* Lista rolável */
+/* Botão fechar */
+.po-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 4px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.po-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
 .po-list {
   overflow-y: auto;
   flex: 1;
@@ -4123,7 +4150,6 @@ footer p {
 .po-list::-webkit-scrollbar-track { background: transparent; }
 .po-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
 
-/* Cada linha de piloto */
 .po-pilot-row {
   display: flex;
   align-items: center;
@@ -4141,7 +4167,6 @@ footer p {
   border-bottom: none;
 }
 
-/* Avatar (ícone de avião) */
 .po-avatar {
   width: 32px;
   height: 32px;
@@ -4154,7 +4179,6 @@ footer p {
   flex-shrink: 0;
 }
 
-/* Info do piloto (nome + rota) */
 .po-info {
   display: flex;
   flex-direction: column;
@@ -4179,7 +4203,6 @@ footer p {
   gap: 4px;
 }
 
-/* Badge VVX / VAX */
 .po-badge {
   font-size: 10px;
   font-weight: 700;
@@ -4201,7 +4224,6 @@ footer p {
   border: 1px solid rgba(33, 150, 243, 0.4);
 }
 
-/* Esconde em telas pequenas */
 @media (max-width: 768px) {
   #pilotos-online { display: none !important; }
 }
