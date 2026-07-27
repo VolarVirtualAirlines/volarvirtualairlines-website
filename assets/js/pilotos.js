@@ -255,14 +255,40 @@ async function carregarPilotos() {
         const possuiVATSIM =
             piloto.vatsim &&
             piloto.vatsim !== "—";
+
+        const urlAvatar = piloto.avatar
+            ? `https://newsky.app/api/pilot/avatar/${piloto.avatar}`
+            : "";
         
         return `
             <article class="piloto-card">
 
                 <div class="piloto-avatar-container">
-                    <div class="piloto-avatar-placeholder">
-                        ${piloto.iniciais}
-                    </div>
+                
+                    ${urlAvatar ? `
+                        <img
+                            src="${urlAvatar}"
+                            alt="Avatar de ${piloto.nome}"
+                            class="piloto-avatar"
+                            loading="lazy"
+                            onerror="
+                                this.hidden = true;
+                                this.nextElementSibling.hidden = false;
+                            "
+                        >
+                
+                        <div
+                            class="piloto-avatar-placeholder"
+                            hidden
+                        >
+                            ${piloto.iniciais}
+                        </div>
+                    ` : `
+                        <div class="piloto-avatar-placeholder">
+                            ${piloto.iniciais}
+                        </div>
+                    `}
+                
                 </div>
 
                 <h3 class="piloto-nome">
