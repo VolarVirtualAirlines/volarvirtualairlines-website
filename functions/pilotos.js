@@ -1,23 +1,6 @@
 export async function onRequestGet(context) {
   const url = "https://newsky.app/api/airline-api/pilots";
-
-  // Depois vamos cadastrar essa variável no Cloudflare.
-  const apiKey = context.env.NEWSKY_PILOTS_API_KEY;
-
-  if (!apiKey) {
-    return new Response(
-      JSON.stringify({
-        error: true,
-        message: "Chave da API de pilotos não configurada."
-      }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-    );
-  }
+  const apiKey = "VVX_6t2Ol9DvcRHliIWUwXuIWm03IHTTUz";
 
   try {
     const response = await fetch(url, {
