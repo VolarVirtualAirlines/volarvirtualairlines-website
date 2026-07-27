@@ -218,9 +218,11 @@ async function carregarPilotos() {
             );
         }
 
-        pilotos = Array.isArray(resultado.dados)
+        const pilotosRecebidos = Array.isArray(resultado.dados)
             ? resultado.dados
             : [];
+        
+        pilotos = pilotosRecebidos.map(mapearPilotoNewSky);
 
         console.log("Pilotos recebidos:");
         console.table(pilotos);
@@ -499,8 +501,8 @@ const somaMinutos = lista.reduce(
 
             const correspondeRede =
                 redeSelecionada === "todas" ||
-                normalizarTexto(piloto.rede) ===
-                normalizarTexto(redeSelecionada);
+                normalizarTexto(piloto.rede)
+                    .includes(normalizarTexto(redeSelecionada));
 
             return (
                 correspondeNome &&
