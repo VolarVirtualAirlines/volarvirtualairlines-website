@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const pilotos = [
         {
             nome: "Marcos Bastos",
-            identificacao: "VVX001",
             pais: "Brasil",
             base: "SBGR",
             voos: 1284,
@@ -17,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             nome: "Dalyson Silva",
-            identificacao: "VVX002",
             pais: "Brasil",
             base: "SBBR",
             voos: 342,
@@ -31,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             nome: "Carlos García",
-            identificacao: "VVX003",
             pais: "Espanha",
             base: "LEMD",
             voos: 198,
@@ -66,10 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 <h3 class="piloto-nome">
                     ${piloto.nome}
                 </h3>
-
-                <div class="piloto-identificacao">
-                    ${piloto.identificacao}
-                </div>
 
                 <div class="piloto-localizacao">
                     <i class="fas fa-location-dot"></i>
