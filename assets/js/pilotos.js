@@ -247,7 +247,15 @@ async function carregarPilotos() {
     function criarCardPiloto(piloto) {
 
         const classeStatus = obterClasseStatus(piloto.status);
-
+        
+        const possuiIVAO =
+            piloto.ivao &&
+            piloto.ivao !== "—";
+        
+        const possuiVATSIM =
+            piloto.vatsim &&
+            piloto.vatsim !== "—";
+        
         return `
             <article class="piloto-card">
 
@@ -299,15 +307,19 @@ async function carregarPilotos() {
 
                 <div class="piloto-card-footer">
 
-                    <div class="piloto-card-info">
-                        <span>IVAO ID</span>
-                        <strong>${piloto.ivao}</strong>
-                    </div>
-
-                    <div class="piloto-card-info">
-                        <span>Rede</span>
-                        <strong>${piloto.rede}</strong>
-                    </div>
+                    ${possuiIVAO ? `
+                        <div class="piloto-card-info">
+                            <span>IVAO ID</span>
+                            <strong>${piloto.ivao}</strong>
+                        </div>
+                    ` : ""}
+                    
+                    ${possuiVATSIM ? `
+                        <div class="piloto-card-info">
+                            <span>VATSIM ID</span>
+                            <strong>${piloto.vatsim}</strong>
+                        </div>
+                    ` : ""}
 
                     <div class="piloto-card-info">
                         <span>Membro desde</span>
