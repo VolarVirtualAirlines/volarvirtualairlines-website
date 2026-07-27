@@ -168,8 +168,6 @@ function mapearPilotoNewSky(piloto) {
 
         rede: obterRedePiloto(integracoes),
 
-        cargo: "Piloto",
-
         membroDesde: formatarDataNewSky(
             piloto.createdAt
         ),
@@ -310,11 +308,6 @@ async function carregarPilotos() {
                     </div>
 
                     <div class="piloto-card-info">
-                        <span>Função</span>
-                        <strong>${piloto.cargo}</strong>
-                    </div>
-
-                    <div class="piloto-card-info">
                         <span>Membro desde</span>
                         <strong>${piloto.membroDesde}</strong>
                     </div>
@@ -436,8 +429,8 @@ const somaMinutos = lista.reduce(
             case "horas":
                 listaOrdenada.sort(
                     (a, b) =>
-                        obterHorasNumericas(b.horas) -
-                        obterHorasNumericas(a.horas)
+                        b.minutosVoados -
+                        a.minutosVoados
                 );
                 break;
 
