@@ -72,7 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="piloto-card-stats">
 
                     <div class="piloto-card-stat">
-                        <strong>${piloto.voos.toLocaleString("pt-BR")}</strong>
+                        <strong>
+                            ${piloto.voos.toLocaleString("pt-BR")}
+                        </strong>
                         <span>Voos</span>
                     </div>
 
@@ -120,6 +122,49 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
 
+    function obterHorasNumericas(horas) {
+
+        return Number(
+            String(horas).replace(/[^\d]/g, "")
+        ) || 0;
+    }
+
+    function atualizarEstatisticas(lista) {
+
+        if (totalPilotos) {
+            totalPilotos.textContent =
+                pilotos.length.toLocaleString("pt-BR");
+        }
+
+        if (totalVoos) {
+
+            const somaVoos = lista.reduce(
+                (total, piloto) => total + piloto.voos,
+                0
+            );
+
+            totalVoos.textContent =
+                somaVoos.toLocaleString("pt-BR");
+        }
+
+        if (totalHoras) {
+
+            const somaHoras = lista.reduce(
+                (total, piloto) =>
+                    total + obterHorasNumericas(piloto.horas),
+                0
+            );
+
+            totalHoras.textContent =
+                `${somaHoras.toLocaleString("pt-BR")}h`;
+        }
+
+        if (totalFiltrados) {
+            totalFiltrados.textContent =
+                lista.length.toLocaleString("pt-BR");
+        }
+    }
+
     function renderizarPilotos(lista) {
 
         if (!gridPilotos) {
@@ -130,37 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .map(criarCardPiloto)
             .join("");
 
-        if (totalPilotos) {
-            totalPilotos.textContent = pilotos.length;
-        }
-
-        if (totalVoos) {
-            const somaVoos = pilotos.reduce(
-                (total, piloto) => total + piloto.voos,
-                0
-            );
-
-            totalVoos.textContent = somaVoos.toLocaleString("pt-BR");
-        }
-
-        if (totalHoras) {
-            const somaHoras = pilotos.reduce((total, piloto) => {
-
-                const horasNumericas = Number(
-                    piloto.horas.replace(/[^\d]/g, "")
-                );
-
-                return total + horasNumericas;
-
-            }, 0);
-
-            totalHoras.textContent =
-                `${somaHoras.toLocaleString("pt-BR")}h`;
-        }
-
-        if (totalFiltrados) {
-            totalFiltrados.textContent = lista.length;
-        }
+        atualizarEstatisticas(lista);
     }
 
     renderizarPilotos(pilotos);
