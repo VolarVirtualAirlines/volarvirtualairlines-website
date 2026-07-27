@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pilotos | Volar Virtual Airlines</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo-container">
+
+        <a href="index.html">
+
+            <img
+                src="assets/LOGO_WEBSITE.png"
+                alt="Volar Virtual Airlines"
+                class="logo"
+            >
+
+        </a>
+
+    </div>
+
+    <div id="menu-container"></div>
+
+</header>
+
+
+<main>
+
+    <section class="section dark pilotos-premium">
+
+        <h2>Nossos Pilotos</h2>
+
+        <p class="pilotos-intro">
+
+            Conheça os pilotos que fazem parte da tripulação da
+            Volar Virtual Airlines.
+
+            <br><br>
+
+            Consulte informações operacionais, horas de voo,
+            quantidade de operações e dados dos comandantes que
+            ajudam a escrever diariamente a história da VOLAR.
+
+        </p>
+
+        <div class="pilotos-divider"></div>
+
+
+        <!-- CARREGAMENTO DOS PILOTOS -->
+
+        <div id="loading-pilotos" class="loading-pilotos-card">
+
+            <h3>
+                <i class="fas fa-plane"></i>
+                Carregando Pilotos
+            </h3>
+
+            <p>
+                Aguarde... Sincronizando a tripulação da companhia...
+            </p>
+
+            <div class="loading-pilotos-barra-container">
+
+                <div
+                    id="loading-pilotos-barra"
+                    class="loading-pilotos-barra"
+                ></div>
+
+            </div>
+
+            <span id="loading-pilotos-percentual">0%</span>
+
+        </div>
+
+
+        <!-- CONTEÚDO PRINCIPAL -->
+
+        <div
+            id="conteudo-pilotos"
+            class="conteudo-pilotos-oculto"
+        >
+
+
+            <!-- ESTATÍSTICAS -->
+
+            <div class="pilotos-stats">
+
+                <div class="piloto-stat-card card-pilotos-total">
+
+                    <i class="fas fa-users"></i>
+
+                    <span id="total-pilotos">0</span>
+
+                    <p>Pilotos</p>
+
+                </div>
+
+
+                <div class="piloto-stat-card card-pilotos-voos">
+
+                    <i class="fas fa-plane-departure"></i>
+
+                    <span id="total-voos-pilotos">0</span>
+
+                    <p>Voos Realizados</p>
+
+                </div>
+
+
+                <div class="piloto-stat-card card-pilotos-horas">
+
+                    <i class="fas fa-clock"></i>
+
+                    <span id="total-horas-pilotos">0h</span>
+
+                    <p>Horas de Voo</p>
+
+                </div>
+
+
+                <div class="piloto-stat-card card-pilotos-filtrados">
+
+                    <i class="fas fa-filter"></i>
+
+                    <span id="total-pilotos-filtrados">0</span>
+
+                    <p>Pilotos Encontrados</p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTROS -->
+
+            <div class="pilotos-filtros">
+
+                <div class="pilotos-campo-busca">
+
+                    <i class="fas fa-search"></i>
+
+                    <input
+                        type="text"
+                        id="filtro-piloto"
+                        placeholder="Buscar piloto pelo nome"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <input
+                    type="text"
+                    id="filtro-home-icao"
+                    placeholder="Aeroporto base. Ex: SBGR"
+                    maxlength="4"
+                    autocomplete="off"
+                >
+
+
+                <select id="filtro-rede">
+
+                    <option value="todas">
+                        Todas as Redes
+                    </option>
+
+                    <option value="ivao">
+                        IVAO
+                    </option>
+
+                    <option value="vatsim">
+                        VATSIM
+                    </option>
+
+                    <option value="offline">
+                        Offline
+                    </option>
+
+                </select>
+
+
+                <select id="ordenar-pilotos">
+
+                    <option value="nome">
+                        Ordenar por Nome
+                    </option>
+
+                    <option value="voos">
+                        Mais Voos
+                    </option>
+
+                    <option value="horas">
+                        Mais Horas
+                    </option>
+
+                    <option value="rating">
+                        Melhor Avaliação
+                    </option>
+
+                    <option value="recente">
+                        Entrada Mais Recente
+                    </option>
+
+                </select>
+
+
+                <button
+                    type="button"
+                    id="btn-filtrar-pilotos"
+                    class="btn-filtro-pilotos"
+                >
+
+                    <i class="fas fa-search"></i>
+
+                    <span>Filtrar</span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="btn-limpar-pilotos"
+                    class="btn-limpar-pilotos"
+                >
+
+                    <i class="fas fa-eraser"></i>
+
+                    <span>Limpar</span>
+
+                </button>
+
+            </div>
+
+
+            <!-- MENSAGEM SEM RESULTADOS -->
+
+            <div
+                id="pilotos-sem-resultados"
+                class="pilotos-sem-resultados"
+                hidden
+            >
+
+                <i class="fas fa-user-slash"></i>
+
+                <h3>Nenhum piloto encontrado</h3>
+
+                <p>
+                    Revise os filtros utilizados e tente novamente.
+                </p>
+
+            </div>
+
+
+            <!-- CARDS DOS PILOTOS -->
+
+            <div
+                id="grid-pilotos"
+                class="grid-pilotos"
+            >
+
+                <!--
+                    Os cards serão inseridos dinamicamente
+                    pelo arquivo assets/js/pilotos.js
+                -->
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<div id="footer-container"></div>
+
+
+<!-- BOTÃO VOLTAR AO TOPO -->
+
+<button
+    type="button"
+    id="btn-voltar-topo"
+    title="Voltar ao topo"
+    aria-label="Voltar ao topo"
+>
+    ↑
+</button>
+
+
+<!-- BOTÃO DE SUPORTE FLUTUANTE -->
+
+<button
+    type="button"
+    id="btn-suporte"
+    title="Precisa de ajuda?"
+>
+
+    <img
+        src="assets/support/support_icon.png"
+        alt="Suporte"
+    >
+
+    <span class="label-suporte">
+        Precisa de ajuda?
+    </span>
+
+</button>
+
+
+<!-- MODAL DA CENTRAL DE ATENDIMENTO -->
+
+<div
+    id="modal-suporte"
+    class="modal-suporte-container"
+>
+
+    <div class="modal-suporte-content">
+
+        <button
+            type="button"
+            class="btn-fechar-modal"
+            id="fechar-suporte"
+            aria-label="Fechar central de atendimento"
+        >
+            &times;
+        </button>
+
+
+        <div class="modal-header">
+
+            <h3>Central de Atendimento</h3>
+
+            <p>Volar Virtual Airlines</p>
+
+        </div>
+
+
+        <form
+            action="https://api.staticforms.dev/submit"
+            method="POST"
+            id="form-suporte"
+        >
+
+            <input
+                type="hidden"
+                name="apiKey"
+                value="sf_1f0637f6ba466017621733fb"
+            >
+
+            <input
+                type="text"
+                name="honeypot"
+                style="display:none"
+            >
+
+            <input
+                type="hidden"
+                name="subject"
+                value="Volar Virtual Airlines Suporte submission"
+            >
+
+
+            <div class="input-group">
+
+                <label for="sup-nome">
+                    Nome Completo
+                </label>
+
+                <input
+                    type="text"
+                    id="sup-nome"
+                    name="name"
+                    placeholder="Digite seu nome"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="sup-email">
+                    E-mail de Contato
+                </label>
+
+                <input
+                    type="email"
+                    id="sup-email"
+                    name="email"
+                    placeholder="seu-email@exemplo.com"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="sup-mensagem">
+                    Mensagem
+                </label>
+
+                <textarea
+                    id="sup-mensagem"
+                    name="message"
+                    rows="4"
+                    placeholder="Como podemos ajudar você hoje, piloto?"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn-enviar-suporte"
+            >
+                Enviar Mensagem
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- VOLTAR AO TOPO -->
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const btnTopo = document.getElementById("btn-voltar-topo");
+
+    if (!btnTopo) {
+        return;
+    }
+
+    window.addEventListener("scroll", () => {
+
+        btnTopo.style.display =
+            window.scrollY > 400 ? "flex" : "none";
+
+    });
+
+    btnTopo.addEventListener("click", () => {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+});
+</script>
+
+
+<!-- SCRIPTS GERAIS -->
+
+<script src="assets/js/menu.js"></script>
+<script src="assets/js/footer.js"></script>
+<script src="assets/js/support.js"></script>
+
+<!-- SCRIPT DA PÁGINA DE PILOTOS -->
+<!-- Será ativado após criarmos o arquivo assets/js/pilotos.js -->
+
+<!-- <script src="assets/js/pilotos.js"></script> -->
+
+
+</body>
+
+</html>
