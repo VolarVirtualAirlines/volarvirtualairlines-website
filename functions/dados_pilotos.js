@@ -6,7 +6,7 @@ export async function onRequestGet(context) {
     try {
 
         const response = await fetch(url, {
-            method: "POST",
+            method: "GET",
             headers: {
                 "Authorization": `Bearer ${apiKey}`,
                 "Accept": "application/json"
