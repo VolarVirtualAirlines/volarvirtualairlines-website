@@ -92,7 +92,7 @@ async function carregarPilotos() {
         console.log("Pilotos recebidos:");
         console.table(pilotos);
 
-        carregarPilotos();
+        aplicarFiltros();
 
     } catch (error) {
 
@@ -461,6 +461,6 @@ async function carregarPilotos() {
        INICIALIZAÇÃO
     ===================================== */
 
-    aplicarFiltros();
+    carregarPilotos();
 
 });
