@@ -1,49 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const pilotos = [
-        {
-            nome: "Marcos Bastos",
-            pais: "Brasil",
-            base: "SBGR",
-            rede: "IVAO",
-            voos: 1284,
-            horas: "2615h",
-            score: 9.84,
-            ivao: "123456",
-            cargo: "Comandante",
-            membroDesde: "15/01/2026",
-            status: "Ativo",
-            iniciais: "MB"
-        },
-        {
-            nome: "Dalyson Silva",
-            pais: "Brasil",
-            base: "SBBR",
-            rede: "IVAO",
-            voos: 342,
-            horas: "718h",
-            score: 9.52,
-            ivao: "654321",
-            cargo: "Comandante",
-            membroDesde: "26/06/2026",
-            status: "Ativo",
-            iniciais: "DS"
-        },
-        {
-            nome: "Carlos García",
-            pais: "Espanha",
-            base: "LEMD",
-            rede: "IVAO",
-            voos: 198,
-            horas: "426h",
-            score: 9.21,
-            ivao: "789456",
-            cargo: "Primeiro Oficial",
-            membroDesde: "04/04/2026",
-            status: "Ativo",
-            iniciais: "CG"
-        }
-    ];
+    let pilotos = [];
 
     /* =====================================
        ELEMENTOS DA PÁGINA
@@ -106,6 +63,47 @@ document.addEventListener("DOMContentLoaded", () => {
             : "piloto-badge-inativo";
     }
 
+/* =====================================
+   CARREGAMENTO DOS PILOTOS
+ ===================================== */
+
+async function carregarPilotos() {
+
+    try {
+
+        const response = await fetch("/dados_pilotos", {
+            cache: "no-store"
+        });
+
+        const resultado = await response.json();
+
+        console.log("Retorno da Function:", resultado);
+
+        if (resultado.error) {
+            throw new Error(
+                resultado.message || "Erro ao consultar pilotos."
+            );
+        }
+
+        pilotos = Array.isArray(resultado.dados)
+            ? resultado.dados
+            : [];
+
+        console.log("Pilotos recebidos:");
+        console.table(pilotos);
+
+        carregarPilotos();
+
+    } catch (error) {
+
+        console.error("Erro ao carregar pilotos:", error);
+
+        pilotos = [];
+
+        atualizarEstatisticas(pilotos);
+        renderizarPilotos(pilotos);
+    }
+}
 
     /* =====================================
        CRIAÇÃO DOS CARDS
