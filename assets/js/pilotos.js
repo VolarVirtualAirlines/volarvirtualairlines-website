@@ -63,6 +63,141 @@ document.addEventListener("DOMContentLoaded", () => {
             : "piloto-badge-inativo";
     }
 
+function obterIniciais(nome) {
+
+    return String(nome || "")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((parte) => parte.charAt(0).toUpperCase())
+        .join("");
+}
+
+
+function formatarDataNewSky(data) {
+
+    if (!data) {
+        return "—";
+    }
+
+    const dataConvertida = new Date(data);
+
+    if (Number.isNaN(dataConvertida.getTime())) {
+        return "—";
+    }
+
+    return dataConvertida.toLocaleDateString("pt-BR");
+}
+
+
+function formatarTempoNewSky(minutos) {
+
+    const totalMinutos = Number(minutos) || 0;
+
+    const horas = Math.floor(totalMinutos / 60);
+    const minutosRestantes = totalMinutos % 60;
+
+    if (minutosRestantes === 0) {
+        return `${horas}h`;
+    }
+
+    return `${horas}h ${String(minutosRestantes).padStart(2, "0")}min`;
+}
+
+
+function obterRedePiloto(integracoes) {
+
+    const possuiIvao = Boolean(integracoes?.ivao);
+    const possuiVatsim = Boolean(integracoes?.vatsim);
+
+    if (possuiIvao && possuiVatsim) {
+        return "IVAO / VATSIM";
+    }
+
+    if (possuiIvao) {
+        return "IVAO";
+    }
+
+    if (possuiVatsim) {
+        return "VATSIM";
+    }
+
+    return "—";
+}
+
+
+function mapearPilotoNewSky(piloto) {
+
+    const nome = piloto.fullname || "Piloto VOLAR";
+
+    const estatisticas = piloto.airlineStats || {};
+
+    const integracoes = piloto.integrations || {};
+
+    return {
+        id: piloto._id || "",
+
+        nome,
+
+        iniciais: obterIniciais(nome),
+
+        pais: piloto.countryCode || "—",
+
+        base: piloto.homeIcao || "—",
+
+        voos: Number(estatisticas.flights) || 0,
+
+        horas: formatarTempoNewSky(
+            estatisticas.time
+        ),
+
+        minutosVoados: Number(
+            estatisticas.time
+        ) || 0,
+
+        score: Number(
+            estatisticas.rating
+        ) || 0,
+
+        ivao: integracoes.ivao || "—",
+
+        vatsim: integracoes.vatsim || "—",
+
+        discord: integracoes.discord || "—",
+
+        rede: obterRedePiloto(integracoes),
+
+        cargo: "Piloto",
+
+        membroDesde: formatarDataNewSky(
+            piloto.createdAt
+        ),
+
+        ultimoVoo: formatarDataNewSky(
+            estatisticas.lastFlightDate
+        ),
+
+        distancia: Number(
+            estatisticas.dist
+        ) || 0,
+
+        schedules: Number(
+            estatisticas.schedules
+        ) || 0,
+
+        charters: Number(
+            estatisticas.charters
+        ) || 0,
+
+        status: piloto.status?.active
+            ? "Ativo"
+            : "Inativo",
+
+        avatar: piloto.avatar || ""
+    };
+}
+    
 /* =====================================
    CARREGAMENTO DOS PILOTOS
  ===================================== */
@@ -224,14 +359,23 @@ async function carregarPilotos() {
 
         if (totalHoras) {
 
-            const somaHoras = lista.reduce(
-                (total, piloto) =>
-                    total + obterHorasNumericas(piloto.horas),
-                0
-            );
+const somaMinutos = lista.reduce(
+    (total, piloto) =>
+        total + piloto.minutosVoados,
+    0
+);
 
-            totalHoras.textContent =
-                `${somaHoras.toLocaleString("pt-BR")}h`;
+        const horasCompletas = Math.floor(
+            somaMinutos / 60
+        );
+        
+        const minutosRestantes =
+            somaMinutos % 60;
+        
+        totalHoras.textContent =
+            minutosRestantes > 0
+                ? `${horasCompletas.toLocaleString("pt-BR")}h ${String(minutosRestantes).padStart(2, "0")}min`
+                : `${horasCompletas.toLocaleString("pt-BR")}h`;
         }
 
         if (totalFiltrados) {
@@ -239,7 +383,6 @@ async function carregarPilotos() {
                 lista.length.toLocaleString("pt-BR");
         }
     }
-
 
     /* =====================================
        RENDERIZAÇÃO
