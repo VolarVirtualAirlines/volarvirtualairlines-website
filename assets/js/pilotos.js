@@ -488,6 +488,12 @@ const somaMinutos = lista.reduce(
                 );
                 break;
 
+            case "antigo":
+                pilotos.sort((a, b) =>
+                    new Date(a.dataIngresso) - new Date(b.dataIngresso)
+                );
+                break;
+
             case "nome":
             default:
                 listaOrdenada.sort(
