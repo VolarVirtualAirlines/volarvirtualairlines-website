@@ -4262,3 +4262,725 @@ footer p {
 @media (max-width: 768px) {
   #pilotos-online { display: none !important; }
 }
+
+/* =====================================
+   PÁGINA DE PILOTOS
+===================================== */
+
+.pilotos-premium {
+    background: var(--section-dark);
+}
+
+.pilotos-intro {
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+
+.pilotos-divider {
+    width: 120px;
+    height: 1px;
+    margin: 35px auto 45px auto;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.45),
+        transparent
+    );
+}
+
+
+/* =====================================
+   LOADING DOS PILOTOS
+===================================== */
+
+.conteudo-pilotos-oculto {
+    display: none;
+}
+
+.loading-pilotos-card {
+    max-width: 620px;
+    margin: 0 auto 50px auto;
+    padding: 38px 34px;
+
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(0, 229, 255, 0.25);
+    border-radius: 18px;
+
+    text-align: center;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+.loading-pilotos-card h3 {
+    font-family: var(--font-headers);
+    color: #ffffff;
+    font-size: 1.35rem;
+    margin-bottom: 10px;
+}
+
+.loading-pilotos-card h3 i {
+    color: var(--turquoise);
+    margin-right: 8px;
+}
+
+.loading-pilotos-card p {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: 24px;
+}
+
+.loading-pilotos-barra-container {
+    width: 100%;
+    height: 12px;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.15);
+    border-radius: 999px;
+
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.loading-pilotos-barra {
+    width: 0%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        var(--turquoise),
+        #4ADE80
+    );
+
+    border-radius: 999px;
+    transition: width 0.35s ease;
+    box-shadow: 0 0 18px rgba(0, 229, 255, 0.45);
+}
+
+#loading-pilotos-percentual {
+    display: block;
+
+    font-family: var(--font-headers);
+    color: var(--gold-premium);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+
+/* =====================================
+   ESTATÍSTICAS DOS PILOTOS
+===================================== */
+
+.pilotos-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+
+    max-width: 1200px;
+    margin: 0 auto 45px auto;
+}
+
+.piloto-stat-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+
+    padding: 24px;
+    text-align: center;
+
+    transition: all 0.3s ease;
+}
+
+.piloto-stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 229, 255, 0.35);
+    background: rgba(0, 229, 255, 0.05);
+}
+
+.piloto-stat-card i {
+    display: block;
+    margin-bottom: 10px;
+
+    color: var(--turquoise);
+    font-size: 1.35rem;
+}
+
+.piloto-stat-card span {
+    display: block;
+
+    font-family: var(--font-headers);
+    font-size: 2rem;
+    font-weight: 700;
+
+    color: var(--turquoise);
+    margin-bottom: 8px;
+}
+
+.piloto-stat-card p {
+    margin: 0;
+
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+
+/* Cores individuais */
+
+.card-pilotos-total {
+    border-color: rgba(0, 229, 255, 0.20);
+    background: rgba(0, 229, 255, 0.03);
+}
+
+.card-pilotos-total i,
+.card-pilotos-total span {
+    color: #00E5FF;
+}
+
+.card-pilotos-voos {
+    border-color: rgba(77, 163, 255, 0.20);
+    background: rgba(77, 163, 255, 0.03);
+}
+
+.card-pilotos-voos i,
+.card-pilotos-voos span {
+    color: #4DA3FF;
+}
+
+.card-pilotos-horas {
+    border-color: rgba(212, 175, 55, 0.25);
+    background: rgba(212, 175, 55, 0.04);
+}
+
+.card-pilotos-horas i,
+.card-pilotos-horas span {
+    color: var(--gold-premium);
+}
+
+.card-pilotos-filtrados {
+    border-color: rgba(74, 222, 128, 0.20);
+    background: rgba(74, 222, 128, 0.03);
+}
+
+.card-pilotos-filtrados i,
+.card-pilotos-filtrados span {
+    color: #4ADE80;
+}
+
+
+/* =====================================
+   FILTROS DOS PILOTOS
+===================================== */
+
+.pilotos-filtros {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 16px;
+    max-width: 1400px;
+
+    margin: 0 auto 40px auto;
+}
+
+.pilotos-filtros input,
+.pilotos-filtros select {
+    height: 48px;
+    min-width: 220px;
+
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+
+    padding: 12px 16px;
+
+    color: var(--text-main);
+    font-family: var(--font-body);
+    font-size: 15px;
+
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.pilotos-filtros input::placeholder {
+    color: rgba(142, 154, 175, 0.65);
+}
+
+.pilotos-filtros input:focus,
+.pilotos-filtros select:focus {
+    border-color: var(--turquoise);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.12);
+}
+
+.pilotos-filtros select option {
+    background: var(--night-blue);
+    color: var(--text-main);
+}
+
+.pilotos-campo-busca {
+    position: relative;
+}
+
+.pilotos-campo-busca i {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+
+    transform: translateY(-50%);
+
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.pilotos-campo-busca input {
+    padding-left: 44px;
+}
+
+.btn-filtro-pilotos,
+.btn-limpar-pilotos {
+    height: 48px;
+    min-width: 140px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border-radius: 14px;
+
+    font-family: var(--font-headers);
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-filtro-pilotos {
+    background: rgba(0, 229, 255, 0.12);
+    border: 1px solid rgba(0, 229, 255, 0.35);
+    color: var(--turquoise);
+}
+
+.btn-filtro-pilotos:hover {
+    background: rgba(0, 229, 255, 0.22);
+    border-color: var(--turquoise);
+    transform: translateY(-2px);
+}
+
+.btn-limpar-pilotos {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+}
+
+.btn-limpar-pilotos:hover {
+    border-color: var(--turquoise);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+
+/* =====================================
+   GRID DOS PILOTOS
+===================================== */
+
+.grid-pilotos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 26px;
+    max-width: 1300px;
+
+    margin: 0 auto;
+}
+
+
+/* =====================================
+   CARD DO PILOTO
+===================================== */
+
+.piloto-card {
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-height: 440px;
+    padding: 34px 28px;
+
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+    transition: all 0.35s ease;
+}
+
+.piloto-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--turquoise),
+        transparent
+    );
+
+    opacity: 0.65;
+}
+
+.piloto-card:hover {
+    transform: translateY(-7px);
+
+    border-color: rgba(0, 229, 255, 0.35);
+    background: rgba(0, 229, 255, 0.045);
+
+    box-shadow: 0 20px 48px rgba(0, 229, 255, 0.11);
+}
+
+
+/* =====================================
+   AVATAR DO PILOTO
+===================================== */
+
+.piloto-avatar-container {
+    width: 104px;
+    height: 104px;
+
+    margin-bottom: 20px;
+    padding: 4px;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        var(--turquoise),
+        rgba(212, 175, 55, 0.85)
+    );
+
+    box-shadow: 0 0 24px rgba(0, 229, 255, 0.16);
+}
+
+.piloto-avatar {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+    object-fit: cover;
+
+    border: 4px solid var(--section-dark);
+    border-radius: 50%;
+
+    background: var(--night-blue);
+}
+
+.piloto-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 4px solid var(--section-dark);
+    border-radius: 50%;
+
+    background: var(--night-blue);
+    color: var(--turquoise);
+
+    font-family: var(--font-headers);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+
+/* =====================================
+   INFORMAÇÕES DO PILOTO
+===================================== */
+
+.piloto-nome {
+    font-family: var(--font-headers);
+    color: #ffffff;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+
+    line-height: 1.3;
+    margin-bottom: 6px;
+}
+
+.piloto-identificacao {
+    color: var(--turquoise);
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+
+    margin-bottom: 8px;
+}
+
+.piloto-localizacao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    min-height: 24px;
+    margin-bottom: 24px;
+
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.piloto-localizacao i {
+    color: var(--gold-premium);
+}
+
+
+/* =====================================
+   ESTATÍSTICAS DENTRO DO CARD
+===================================== */
+
+.piloto-card-stats {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    margin-bottom: 24px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.piloto-card-stat {
+    padding: 17px 8px;
+}
+
+.piloto-card-stat:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.piloto-card-stat strong {
+    display: block;
+
+    font-family: var(--font-headers);
+    color: #ffffff;
+
+    font-size: 1.1rem;
+    font-weight: 700;
+
+    margin-bottom: 4px;
+}
+
+.piloto-card-stat span {
+    display: block;
+
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+
+/* =====================================
+   RODAPÉ DO CARD
+===================================== */
+
+.piloto-card-footer {
+    width: 100%;
+    margin-top: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.piloto-card-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.piloto-card-info span:first-child {
+    text-align: left;
+}
+
+.piloto-card-info strong {
+    color: var(--text-main);
+    font-weight: 600;
+    text-align: right;
+}
+
+
+/* =====================================
+   BADGES DOS PILOTOS
+===================================== */
+
+.piloto-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 5px 11px;
+    border-radius: 999px;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.piloto-badge-ativo {
+    color: #4ADE80;
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+}
+
+.piloto-badge-inativo {
+    color: var(--text-muted);
+    background: rgba(142, 154, 175, 0.08);
+    border: 1px solid rgba(142, 154, 175, 0.20);
+}
+
+.piloto-badge-staff {
+    color: var(--gold-premium);
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+
+/* =====================================
+   SEM RESULTADOS
+===================================== */
+
+.pilotos-sem-resultados {
+    max-width: 620px;
+    margin: 30px auto;
+    padding: 45px 30px;
+
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+
+    text-align: center;
+}
+
+.pilotos-sem-resultados i {
+    color: var(--turquoise);
+    font-size: 2.4rem;
+    margin-bottom: 18px;
+}
+
+.pilotos-sem-resultados h3 {
+    font-family: var(--font-headers);
+    color: #ffffff;
+
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+}
+
+.pilotos-sem-resultados p {
+    margin: 0;
+    font-size: 15px;
+}
+
+
+/* =====================================
+   RESPONSIVIDADE DOS PILOTOS
+===================================== */
+
+@media (max-width: 1100px) {
+
+    .grid-pilotos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 900px;
+    }
+
+    .pilotos-stats {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 800px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .pilotos-premium {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .pilotos-filtros {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pilotos-campo-busca,
+    .pilotos-filtros input,
+    .pilotos-filtros select,
+    .btn-filtro-pilotos,
+    .btn-limpar-pilotos {
+        width: 100%;
+        max-width: 440px;
+    }
+
+    .pilotos-campo-busca input {
+        max-width: none;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .grid-pilotos {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+    }
+
+    .pilotos-stats {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+    }
+
+    .piloto-card {
+        min-height: auto;
+        padding: 30px 22px;
+    }
+
+    .piloto-card-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .piloto-card-stat {
+        padding: 15px 5px;
+    }
+
+    .piloto-card-stat strong {
+        font-size: 1rem;
+    }
+
+    .piloto-card-stat span {
+        font-size: 10px;
+    }
+}
