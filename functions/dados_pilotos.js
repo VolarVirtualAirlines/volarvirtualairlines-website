@@ -1,28 +1,49 @@
 export async function onRequestGet(context) {
 
-    const url = "https://newsky.app/api/airline-api/pilots";
+    const url =
+        "https://newsky.app/api/airline/68e565033f0641c7f6546693/pilots";
+
     const apiKey = "VVX_6t2Ol9DvcRHliIWUwXuIWm03IHTTUz";
+
+    const payload = {
+        skip: 0,
+        count: 50,
+        needle: "",
+        sort: "createdAt",
+        order: 1,
+        status: "active",
+        includeSensitive: false
+    };
 
     try {
 
         const response = await fetch(url, {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Authorization": `Bearer ${apiKey}`,
-                "Accept": "application/json"
-            }
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
         });
 
         const textoPuro = await response.text();
         const textoLimpo = textoPuro.trim();
 
+        const contentType =
+            response.headers.get("content-type") || "";
+
         const ehJsonValido =
             textoLimpo.startsWith("[") ||
             textoLimpo.startsWith("{");
 
+        const pareceHtml =
+            textoLimpo.toLowerCase().includes("<html") ||
+            textoLimpo.toLowerCase().includes("<!doctype html");
+
         if (
             !response.ok ||
-            textoLimpo.toLowerCase().includes("<html") ||
+            pareceHtml ||
             !ehJsonValido
         ) {
 
@@ -31,24 +52,27 @@ export async function onRequestGet(context) {
                     error: true,
                     status: response.status,
                     endpoint: url,
+                    contentType,
                     message:
-                        `Resposta inesperada do NewSky: ` +
-                        textoLimpo.substring(0, 300)
+                        "Resposta inesperada do NewSky: " +
+                        textoLimpo.substring(0, 500)
                 }),
                 {
                     status: 200,
                     headers: {
-                        "Content-Type": "application/json",
+                        "Content-Type": "application/json; charset=utf-8",
                         "Cache-Control": "no-store"
                     }
                 }
             );
         }
 
-        let dados;
+        let respostaNewSky;
 
         try {
-            dados = JSON.parse(textoPuro);
+
+            respostaNewSky = JSON.parse(textoPuro);
+
         } catch (erroJson) {
 
             return new Response(
@@ -56,34 +80,39 @@ export async function onRequestGet(context) {
                     error: true,
                     status: response.status,
                     endpoint: url,
-                    message: "A resposta recebida não pôde ser convertida em JSON.",
+                    message:
+                        "A resposta recebida não pôde ser convertida em JSON.",
                     details: erroJson.message
                 }),
                 {
                     status: 200,
                     headers: {
-                        "Content-Type": "application/json",
+                        "Content-Type": "application/json; charset=utf-8",
                         "Cache-Control": "no-store"
                     }
                 }
             );
         }
 
+        const pilotos = Array.isArray(respostaNewSky.results)
+            ? respostaNewSky.results
+            : [];
+
         return new Response(
             JSON.stringify({
                 error: false,
                 status: response.status,
                 endpoint: url,
-                tipo: Array.isArray(dados) ? "array" : typeof dados,
-                quantidade: Array.isArray(dados)
-                    ? dados.length
-                    : null,
-                dados
+                tipo: typeof respostaNewSky,
+                quantidade: pilotos.length,
+                totalResults:
+                    respostaNewSky.totalResults ?? pilotos.length,
+                dados: pilotos
             }),
             {
                 status: 200,
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json; charset=utf-8",
                     "Cache-Control": "no-store"
                 }
             }
@@ -100,7 +129,7 @@ export async function onRequestGet(context) {
             {
                 status: 200,
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json; charset=utf-8",
                     "Cache-Control": "no-store"
                 }
             }
