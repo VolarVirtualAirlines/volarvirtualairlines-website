@@ -22,11 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <nav class="menu" id="menu-principal" aria-label="Menu principal">
 
-            <div class="menu-mobile-header">
-                <div class="menu-mobile-brand">
-                    <strong>VOLAR</strong>
-                    <span>Fly Beyond</span>
-                </div>
+        <div class="menu-mobile-brand">
+            <img
+                src="assets/logo_volar_menu_hamburguer.png"
+                alt="Volar Virtual Airlines"
+                class="menu-mobile-logo">
+        </div>
 
                 <button
                     type="button"
