@@ -316,18 +316,6 @@ async function carregarPilotos() {
                         <span>Voos</span>
                     </div>
 
-                    <div class="piloto-card-meta">
-                        <i class="fas fa-earth-americas"></i>
-                    
-                        <span>
-                            ${piloto.distancia.toLocaleString("pt-BR")} km
-                            •
-                            ${piloto.rede}
-                            •
-                            Último voo: ${piloto.ultimoVoo}
-                        </span>
-                    </div>
-
                     <div class="piloto-card-stat">
                         <strong>
                             ${piloto.horas}
@@ -345,6 +333,18 @@ async function carregarPilotos() {
                     </div>
 
                 </div>
+
+                    <div class="piloto-card-meta">
+                        <i class="fas fa-earth-americas"></i>
+                    
+                        <span>
+                            ${piloto.distancia.toLocaleString("pt-BR")} km
+                            •
+                            ${piloto.rede}
+                            •
+                            Último voo: ${piloto.ultimoVoo}
+                        </span>
+                    </div>
 
                 <div class="piloto-card-footer">
 
