@@ -101,40 +101,6 @@ export async function onRequestGet(context) {
         const pilotos = Array.isArray(respostaNewSky.results)
             ? respostaNewSky.results
             : [];
-
-            const pilotosComDetalhes = await Promise.all(
-            
-                pilotos.map(async (piloto) => {
-            
-                    try {
-            
-                        const perfil =
-                            await buscarPerfilPiloto(
-                                piloto._id,
-                                apiKey
-                            );
-            
-                        return {
-                            piloto,
-                            perfil
-                        };
-            
-                    } catch (error) {
-            
-                        console.error(
-                            `Erro ao consultar ${piloto.fullname}:`,
-                            error.message
-                        );
-            
-                        return {
-                            piloto,
-                            perfil: null
-                        };
-                    }
-            
-                })
-            
-            );
         
         const pilotosNormalizados = pilotosComDetalhes.map(
             ({ piloto, perfil }) => {
