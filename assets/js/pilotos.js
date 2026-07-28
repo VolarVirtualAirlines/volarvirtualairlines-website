@@ -132,7 +132,7 @@ function mapearPilotoNewSky(piloto) {
 
     const nome = piloto.fullname || "Piloto VOLAR";
 
-    const estatisticas = piloto.airlineStats || {};
+    const estatisticas = piloto.stats || {};
 
     const integracoes = piloto.integrations || {};
 
