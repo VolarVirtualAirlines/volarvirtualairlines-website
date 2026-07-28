@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const filtroBase = document.getElementById("filtro-home-icao");
     const filtroRede = document.getElementById("filtro-rede");
     const ordenarPilotos = document.getElementById("ordenar-pilotos");
+    const filtroMembroDesde = document.getElementById("filtro-membro-desde");
 
     const btnFiltrar = document.getElementById("btn-filtrar-pilotos");
     const btnLimpar = document.getElementById("btn-limpar-pilotos");
@@ -167,6 +168,8 @@ function mapearPilotoNewSky(piloto) {
         discord: integracoes.discord || "—",
 
         rede: obterRedePiloto(integracoes),
+
+        dataIngresso: piloto.createdAt,
 
         membroDesde: formatarDataNewSky(
             piloto.createdAt
@@ -528,6 +531,9 @@ const somaMinutos = lista.reduce(
         const redeSelecionada =
             filtroRede?.value || "todas";
 
+        const periodoSelecionado =
+            filtroMembroDesde?.value || "todos";
+
         const criterioOrdenacao =
             ordenarPilotos?.value || "nome";
 
@@ -548,10 +554,69 @@ const somaMinutos = lista.reduce(
                 normalizarTexto(piloto.rede)
                     .includes(normalizarTexto(redeSelecionada));
 
+            const hoje = new Date();
+            
+            const dataIngresso = piloto.dataIngresso
+                ? new Date(piloto.dataIngresso)
+                : null;
+            
+            let correspondePeriodo = true;
+            
+            if (periodoSelecionado !== "todos" && dataIngresso) {
+            
+                switch (periodoSelecionado) {
+            
+                    case "30-dias": {
+            
+                        const limite = new Date();
+            
+                        limite.setDate(
+                            limite.getDate() - 30
+                        );
+            
+                        correspondePeriodo =
+                            dataIngresso >= limite;
+            
+                        break;
+                    }
+            
+                    case "90-dias": {
+            
+                        const limite = new Date();
+            
+                        limite.setDate(
+                            limite.getDate() - 90
+                        );
+            
+                        correspondePeriodo =
+                            dataIngresso >= limite;
+            
+                        break;
+                    }
+            
+                    case "ano-atual":
+            
+                        correspondePeriodo =
+                            dataIngresso.getFullYear() ===
+                            hoje.getFullYear();
+            
+                        break;
+            
+                    default:
+            
+                        correspondePeriodo =
+                            dataIngresso.getFullYear() ==
+                            Number(periodoSelecionado);
+            
+                }
+            
+            }
+            
             return (
                 correspondeNome &&
                 correspondeBase &&
-                correspondeRede
+                correspondeRede &&
+                correspondePeriodo
             );
         });
 
@@ -579,6 +644,10 @@ const somaMinutos = lista.reduce(
 
         if (ordenarPilotos) {
             ordenarPilotos.value = "nome";
+        }
+
+        if (filtroMembroDesde) {
+            filtroMembroDesde.value = "todos";
         }
 
         aplicarFiltros();
