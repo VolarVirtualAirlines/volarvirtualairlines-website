@@ -338,7 +338,7 @@ async function carregarPilotos() {
                         <i class="fas fa-earth-americas"></i>
                     
                         <span>
-                            ${piloto.distancia.toLocaleString("pt-BR")} km
+                            ${piloto.distancia.toLocaleString("pt-BR")} NM
                             •
                             Último voo: ${piloto.ultimoVoo}
                         </span>
