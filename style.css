@@ -4728,10 +4728,12 @@ footer p {
     font-family: var(--font-headers);
     color: #ffffff;
 
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
 
     margin-bottom: 4px;
+
+    white-space: nowrap;
 }
 
 .piloto-card-stat span {
