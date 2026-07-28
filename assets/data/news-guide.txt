@@ -13,6 +13,7 @@ VOLAR NEWS - PADRÃO DE TAGS OFICIAIS
 📡 AIRAC       #FFD700
 🎓 VAX         #8B5CF6
 🤝 PARCEIROS   #EAB308
+👨‍✈️ PILOTOS     #14B8A6
 
 🟢 OPERACOES
 Cor: #22C55E
@@ -54,6 +55,9 @@ Uso: Atualizações sobre a VAX
 
 🤝 PARCEIROS   #EAB308
 Uso: Fechamento de parcerias
+
+👨‍✈️ PILOTOS     #14B8A6
+Uso: Atualizações sobre cadastros e afins para pilotos
 
 =================================================
 EXEMPLO DE USO NO NEWS.JSON
