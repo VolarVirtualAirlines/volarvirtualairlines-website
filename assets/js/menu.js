@@ -21,14 +21,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="menu-mobile-overlay" id="menu-mobile-overlay"></div>
 
         <nav class="menu" id="menu-principal" aria-label="Menu principal">
-
-        <div class="menu-mobile-brand">
-            <img
-                src="assets/logo_volar_menu_hamburguer.png"
-                alt="Volar Virtual Airlines"
-                class="menu-mobile-logo">
-        </div>
-
+        
+            <div class="menu-mobile-header">
+        
+                <div class="menu-mobile-brand">
+                    <img
+                        src="assets/logo_volar_menu_hamburguer.png"
+                        alt="Volar Virtual Airlines"
+                        class="menu-mobile-logo">
+                </div>
+        
                 <button
                     type="button"
                     class="menu-mobile-close"
@@ -37,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 >
                     <i class="fas fa-times" aria-hidden="true"></i>
                 </button>
+        
             </div>
 
             <a href="index.html" data-menu="home">Home</a>
