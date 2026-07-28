@@ -1,5 +1,12 @@
 [
     {
+        "image": "assets/announcements/announcements_6.png",
+        "version": 1,
+        "alt": "Nova Página de Pilotos VVX",
+        "start": "2026-07-28",
+        "end": "2026-08-15"
+    },
+    {
         "image": "assets/announcements/announcements_1.png",
         "version": 1,
         "alt": "VAX - Volar Virtual Academy",
