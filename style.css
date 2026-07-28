@@ -4878,23 +4878,15 @@ footer p {
         padding-right: 18px;
     }
 
-    .pilotos-filtros {
-        flex-direction: column;
-        align-items: center;
-    }
-
     .pilotos-campo-busca,
     .pilotos-filtros input,
     .pilotos-filtros select,
     .btn-filtro-pilotos,
     .btn-limpar-pilotos {
         width: 100%;
-        max-width: 440px;
-    }
-
-    .pilotos-campo-busca input {
         max-width: none;
     }
+
 }
 
 @media (max-width: 640px) {
@@ -4931,7 +4923,7 @@ footer p {
     }
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 1700px) {
 
     .pilotos-filtros {
         grid-template-columns: repeat(4, minmax(0, 1fr));
