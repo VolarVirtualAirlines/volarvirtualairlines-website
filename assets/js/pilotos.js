@@ -340,8 +340,6 @@ async function carregarPilotos() {
                         <span>
                             ${piloto.distancia.toLocaleString("pt-BR")} km
                             •
-                            ${piloto.rede}
-                            •
                             Último voo: ${piloto.ultimoVoo}
                         </span>
                     </div>
