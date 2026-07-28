@@ -58,6 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
     </div>
 
+    <a href="pilotos.html" data-menu="pilotos">Pilotos</a>
+
     <div class="menu-dropdown">
         <a href="#" class="menu-dropdown-toggle" data-menu="comunidade">
             Comunidade <i class="fas fa-chevron-down"></i>
