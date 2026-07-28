@@ -184,7 +184,7 @@ export async function onRequestGet(context) {
             ({ piloto, perfil }) => {
         
                 const estatisticasVVX =
-                    perfil?.stats?.airlines?.[airlineId] || {};
+                    perfil?.stats || {};
         
                 return {
                     ...piloto,
