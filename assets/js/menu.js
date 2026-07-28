@@ -64,6 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
         </a>
 
         <div class="menu-dropdown-content">
+            <a href="pilotos.html">
+                <i class="fas fa-id-badge"></i> Pilotos
+            </a>
             <a href="index.html#social">Redes Sociais</a>
             <a href="index.html#parceiros">Parceiros</a>
             <a href="index.html#links">Links Úteis</a>
