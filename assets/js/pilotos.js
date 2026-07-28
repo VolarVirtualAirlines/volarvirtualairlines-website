@@ -707,6 +707,10 @@ const somaMinutos = lista.reduce(
         }
     );
 
+    filtroMembroDesde?.addEventListener(
+        "change",
+        aplicarFiltros
+    );
 
     /* =====================================
        INICIALIZAÇÃO
