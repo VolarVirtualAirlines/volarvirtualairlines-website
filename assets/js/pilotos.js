@@ -490,10 +490,12 @@ const somaMinutos = lista.reduce(
                         converterData(a.membroDesde)
                 );
                 break;
-
+            
             case "antigo":
-                pilotos.sort((a, b) =>
-                    new Date(a.dataIngresso) - new Date(b.dataIngresso)
+                listaOrdenada.sort(
+                    (a, b) =>
+                        new Date(a.dataIngresso) -
+                        new Date(b.dataIngresso)
                 );
                 break;
 
