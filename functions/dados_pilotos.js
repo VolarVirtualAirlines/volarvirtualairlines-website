@@ -183,8 +183,8 @@ export async function onRequestGet(context) {
         const pilotosNormalizados = pilotosComDetalhes.map(
             ({ piloto, perfil }) => {
         
-                const estatisticasVVX =
-                    perfil?.stats || {};
+            const estatisticasVVX =
+                piloto.stats || {};
         
                 return {
                     ...piloto,
