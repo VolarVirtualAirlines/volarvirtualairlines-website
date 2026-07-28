@@ -5224,8 +5224,8 @@ body.menu-open {
 
       .menu-mobile-brand {
           display: flex;
-          align-items: center;
-          justify-content: center;
+          flex-direction: column;
+          line-height: 1.15;
       }
       
       .menu-mobile-logo {
