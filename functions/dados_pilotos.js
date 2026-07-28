@@ -101,45 +101,43 @@ export async function onRequestGet(context) {
         const pilotos = Array.isArray(respostaNewSky.results)
             ? respostaNewSky.results
             : [];
-        
-        const pilotosNormalizados = pilotosComDetalhes.map(
-            ({ piloto, perfil }) => {
+
+        const pilotosNormalizados = pilotos.map((piloto) => {
         
             const estatisticasVVX =
                 piloto.stats || {};
         
-                return {
-                    ...piloto,
+            return {
+                ...piloto,
         
-                    airlineStats: {
-                        rating:
-                            Number(estatisticasVVX.rating) || 0,
+                airlineStats: {
+                    rating:
+                        Number(estatisticasVVX.rating) || 0,
         
-                        flights:
-                            Number(estatisticasVVX.flights) || 0,
+                    flights:
+                        Number(estatisticasVVX.flights) || 0,
         
-                        time:
-                            Number(estatisticasVVX.time) || 0,
+                    time:
+                        Number(estatisticasVVX.time) || 0,
         
-                        dist:
-                            Number(estatisticasVVX.dist) || 0,
+                    dist:
+                        Number(estatisticasVVX.dist) || 0,
         
-                        schedules:
-                            Number(estatisticasVVX.schedules) || 0,
+                    schedules:
+                        Number(estatisticasVVX.schedules) || 0,
         
-                        charters:
-                            Number(estatisticasVVX.charters) || 0,
+                    charters:
+                        Number(estatisticasVVX.charters) || 0,
         
-                        online:
-                            Number(estatisticasVVX.online) || 0,
+                    online:
+                        Number(estatisticasVVX.online) || 0,
         
-                        lastFlightDate:
-                            estatisticasVVX.lastFlightDate || null
-                    }
-                };
-            }
-        );
-        
+                    lastFlightDate:
+                        estatisticasVVX.lastFlightDate || null
+                }
+            };
+        });
+     
         return new Response(
             JSON.stringify({
                 error: false,
