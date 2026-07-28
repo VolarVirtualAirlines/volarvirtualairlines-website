@@ -4953,3 +4953,20 @@ footer p {
     }
 
 }
+
+.piloto-card-meta {
+    margin: -10px 0 18px;
+
+    text-align: center;
+
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: rgba(255,255,255,.72);
+
+    line-height: 1.4;
+}
+
+.piloto-card-meta i {
+    color: #ffffff;
+    margin-right: 4px;
+}
