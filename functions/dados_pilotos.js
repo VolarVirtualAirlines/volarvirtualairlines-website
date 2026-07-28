@@ -179,6 +179,44 @@ export async function onRequestGet(context) {
             })
         
         );
+
+        const pilotosNormalizados = pilotosComDetalhes.map(
+            ({ piloto, perfil }) => {
+        
+                const estatisticasVVX =
+                    perfil?.stats?.airlines?.[airlineId] || {};
+        
+                return {
+                    ...piloto,
+        
+                    airlineStats: {
+                        rating:
+                            Number(estatisticasVVX.rating) || 0,
+        
+                        flights:
+                            Number(estatisticasVVX.flights) || 0,
+        
+                        time:
+                            Number(estatisticasVVX.time) || 0,
+        
+                        dist:
+                            Number(estatisticasVVX.dist) || 0,
+        
+                        schedules:
+                            Number(estatisticasVVX.schedules) || 0,
+        
+                        charters:
+                            Number(estatisticasVVX.charters) || 0,
+        
+                        online:
+                            Number(estatisticasVVX.online) || 0,
+        
+                        lastFlightDate:
+                            estatisticasVVX.lastFlightDate || null
+                    }
+                };
+            }
+        );
         
         return new Response(
             JSON.stringify({
@@ -186,10 +224,10 @@ export async function onRequestGet(context) {
                 status: response.status,
                 endpoint: url,
                 tipo: typeof respostaNewSky,
-                quantidade: pilotos.length,
+                quantidade: pilotosNormalizados.length,
                 totalResults:
-                    respostaNewSky.totalResults ?? pilotos.length,
-                dados: pilotos
+                    respostaNewSky.totalResults ?? pilotosNormalizados.length,
+                dados: pilotosNormalizados
             }),
             {
                 status: 200,
