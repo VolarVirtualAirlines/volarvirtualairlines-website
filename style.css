@@ -6581,9 +6581,19 @@ body.menu-open {
         margin-left: auto;
     }
 
+    /* Conector passa a ser vertical */
+
     .vax-jornada-timeline .jornada-volar-conector {
-        transform: rotate(90deg);
         margin: 3px auto;
+    }
+
+    .vax-jornada-timeline .jornada-volar-conector::before {
+        transform: rotate(90deg);
+        transform-origin: center;
+    }
+
+    .vax-jornada-timeline .jornada-volar-conector i {
+        transform: rotate(90deg);
     }
 
     .vax-jornada-etapa {
