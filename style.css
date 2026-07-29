@@ -4971,10 +4971,10 @@ footer p {
 
 .cadete-lista-item{
     display:flex;
-    align-items:flex-start;
-    gap:22px;
+    align-items:center;
+    gap:18px;
 
-    padding:22px 26px;
+    padding:12px 22px;
 
     background:rgba(255,255,255,.03);
     border:1px solid var(--glass-border);
