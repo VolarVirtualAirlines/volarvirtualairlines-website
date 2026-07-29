@@ -301,26 +301,28 @@ return `
         <div class="cadete-lista-conteudo">
 
             <div class="cadete-lista-identificacao">
-
-                <div>
+            
+                <div class="cadete-lista-titulo">
+            
                     <h3 class="cadete-lista-nome">
                         ${piloto.nome}
                     </h3>
-
+            
                     <div class="cadete-lista-localizacao">
                         <i class="fas fa-location-dot"></i>
-
+            
                         <span>
                             ${piloto.pais} • ${piloto.base}
                         </span>
                     </div>
+            
                 </div>
-
+            
                 <span class="piloto-badge ${classeStatus}">
                     <i class="fas fa-circle"></i>
                     ${piloto.status}
                 </span>
-
+            
             </div>
 
             <div class="cadete-lista-dados">
