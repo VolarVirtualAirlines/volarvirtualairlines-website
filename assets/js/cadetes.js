@@ -263,120 +263,118 @@ async function carregarPilotos() {
             ? `https://newsky.app/api/pilot/avatar/${piloto.avatar}`
             : "";
         
-        return `
-            <article class="piloto-card">
+return `
+    <article class="cadete-lista-item">
 
-                <div class="piloto-avatar-container">
-                
-                    ${urlAvatar ? `
-                        <img
-                            src="${urlAvatar}"
-                            alt="Avatar de ${piloto.nome}"
-                            class="piloto-avatar"
-                            loading="lazy"
-                            onerror="
-                                this.hidden = true;
-                                this.nextElementSibling.hidden = false;
-                            "
-                        >
-                
-                        <div
-                            class="piloto-avatar-placeholder"
-                            hidden
-                        >
-                            ${piloto.iniciais}
-                        </div>
-                    ` : `
-                        <div class="piloto-avatar-placeholder">
-                            ${piloto.iniciais}
-                        </div>
-                    `}
-                
+        <div class="cadete-lista-avatar">
+
+            ${urlAvatar ? `
+                <img
+                    src="${urlAvatar}"
+                    alt="Avatar de ${piloto.nome}"
+                    class="piloto-avatar"
+                    loading="lazy"
+                    onerror="
+                        this.hidden = true;
+                        this.nextElementSibling.hidden = false;
+                    "
+                >
+
+                <div
+                    class="piloto-avatar-placeholder"
+                    hidden
+                >
+                    ${piloto.iniciais}
                 </div>
-
-                <h3 class="piloto-nome">
-                    ${piloto.nome}
-                </h3>
-
-                <div class="piloto-localizacao">
-                    <i class="fas fa-location-dot"></i>
-
-                    <span>
-                        ${piloto.pais} • ${piloto.base}
-                    </span>
+            ` : `
+                <div class="piloto-avatar-placeholder">
+                    ${piloto.iniciais}
                 </div>
+            `}
 
-                <div class="piloto-card-stats">
+        </div>
 
-                    <div class="piloto-card-stat">
-                        <strong>
-                            ${piloto.voos.toLocaleString("pt-BR")}
-                        </strong>
+        <div class="cadete-lista-conteudo">
 
-                        <span>Voos</span>
-                    </div>
+            <div class="cadete-lista-identificacao">
 
-                    <div class="piloto-card-stat">
-                        <strong>
-                            ${piloto.horas}
-                        </strong>
+                <div>
+                    <h3 class="cadete-lista-nome">
+                        ${piloto.nome}
+                    </h3>
 
-                        <span>Horas</span>
-                    </div>
+                    <div class="cadete-lista-localizacao">
+                        <i class="fas fa-location-dot"></i>
 
-                    <div class="piloto-card-stat">
-                        <strong>
-                            ${piloto.score.toFixed(2)}
-                        </strong>
-
-                        <span>Score</span>
-                    </div>
-
-                </div>
-
-                    <div class="piloto-card-meta">
-                        <i class="fas fa-earth-americas"></i>
-                    
                         <span>
-                            ${piloto.distancia.toLocaleString("pt-BR")} NM
-                            •
-                            Último voo: ${piloto.ultimoVoo}
+                            ${piloto.pais} • ${piloto.base}
                         </span>
                     </div>
-
-                <div class="piloto-card-footer">
-
-                    ${possuiIVAO ? `
-                        <div class="piloto-card-info">
-                            <span>IVAO ID</span>
-                            <strong>${piloto.ivao}</strong>
-                        </div>
-                    ` : ""}
-                    
-                    ${possuiVATSIM ? `
-                        <div class="piloto-card-info">
-                            <span>VATSIM ID</span>
-                            <strong>${piloto.vatsim}</strong>
-                        </div>
-                    ` : ""}
-
-                    <div class="piloto-card-info">
-                        <span>Membro desde</span>
-                        <strong>${piloto.membroDesde}</strong>
-                    </div>
-
-                    <div class="piloto-card-info">
-                        <span>Status</span>
-
-                        <span class="piloto-badge ${classeStatus}">
-                            <i class="fas fa-circle"></i>
-                            ${piloto.status}
-                        </span>
-                    </div>
-
                 </div>
 
-            </article>
+                <span class="piloto-badge ${classeStatus}">
+                    <i class="fas fa-circle"></i>
+                    ${piloto.status}
+                </span>
+
+            </div>
+
+            <div class="cadete-lista-dados">
+
+                <div class="cadete-lista-dado">
+                    <span>Voos</span>
+                    <strong>
+                        ${piloto.voos.toLocaleString("pt-BR")}
+                    </strong>
+                </div>
+
+                <div class="cadete-lista-dado">
+                    <span>Horas</span>
+                    <strong>${piloto.horas}</strong>
+                </div>
+
+                <div class="cadete-lista-dado">
+                    <span>Score</span>
+                    <strong>${piloto.score.toFixed(2)}</strong>
+                </div>
+
+                <div class="cadete-lista-dado">
+                    <span>Distância</span>
+                    <strong>
+                        ${piloto.distancia.toLocaleString("pt-BR")} NM
+                    </strong>
+                </div>
+
+                <div class="cadete-lista-dado">
+                    <span>Último voo</span>
+                    <strong>${piloto.ultimoVoo}</strong>
+                </div>
+
+                <div class="cadete-lista-dado">
+                    <span>Membro desde</span>
+                    <strong>${piloto.membroDesde}</strong>
+                </div>
+
+                ${possuiIVAO ? `
+                    <div class="cadete-lista-dado">
+                        <span>IVAO ID</span>
+                        <strong>${piloto.ivao}</strong>
+                    </div>
+                ` : ""}
+
+                ${possuiVATSIM ? `
+                    <div class="cadete-lista-dado">
+                        <span>VATSIM ID</span>
+                        <strong>${piloto.vatsim}</strong>
+                    </div>
+                ` : ""}
+
+            </div>
+
+        </div>
+
+    </article>
+`;
         `;
     }
 
