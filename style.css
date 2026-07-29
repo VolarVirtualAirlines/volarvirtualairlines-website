@@ -2368,63 +2368,139 @@ footer p {
 ===================================== */
 
 .jornada-volar-destino {
-    border-color: rgba(212, 175, 55, 0.48);
+    border-color: rgba(212, 175, 55, 0.62);
+
     background:
         radial-gradient(
             circle at 50% 0%,
-            rgba(212, 175, 55, 0.15),
-            transparent 48%
+            rgba(212, 175, 55, 0.22),
+            transparent 52%
         ),
-        rgba(212, 175, 55, 0.045);
+        rgba(212, 175, 55, 0.055);
+
     box-shadow:
-        0 15px 42px rgba(0, 0, 0, 0.3),
-        0 0 28px rgba(212, 175, 55, 0.06);
+        0 16px 44px rgba(0, 0, 0, 0.34),
+        0 0 34px rgba(212, 175, 55, 0.12);
+
+    transform: translateY(-3px);
 }
 
+/* Linha superior dourada */
 .jornada-volar-destino::before {
+    width: 72%;
+    height: 2px;
+
     background: linear-gradient(
         90deg,
         transparent,
         var(--gold-premium),
         transparent
     );
-    opacity: 0.9;
+
+    opacity: 1;
+    box-shadow: 0 0 14px rgba(212, 175, 55, 0.5);
 }
 
+/* Hover do card final */
 .jornada-volar-destino:hover {
-    border-color: rgba(212, 175, 55, 0.75);
+    transform: translateY(-10px);
+
+    border-color: rgba(212, 175, 55, 0.88);
+
     background:
         radial-gradient(
             circle at 50% 0%,
-            rgba(212, 175, 55, 0.19),
-            transparent 52%
+            rgba(212, 175, 55, 0.28),
+            transparent 55%
         ),
-        rgba(212, 175, 55, 0.065);
+        rgba(212, 175, 55, 0.075);
+
     box-shadow:
-        0 22px 52px rgba(0, 0, 0, 0.34),
-        0 0 36px rgba(212, 175, 55, 0.13);
+        0 24px 58px rgba(0, 0, 0, 0.38),
+        0 0 46px rgba(212, 175, 55, 0.2);
 }
 
+/* Ícone dourado */
 .jornada-volar-destino .jornada-volar-icone {
-    border-color: rgba(212, 175, 55, 0.48);
-    background: rgba(212, 175, 55, 0.1);
-    box-shadow: 0 0 25px rgba(212, 175, 55, 0.12);
+    border-color: rgba(212, 175, 55, 0.7);
+    background: rgba(212, 175, 55, 0.14);
+
+    box-shadow:
+        inset 0 0 18px rgba(212, 175, 55, 0.08),
+        0 0 30px rgba(212, 175, 55, 0.24);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
 }
 
-.jornada-volar-destino .jornada-volar-icone i,
+/* Coroa dourada */
+.jornada-volar-destino .jornada-volar-icone i {
+    color: var(--gold-premium);
+    font-size: 29px;
+    filter: drop-shadow(0 0 7px rgba(212, 175, 55, 0.5));
+
+    animation: coroa-pulso 2.8s ease-in-out infinite;
+    transform-origin: center;
+}
+
+/* Pulsação discreta da coroa */
+@keyframes coroa-pulso {
+    0%,
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 7px rgba(212, 175, 55, 0.45));
+    }
+
+    50% {
+        transform: scale(1.07);
+        filter: drop-shadow(0 0 13px rgba(212, 175, 55, 0.75));
+    }
+}
+
+/* Efeito no círculo da coroa ao passar o mouse */
+.jornada-volar-destino:hover .jornada-volar-icone {
+    transform: scale(1.08);
+    border-color: rgba(212, 175, 55, 0.9);
+
+    box-shadow:
+        inset 0 0 20px rgba(212, 175, 55, 0.12),
+        0 0 38px rgba(212, 175, 55, 0.34);
+}
+
+/* Numeração dourada */
 .jornada-volar-destino .jornada-volar-numero {
     color: var(--gold-premium);
 }
 
+/* Título do último card */
+.jornada-volar-destino h3 {
+    color: #ffffff;
+    font-size: 1.1rem;
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.16);
+}
+
+/* Slogan final */
 .jornada-volar-slogan {
     display: block;
     margin-top: auto;
     padding-top: 20px;
+
     color: var(--gold-premium);
     font-family: var(--font-headers);
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Respeita usuários que desativam animações */
+@media (prefers-reduced-motion: reduce) {
+    .jornada-volar-destino .jornada-volar-icone i {
+        animation: none;
+    }
 }
 
 /* =====================================
