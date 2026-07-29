@@ -2087,6 +2087,505 @@ footer p {
 }
 
 /* =====================================
+   JORNADA VOLAR - TIMELINE PREMIUM
+===================================== */
+
+.jornada-volar-premium {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(0, 229, 255, 0.07),
+            transparent 38%
+        ),
+        var(--section-dark);
+}
+
+/* Brilho decorativo de fundo */
+.jornada-volar-premium::before {
+    content: "";
+    position: absolute;
+    top: -220px;
+    left: 50%;
+    width: 620px;
+    height: 620px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: rgba(0, 229, 255, 0.035);
+    filter: blur(90px);
+    pointer-events: none;
+}
+
+/* Mantém o conteúdo acima do efeito de fundo */
+.jornada-volar-header,
+.jornada-volar-timeline,
+.jornada-volar-cta {
+    position: relative;
+    z-index: 2;
+}
+
+/* Cabeçalho da seção */
+.jornada-volar-header {
+    max-width: 950px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.jornada-volar-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    color: var(--turquoise);
+    font-family: var(--font-headers);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.jornada-volar-intro {
+    max-width: 760px;
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+
+/* Timeline principal */
+.jornada-volar-timeline {
+    display: grid;
+    grid-template-columns:
+        minmax(180px, 1fr)
+        42px
+        minmax(180px, 1fr)
+        42px
+        minmax(210px, 1.12fr)
+        42px
+        minmax(180px, 1fr)
+        42px
+        minmax(190px, 1fr);
+
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+    max-width: 1500px;
+    margin: 60px auto 0 auto;
+}
+
+/* Cards */
+.jornada-volar-etapa {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 330px;
+    padding: 32px 24px 28px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.28);
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        background 0.35s ease,
+        box-shadow 0.35s ease;
+    overflow: hidden;
+}
+
+/* Linha superior decorativa */
+.jornada-volar-etapa::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 60%;
+    height: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--turquoise),
+        transparent
+    );
+    opacity: 0.65;
+}
+
+.jornada-volar-etapa:hover {
+    transform: translateY(-8px);
+    border-color: rgba(0, 229, 255, 0.4);
+    background: rgba(0, 229, 255, 0.055);
+    box-shadow: 0 20px 48px rgba(0, 229, 255, 0.11);
+}
+
+/* Ícone circular */
+.jornada-volar-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 68px;
+    height: 68px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(0, 229, 255, 0.28);
+    border-radius: 50%;
+    background: rgba(0, 229, 255, 0.075);
+    box-shadow:
+        inset 0 0 22px rgba(0, 229, 255, 0.04),
+        0 0 24px rgba(0, 229, 255, 0.08);
+}
+
+.jornada-volar-icone i {
+    color: var(--turquoise);
+    font-size: 27px;
+}
+
+/* Numeração */
+.jornada-volar-numero {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: var(--turquoise);
+    font-family: var(--font-headers);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* Títulos */
+.jornada-volar-etapa h3 {
+    min-height: 52px;
+    margin-bottom: 14px;
+    color: #ffffff;
+    font-family: var(--font-headers);
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+/* Sobrescreve o estilo global .section p */
+.jornada-volar-etapa p {
+    max-width: none;
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Conectores entre cards */
+.jornada-volar-conector {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+}
+
+.jornada-volar-conector::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        rgba(0, 229, 255, 0.14),
+        rgba(0, 229, 255, 0.75),
+        rgba(0, 229, 255, 0.14)
+    );
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.18);
+}
+
+.jornada-volar-conector i {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    color: var(--turquoise);
+    font-size: 12px;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 50%;
+    background: var(--section-dark);
+    box-shadow: 0 0 14px rgba(0, 229, 255, 0.15);
+}
+
+/* Card de requisitos */
+.jornada-volar-requisitos {
+    border-color: rgba(0, 229, 255, 0.22);
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0, 229, 255, 0.055),
+            rgba(255, 255, 255, 0.025)
+        );
+}
+
+/* Chips dos requisitos */
+.jornada-volar-chips {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 9px;
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.jornada-volar-chips span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 34px;
+    padding: 7px 10px;
+    color: var(--text-main);
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.3;
+    border: 1px solid rgba(0, 229, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(0, 229, 255, 0.055);
+}
+
+.jornada-volar-chips i {
+    color: var(--turquoise);
+    font-size: 0.75rem;
+}
+
+/* Card final em dourado */
+.jornada-volar-destino {
+    border-color: rgba(212, 175, 55, 0.48);
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(212, 175, 55, 0.15),
+            transparent 48%
+        ),
+        rgba(212, 175, 55, 0.045);
+    box-shadow:
+        0 15px 42px rgba(0, 0, 0, 0.3),
+        0 0 28px rgba(212, 175, 55, 0.06);
+}
+
+.jornada-volar-destino::before {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--gold-premium),
+        transparent
+    );
+    opacity: 0.9;
+}
+
+.jornada-volar-destino:hover {
+    border-color: rgba(212, 175, 55, 0.75);
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(212, 175, 55, 0.19),
+            transparent 52%
+        ),
+        rgba(212, 175, 55, 0.065);
+    box-shadow:
+        0 22px 52px rgba(0, 0, 0, 0.34),
+        0 0 36px rgba(212, 175, 55, 0.13);
+}
+
+.jornada-volar-destino .jornada-volar-icone {
+    border-color: rgba(212, 175, 55, 0.48);
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.12);
+}
+
+.jornada-volar-destino .jornada-volar-icone i,
+.jornada-volar-destino .jornada-volar-numero {
+    color: var(--gold-premium);
+}
+
+.jornada-volar-slogan {
+    display: block;
+    margin-top: auto;
+    padding-top: 20px;
+    color: var(--gold-premium);
+    font-family: var(--font-headers);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* CTA inferior */
+.jornada-volar-cta {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.jornada-volar-cta p {
+    margin-bottom: 18px;
+    color: var(--text-muted);
+    font-size: 16px;
+}
+
+/* =====================================
+   JORNADA VOLAR - RESPONSIVO
+===================================== */
+
+@media (max-width: 1350px) {
+
+    .jornada-volar-timeline {
+        grid-template-columns:
+            minmax(175px, 1fr)
+            30px
+            minmax(175px, 1fr)
+            30px
+            minmax(195px, 1.08fr)
+            30px
+            minmax(175px, 1fr)
+            30px
+            minmax(180px, 1fr);
+    }
+
+    .jornada-volar-etapa {
+        padding: 30px 18px 26px;
+    }
+
+    .jornada-volar-conector {
+        min-width: 30px;
+    }
+}
+
+@media (max-width: 1100px) {
+
+    .jornada-volar-timeline {
+        grid-template-columns:
+            minmax(210px, 1fr)
+            38px
+            minmax(210px, 1fr);
+
+        max-width: 720px;
+        row-gap: 28px;
+    }
+
+    /*
+       Reorganiza visualmente os cards em duas colunas.
+       Os conectores horizontais continuam entre os pares.
+    */
+
+    .jornada-volar-etapa {
+        min-height: 315px;
+    }
+
+    .jornada-volar-conector:nth-of-type(4) {
+        display: none;
+    }
+
+    .jornada-volar-destino {
+        grid-column: 1 / -1;
+        width: min(100%, 340px);
+        justify-self: center;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .jornada-volar-premium {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .jornada-volar-eyebrow {
+        font-size: 0.68rem;
+        letter-spacing: 1.6px;
+    }
+
+    .jornada-volar-intro {
+        font-size: 16px;
+    }
+
+    .jornada-volar-timeline {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        max-width: 520px;
+        margin-top: 45px;
+        row-gap: 0;
+    }
+
+    .jornada-volar-etapa {
+        width: 100%;
+        min-height: auto;
+        padding: 30px 24px;
+    }
+
+    .jornada-volar-etapa h3 {
+        min-height: auto;
+    }
+
+    .jornada-volar-chips {
+        margin-top: 20px;
+        padding-top: 0;
+    }
+
+    .jornada-volar-conector {
+        width: 100%;
+        min-width: 0;
+        height: 52px;
+    }
+
+    .jornada-volar-conector::before {
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        right: auto;
+        width: 1px;
+        height: 100%;
+        background: linear-gradient(
+            180deg,
+            rgba(0, 229, 255, 0.14),
+            rgba(0, 229, 255, 0.75),
+            rgba(0, 229, 255, 0.14)
+        );
+    }
+
+    .jornada-volar-conector i {
+        transform: rotate(90deg);
+        background: var(--section-dark);
+    }
+
+    .jornada-volar-destino {
+        width: 100%;
+    }
+
+    .jornada-volar-cta {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .jornada-volar-etapa {
+        padding: 28px 20px;
+    }
+
+    .jornada-volar-icone {
+        width: 62px;
+        height: 62px;
+    }
+
+    .jornada-volar-icone i {
+        font-size: 24px;
+    }
+
+    .jornada-volar-chips span {
+        font-size: 0.75rem;
+    }
+}
+
+
+/* =====================================
    VOLAR CARGO
 ===================================== */
 
