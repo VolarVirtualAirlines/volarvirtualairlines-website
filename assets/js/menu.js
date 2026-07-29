@@ -129,8 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 </a>
             
                 <div class="menu-dropdown-content">
-                    <a href="pilotos.html">Volar Virtual (VVX)</a>
-                    <a href="cadetes.html">Volar Academy (VAX)</a>
+                    <a href="pilotos.html">Volar Virtual Airlines (VVX)</a>
+                    <a href="cadetes.html">Volar Academy Excellence (VAX)</a>
                 </div>
             </div>
 
