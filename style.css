@@ -6482,7 +6482,7 @@ body.menu-open {
     position: relative;
     z-index: 1;
     max-width: 920px;
-    margin: 55px auto 0;
+    margin: 70px auto 0;
 }
 
 .vax-jornada-detalhada .vax-operacoes-card {
@@ -6554,7 +6554,18 @@ body.menu-open {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 180px;
+
+    min-width: 210px;
+    padding: 12px 26px;
+
+    font-weight: 700;
+    letter-spacing: 0.02em;
+
+    transition: all 0.25s ease;
+}
+
+.vax-jornada-cta .btn-link:hover {
+    transform: translateY(-2px);
 }
 
 /* =========================================================
