@@ -7,7 +7,7 @@ export async function onRequestGet(context) {
         `https://newsky.app/api/airline/${airlineId}/pilots`;
 
     const apiKey =
-        "VVX_6t2Ol9DvcRHliIWUwXuIWm03IHTTUz";
+        "VAX_DF0RJzIc7lKztlPx6bFLfn1Wz56apI";
     
     const payload = {
         skip: 0,
