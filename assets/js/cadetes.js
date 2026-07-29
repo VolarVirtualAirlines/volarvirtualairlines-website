@@ -343,13 +343,6 @@ return `
                 </div>
 
                 <div class="cadete-lista-dado">
-                    <span>Distância</span>
-                    <strong>
-                        ${piloto.distancia.toLocaleString("pt-BR")} NM
-                    </strong>
-                </div>
-
-                <div class="cadete-lista-dado">
                     <span>Último voo</span>
                     <strong>${piloto.ultimoVoo}</strong>
                 </div>
