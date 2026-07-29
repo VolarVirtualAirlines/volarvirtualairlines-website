@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <div class="menu-dropdown-content">
                     <a href="cargo.html">Volar Cargo</a>
-                    <a href="vax.html">Volar Virtual Academy (VAX)</a>
+                    <a href="vax.html">Volar Academy (VAX)</a>
                 </div>
             </div>
 
