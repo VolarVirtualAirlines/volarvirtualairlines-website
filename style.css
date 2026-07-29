@@ -2025,7 +2025,6 @@ footer p {
 
 .vax-home-premium {
     background: var(--midnight-dark);
-    padding-bottom: 120px;
 }
 
 .vax-home-intro {
@@ -2041,7 +2040,7 @@ footer p {
     grid-template-columns: repeat(3, 1fr);
     gap: 26px;
     max-width: 1100px;
-    margin: 55px auto 0 auto;
+    margin: 55px auto 70px auto;
 }
 
 .vax-home-card {
@@ -2084,12 +2083,6 @@ footer p {
     .vax-home-cards {
         grid-template-columns: 1fr;
         max-width: 520px;
-    }
-}
-
-@media (max-width: 768px) {
-    .vax-home-premium {
-        padding-bottom: 90px;
     }
 }
 
