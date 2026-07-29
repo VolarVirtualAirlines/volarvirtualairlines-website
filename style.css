@@ -2135,18 +2135,6 @@ footer p {
     text-align: center;
 }
 
-.jornada-volar-eyebrow {
-    display: block;
-    margin-bottom: 14px;
-    text-align: center;
-    color: var(--turquoise);
-    font-family: var(--font-headers);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
 .jornada-volar-intro {
     max-width: 760px;
     margin: 0 auto;
@@ -2586,11 +2574,6 @@ footer p {
     .jornada-volar-premium {
         padding-right: 20px;
         padding-left: 20px;
-    }
-
-    .jornada-volar-eyebrow {
-        font-size: 0.68rem;
-        letter-spacing: 1.6px;
     }
 
     .jornada-volar-intro {
