@@ -375,7 +375,6 @@ return `
 
     </article>
 `;
-        `;
     }
 
 
