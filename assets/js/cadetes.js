@@ -247,7 +247,7 @@ async function carregarPilotos() {
        CRIAÇÃO DOS CARDS
     ===================================== */
 
-    function criarCardPiloto(piloto) {
+    function criarItemCadete(piloto) {
 
         const classeStatus = obterClasseStatus(piloto.status);
         
@@ -455,7 +455,7 @@ const somaMinutos = lista.reduce(
             }
 
             gridPilotos.innerHTML = lista
-                .map(criarCardPiloto)
+                .map(criarItemCadete)
                 .join("");
         }
 
