@@ -5110,6 +5110,11 @@ footer p {
     gap:14px;
 }
 
+.cadete-lista-nome{
+    width:180px;
+    flex-shrink:0;
+}
+
 /* ==========================================================================
    MENU RESPONSIVO PREMIUM - VOLAR VIRTUAL AIRLINES
    ========================================================================== */
