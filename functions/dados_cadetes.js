@@ -1,7 +1,7 @@
 export async function onRequestGet(context) {
 
     const airlineId =
-        "68e565033f0641c7f6546693";
+        "6a3ab801a5e61d69a7f42cf0";
 
     const url =
         `https://newsky.app/api/airline/${airlineId}/pilots`;
