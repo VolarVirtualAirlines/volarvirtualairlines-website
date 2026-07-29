@@ -2441,22 +2441,42 @@ footer p {
     font-size: 29px;
     filter: drop-shadow(0 0 7px rgba(212, 175, 55, 0.5));
 
-    animation: coroa-pulso 2.8s ease-in-out infinite;
+    animation: coroa-shine 8s linear infinite;
+    position: relative;
     transform-origin: center;
 }
 
-/* Pulsação discreta da coroa */
-@keyframes coroa-pulso {
+@keyframes coroa-shine {
+
     0%,
-    100% {
-        transform: scale(1);
-        filter: drop-shadow(0 0 7px rgba(212, 175, 55, 0.45));
+    84% {
+        filter:
+            drop-shadow(0 0 7px rgba(212,175,55,.45));
     }
 
-    50% {
-        transform: scale(1.07);
-        filter: drop-shadow(0 0 13px rgba(212, 175, 55, 0.75));
+    88% {
+        filter:
+            drop-shadow(0 0 12px rgba(212,175,55,.9))
+            brightness(1.35);
     }
+
+    92% {
+        filter:
+            drop-shadow(0 0 18px rgba(212,175,55,1))
+            brightness(1.55);
+    }
+
+    96% {
+        filter:
+            drop-shadow(0 0 12px rgba(212,175,55,.8))
+            brightness(1.25);
+    }
+
+    100% {
+        filter:
+            drop-shadow(0 0 7px rgba(212,175,55,.45));
+    }
+
 }
 
 /* Efeito no círculo da coroa ao passar o mouse */
