@@ -259,7 +259,11 @@ async function carregarPilotos() {
             piloto.vatsim &&
             piloto.vatsim !== "—";
 
-        const urlAvatar = piloto.avatar
+        const possuiAvatar =
+            piloto.avatar &&
+            piloto.avatar !== "default";
+        
+        const urlAvatar = possuiAvatar
             ? `https://newsky.app/api/pilot/avatar/${piloto.avatar}`
             : "";
         
