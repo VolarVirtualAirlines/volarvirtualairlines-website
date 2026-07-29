@@ -5015,7 +5015,7 @@ footer p {
 }
 
 .cadete-lista-localizacao{
-    margin-top:6px;
+    margin-top:0;
     color:var(--gold-premium);
     font-size:.9rem;
 
@@ -5102,6 +5102,12 @@ footer p {
     font-family:var(--font-headers);
     font-size:2rem;
     font-weight:700;
+}
+
+.cadete-lista-titulo{
+    display:flex;
+    align-items:center;
+    gap:14px;
 }
 
 /* ==========================================================================
