@@ -2136,10 +2136,9 @@ footer p {
 }
 
 .jornada-volar-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 8px;
+    display: block;
+    margin-bottom: 14px;
+    text-align: center;
     color: var(--turquoise);
     font-family: var(--font-headers);
     font-size: 0.75rem;
