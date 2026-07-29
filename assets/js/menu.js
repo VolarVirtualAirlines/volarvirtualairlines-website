@@ -117,7 +117,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             </div>
 
-            <a href="pilotos.html" data-menu="pilotos">Pilotos</a>
+            <div class="menu-dropdown">
+                <a
+                    href="#"
+                    class="menu-dropdown-toggle"
+                    data-menu="pilotos"
+                    aria-expanded="false"
+                >
+                    <span>Pilotos</span>
+                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                </a>
+            
+                <div class="menu-dropdown-content">
+                    <a href="pilotos.html">Pilotos VVX</a>
+                    <a href="cadetes.html">Cadetes VAX</a>
+                </div>
+            </div>
 
             <div class="menu-dropdown">
                 <a
@@ -252,6 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "vax.html": "divisoes",
         "frota.html": "frota",
         "pilotos.html": "pilotos",
+        "cadetes.html": "pilotos",
         "privacy.html": "volar",
         "terms.html": "volar"
     };
