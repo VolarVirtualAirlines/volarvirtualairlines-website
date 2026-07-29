@@ -2117,7 +2117,7 @@ footer p {
     pointer-events: none;
 }
 
-/* Mantém o conteúdo acima do efeito de fundo */
+/* Mantém o conteúdo acima do efeito decorativo */
 .jornada-volar-header,
 .jornada-volar-timeline,
 .jornada-volar-cta {
@@ -2125,7 +2125,10 @@ footer p {
     z-index: 2;
 }
 
-/* Cabeçalho da seção */
+/* =====================================
+   CABEÇALHO
+===================================== */
+
 .jornada-volar-header {
     max-width: 950px;
     margin: 0 auto;
@@ -2148,12 +2151,15 @@ footer p {
 .jornada-volar-intro {
     max-width: 760px;
     margin: 0 auto;
+    color: var(--text-muted);
     font-size: 18px;
     line-height: 1.8;
-    color: var(--text-muted);
 }
 
-/* Timeline principal */
+/* =====================================
+   TIMELINE HORIZONTAL - DESKTOP
+===================================== */
+
 .jornada-volar-timeline {
     display: grid;
     grid-template-columns:
@@ -2168,20 +2174,23 @@ footer p {
         minmax(190px, 1fr);
 
     align-items: stretch;
-    gap: 0;
     width: 100%;
     max-width: 1500px;
     margin: 60px auto 0 auto;
 }
 
-/* Cards */
+/* =====================================
+   CARDS
+===================================== */
+
 .jornada-volar-etapa {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 330px;
-    padding: 32px 24px 28px;
+    min-height: 340px;
+    padding: 32px 22px 28px;
+    overflow: hidden;
     text-align: center;
     background: rgba(255, 255, 255, 0.035);
     border: 1px solid var(--glass-border);
@@ -2192,10 +2201,9 @@ footer p {
         border-color 0.35s ease,
         background 0.35s ease,
         box-shadow 0.35s ease;
-    overflow: hidden;
 }
 
-/* Linha superior decorativa */
+/* Linha iluminada na parte superior */
 .jornada-volar-etapa::before {
     content: "";
     position: absolute;
@@ -2220,11 +2228,15 @@ footer p {
     box-shadow: 0 20px 48px rgba(0, 229, 255, 0.11);
 }
 
-/* Ícone circular */
+/* =====================================
+   ÍCONES
+===================================== */
+
 .jornada-volar-icone {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     width: 68px;
     height: 68px;
     margin-bottom: 18px;
@@ -2237,11 +2249,15 @@ footer p {
 }
 
 .jornada-volar-icone i {
+    margin: 0;
     color: var(--turquoise);
     font-size: 27px;
 }
 
-/* Numeração */
+/* =====================================
+   NUMERAÇÃO E TEXTOS
+===================================== */
+
 .jornada-volar-numero {
     display: inline-block;
     margin-bottom: 8px;
@@ -2252,10 +2268,9 @@ footer p {
     letter-spacing: 2px;
 }
 
-/* Títulos */
 .jornada-volar-etapa h3 {
     min-height: 52px;
-    margin-bottom: 14px;
+    margin: 0 0 14px;
     color: #ffffff;
     font-family: var(--font-headers);
     font-size: 1.05rem;
@@ -2263,7 +2278,6 @@ footer p {
     line-height: 1.4;
 }
 
-/* Sobrescreve o estilo global .section p */
 .jornada-volar-etapa p {
     max-width: none;
     margin: 0;
@@ -2272,7 +2286,10 @@ footer p {
     line-height: 1.7;
 }
 
-/* Conectores entre cards */
+/* =====================================
+   CONECTORES
+===================================== */
+
 .jornada-volar-conector {
     position: relative;
     display: flex;
@@ -2284,9 +2301,9 @@ footer p {
 .jornada-volar-conector::before {
     content: "";
     position: absolute;
-    left: 0;
-    right: 0;
     top: 50%;
+    right: 0;
+    left: 0;
     height: 1px;
     background: linear-gradient(
         90deg,
@@ -2313,7 +2330,10 @@ footer p {
     box-shadow: 0 0 14px rgba(0, 229, 255, 0.15);
 }
 
-/* Card de requisitos */
+/* =====================================
+   CARD DE EVOLUÇÃO E REQUISITOS
+===================================== */
+
 .jornada-volar-requisitos {
     border-color: rgba(0, 229, 255, 0.22);
     background:
@@ -2324,7 +2344,6 @@ footer p {
         );
 }
 
-/* Chips dos requisitos */
 .jornada-volar-chips {
     display: flex;
     flex-direction: column;
@@ -2352,11 +2371,15 @@ footer p {
 }
 
 .jornada-volar-chips i {
+    margin: 0;
     color: var(--turquoise);
     font-size: 0.75rem;
 }
 
-/* Card final em dourado */
+/* =====================================
+   CARD FINAL - VVX
+===================================== */
+
 .jornada-volar-destino {
     border-color: rgba(212, 175, 55, 0.48);
     background:
@@ -2417,122 +2440,115 @@ footer p {
     letter-spacing: 1px;
 }
 
-/* CTA inferior */
+/* =====================================
+   CTA INFERIOR
+===================================== */
+
 .jornada-volar-cta {
     margin-top: 50px;
     text-align: center;
 }
 
 .jornada-volar-cta p {
-    margin-bottom: 18px;
+    margin: 0 auto 18px;
     color: var(--text-muted);
     font-size: 16px;
 }
 
 /* =====================================
-   JORNADA VOLAR - RESPONSIVO
+   AJUSTE PARA DESKTOPS MENORES
 ===================================== */
 
-@media (max-width: 1350px) {
+@media (max-width: 1350px) and (min-width: 1201px) {
 
     .jornada-volar-timeline {
         grid-template-columns:
-            minmax(175px, 1fr)
+            minmax(165px, 1fr)
             30px
-            minmax(175px, 1fr)
+            minmax(165px, 1fr)
             30px
-            minmax(195px, 1.08fr)
+            minmax(190px, 1.1fr)
             30px
-            minmax(175px, 1fr)
+            minmax(165px, 1fr)
             30px
-            minmax(180px, 1fr);
+            minmax(175px, 1fr);
     }
 
     .jornada-volar-etapa {
-        padding: 30px 18px 26px;
+        min-height: 350px;
+        padding: 30px 17px 26px;
+    }
+
+    .jornada-volar-etapa h3 {
+        font-size: 0.98rem;
+    }
+
+    .jornada-volar-etapa p {
+        font-size: 13px;
     }
 
     .jornada-volar-conector {
         min-width: 30px;
     }
-}
 
-@media (max-width: 1100px) {
-
-    .jornada-volar-timeline {
-        grid-template-columns:
-            minmax(210px, 1fr)
-            38px
-            minmax(210px, 1fr);
-
-        max-width: 720px;
-        row-gap: 28px;
-    }
-
-    /*
-       Reorganiza visualmente os cards em duas colunas.
-       Os conectores horizontais continuam entre os pares.
-    */
-
-    .jornada-volar-etapa {
-        min-height: 315px;
-    }
-
-    .jornada-volar-conector:nth-of-type(4) {
-        display: none;
-    }
-
-    .jornada-volar-destino {
-        grid-column: 1 / -1;
-        width: min(100%, 340px);
-        justify-self: center;
+    .jornada-volar-chips span {
+        padding-right: 7px;
+        padding-left: 7px;
+        font-size: 0.72rem;
     }
 }
 
-@media (max-width: 768px) {
+/* =====================================
+   TIMELINE VERTICAL
+   NOTEBOOKS, TABLETS E CELULARES
+===================================== */
 
-    .jornada-volar-premium {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .jornada-volar-eyebrow {
-        font-size: 0.68rem;
-        letter-spacing: 1.6px;
-    }
-
-    .jornada-volar-intro {
-        font-size: 16px;
-    }
+@media (max-width: 1200px) {
 
     .jornada-volar-timeline {
         display: flex;
         flex-direction: column;
         align-items: stretch;
-        max-width: 520px;
-        margin-top: 45px;
-        row-gap: 0;
+        width: 100%;
+        max-width: 600px;
+        margin: 50px auto 0;
     }
 
     .jornada-volar-etapa {
         width: 100%;
         min-height: auto;
-        padding: 30px 24px;
+        padding: 32px 30px;
     }
 
     .jornada-volar-etapa h3 {
         min-height: auto;
     }
 
+    .jornada-volar-etapa p {
+        max-width: 470px;
+    }
+
     .jornada-volar-chips {
-        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-top: 22px;
         padding-top: 0;
+    }
+
+    .jornada-volar-chips span {
+        flex: 0 1 auto;
+        min-width: 135px;
+        padding-right: 14px;
+        padding-left: 14px;
     }
 
     .jornada-volar-conector {
         width: 100%;
         min-width: 0;
-        height: 52px;
+        height: 58px;
     }
 
     .jornada-volar-conector::before {
@@ -2542,6 +2558,7 @@ footer p {
         right: auto;
         width: 1px;
         height: 100%;
+        transform: translateX(-50%);
         background: linear-gradient(
             180deg,
             rgba(0, 229, 255, 0.14),
@@ -2555,14 +2572,59 @@ footer p {
         background: var(--section-dark);
     }
 
-    .jornada-volar-destino {
+    .jornada-volar-slogan {
+        margin-top: 20px;
+        padding-top: 0;
+    }
+}
+
+/* =====================================
+   TABLETS E CELULARES
+===================================== */
+
+@media (max-width: 768px) {
+
+    .jornada-volar-premium {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+    .jornada-volar-eyebrow {
+        font-size: 0.68rem;
+        letter-spacing: 1.6px;
+    }
+
+    .jornada-volar-intro {
+        font-size: 16px;
+    }
+
+    .jornada-volar-timeline {
+        max-width: 520px;
+        margin-top: 42px;
+    }
+
+    .jornada-volar-etapa {
+        padding: 30px 24px;
+    }
+
+    .jornada-volar-chips {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .jornada-volar-chips span {
         width: 100%;
+        min-width: 0;
     }
 
     .jornada-volar-cta {
         margin-top: 40px;
     }
 }
+
+/* =====================================
+   CELULARES PEQUENOS
+===================================== */
 
 @media (max-width: 480px) {
 
@@ -2579,11 +2641,18 @@ footer p {
         font-size: 24px;
     }
 
+    .jornada-volar-etapa h3 {
+        font-size: 1rem;
+    }
+
+    .jornada-volar-etapa p {
+        font-size: 13.5px;
+    }
+
     .jornada-volar-chips span {
         font-size: 0.75rem;
     }
 }
-
 
 /* =====================================
    VOLAR CARGO
