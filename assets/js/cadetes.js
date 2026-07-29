@@ -207,7 +207,7 @@ async function carregarPilotos() {
 
     try {
 
-        const response = await fetch("/dados_pilotos", {
+        const response = await fetch("/dados_cadetes", {
             cache: "no-store"
         });
 
