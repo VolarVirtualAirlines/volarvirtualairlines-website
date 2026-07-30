@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                             <!-- COLE O LINK DO DISCORD NO HREF -->
                             <a
-                                href="#"
+                                href="https://discord.gg/fnvf8KYgzy"
                                 class="footer-social-icon"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                             <!-- COLE O LINK DO INSTAGRAM NO HREF -->
                             <a
-                                href="#"
+                                href="https://www.instagram.com/sofacockpitcrew/?__pwa=1"
                                 class="footer-social-icon"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                             <!-- COLE O LINK DO TIKTOK NO HREF -->
                             <a
-                                href="#"
+                                href="https://www.tiktok.com/@sofacockpitcrew"
                                 class="footer-social-icon"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                             <li>
                                 <!-- COLE O LINK DA PÁGINA DE PILOTOS NO HREF -->
-                                <a href="#">Pilotos</a>
+                                <a href="pilotos.html">Pilotos</a>
                             </li>
 
                             <li>
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <li>
                                 <!-- COLE O LINK EXTERNO DO NEWSKY NO HREF -->
                                 <a
-                                    href="#"
+                                    href="https://newsky.app/airline/vvx/info"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <li>
                                 <!-- COLE O LINK DA VOLAR NA IVAO NO HREF -->
                                 <a
-                                    href="#"
+                                    href="https://www.ivao.aero"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
