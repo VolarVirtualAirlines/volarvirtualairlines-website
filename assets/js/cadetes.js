@@ -356,12 +356,12 @@ return `
 
                 <div class="cadete-lista-dado">
                     <span>IVAO ID</span>
-                    <strong>${possuiIVAO ? piloto.ivao : ""}</strong>
+                    <strong>${possuiIVAO ? piloto.ivao : "—"}</strong>
                 </div>
                 
                 <div class="cadete-lista-dado">
                     <span>VATSIM ID</span>
-                    <strong>${possuiVATSIM ? piloto.vatsim : ""}</strong>
+                    <strong>${possuiVATSIM ? piloto.vatsim : "—"}</strong>
                 </div>
 
             </div>
