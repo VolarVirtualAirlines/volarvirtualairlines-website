@@ -6997,10 +6997,6 @@ body.menu-open {
         margin-right: auto;
     }
 
-    .footer-socials {
-        justify-content: center;
-    }
-
     .footer-title::after {
         left: 50%;
         transform: translateX(-50%);
