@@ -7106,7 +7106,12 @@ body.menu-open {
 .footer-socials {
     display: flex;
     align-items: center;
+
+    justify-content: center;
+
     gap: 6px;
+
+    width: 100%;
 }
 
 .footer-social-icon {
