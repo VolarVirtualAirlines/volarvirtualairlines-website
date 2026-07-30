@@ -5696,15 +5696,15 @@ footer p {
 
     display:grid;
 
-    grid-template-columns:
-        90px   /* Voos */
-        140px  /* Horas */
-        100px  /* Score */
-        150px  /* Último voo */
-        150px  /* Membro desde */
-        110px  /* IVAO */
-        120px  /* VATSIM */
-        120px; /* Status */
+      grid-template-columns:
+          90px    /* Voos */
+          165px   /* Horas */
+          110px   /* Score */
+          175px   /* Último voo */
+          175px   /* Membro desde */
+          130px   /* IVAO */
+          130px   /* VATSIM */
+          130px;  /* Status */
 
     justify-content:space-between;
     align-items:center;
