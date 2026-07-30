@@ -5696,9 +5696,19 @@ footer p {
     display:grid;
 
     grid-template-columns:
-        repeat(7, minmax(0, 1fr));
+        90px    /* Voos */
+        150px   /* Horas */
+        110px   /* Score */
+        170px   /* Último voo */
+        170px   /* Membro desde */
+        120px   /* IVAO ID */
+        120px;  /* VATSIM ID */
 
+    justify-content:space-between;
     align-items:center;
+
+    width:100%;
+
     gap:20px;
 }
 
