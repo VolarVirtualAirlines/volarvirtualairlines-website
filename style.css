@@ -5693,22 +5693,18 @@ footer p {
 }
 
 .cadete-lista-dados{
-
     display:grid;
 
-      grid-template-columns:
-          90px    /* Voos */
-          165px   /* Horas */
-          110px   /* Score */
-          175px   /* Último voo */
-          175px   /* Membro desde */
-          130px   /* IVAO */
-          130px   /* VATSIM */
-          130px;  /* Status */
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
 
-    justify-content:space-between;
     align-items:center;
     gap:20px;
+}
+
+.cadete-lista-dado:last-child{
+    justify-self:end;
+    text-align:left;
 }
 
 .cadete-lista-dado{
