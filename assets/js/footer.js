@@ -32,38 +32,43 @@ document.addEventListener("DOMContentLoaded", () => {
                         </p>
 
                         <div class="footer-socials">
+                        
                             <!-- COLE O LINK DO DISCORD NO HREF -->
                             <a
                                 href="#"
-                                class="footer-social-link"
+                                class="footer-social-icon"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="Discord da Volar Virtual Airlines"
+                                title="Discord"
                             >
-                                Discord
+                                <i class="fab fa-discord" aria-hidden="true"></i>
                             </a>
-
+                        
                             <!-- COLE O LINK DO INSTAGRAM NO HREF -->
                             <a
                                 href="#"
-                                class="footer-social-link"
+                                class="footer-social-icon"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="Instagram da Volar Virtual Airlines"
+                                title="Instagram"
                             >
-                                Instagram
+                                <i class="fab fa-instagram" aria-hidden="true"></i>
                             </a>
-
-                            <!-- COLE O LINK DA VOLAR NO NEWSKY NO HREF -->
+                        
+                            <!-- COLE O LINK DO TIKTOK NO HREF -->
                             <a
                                 href="#"
-                                class="footer-social-link"
+                                class="footer-social-icon"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                aria-label="Página da Volar no NewSky"
+                                aria-label="TikTok da Volar Virtual Airlines"
+                                title="TikTok"
                             >
-                                NewSky
+                                <i class="fab fa-tiktok" aria-hidden="true"></i>
                             </a>
+                        
                         </div>
                     </div>
 
