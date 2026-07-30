@@ -354,19 +354,15 @@ return `
                     <strong>${piloto.membroDesde}</strong>
                 </div>
 
-                ${possuiIVAO ? `
-                    <div class="cadete-lista-dado">
-                        <span>IVAO ID</span>
-                        <strong>${piloto.ivao}</strong>
-                    </div>
-                ` : ""}
-
-                ${possuiVATSIM ? `
-                    <div class="cadete-lista-dado">
-                        <span>VATSIM ID</span>
-                        <strong>${piloto.vatsim}</strong>
-                    </div>
-                ` : ""}
+                <div class="cadete-lista-dado">
+                    <span>IVAO ID</span>
+                    <strong>${possuiIVAO ? piloto.ivao : ""}</strong>
+                </div>
+                
+                <div class="cadete-lista-dado">
+                    <span>VATSIM ID</span>
+                    <strong>${possuiVATSIM ? piloto.vatsim : ""}</strong>
+                </div>
 
             </div>
 
