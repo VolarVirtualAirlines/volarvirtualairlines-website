@@ -106,7 +106,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         <ul class="footer-menu">
                             <li>
-                                <a href="index.html">Volar Virtual Airlines</a>
+                                <!-- COLE O LINK EXTERNO DO VOLAR/NEWSKY NO HREF -->
+                                <a
+                                    href="https://newsky.app/airline/vvx/info"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Volar Virtual Airlines
+                                </a>
+                            </li>
                             </li>
 
                             <li>
@@ -118,13 +126,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             </li>
 
                             <li>
-                                <!-- COLE O LINK EXTERNO DO NEWSKY NO HREF -->
+                                <!-- COLE O LINK EXTERNO DO SayIntentions NO HREF -->
                                 <a
-                                    href="https://newsky.app/airline/vvx/info"
+                                    href="https://www.sayintentions.ai"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    NewSky
+                                    SayIntentions.AI
                                 </a>
                             </li>
 
