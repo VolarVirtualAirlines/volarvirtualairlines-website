@@ -6934,14 +6934,16 @@ body.menu-open {
     opacity: 0.6;
 }
 
-.site-footer .footer-signature {
-    color: rgba(142, 154, 175, 0.72);
+.footer-signature {
+    color: rgba(142, 154, 175, 0.78);
     font-family: var(--font-headers);
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    white-space: nowrap;
+    font-size: 0.72rem;
+    font-weight: 500;
+
+    letter-spacing: 0.4px;
+
+    text-transform: none;
+    font-style: italic;
 }
 
 /* =====================================
