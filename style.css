@@ -6693,47 +6693,6 @@ body.menu-open {
 }
 
 /* =====================================
-   REDES E PLATAFORMAS
-===================================== */
-
-.footer-socials {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 9px;
-}
-
-.footer-social-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 34px;
-    padding: 8px 13px;
-    color: var(--text-muted);
-    background: rgba(255, 255, 255, 0.025);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 7px;
-    text-decoration: none;
-    font-family: var(--font-headers);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.45px;
-    transition:
-        color 0.3s ease,
-        background 0.3s ease,
-        border-color 0.3s ease,
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-}
-
-.footer-social-link:hover {
-    color: var(--turquoise);
-    background: rgba(0, 229, 255, 0.06);
-    border-color: rgba(0, 229, 255, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 229, 255, 0.08);
-}
-
-/* =====================================
    COLUNAS E LINKS
 ===================================== */
 
@@ -7080,11 +7039,6 @@ body.menu-open {
     .footer-main {
         padding-left: 18px;
         padding-right: 18px;
-    }
-
-    .footer-social-link {
-        padding: 8px 11px;
-        font-size: 0.66rem;
     }
 
     .site-footer .footer-copyright {
