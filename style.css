@@ -7098,3 +7098,67 @@ body.menu-open {
         margin-bottom: 3px;
     }
 }
+
+/* =====================================
+   ÍCONES SOCIAIS DO FOOTER
+===================================== */
+
+.footer-socials {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+
+    text-decoration: none;
+    font-size: 1.15rem;
+
+    transition:
+        color 0.3s ease,
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.footer-social-icon:hover {
+    color: var(--turquoise);
+    background: rgba(0, 229, 255, 0.07);
+    border-color: rgba(0, 229, 255, 0.4);
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 22px rgba(0, 229, 255, 0.12),
+        0 0 14px rgba(0, 229, 255, 0.12);
+}
+
+.footer-social-icon:focus-visible {
+    outline: 2px solid var(--turquoise);
+    outline-offset: 4px;
+}
+
+@media (max-width: 640px) {
+    .footer-socials {
+        justify-content: center;
+    }
+
+    .footer-social-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.08rem;
+    }
+}
