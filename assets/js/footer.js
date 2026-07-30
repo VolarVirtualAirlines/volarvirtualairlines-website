@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </p>
 
                     <p class="footer-signature">
-                        Virtual Aviation Excellence
+                        Real Routes. Real Procedures.
                     </p>
                 </div>
             </div>
