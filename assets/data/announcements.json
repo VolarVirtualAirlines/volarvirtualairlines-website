@@ -1,5 +1,13 @@
 [
      {
+        "image": "assets/announcements/announcements_2.png",
+        "version": 1,
+        "alt": "B737-800 LIVERY KIDS",
+        "start": "2026-07-31",
+        "end": "2026-08-15"
+    },
+     
+     {
         "image": "assets/announcements/announcements_7.png",
         "version": 1,
         "alt": "VOLAR RAOV",
