@@ -4,232 +4,440 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Ferramentas Recomendadas | Volar Virtual Airlines</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    >
 </head>
 
 <body>
 
-<header class="navbar">
-    <div class="logo-container">
-        <a href="index.html">
-            <img src="assets/LOGO_WEBSITE.png" alt="Logotipo Volar Virtual Airlines" class="logo">
-        </a>
-    </div>
+    <header class="navbar">
+        <div class="logo-container">
+            <a href="index.html">
+                <img
+                    src="assets/LOGO_WEBSITE.png"
+                    alt="Logotipo Volar Virtual Airlines"
+                    class="logo"
+                >
+            </a>
+        </div>
 
-    <div id="menu-container"></div>
-</header>
+        <div id="menu-container"></div>
+    </header>
 
-</header>
+    <main>
 
-<section class="ferramentas-banner">
-    <img
-        src="assets/ferramentas_operacionais.png"
-        alt="Ferramentas Operacionais Recomendadas"
-        class="banner-ferramentas"
+        <section class="ferramentas-banner">
+            <img
+                src="assets/ferramentas_operacionais.png"
+                alt="Ferramentas Operacionais Recomendadas"
+                class="banner-ferramentas"
+            >
+        </section>
+
+        <section class="section dark ferramentas-premium">
+            <h2>Ferramentas Recomendadas</h2>
+
+            <p class="ferramentas-intro">
+                A Volar Virtual Airlines utiliza e recomenda ferramentas que auxiliam no planejamento,
+                navegação e preparação dos voos. Algumas fazem parte do fluxo operacional da companhia,
+                enquanto outras são recursos complementares para aprimorar a experiência dos pilotos.
+            </p>
+
+            <h3 class="ferramentas-subtitulo">
+                Ferramentas Oficiais da Volar
+            </h3>
+
+            <div class="ferramentas-cards ferramentas-oficiais">
+
+                <div class="ferramenta-card ferramenta-oficial">
+                    <i class="fas fa-file-alt"></i>
+
+                    <h3>SimBrief</h3>
+
+                    <span class="ferramenta-badge">
+                        Oficial • Integrado ao NewSky
+                    </span>
+
+                    <p>
+                        Ferramenta oficial de planejamento integrada ao NewSky para geração automática
+                        de planos de voo, cálculo de combustível, rotas, alternados e informações operacionais.
+                    </p>
+
+                    <a
+                        href="https://www.simbrief.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="ferramenta-link"
+                    >
+                        Acessar Site
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="ferramenta-card ferramenta-oficial">
+                    <i class="fas fa-cloud-sun"></i>
+
+                    <h3>METAR-TAF</h3>
+
+                    <span class="ferramenta-badge">
+                        Oficial • Consulta Meteorológica
+                    </span>
+
+                    <p>
+                        Consulta meteorológica oficial recomendada pela Volar para análise das condições
+                        operacionais, METAR e TAF antes da realização de cada voo.
+                    </p>
+
+                    <a
+                        href="https://metar-taf.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="ferramenta-link"
+                    >
+                        Acessar Site
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section ferramentas-complementares">
+            <h2>Ferramentas Complementares</h2>
+
+            <p class="ferramentas-intro">
+                Além das ferramentas oficiais, a Volar recomenda alguns recursos complementares
+                que podem auxiliar os pilotos na consulta de cartas, navegação, meteorologia e planejamento visual.
+            </p>
+
+            <div class="ferramentas-cards">
+
+                <div class="ferramenta-card">
+                    <i class="fas fa-map"></i>
+
+                    <h3>Navigraph</h3>
+
+                    <span class="ferramenta-badge">
+                        Opcional • Recomendado
+                    </span>
+
+                    <p>
+                        Cartas aeronáuticas, procedimentos SID, STAR, aproximações e AIRAC atualizado
+                        para uma experiência mais próxima da aviação real.
+                    </p>
+
+                    <a
+                        href="https://navigraph.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="ferramenta-link"
+                    >
+                        Acessar Site
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="ferramenta-card">
+                    <i class="fas fa-map-location-dot"></i>
+
+                    <h3>ChartFox</h3>
+
+                    <span class="ferramenta-badge">
+                        Gratuito • Cartas
+                    </span>
+
+                    <p>
+                        Plataforma gratuita para consulta de cartas aeronáuticas, muito útil para pilotos
+                        que não utilizam ferramentas pagas de navegação.
+                    </p>
+
+                    <a
+                        href="https://chartfox.org"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="ferramenta-link"
+                    >
+                        Acessar Site
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="ferramenta-card">
+                    <i class="fas fa-route"></i>
+
+                    <h3>Little Navmap</h3>
+
+                    <span class="ferramenta-badge">
+                        Gratuito • Planejamento
+                    </span>
+
+                    <p>
+                        Ferramenta gratuita para planejamento, acompanhamento e visualização de rotas
+                        com recursos avançados de navegação.
+                    </p>
+
+                    <a
+                        href="https://albar965.github.io/littlenavmap.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="ferramenta-link"
+                    >
+                        Acessar Site
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="ferramenta-card">
+                    <i class="fas fa-globe-americas"></i>
+
+                    <h3>AISWEB</h3>
+
+                    <span class="ferramenta-badge">
+                        Consulta • Brasil
+                    </span>
+
+                    <p>
+                        Fonte oficial brasileira para consulta de cartas aeronáuticas, AIP, NOTAM
+                        e publicações operacionais.
+                    </p>
+
+                    <a
+                        href="https://aisweb.decea.mil.br"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="ferramenta-link"
+                    >
+                        Acessar Site
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="ferramenta-card">
+                    <i class="fas fa-earth-americas"></i>
+
+                    <h3>SkyVector</h3>
+
+                    <span class="ferramenta-badge">
+                        Gratuito • Internacional
+                    </span>
+
+                    <p>
+                        Ferramenta online para consulta de cartas, rotas IFR/VFR, planejamento visual
+                        e apoio em voos internacionais.
+                    </p>
+
+                    <a
+                        href="https://skyvector.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="ferramenta-link"
+                    >
+                        Acessar Site
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="ferramentas-observacao">
+                <h3>Observação</h3>
+
+                <p>
+                    Algumas ferramentas listadas são opcionais. A Volar Virtual Airlines recomenda sua utilização
+                    para aprimorar a experiência operacional dos pilotos, porém seu uso não é obrigatório para
+                    participação na companhia.
+                </p>
+            </div>
+
+            <div class="links-container">
+                <a href="rotas.html" class="btn-link">
+                    Ver Rotas Oficiais
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="footer-container"></div>
+
+    <button
+        type="button"
+        id="btn-voltar-topo"
+        title="Voltar ao topo"
+        aria-label="Voltar ao topo"
     >
-</section>
+        ↑
+    </button>
 
-<section class="section dark ferramentas-premium">
-    
-<section class="section dark ferramentas-premium">
-    <h2>Ferramentas Recomendadas</h2>
+    <button
+        type="button"
+        id="btn-suporte"
+        title="Precisa de ajuda?"
+        aria-label="Abrir Central de Atendimento"
+    >
+        <img
+            src="assets/support/support_icon.png"
+            alt=""
+            aria-hidden="true"
+        >
 
-    <p class="ferramentas-intro">
-        A Volar Virtual Airlines utiliza e recomenda ferramentas que auxiliam no planejamento,
-        navegação e preparação dos voos. Algumas fazem parte do fluxo operacional da companhia,
-        enquanto outras são recursos complementares para aprimorar a experiência dos pilotos.
-    </p>
+        <span class="label-suporte">
+            Precisa de ajuda?
+        </span>
+    </button>
 
-    <h3 class="ferramentas-subtitulo">Ferramentas Oficiais da Volar</h3>
+    <div
+        id="modal-suporte"
+        class="modal-suporte-container"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-modal-suporte"
+    >
+        <div class="modal-suporte-content">
 
-    <div class="ferramentas-cards ferramentas-oficiais">
-        <div class="ferramenta-card ferramenta-oficial">
-            <i class="fas fa-file-alt"></i>
-            <h3>SimBrief</h3>
-            <span class="ferramenta-badge">Oficial • Integrado ao NewSky</span>
-            <p>
-                Ferramenta oficial de planejamento integrada ao NewSky para geração automática
-                de planos de voo, cálculo de combustível, rotas, alternados e informações operacionais.
-            </p>
-            <a href="https://www.simbrief.com" target="_blank" rel="noopener noreferrer" class="ferramenta-link">
-                Acessar Site <i class="fas fa-arrow-up-right-from-square"></i>
-            </a>
-        </div>
+            <button
+                type="button"
+                class="btn-fechar-modal"
+                id="fechar-suporte"
+                aria-label="Fechar Central de Atendimento"
+            >
+                &times;
+            </button>
 
-        <div class="ferramenta-card ferramenta-oficial">
-            <i class="fas fa-cloud-sun"></i>
-            <h3>METAR-TAF</h3>
-            <span class="ferramenta-badge">Oficial • Consulta Meteorológica</span>
-            <p>
-                Consulta meteorológica oficial recomendada pela Volar para análise das condições
-                operacionais, METAR e TAF antes da realização de cada voo.
-            </p>
-            <a href="https://metar-taf.com" target="_blank" rel="noopener noreferrer" class="ferramenta-link">
-                Acessar Site <i class="fas fa-arrow-up-right-from-square"></i>
-            </a>
-        </div>
-    </div>
-</section>
+            <div class="modal-header">
+                <h3 id="titulo-modal-suporte">
+                    Central de Atendimento
+                </h3>
 
-<section class="section ferramentas-complementares">
-    <h2>Ferramentas Complementares</h2>
-
-    <p class="ferramentas-intro">
-        Além das ferramentas oficiais, a Volar recomenda alguns recursos complementares
-        que podem auxiliar os pilotos na consulta de cartas, navegação, meteorologia e planejamento visual.
-    </p>
-
-    <div class="ferramentas-cards">
-        <div class="ferramenta-card">
-            <i class="fas fa-map"></i>
-            <h3>Navigraph</h3>
-            <span class="ferramenta-badge">Opcional • Recomendado</span>
-            <p>
-                Cartas aeronáuticas, procedimentos SID, STAR, aproximações e AIRAC atualizado
-                para uma experiência mais próxima da aviação real.
-            </p>
-            <a href="https://navigraph.com" target="_blank" rel="noopener noreferrer" class="ferramenta-link">
-                Acessar Site <i class="fas fa-arrow-up-right-from-square"></i>
-            </a>
-        </div>
-        
-        <div class="ferramenta-card">
-            <i class="fas fa-map-location-dot"></i>
-            <h3>ChartFox</h3>
-            <span class="ferramenta-badge">Gratuito • Cartas</span>
-            <p>
-                Plataforma gratuita para consulta de cartas aeronáuticas, muito útil para pilotos
-                que não utilizam ferramentas pagas de navegação.
-            </p>
-            <a href="https://chartfox.org" target="_blank" rel="noopener noreferrer" class="ferramenta-link">
-                Acessar Site <i class="fas fa-arrow-up-right-from-square"></i>
-            </a>
-        </div>
-        
-        <div class="ferramenta-card">
-            <i class="fas fa-route"></i>
-            <h3>Little Navmap</h3>
-            <span class="ferramenta-badge">Gratuito • Planejamento</span>
-            <p>
-                Ferramenta gratuita para planejamento, acompanhamento e visualização de rotas
-                com recursos avançados de navegação.
-            </p>
-            <a href="https://albar965.github.io/littlenavmap.html" target="_blank" rel="noopener noreferrer" class="ferramenta-link">
-                Acessar Site <i class="fas fa-arrow-up-right-from-square"></i>
-            </a>
-        </div>
-        
-        <div class="ferramenta-card">
-            <i class="fas fa-globe-americas"></i>
-            <h3>AISWEB</h3>
-            <span class="ferramenta-badge">Consulta • Brasil</span>
-            <p>
-                Fonte oficial brasileira para consulta de cartas aeronáuticas, AIP, NOTAM
-                e publicações operacionais.
-            </p>
-            <a href="https://aisweb.decea.mil.br" target="_blank" rel="noopener noreferrer" class="ferramenta-link">
-                Acessar Site <i class="fas fa-arrow-up-right-from-square"></i>
-            </a>
-        </div>
-
-        <div class="ferramenta-card">
-            <i class="fas fa-earth-americas"></i>
-            <h3>SkyVector</h3>
-            <span class="ferramenta-badge">Gratuito • Internacional</span>
-            <p>
-                Ferramenta online para consulta de cartas, rotas IFR/VFR, planejamento visual
-                e apoio em voos internacionais.
-            </p>
-            <a href="https://skyvector.com" target="_blank" rel="noopener noreferrer" class="ferramenta-link">
-                Acessar Site <i class="fas fa-arrow-up-right-from-square"></i>
-            </a>
-        </div>
-    </div>
-
-    <div class="ferramentas-observacao">
-        <h3>Observação</h3>
-        <p>
-            Algumas ferramentas listadas são opcionais. A Volar Virtual Airlines recomenda sua utilização
-            para aprimorar a experiência operacional dos pilotos, porém seu uso não é obrigatório para
-            participação na companhia.
-        </p>
-    </div>
-
-    <div class="links-container">
-        <a href="rotas.html" class="btn-link">
-            Ver Rotas Oficiais
-        </a>
-    </div>
-</section>
-
-<div id="footer-container"></div>
-
-<button id="btn-voltar-topo" title="Voltar ao topo">↑</button>
-
-<button type="button" id="btn-suporte" title="Precisa de ajuda?">
-    <img src="assets/support/support_icon.png" alt="Suporte">
-    <span class="label-suporte">Precisa de ajuda?</span>
-</button>
-
-<div id="modal-suporte" class="modal-suporte-container">
-    <div class="modal-suporte-content">
-        <button type="button" class="btn-fechar-modal" id="fechar-suporte">&times;</button>
-
-        <div class="modal-header">
-            <h3>Central de Atendimento</h3>
-            <p>Volar Virtual Airlines</p>
-        </div>
-
-        <form action="https://api.staticforms.dev/submit" method="POST" id="form-suporte">
-            <input type="hidden" name="apiKey" value="sf_1f0637f6ba466017621733fb">
-            <input type="text" name="honeypot" style="display:none">
-            <input type="hidden" name="subject" value="Volar Virtual Airlines Suporte submission">
-
-            <div class="input-group">
-                <label for="sup-nome">Nome Completo</label>
-                <input type="text" id="sup-nome" name="name" placeholder="Digite seu nome" required>
+                <p>Volar Virtual Airlines</p>
             </div>
 
-            <div class="input-group">
-                <label for="sup-email">E-mail de Contato</label>
-                <input type="email" id="sup-email" name="email" placeholder="seu-email@exemplo.com" required>
-            </div>
+            <form
+                action="https://api.staticforms.dev/submit"
+                method="POST"
+                id="form-suporte"
+            >
+                <input
+                    type="hidden"
+                    name="apiKey"
+                    value="sf_1f0637f6ba466017621733fb"
+                >
 
-            <div class="input-group">
-                <label for="sup-mensagem">Mensagem</label>
-                <textarea id="sup-mensagem" name="message" rows="4" placeholder="Como podemos ajudar você hoje, piloto?" required></textarea>
-            </div>
+                <input
+                    type="text"
+                    name="honeypot"
+                    tabindex="-1"
+                    autocomplete="off"
+                    style="display:none"
+                >
 
-            <button type="submit" class="btn-enviar-suporte">Enviar Mensagem</button>
-        </form>
+                <input
+                    type="hidden"
+                    name="subject"
+                    value="Volar Virtual Airlines Suporte submission"
+                >
+
+                <div class="input-group">
+                    <label for="sup-nome">
+                        Nome Completo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="sup-nome"
+                        name="name"
+                        placeholder="Digite seu nome"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="sup-email">
+                        E-mail de Contato
+                    </label>
+
+                    <input
+                        type="email"
+                        id="sup-email"
+                        name="email"
+                        placeholder="seu-email@exemplo.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="sup-mensagem">
+                        Mensagem
+                    </label>
+
+                    <textarea
+                        id="sup-mensagem"
+                        name="message"
+                        rows="4"
+                        placeholder="Como podemos ajudar você hoje, piloto?"
+                        required
+                    ></textarea>
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn-enviar-suporte"
+                >
+                    Enviar Mensagem
+                </button>
+            </form>
+
+        </div>
     </div>
-</div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const btnTopo = document.getElementById("btn-voltar-topo");
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const btnTopo = document.getElementById("btn-voltar-topo");
 
-    window.addEventListener('scroll', () => {
-        btnTopo.style.display = window.scrollY > 400 ? "flex" : "none";
-    });
+            if (!btnTopo) return;
 
-    btnTopo.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
+            const atualizarBotaoTopo = () => {
+                btnTopo.style.display =
+                    window.scrollY > 400 ? "flex" : "none";
+            };
+
+            window.addEventListener("scroll", atualizarBotaoTopo);
+
+            btnTopo.addEventListener("click", () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+
+            atualizarBotaoTopo();
         });
-    });
-});
-</script>
+    </script>
 
-<script src="assets/js/menu.js"></script>
-<script src="assets/js/footer.js"></script>
-<script src="assets/js/support.js"></script>
+    <script src="assets/js/menu.js"></script>
+    <script src="assets/js/footer.js"></script>
+    <script src="assets/js/support.js"></script>
 
 </body>
+
 </html>
