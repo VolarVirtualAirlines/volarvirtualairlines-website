@@ -1,6 +1,16 @@
 [
    {
     "date": "2026-07-28",
+    "tag": "VAX",
+    "color": "#8B5CF6",
+    "title": "🎓 VOLAR RAOV",
+    "summary": "Relatório de Análise Operacional de Voo",
+    "image": "assets/news/2026-07-31-VAX_RAOV.png",
+    "link": "https://volarvirtualairlines.com/vax"
+  }, 
+   
+   {
+    "date": "2026-07-28",
     "tag": "PILOTOS",
     "color": "#14B8A6",
     "title": "👨‍✈️ PILOTOS - NOVA PÁGINA DO SITE",
