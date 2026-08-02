@@ -57,6 +57,10 @@
             <select id="filtro-desenvolvedor">
                 <option value="">Todos os desenvolvedores</option>
             </select>
+
+            <select id="filtro-livery">
+                <option value="">Todas as liveries</option>
+            </select>
         
             <select id="filtro-simulador">
                 <option value="">Todos os simuladores</option>
@@ -585,6 +589,7 @@ document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
 const filtroAeronave = document.getElementById("filtro-aeronave");
 const filtroTipo = document.getElementById("filtro-tipo");
 const filtroDesenvolvedor = document.getElementById("filtro-desenvolvedor");
+const filtroLivery = document.getElementById("filtro-livery");
 const filtroSimulador = document.getElementById("filtro-simulador");
 const btnLimparFiltrosFrota = document.getElementById("btn-limpar-filtros-frota");
 
@@ -617,7 +622,8 @@ function filtrarFrota() {
     const aeronave = filtroAeronave.value;
     const tipo = filtroTipo.value;
     const desenvolvedor = filtroDesenvolvedor.value;
-    const simulador = filtroSimulador.value;
+        const livery = filtroLivery.value;
+const simulador = filtroSimulador.value;
     const contadorFrota = document.getElementById("contador-frota");
 
     let totalVisivel = 0;
@@ -626,13 +632,15 @@ function filtrarFrota() {
         const rowAeronave = row.children[1]?.textContent.trim().toLowerCase();
         const rowTipo = limparEmoji(row.children[2]?.textContent.trim()).toLowerCase();
         const rowDesenvolvedor = row.children[3]?.textContent.trim().toLowerCase();
-        const rowSimulador = row.children[6]?.textContent.trim().toLowerCase();
+                const rowLivery = row.children[4]?.textContent.trim().toLowerCase();
+const rowSimulador = row.children[6]?.textContent.trim().toLowerCase();
 
         const exibir =
             (!aeronave || rowAeronave === aeronave) &&
             (!tipo || rowTipo === tipo) &&
             (!desenvolvedor || rowDesenvolvedor === desenvolvedor) &&
-            (!simulador || rowSimulador === simulador);
+                        (!livery || rowLivery === livery) &&
+(!simulador || rowSimulador === simulador);
 
         row.style.display = exibir ? "" : "none";
 
@@ -649,11 +657,12 @@ function filtrarFrota() {
 preencherFiltro(filtroAeronave, 1);
 preencherFiltro(filtroTipo, 2, true);
 preencherFiltro(filtroDesenvolvedor, 3);
+preencherFiltro(filtroLivery, 4);
 preencherFiltro(filtroSimulador, 6);
 filtrarFrota();
 
     
-[filtroAeronave, filtroTipo, filtroDesenvolvedor, filtroSimulador].forEach(filtro => {
+[filtroAeronave, filtroTipo, filtroDesenvolvedor, filtroLivery, filtroSimulador].forEach(filtro => {
     filtro.addEventListener("change", filtrarFrota);
 });
 
@@ -661,7 +670,8 @@ btnLimparFiltrosFrota.addEventListener("click", () => {
     filtroAeronave.value = "";
     filtroTipo.value = "";
     filtroDesenvolvedor.value = "";
-    filtroSimulador.value = "";
+        filtroLivery.value = "";
+filtroSimulador.value = "";
 
     filtrarFrota();
 });
