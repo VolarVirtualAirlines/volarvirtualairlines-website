@@ -6,7 +6,7 @@
 # Remember to respect headers and proper CSV formatting!
 # Empty airframes column with result in ALL available
 #
-# Start of CSV data:
+# Start of CSV data:SBSI
 number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1000,SBAE,SBMO,pax,156,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1001,SBAE,SBPS,pax,103,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
@@ -45,7 +45,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1034,SBBR,SBGL,pax,80,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1035,SBBR,SBGO,pax,25,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1036,SBBR,SBGR,pax,85,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1037,SBBR,SBIZ,pax,100,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+1037,SBBR,SBIZ,pax,100,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
 1038,SBBR,SBKG,pax,140,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1039,SBBR,SBKP,pax,75,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1040,SBBR,SBMA,pax,105,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
@@ -58,7 +58,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1047,SBBR,SBRB,pax,190,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
 1048,SBBR,SBRF,pax,140,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1049,SBBR,SBSG,pax,140,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1050,SBBR,SBSI,pax,80,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+1050,SBBR,SBSI,pax,80,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
 1051,SBBR,SBSL,pax,125,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1052,SBBR,SBSP,pax,85,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1053,SBBR,SBSV,pax,90,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
@@ -68,8 +68,8 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1057,SBBV,SBBR,pax,199,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
 1058,SBBV,SBEG,pax,60,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1059,SBBV,SBGR,pax,265,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M",true
-1060,SBCA,SBGR,pax,85,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1061,SBCA,SBMO,pax,198,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
+1060,SBCA,SBGR,pax,85,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
+1061,SBCA,SBMO,pax,198,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195",true
 1062,SBCF,SBAR,pax,99,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1063,SBCF,SBBE,pax,162,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1064,SBCF,SBBR,pax,65,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
@@ -228,7 +228,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1217,SBGR,SBBE,pax,205,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M",true
 1218,SBGR,SBBR,pax,80,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1219,SBGR,SBBV,pax,260,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M",true
-1220,SBGR,SBCA,pax,80,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+1220,SBGR,SBCA,pax,80,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
 1221,SBGR,SBCF,pax,55,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1222,SBGR,SBCG,pax,95,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1223,SBGR,SBCH,pax,80,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
@@ -245,8 +245,8 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1234,SBGR,SBFZ,pax,185,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
 1235,SBGR,SBGL,pax,40,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1236,SBGR,SBGO,pax,75,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1237,SBGR,SBIL,pax,105,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1238,SBGR,SBIZ,pax,170,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+1237,SBGR,SBIL,pax,105,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
+1238,SBGR,SBIZ,pax,170,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
 1239,SBGR,SBJA,pax,70,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1240,SBGR,SBJE,pax,185,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
 1241,SBGR,SBJU,pax,155,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
@@ -267,7 +267,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1256,SBGR,SBRJ,pax,41,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1257,SBGR,SBRP,pax,45,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1258,SBGR,SBSG,pax,180,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
-1259,SBGR,SBSI,pax,155,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+1259,SBGR,SBSI,pax,155,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
 1260,SBGR,SBSL,pax,195,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
 1261,SBGR,SBSR,pax,50,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1262,SBGR,SBSV,pax,120,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
@@ -279,12 +279,12 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1268,SBGR,SBVT,pax,70,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1269,SBGR,SBZM,pax,50,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1270,SBHT,SBBE,pax,47,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1271,SBIL,SBGR,pax,120,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1272,SBIL,SBKP,pax,114,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1273,SBIL,SBSP,pax,120,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1274,SBIZ,SBBR,pax,105,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1275,SBIZ,SBGR,pax,175,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1276,SBIZ,SBSL,pax,51,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+1271,SBIL,SBGR,pax,120,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
+1272,SBIL,SBKP,pax,114,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
+1273,SBIL,SBSP,pax,120,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
+1274,SBIZ,SBBR,pax,105,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
+1275,SBIZ,SBGR,pax,175,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
+1276,SBIZ,SBSL,pax,51,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
 1277,SBJA,SBGR,pax,80,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1278,SBJE,SBCF,pax,147,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1279,SBJE,SBGR,pax,200,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
@@ -315,7 +315,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1304,SBKP,SBFZ,pax,182,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
 1305,SBKP,SBGL,pax,45,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1306,SBKP,SBGO,pax,73,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1307,SBKP,SBIL,pax,97,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+1307,SBKP,SBIL,pax,97,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
 1308,SBKP,SBJP,pax,173,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1309,SBKP,SBJU,pax,148,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1310,SBKP,SBMO,pax,148,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
@@ -326,7 +326,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1315,SBKP,SBRF,pax,171,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1316,SBKP,SBRJ,pax,45,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1317,SBKP,SBSG,pax,173,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1318,SBKP,SBSI,pax,135,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+1318,SBKP,SBSI,pax,135,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
 1319,SBKP,SBSL,pax,185,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
 1320,SBKP,SBSV,pax,112,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1321,SBKP,SBTE,pax,159,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
@@ -342,7 +342,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1331,SBMK,SBSP,pax,79,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1332,SBMO,SBAE,pax,166,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1333,SBMO,SBBR,pax,135,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1334,SBMO,SBCA,pax,213,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M",true
+1334,SBMO,SBCA,pax,213,true,true,true,true,true,true,true,"A320,A20N,B738,B38M",true
 1335,SBMO,SBCF,pax,115,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1336,SBMO,SBCT,pax,188,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
 1337,SBMO,SBDN,pax,185,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
@@ -454,9 +454,9 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1443,SBSG,SBSR,pax,182,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
 1444,SBSG,SBSV,pax,80,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1445,SBSG,SBUL,pax,170,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1446,SBSI,SBBR,pax,85,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1447,SBSI,SBGR,pax,140,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1448,SBSI,SBKP,pax,126,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+1446,SBSI,SBBR,pax,85,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
+1447,SBSI,SBGR,pax,140,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
+1448,SBSI,SBKP,pax,126,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
 1449,SBSJ,SBGL,pax,33,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1450,SBSL,SBBE,pax,46,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1451,SBSL,SBBR,pax,130,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
@@ -465,7 +465,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1454,SBSL,SBFZ,pax,70,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1455,SBSL,SBGL,pax,190,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
 1456,SBSL,SBGR,pax,195,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
-1457,SBSL,SBIZ,pax,51,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+1457,SBSL,SBIZ,pax,51,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
 1458,SBSL,SBKP,pax,196,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
 1459,SBSL,SBRF,pax,97,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1460,SBSL,SBSP,pax,195,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
@@ -488,7 +488,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1477,SBSP,SBFZ,pax,200,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195",true
 1478,SBSP,SBGL,pax,37,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1479,SBSP,SBGO,pax,85,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
-1480,SBSP,SBIL,pax,110,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+1480,SBSP,SBIL,pax,110,true,true,true,true,true,true,true,"A320,A20N,B738,B38M,E195,F100",true
 1481,SBSP,SBJP,pax,166,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1482,SBSP,SBJV,pax,45,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1483,SBSP,SBLO,pax,55,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
