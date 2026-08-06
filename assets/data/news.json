@@ -1,4 +1,13 @@
 [
+    {
+    "date": "2026-08-05",
+    "tag": "AIRAC",
+    "color": "#FFD700",
+    "title": "📡 AIRAC 2608",
+    "summary": "Novo ciclo AIRAC 2608",
+    "image": "assets/news/2026-08-05-AIRAC2608.png"
+    },
+   
    {
     "date": "2026-07-28",
     "tag": "VAX",
