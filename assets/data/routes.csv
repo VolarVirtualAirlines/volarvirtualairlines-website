@@ -1,12 +1,12 @@
 # Newsky Schedule Export
 # Airline: VVX - VOLAR VIRTUAL AIRLINES
-# Date: 2026-08-03 18:04z
+# Date: 2026-08-08 13:32z
 #
 # <- use hash to add comments.
 # Remember to respect headers and proper CSV formatting!
 # Empty airframes column with result in ALL available
 #
-# Start of CSV data:SBSI
+# Start of CSV data:
 number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 1000,SBAE,SBMO,pax,156,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 1001,SBAE,SBPS,pax,103,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
@@ -668,3 +668,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 3047,SBGR,LFPG,pax,680,true,true,true,true,true,true,true,"A359,B77W",true
 4000,SBJP,SBBE,pax,140,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 4001,SBBE,SBJP,pax,140,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+4002,SBCR,SBKP,pax,110,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+4003,SBKP,SBCR,pax,100,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+4004,SBCR,SBBR,pax,100,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+4005,SBBR,SBCR,pax,100,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
