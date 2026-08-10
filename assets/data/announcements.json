@@ -1,17 +1,17 @@
 [
       {
+        "image": "assets/announcements/announcements_9.png",
+        "version": 1,
+        "alt": "FOKKER 100",
+        "start": "2026-08-10",
+        "end": "2026-08-20"
+      },
+      {
         "image": "assets/announcements/announcements_4.png",
         "version": 1,
         "alt": "AIRAC 2608",
         "start": "2026-08-05",
         "end": "2026-08-15"
-      },
-      {
-        "image": "assets/announcements/announcements_8.png",
-        "version": 1,
-        "alt": "FOKKER 100",
-        "start": "2026-08-05",
-        "end": "2026-08-20"
       },
       {
         "image": "assets/announcements/announcements_2.png",
@@ -52,7 +52,7 @@
         "image": "assets/announcements/announcements_5.png",
         "version": 1,
         "alt": "SAYINTENTIONS.AI - MAIS DETALHES EM VOLAR NEWS",
-        "start": "2026-07-22",
-        "end": "2026-07-31"
+        "start": "2026-08-10",
+        "end": "2026-08-20"
     }
 ]
