@@ -1,6 +1,6 @@
 # Newsky Schedule Export
 # Airline: VVX - VOLAR VIRTUAL AIRLINES
-# Date: 2026-08-08 13:32z
+# Date: 2026-08-11 14:42z
 #
 # <- use hash to add comments.
 # Remember to respect headers and proper CSV formatting!
@@ -672,3 +672,31 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 4003,SBKP,SBCR,pax,110,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 4004,SBCR,SBBR,pax,100,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
 4005,SBBR,SBCR,pax,100,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3048,SBRF,GVNP,pax,250,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M",true
+3049,GVNP,SBRF,pax,250,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M",true
+3050,GVNP,LPPT,pax,200,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M",true
+3051,LPPT,GVNP,pax,200,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M",true
+3052,LPPT,LPMA,pax,75,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3053,LPMA,LPPT,pax,75,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3054,LPPT,LPPR,pax,35,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3055,LPPR,LPPT,pax,35,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3056,LPPT,EIDW,pax,135,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3057,EIDW,LPPT,pax,135,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3058,LPPT,EGLL,pax,130,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3059,EGLL,LPPT,pax,130,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3060,LPPT,EHAM,pax,150,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3061,EHAM,LPPT,pax,150,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3062,LPPT,LFPG,pax,110,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3063,LFPG,LPPT,pax,110,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3064,LPPT,EDDF,pax,135,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3065,EDDF,LPPT,pax,135,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3066,LPPT,LIMC,pax,140,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3067,LIMC,LPPT,pax,140,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3068,LPPT,LEMD,pax,50,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3069,LEMD,LPPT,pax,50,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3070,LPPT,LEBL,pax,90,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3071,LEBL,LPPT,pax,90,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3072,LPPT,LIRF,pax,165,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+3073,LIRF,LPPT,pax,165,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+5000,EGLL,LOWI,pax,110,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
+5001,LOWI,EGLL,pax,110,true,true,true,true,true,true,true,"A320,A20N,A21N,B738,B38M,E195,F100",true
