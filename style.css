@@ -6899,6 +6899,66 @@ body.menu-open {
 }
 
 /* =====================================
+   REDES DE AVIAÇÃO - FOOTER
+===================================== */
+
+.footer-networks {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+
+    white-space: nowrap;
+}
+
+.footer-networks a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    opacity: 0.72;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.footer-network-logo {
+    display: block;
+    width: auto;
+    height: 21px;
+
+    max-width: 95px;
+    object-fit: contain;
+}
+
+.footer-networks a:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(0, 229, 255, 0.25)
+        );
+}
+
+.footer-network-divider {
+    width: 1px;
+    height: 18px;
+
+    background: rgba(142, 154, 175, 0.28);
+}
+
+/* =====================================
    ACESSIBILIDADE
 ===================================== */
 
