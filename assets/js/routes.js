@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (codigo.startsWith("BCS3")) return "aircraft-chip-airbus";
     
         if (codigo.startsWith("B7")) return "aircraft-chip-boeing";
+        if (codigo.startsWith("B3")) return "aircraft-chip-boeing";
 
         if (codigo.startsWith("F100")) return "aircraft-chip-fokker";
     
