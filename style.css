@@ -2983,9 +2983,29 @@ body {
     border-color: rgba(59,130,246,.45);
 }
 
+.aircraft-chip-a320 {
+    background: rgba(59,130,246,.18);
+    border-color: rgba(59,130,246,.45);
+}
+
+.aircraft-chip-a21n {
+    background: rgba(59,130,246,.18);
+    border-color: rgba(59,130,246,.45);
+}
+
+.aircraft-chip-bcs3 {
+    background: rgba(59,130,246,.18);
+    border-color: rgba(59,130,246,.45);
+}
+
 /* Boeing Narrow */
 
 .aircraft-chip-b738 {
+    background: rgba(249,115,22,.18);
+    border-color: rgba(249,115,22,.45);
+}
+
+.aircraft-chip-b738m {
     background: rgba(249,115,22,.18);
     border-color: rgba(249,115,22,.45);
 }
@@ -2995,13 +3015,6 @@ body {
 .aircraft-chip-b77w {
     background: rgba(239,68,68,.18);
     border-color: rgba(239,68,68,.45);
-}
-
-/* Airbus Wide */
-
-.aircraft-chip-a359 {
-    background: rgba(168,85,247,.18);
-    border-color: rgba(168,85,247,.45);
 }
 
 /* Fallback */
