@@ -6856,6 +6856,7 @@ body.menu-open {
 }
 
 .footer-bottom-content {
+    position: relative;
     max-width: 1400px;
     margin: 0 auto;
     padding: 22px 40px;
