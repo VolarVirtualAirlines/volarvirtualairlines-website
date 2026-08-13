@@ -228,38 +228,80 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 </div>
             </div>
-
+            
             <!-- BARRA INFERIOR -->
             <div class="footer-bottom">
                 <div class="footer-bottom-content">
+            
                     <p class="footer-copyright">
                         © ${currentYear}
                         <strong>Volar Virtual Airlines</strong>
-
+            
                         <span
                             class="footer-separator"
                             aria-hidden="true"
                         >
                             •
                         </span>
-
+            
                         Fly Beyond
-
+            
                         <span
                             class="footer-separator"
                             aria-hidden="true"
                         >
                             •
                         </span>
-
+            
                         ICAO: VVX
                     </p>
-
+            
+                    <!-- REDES DE AVIAÇÃO -->
+                    <div
+                        class="footer-networks"
+                        aria-label="Redes de aviação parceiras"
+                    >
+                        <a
+                            href="https://www.ivao.aero"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="IVAO"
+                            title="IVAO"
+                        >
+                            <img
+                                src="assets/partners/IVAO_Logo_White.png"
+                                alt="IVAO"
+                                class="footer-network-logo footer-network-logo-ivao"
+                            >
+                        </a>
+            
+                        <span
+                            class="footer-network-divider"
+                            aria-hidden="true"
+                        ></span>
+            
+                        <a
+                            href="https://vatsim.net"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="VATSIM"
+                            title="VATSIM"
+                        >
+                            <img
+                                src="assets/partners/VATSIM_Logo_White.png"
+                                alt="VATSIM"
+                                class="footer-network-logo footer-network-logo-vatsim"
+                            >
+                        </a>
+                    </div>
+            
                     <p class="footer-signature">
                         Real Routes. Real Procedures.
                     </p>
+            
                 </div>
             </div>
+
         </footer>
     `;
 
