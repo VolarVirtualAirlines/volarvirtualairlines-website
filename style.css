@@ -2983,12 +2983,13 @@ body {
     border-color: rgba(59,130,246,.45);
 }
 
-.aircraft-chip-a320 {
+
+.aircraft-chip-a21n {
     background: rgba(59,130,246,.18);
     border-color: rgba(59,130,246,.45);
 }
 
-.aircraft-chip-a21n {
+.aircraft-chip-a320 {
     background: rgba(59,130,246,.18);
     border-color: rgba(59,130,246,.45);
 }
