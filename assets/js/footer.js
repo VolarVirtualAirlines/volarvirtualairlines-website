@@ -295,10 +295,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         </a>
                     </div>
             
-                    <p class="footer-signature">
-                        Real Routes. Real Procedures.
-                    </p>
-            
                 </div>
             </div>
 
