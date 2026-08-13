@@ -52,15 +52,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     
         const codigo = String(aeronave).toUpperCase();
     
-        if (codigo.startsWith("E195")) return "aircraft-chip-e195";
+        if (codigo.startsWith("E19")) return "aircraft-chip-e195";
     
-        if (codigo.startsWith("A20")) return "aircraft-chip-a20n";
+        if (codigo.startsWith("A2")) return "aircraft-chip-a20n";
+        if (codigo.startsWith("A3")) return "aircraft-chip-a20n";
+        if (codigo.startsWith("BCS3")) return "aircraft-chip-a20n";
     
-        if (codigo.startsWith("B738")) return "aircraft-chip-b738";
-    
-        if (codigo.startsWith("A359")) return "aircraft-chip-a359";
-    
-        if (codigo.startsWith("B77")) return "aircraft-chip-b77w";
+        if (codigo.startsWith("B7")) return "aircraft-chip-b738";
     
         return "aircraft-chip-default";
     }
