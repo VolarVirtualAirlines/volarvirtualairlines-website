@@ -1,5 +1,12 @@
 [
       {
+        "image": "assets/announcements/announcements_10.png",
+        "version": 1,
+        "alt": "A220-300",
+        "start": "2026-08-19",
+        "end": "2026-08-31"
+      },
+      {
         "image": "assets/announcements/announcements_9.png",
         "version": 1,
         "alt": "FOKKER 100",
