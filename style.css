@@ -7174,13 +7174,13 @@ body.menu-open {
 
     background:
         radial-gradient(
-            circle at top,
-            rgba(205, 170, 102, 0.12),
-            transparent 40%
+            circle at top center,
+            rgba(212, 175, 55, 0.10),
+            transparent 42%
         ),
         linear-gradient(
             180deg,
-            #090909 0%,
+            #080808 0%,
             #111111 100%
         );
 }
@@ -7193,18 +7193,18 @@ body.menu-open {
 .executive-logo {
     display: block;
 
-    width: min(620px, 90%);
+    width: min(600px, 88%);
     height: auto;
 
     margin:
-        10px
+        5px
         auto
         34px;
 
     filter:
         drop-shadow(
-            0 15px 35px
-            rgba(0, 0, 0, 0.45)
+            0 18px 38px
+            rgba(0, 0, 0, 0.50)
         );
 }
 
@@ -7220,11 +7220,12 @@ body.menu-open {
         0
         auto;
 
-    font-size: 1.05rem;
+    color: #c9c9c9;
 
+    font-size: 1.03rem;
     line-height: 1.8;
 
-    color: #cfcfcf;
+    text-align: center;
 }
 
 
@@ -7233,6 +7234,10 @@ body.menu-open {
 ========================================================= */
 
 .executive-status {
+    display: flex;
+
+    justify-content: center;
+
     margin:
         32px
         auto
@@ -7244,7 +7249,6 @@ body.menu-open {
     display: inline-flex;
 
     align-items: center;
-
     justify-content: center;
 
     gap: 10px;
@@ -7261,29 +7265,28 @@ body.menu-open {
 
     color: #d4af37;
 
+    background:
+        rgba(212, 175, 55, 0.06);
+
     font-size: 0.72rem;
 
     font-weight: 700;
 
     letter-spacing: 1.6px;
 
-    background:
-        rgba(212, 175, 55, 0.05);
+    text-transform: uppercase;
 }
 
 
 /* =========================================================
-   CARDS
+   CARDS PRINCIPAIS
 ========================================================= */
 
 .executive-cards {
     display: grid;
 
     grid-template-columns:
-        repeat(
-            4,
-            minmax(0, 1fr)
-        );
+        repeat(4, minmax(0, 1fr));
 
     gap: 22px;
 
@@ -7298,27 +7301,40 @@ body.menu-open {
 .executive-card {
     position: relative;
 
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    min-height: 230px;
+
     padding:
-        35px
-        25px;
+        34px
+        26px;
 
     border:
         1px solid
-        rgba(212, 175, 55, 0.18);
+        rgba(212, 175, 55, 0.16);
 
-    border-radius: 14px;
+    border-radius: 16px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(255, 255, 255, 0.04),
-            rgba(255, 255, 255, 0.01)
+            rgba(255, 255, 255, 0.045),
+            rgba(255, 255, 255, 0.015)
         );
+
+    box-sizing: border-box;
 
     transition:
         transform 0.3s ease,
         border-color 0.3s ease,
-        box-shadow 0.3s ease;
+        box-shadow 0.3s ease,
+        background 0.3s ease;
 }
 
 
@@ -7327,40 +7343,56 @@ body.menu-open {
         translateY(-6px);
 
     border-color:
-        rgba(212, 175, 55, 0.55);
+        rgba(212, 175, 55, 0.50);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(212, 175, 55, 0.07),
+            rgba(255, 255, 255, 0.02)
+        );
 
     box-shadow:
-        0 15px 40px
-        rgba(0, 0, 0, 0.25);
+        0 16px 38px
+        rgba(0, 0, 0, 0.28);
 }
 
 
 .executive-card i {
-    font-size: 2rem;
+    margin-bottom: 20px;
 
     color: #d4af37;
 
-    margin-bottom: 20px;
+    font-size: 2rem;
 }
 
 
 .executive-card h3 {
+    margin:
+        0
+        0
+        12px;
+
     color: #ffffff;
 
-    font-family: 'Montserrat', sans-serif;
+    font-family:
+        'Montserrat',
+        sans-serif;
 
     font-size: 1.05rem;
 
-    margin-bottom: 12px;
+    line-height: 1.35;
 }
 
 
 .executive-card p {
-    color: #bdbdbd;
+    margin: 0;
 
-    line-height: 1.65;
+    color: #b8b8b8;
 
     font-size: 0.92rem;
+
+    line-height: 1.65;
 }
 
 
@@ -7369,46 +7401,85 @@ body.menu-open {
 ========================================================= */
 
 .executive-operations {
+    position: relative;
+
     text-align: center;
 
-    background: #f8f8f8;
+    background:
+        radial-gradient(
+            circle at top center,
+            rgba(212, 175, 55, 0.055),
+            transparent 45%
+        ),
+        #151515;
+}
+
+
+/* TAG DAS SEÇÕES */
+
+.executive-section-tag {
+    display: block;
+
+    width: fit-content;
+
+    margin:
+        0
+        auto
+        14px;
+
+    color: #d4af37;
+
+    font-size: 0.74rem;
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+}
+
+
+/* TÍTULOS DAS SEÇÕES */
+
+.executive-operations h2,
+.executive-fleet h2,
+.executive-cta h2 {
+    margin:
+        0
+        auto
+        22px;
+
+    font-family:
+        'Montserrat',
+        sans-serif;
+
+    font-size:
+        clamp(
+            2rem,
+            4vw,
+            2.8rem
+        );
+
+    line-height: 1.2;
 }
 
 
 .executive-operations h2,
-.executive-cta h2 {
-    color: #202020;
-
-    font-family: 'Montserrat', sans-serif;
-
-    font-size: clamp(
-        2rem,
-        4vw,
-        2.8rem
-    );
+.executive-fleet h2 {
+    color: #ffffff;
 }
 
 
 .executive-operations
 .executive-intro {
-    color: #606060;
+    max-width: 900px;
 
-    margin-bottom: 45px;
-}
+    margin:
+        0
+        auto
+        44px;
 
-
-.executive-section-tag {
-    display: inline-block;
-
-    margin-bottom: 12px;
-
-    color: #b08c3d;
-
-    font-size: 0.75rem;
-
-    font-weight: 700;
-
-    letter-spacing: 3px;
+    color: #bdbdbd;
 }
 
 
@@ -7420,51 +7491,75 @@ body.menu-open {
     display: grid;
 
     grid-template-columns:
-        repeat(2, 1fr);
+        repeat(2, minmax(0, 1fr));
 
-    gap: 20px;
+    gap: 22px;
 
     max-width: 1000px;
 
     margin:
-        20px
-        auto
-        0;
+        0
+        auto;
+
+    align-items: stretch;
 }
 
 
 .executive-mission {
     display: flex;
 
-    align-items: flex-start;
+    align-items: center;
 
-    gap: 20px;
+    gap: 22px;
 
-    padding: 25px;
+    min-height: 145px;
+
+    padding:
+        26px
+        28px;
 
     text-align: left;
 
     border:
         1px solid
-        #e7e7e7;
+        rgba(212, 175, 55, 0.15);
 
-    border-radius: 12px;
+    border-radius: 14px;
 
-    background: #ffffff;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.04),
+            rgba(255, 255, 255, 0.015)
+        );
+
+    box-sizing: border-box;
 
     transition:
         transform 0.3s ease,
-        box-shadow 0.3s ease;
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
 }
 
 
 .executive-mission:hover {
     transform:
-        translateY(-4px);
+        translateY(-5px);
+
+    border-color:
+        rgba(212, 175, 55, 0.45);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(212, 175, 55, 0.065),
+            rgba(255, 255, 255, 0.02)
+        );
 
     box-shadow:
-        0 10px 30px
-        rgba(0, 0, 0, 0.08);
+        0 14px 34px
+        rgba(0, 0, 0, 0.24);
 }
 
 
@@ -7475,18 +7570,24 @@ body.menu-open {
 
     justify-content: center;
 
-    min-width: 52px;
+    flex:
+        0
+        0
+        54px;
 
-    width: 52px;
+    width: 54px;
+    height: 54px;
 
-    height: 52px;
+    border:
+        1px solid
+        rgba(212, 175, 55, 0.24);
 
     border-radius: 50%;
 
     color: #d4af37;
 
     background:
-        rgba(212, 175, 55, 0.10);
+        rgba(212, 175, 55, 0.08);
 }
 
 
@@ -7501,20 +7602,24 @@ body.menu-open {
         0
         8px;
 
-    color: #202020;
+    color: #ffffff;
 
-    font-family: 'Montserrat', sans-serif;
+    font-family:
+        'Montserrat',
+        sans-serif;
+
+    font-size: 1.04rem;
 }
 
 
 .executive-mission p {
     margin: 0;
 
-    color: #666666;
-
-    line-height: 1.55;
+    color: #b5b5b5;
 
     font-size: 0.93rem;
+
+    line-height: 1.6;
 }
 
 
@@ -7523,34 +7628,34 @@ body.menu-open {
 ========================================================= */
 
 .executive-fleet {
+    position: relative;
+
     text-align: center;
 
     background:
         radial-gradient(
             circle at center,
-            rgba(27, 179, 173, 0.07),
-            transparent 45%
+            rgba(27, 179, 173, 0.06),
+            transparent 46%
         ),
-        #0b0b0b;
-}
-
-
-.executive-fleet h2 {
-    color: #ffffff;
-
-    font-family: 'Montserrat', sans-serif;
-
-    font-size: clamp(
-        2rem,
-        4vw,
-        2.8rem
-    );
+        linear-gradient(
+            180deg,
+            #0b0b0b 0%,
+            #101010 100%
+        );
 }
 
 
 .executive-fleet
 .executive-intro {
-    margin-bottom: 45px;
+    max-width: 900px;
+
+    margin:
+        0
+        auto
+        45px;
+
+    color: #bdbdbd;
 }
 
 
@@ -7565,7 +7670,7 @@ body.menu-open {
 
     max-width: 650px;
 
-    min-height: 260px;
+    min-height: 250px;
 
     margin:
         0
@@ -7576,34 +7681,38 @@ body.menu-open {
 
     border:
         1px solid
-        rgba(212, 175, 55, 0.30);
+        rgba(212, 175, 55, 0.26);
 
     border-radius: 16px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(212, 175, 55, 0.08),
-            rgba(30, 179, 173, 0.04)
+            rgba(212, 175, 55, 0.07),
+            rgba(30, 179, 173, 0.035)
         );
+
+    box-sizing: border-box;
 }
 
 
 .executive-coming-soon i {
+    margin-bottom: 20px;
+
     color: #d4af37;
 
-    font-size: 3.5rem;
-
-    margin-bottom: 20px;
+    font-size: 3.4rem;
 }
 
 
 .executive-coming-soon span {
     color: #ffffff;
 
-    font-family: 'Montserrat', sans-serif;
+    font-family:
+        'Montserrat',
+        sans-serif;
 
-    font-size: 1.3rem;
+    font-size: 1.25rem;
 
     font-weight: 700;
 
@@ -7612,7 +7721,10 @@ body.menu-open {
 
 
 .executive-coming-soon p {
-    margin-top: 12px;
+    margin:
+        14px
+        0
+        0;
 
     color: #d4af37;
 
@@ -7623,13 +7735,26 @@ body.menu-open {
 
 
 /* =========================================================
-   CTA
+   CTA FINAL
 ========================================================= */
 
 .executive-cta {
+    position: relative;
+
     text-align: center;
 
-    background: #ffffff;
+    background:
+        radial-gradient(
+            circle at top center,
+            rgba(212, 175, 55, 0.075),
+            transparent 48%
+        ),
+        #151515;
+}
+
+
+.executive-cta h2 {
+    color: #ffffff;
 }
 
 
@@ -7637,13 +7762,30 @@ body.menu-open {
     max-width: 700px;
 
     margin:
-        10px
+        0
         auto
         30px;
 
-    color: #666666;
+    color: #bdbdbd;
 
     line-height: 1.7;
+}
+
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.executive-cta .links-container {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
 }
 
 
@@ -7653,27 +7795,43 @@ body.menu-open {
             135deg,
             #c5a253,
             #e0bd6b
-        );
+        ) !important;
+
+    border:
+        1px solid
+        transparent !important;
 
     color: #111111 !important;
 
-    border-color: transparent !important;
+    font-weight: 700;
+
+    box-shadow:
+        0 8px 22px
+        rgba(212, 175, 55, 0.12);
 }
 
 
 .executive-btn:hover {
-    filter: brightness(1.08);
+    filter:
+        brightness(1.08);
+
+    transform:
+        translateY(-2px);
 }
 
 
 .executive-btn-outline {
-    background: transparent !important;
+    background:
+        transparent !important;
 
     border:
         1px solid
-        #b08c3d !important;
+        rgba(212, 175, 55, 0.55)
+        !important;
 
-    color: #8f712d !important;
+    color:
+        #d4af37
+        !important;
 }
 
 
@@ -7681,11 +7839,18 @@ body.menu-open {
     background:
         rgba(212, 175, 55, 0.08)
         !important;
+
+    border-color:
+        #d4af37
+        !important;
+
+    transform:
+        translateY(-2px);
 }
 
 
 /* =========================================================
-   RESPONSIVO
+   RESPONSIVO - TABLET
 ========================================================= */
 
 @media
@@ -7693,24 +7858,33 @@ body.menu-open {
 
     .executive-cards {
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .executive-card {
+        min-height: 215px;
     }
 
 }
 
 
+/* =========================================================
+   RESPONSIVO - MOBILE
+========================================================= */
+
 @media
 (max-width: 700px) {
 
     .executive-logo {
-        width: 95%;
+        width: 94%;
 
         margin-bottom: 28px;
     }
 
 
     .executive-intro {
-        font-size: 0.98rem;
+        font-size: 0.96rem;
 
         line-height: 1.7;
     }
@@ -7720,24 +7894,95 @@ body.menu-open {
         margin:
             26px
             auto
-            40px;
+            38px;
+    }
+
+
+    .executive-status span {
+        padding:
+            8px
+            14px;
+
+        font-size: 0.66rem;
+
+        letter-spacing: 1.2px;
     }
 
 
     .executive-cards {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
+
+        gap: 18px;
+    }
+
+
+    .executive-card {
+        min-height: auto;
+
+        padding:
+            30px
+            22px;
     }
 
 
     .executive-mission-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
+
+        gap: 18px;
+    }
+
+
+    .executive-mission {
+        align-items: flex-start;
+
+        min-height: auto;
+
+        padding:
+            24px
+            22px;
+    }
+
+
+    .executive-operations
+    .executive-intro,
+
+    .executive-fleet
+    .executive-intro {
+        margin-bottom: 36px;
     }
 
 
     .executive-coming-soon {
+        min-height: 220px;
+
         padding:
             30px
             20px;
+    }
+
+
+    .executive-coming-soon span {
+        font-size: 1.05rem;
+
+        letter-spacing: 3px;
+    }
+
+
+    .executive-cta
+    .links-container {
+        flex-direction: column;
+    }
+
+
+    .executive-cta
+    .btn-link {
+        width: 100%;
+
+        max-width: 300px;
+
+        box-sizing: border-box;
     }
 
 }
