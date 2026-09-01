@@ -7186,17 +7186,20 @@ body.menu-open {
 }
 
 
-/* LOGO */
+/* =========================================================
+   LOGO
+========================================================= */
 
 .executive-logo {
     display: block;
+
     width: min(620px, 90%);
     height: auto;
 
     margin:
         10px
         auto
-        15px;
+        34px;
 
     filter:
         drop-shadow(
@@ -7206,54 +7209,16 @@ body.menu-open {
 }
 
 
-.executive-premium h2 {
-    color: #d4af37;
-
-    font-family: 'Montserrat', sans-serif;
-
-    font-size: clamp(
-        2rem,
-        4vw,
-        3rem
-    );
-
-    letter-spacing: 3px;
-
-    text-transform: uppercase;
-
-    margin-bottom: 8px;
-}
-
-
-/* SLOGAN */
-
-.executive-slogan {
-    color: #ffffff;
-
-    font-size: 1.05rem;
-
-    font-style: italic;
-
-    letter-spacing: 2px;
-
-    margin:
-        0
-        auto
-        30px;
-
-    opacity: 0.85;
-}
-
-
-/* INTRO */
+/* =========================================================
+   INTRO
+========================================================= */
 
 .executive-intro {
     max-width: 900px;
 
     margin:
         0
-        auto
-        45px;
+        auto;
 
     font-size: 1.05rem;
 
@@ -7263,13 +7228,15 @@ body.menu-open {
 }
 
 
-/* STATUS */
+/* =========================================================
+   STATUS
+========================================================= */
 
 .executive-status {
     margin:
-        -15px
+        32px
         auto
-        45px;
+        48px;
 }
 
 
@@ -7277,6 +7244,8 @@ body.menu-open {
     display: inline-flex;
 
     align-items: center;
+
+    justify-content: center;
 
     gap: 10px;
 
@@ -7423,6 +7392,8 @@ body.menu-open {
 .executive-operations
 .executive-intro {
     color: #606060;
+
+    margin-bottom: 45px;
 }
 
 
@@ -7441,7 +7412,9 @@ body.menu-open {
 }
 
 
-/* MISSÕES */
+/* =========================================================
+   MISSÕES
+========================================================= */
 
 .executive-mission-grid {
     display: grid;
@@ -7572,6 +7545,12 @@ body.menu-open {
         4vw,
         2.8rem
     );
+}
+
+
+.executive-fleet
+.executive-intro {
+    margin-bottom: 45px;
 }
 
 
@@ -7725,6 +7704,23 @@ body.menu-open {
 
     .executive-logo {
         width: 95%;
+
+        margin-bottom: 28px;
+    }
+
+
+    .executive-intro {
+        font-size: 0.98rem;
+
+        line-height: 1.7;
+    }
+
+
+    .executive-status {
+        margin:
+            26px
+            auto
+            40px;
     }
 
 
@@ -7735,16 +7731,6 @@ body.menu-open {
 
     .executive-mission-grid {
         grid-template-columns: 1fr;
-    }
-
-
-    .executive-premium h2 {
-        letter-spacing: 2px;
-    }
-
-
-    .executive-slogan {
-        font-size: 0.9rem;
     }
 
 
