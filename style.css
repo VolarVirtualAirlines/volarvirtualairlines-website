@@ -4400,6 +4400,13 @@ body {
     gap: 28px;
 }
 
+.staff-container-quad {
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
 .staff-vice {
     border-color: rgba(0, 229, 255, 0.26);
 }
