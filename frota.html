@@ -777,6 +777,7 @@ const rowSimulador = row.children[6]?.textContent.trim().toLowerCase();
     }
 }
 
+preencherFiltro(filtroStatus, 0);
 preencherFiltro(filtroAeronave, 1);
 preencherFiltro(filtroTipo, 2, true);
 preencherFiltro(filtroDesenvolvedor, 3);
@@ -785,16 +786,17 @@ preencherFiltro(filtroSimulador, 6);
 filtrarFrota();
 
     
-[filtroAeronave, filtroTipo, filtroDesenvolvedor, filtroLivery, filtroSimulador].forEach(filtro => {
+[filtroStatus, filtroAeronave, filtroTipo, filtroDesenvolvedor, filtroLivery, filtroSimulador].forEach(filtro => {
     filtro.addEventListener("change", filtrarFrota);
 });
 
 btnLimparFiltrosFrota.addEventListener("click", () => {
+    filtroStatus.value = "";
     filtroAeronave.value = "";
     filtroTipo.value = "";
     filtroDesenvolvedor.value = "";
-        filtroLivery.value = "";
-filtroSimulador.value = "";
+    filtroLivery.value = "";
+    filtroSimulador.value = "";
 
     filtrarFrota();
 });
