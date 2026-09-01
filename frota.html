@@ -703,8 +703,9 @@ document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
         
         });
 
-    const linhasFrota = document.querySelectorAll(".tabela-frota tbody tr");
+const linhasFrota = document.querySelectorAll(".tabela-frota tbody tr");
 
+const filtroStatus = document.getElementById("filtro-status");
 const filtroAeronave = document.getElementById("filtro-aeronave");
 const filtroTipo = document.getElementById("filtro-tipo");
 const filtroDesenvolvedor = document.getElementById("filtro-desenvolvedor");
@@ -738,6 +739,7 @@ function preencherFiltro(select, coluna, limpar = false) {
 }
 
 function filtrarFrota() {
+    const status = filtroStatus.value;
     const aeronave = filtroAeronave.value;
     const tipo = filtroTipo.value;
     const desenvolvedor = filtroDesenvolvedor.value;
@@ -748,6 +750,7 @@ const simulador = filtroSimulador.value;
     let totalVisivel = 0;
 
     linhasFrota.forEach(row => {
+        const rowStatus = row.children[0]?.textContent.trim().toLowerCase();
         const rowAeronave = row.children[1]?.textContent.trim().toLowerCase();
         const rowTipo = limparEmoji(row.children[2]?.textContent.trim()).toLowerCase();
         const rowDesenvolvedor = row.children[3]?.textContent.trim().toLowerCase();
@@ -755,6 +758,7 @@ const simulador = filtroSimulador.value;
 const rowSimulador = row.children[6]?.textContent.trim().toLowerCase();
 
         const exibir =
+            (!status || rowStatus === status) &&
             (!aeronave || rowAeronave === aeronave) &&
             (!tipo || rowTipo === tipo) &&
             (!desenvolvedor || rowDesenvolvedor === desenvolvedor) &&
