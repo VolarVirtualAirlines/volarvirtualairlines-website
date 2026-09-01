@@ -7162,3 +7162,596 @@ body.menu-open {
         font-size: 1.15rem;
     }
 }
+
+/* =========================================================
+   VOLAR EXECUTIVE
+========================================================= */
+
+.executive-premium {
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(205, 170, 102, 0.12),
+            transparent 40%
+        ),
+        linear-gradient(
+            180deg,
+            #090909 0%,
+            #111111 100%
+        );
+}
+
+
+/* LOGO */
+
+.executive-logo {
+    display: block;
+    width: min(620px, 90%);
+    height: auto;
+
+    margin:
+        10px
+        auto
+        15px;
+
+    filter:
+        drop-shadow(
+            0 15px 35px
+            rgba(0, 0, 0, 0.45)
+        );
+}
+
+
+.executive-premium h2 {
+    color: #d4af37;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: clamp(
+        2rem,
+        4vw,
+        3rem
+    );
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 8px;
+}
+
+
+/* SLOGAN */
+
+.executive-slogan {
+    color: #ffffff;
+
+    font-size: 1.05rem;
+
+    font-style: italic;
+
+    letter-spacing: 2px;
+
+    margin:
+        0
+        auto
+        30px;
+
+    opacity: 0.85;
+}
+
+
+/* INTRO */
+
+.executive-intro {
+    max-width: 900px;
+
+    margin:
+        0
+        auto
+        45px;
+
+    font-size: 1.05rem;
+
+    line-height: 1.8;
+
+    color: #cfcfcf;
+}
+
+
+/* STATUS */
+
+.executive-status {
+    margin:
+        -15px
+        auto
+        45px;
+}
+
+
+.executive-status span {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+        9px
+        18px;
+
+    border:
+        1px solid
+        rgba(212, 175, 55, 0.45);
+
+    border-radius: 30px;
+
+    color: #d4af37;
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    letter-spacing: 1.6px;
+
+    background:
+        rgba(212, 175, 55, 0.05);
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.executive-cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    gap: 22px;
+
+    max-width: 1200px;
+
+    margin:
+        0
+        auto;
+}
+
+
+.executive-card {
+    position: relative;
+
+    padding:
+        35px
+        25px;
+
+    border:
+        1px solid
+        rgba(212, 175, 55, 0.18);
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.04),
+            rgba(255, 255, 255, 0.01)
+        );
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.executive-card:hover {
+    transform:
+        translateY(-6px);
+
+    border-color:
+        rgba(212, 175, 55, 0.55);
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.25);
+}
+
+
+.executive-card i {
+    font-size: 2rem;
+
+    color: #d4af37;
+
+    margin-bottom: 20px;
+}
+
+
+.executive-card h3 {
+    color: #ffffff;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 1.05rem;
+
+    margin-bottom: 12px;
+}
+
+
+.executive-card p {
+    color: #bdbdbd;
+
+    line-height: 1.65;
+
+    font-size: 0.92rem;
+}
+
+
+/* =========================================================
+   OPERAÇÕES
+========================================================= */
+
+.executive-operations {
+    text-align: center;
+
+    background: #f8f8f8;
+}
+
+
+.executive-operations h2,
+.executive-cta h2 {
+    color: #202020;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: clamp(
+        2rem,
+        4vw,
+        2.8rem
+    );
+}
+
+
+.executive-operations
+.executive-intro {
+    color: #606060;
+}
+
+
+.executive-section-tag {
+    display: inline-block;
+
+    margin-bottom: 12px;
+
+    color: #b08c3d;
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+}
+
+
+/* MISSÕES */
+
+.executive-mission-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+
+    max-width: 1000px;
+
+    margin:
+        20px
+        auto
+        0;
+}
+
+
+.executive-mission {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    padding: 25px;
+
+    text-align: left;
+
+    border:
+        1px solid
+        #e7e7e7;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.executive-mission:hover {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.08);
+}
+
+
+.executive-mission-icon {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 52px;
+
+    width: 52px;
+
+    height: 52px;
+
+    border-radius: 50%;
+
+    color: #d4af37;
+
+    background:
+        rgba(212, 175, 55, 0.10);
+}
+
+
+.executive-mission-icon i {
+    font-size: 1.2rem;
+}
+
+
+.executive-mission h3 {
+    margin:
+        0
+        0
+        8px;
+
+    color: #202020;
+
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.executive-mission p {
+    margin: 0;
+
+    color: #666666;
+
+    line-height: 1.55;
+
+    font-size: 0.93rem;
+}
+
+
+/* =========================================================
+   FROTA
+========================================================= */
+
+.executive-fleet {
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(27, 179, 173, 0.07),
+            transparent 45%
+        ),
+        #0b0b0b;
+}
+
+
+.executive-fleet h2 {
+    color: #ffffff;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: clamp(
+        2rem,
+        4vw,
+        2.8rem
+    );
+}
+
+
+.executive-coming-soon {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    max-width: 650px;
+
+    min-height: 260px;
+
+    margin:
+        0
+        auto;
+
+    padding:
+        40px;
+
+    border:
+        1px solid
+        rgba(212, 175, 55, 0.30);
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(212, 175, 55, 0.08),
+            rgba(30, 179, 173, 0.04)
+        );
+}
+
+
+.executive-coming-soon i {
+    color: #d4af37;
+
+    font-size: 3.5rem;
+
+    margin-bottom: 20px;
+}
+
+
+.executive-coming-soon span {
+    color: #ffffff;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 1.3rem;
+
+    font-weight: 700;
+
+    letter-spacing: 5px;
+}
+
+
+.executive-coming-soon p {
+    margin-top: 12px;
+
+    color: #d4af37;
+
+    font-style: italic;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.executive-cta {
+    text-align: center;
+
+    background: #ffffff;
+}
+
+
+.executive-cta p {
+    max-width: 700px;
+
+    margin:
+        10px
+        auto
+        30px;
+
+    color: #666666;
+
+    line-height: 1.7;
+}
+
+
+.executive-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #c5a253,
+            #e0bd6b
+        );
+
+    color: #111111 !important;
+
+    border-color: transparent !important;
+}
+
+
+.executive-btn:hover {
+    filter: brightness(1.08);
+}
+
+
+.executive-btn-outline {
+    background: transparent !important;
+
+    border:
+        1px solid
+        #b08c3d !important;
+
+    color: #8f712d !important;
+}
+
+
+.executive-btn-outline:hover {
+    background:
+        rgba(212, 175, 55, 0.08)
+        !important;
+}
+
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+
+@media
+(max-width: 1000px) {
+
+    .executive-cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media
+(max-width: 700px) {
+
+    .executive-logo {
+        width: 95%;
+    }
+
+
+    .executive-cards {
+        grid-template-columns: 1fr;
+    }
+
+
+    .executive-mission-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .executive-premium h2 {
+        letter-spacing: 2px;
+    }
+
+
+    .executive-slogan {
+        font-size: 0.9rem;
+    }
+
+
+    .executive-coming-soon {
+        padding:
+            30px
+            20px;
+    }
+
+}
