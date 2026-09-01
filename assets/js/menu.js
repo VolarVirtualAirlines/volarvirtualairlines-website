@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <div class="menu-dropdown-content">
                     <a href="cargo.html">Volar Cargo</a>
+                    <a href="executive.html">Volar Executive</a>
                     <a href="vax.html">Volar Academy (VAX)</a>
                 </div>
             </div>
@@ -264,6 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "rotas.html": "operacoes",
         "ferramentas.html": "operacoes",
         "cargo.html": "divisoes",
+        "executive.html": "divisoes",
         "vax.html": "divisoes",
         "frota.html": "frota",
         "pilotos.html": "pilotos",
