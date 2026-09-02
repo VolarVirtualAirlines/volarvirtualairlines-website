@@ -5544,6 +5544,43 @@ body {
 }
 
 /* =====================================
+   ESTRELAS DE EXPERIÊNCIA VOLAR
+===================================== */
+
+.piloto-estrelas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    margin-top: 10px;
+    margin-bottom: 14px;
+
+    min-height: 18px;
+}
+
+.piloto-estrelas i {
+    font-size: 14px;
+    color: #f5c542;
+
+    filter: drop-shadow(
+        0 0 4px rgba(245, 197, 66, 0.35)
+    );
+
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
+}
+
+.piloto-estrelas:hover i {
+    transform: translateY(-1px);
+
+    filter: drop-shadow(
+        0 0 6px rgba(245, 197, 66, 0.55)
+    );
+}
+
+/* =====================================
    CADETES VAX - LISTA
 ===================================== */
 
