@@ -5580,6 +5580,16 @@ body {
     );
 }
 
+.piloto-estrelas-multiplicador {
+    font-family: var(--font-headers);
+    font-size: 14px;
+    font-weight: 700;
+    color: #f5c542;
+
+    margin-left: 2px;
+    line-height: 1;
+}
+
 /* =====================================
    CADETES VAX - LISTA
 ===================================== */
