@@ -106,6 +106,14 @@ function formatarTempoNewSky(minutos) {
     return `${horas}h ${String(minutosRestantes).padStart(2, "0")}min`;
 }
 
+function obterQuantidadeEstrelas(minutosVoados) {
+
+    const totalMinutos = Number(minutosVoados) || 0;
+
+    const minutosPorEstrela = 100 * 60;
+
+    return Math.floor(totalMinutos / minutosPorEstrela);
+}
 
 function obterRedePiloto(integracoes) {
 
@@ -250,6 +258,15 @@ async function carregarPilotos() {
     function criarCardPiloto(piloto) {
 
         const classeStatus = obterClasseStatus(piloto.status);
+
+        const quantidadeEstrelas = obterQuantidadeEstrelas(
+            piloto.minutosVoados
+        );
+
+        const estrelasHtml = Array.from(
+            { length: quantidadeEstrelas },
+            () => '<i class="fas fa-star"></i>'
+        ).join("");
         
         const possuiIVAO =
             piloto.ivao &&
@@ -309,6 +326,15 @@ async function carregarPilotos() {
                         ${piloto.pais} • ${piloto.base}
                     </span>
                 </div>
+
+                ${quantidadeEstrelas > 0 ? `
+                    <div
+                        class="piloto-estrelas"
+                        title="${quantidadeEstrelas} estrela${quantidadeEstrelas > 1 ? "s" : ""} de experiência VOLAR"
+                    >
+                        ${estrelasHtml}
+                    </div>
+                ` : ""}
 
                 <div class="piloto-card-stats">
 
