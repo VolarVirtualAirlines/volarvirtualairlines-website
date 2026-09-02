@@ -5253,7 +5253,7 @@ body {
     gap: 7px;
 
     min-height: 24px;
-    margin-bottom: 24px;
+    margin-bottom: 6px;
 
     color: var(--text-muted);
     font-size: 14px;
