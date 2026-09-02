@@ -262,11 +262,19 @@ async function carregarPilotos() {
         const quantidadeEstrelas = obterQuantidadeEstrelas(
             piloto.minutosVoados
         );
-
-        const estrelasHtml = Array.from(
-            { length: quantidadeEstrelas },
-            () => '<i class="fas fa-star"></i>'
-        ).join("");
+        
+        const estrelasHtml =
+            quantidadeEstrelas <= 5
+                ? Array.from(
+                    { length: quantidadeEstrelas },
+                    () => '<i class="fas fa-star"></i>'
+                ).join("")
+                : `
+                    <i class="fas fa-star"></i>
+                    <span class="piloto-estrelas-multiplicador">
+                        × ${quantidadeEstrelas}
+                    </span>
+                `;
         
         const possuiIVAO =
             piloto.ivao &&
