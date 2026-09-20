@@ -700,7 +700,7 @@ number,dep,arr,type,duration,mon,tue,wed,thu,fri,sat,sun,airframes,active
 3073,LIRF,LPPT,pax,165,true,true,true,true,true,true,true,"A320,A20N,A21N,BCS3,B738,B38M,E195,F100",true
 5000,EGLL,LOWI,pax,110,true,true,true,true,true,true,true,"A320,A20N,A21N,BCS3,B738,B38M,E195,F100",true
 5001,LOWI,EGLL,pax,110,true,true,true,true,true,true,true,"A320,A20N,A21N,BCS3,B738,B38M,E195,F100",true
-2048,SBKP,EDDF,cargo,780,true,true,true,true,true,true,true,B772F,true
-2049,EDDF,SBKP,cargo,780,true,true,true,true,true,true,true,B772F,true
+2048,SBKP,EDDF,cargo,780,true,true,true,true,true,true,true,"B772F,MD11F",true
+2049,EDDF,SBKP,cargo,780,true,true,true,true,true,true,true,"B772F,MD11F",true
 3074,SBGR,OMDB,pax,840,true,true,true,true,true,true,true,"A359,A388,B77W",true
 3075,SBGR,OMDB,pax,840,true,true,true,true,true,true,true,"A359,A388,B77W",true
