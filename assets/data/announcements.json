@@ -1,5 +1,12 @@
 [
       {
+        "image": "assets/announcements/VOLAR_1ANO.png",
+        "version": 1,
+        "alt": "VOLAR - 1 Ano!",
+        "start": "2026-10-07",
+        "end": "2026-11-07"
+      },
+      {
         "image": "assets/announcements/announcements_4.png",
         "version": 1,
         "alt": "AIRAC 2610",
