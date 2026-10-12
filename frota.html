@@ -491,6 +491,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
 const dadosAeronaves = {
+    "A320": {
+        titulo: "Airbus A320 — Fenix",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/HOMOLOG.png",
+        descricao: "O Airbus A320 da Fenix combina sistemas detalhados, comandos fly-by-wire e versatilidade para operações de curta e média distância. Na Volar, recebe a livery Turquoise Wave Edition, com identidade visual marcante e cabine personalizada.",
+        info: {
+            "Fabricante": "Airbus",
+            "Tipo": "Passageiros",
+            "Capacidade": "Até 180 PAX",
+            "Volume de Carga": "37,4 m³",
+            "Carga Máxima": "9.435 kg (porões, incluindo bagagens)",
+            "Motores": "CFM56-5B / IAE V2500-A5",
+            "MTOW": "Até 78.000 kg",
+            "Alcance": "Até 6.200 km (3.348 NM), com Sharklets",
+            "Cruzeiro": "Mach 0.78",
+            "Teto Operacional": "39.100 ft"
+        }
+    },    
     "A321 NEO": {
         titulo: "Airbus A321neo",
         categoria: "ICAO CATEGORY C",
@@ -580,7 +598,6 @@ const dadosAeronaves = {
             "Teto Operacional": "41.000 ft"
         }
     },
-
     "FOKKER 100": {
         titulo: "Fokker 100",
         categoria: "ICAO CATEGORY C",
@@ -599,7 +616,6 @@ const dadosAeronaves = {
             "Teto Operacional": "35.000 ft"
         }
     },
-
     "A220-300": {
         titulo: "Airbus A220-300",
         categoria: "ICAO CATEGORY C",
@@ -638,6 +654,7 @@ function getLiveryEdition(row) {
     if (livery === "BLUE") return "Volar Blue Edition";
     if (livery === "KIDS") return "Volar Kids Edition";
     if (livery === "PURPLE HAZE") return "Volar Purple Haze Edition";
+    if (livery === "TURQUOISE WAVE") return "Volar Turquoise Wave Edition";
     if (livery === "TURQUOISE" && tipo.includes("carga")) return "Volar Turquoise Cargo Edition";
     if (livery === "TURQUOISE") return "Volar Turquoise Edition";
 
