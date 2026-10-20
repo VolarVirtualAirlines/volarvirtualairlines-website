@@ -1067,8 +1067,21 @@ function criarLinha(piloto) {
   if (piloto.aeronave) {
     tagsExtras += '<span class="po-tag po-tag-aircraft">' + escapeHtml(piloto.aeronave) + '</span>';
   }
+
   if (piloto.rede) {
-    tagsExtras += '<span class="po-tag po-tag-network">' + escapeHtml(piloto.rede) + '</span>';
+    const redeNome = piloto.rede.toLowerCase();
+    let classeRede = "rede-newsky";
+
+    if (redeNome === "ivao") {
+        classeRede = "rede-ivao";
+    } else if (redeNome === "vatsim") {
+        classeRede = "rede-vatsim";
+    } else if (redeNome.includes("sayintentions")) {
+        classeRede = "rede-sayintentions";
+    }
+
+    tagsExtras += '<span class="po-tag po-tag-network ' +
+        classeRede + '">' + escapeHtml(piloto.rede) + '</span>';
   }
 
   row.innerHTML =
