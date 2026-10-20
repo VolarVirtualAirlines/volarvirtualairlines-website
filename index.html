@@ -9,6 +9,29 @@
     <link class="css-file" rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        /* CORES DAS REDES - VOOS RECENTES */
+        #tabela-voos-recentes .badge-rede.rede-ivao {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        #tabela-voos-recentes .badge-rede.rede-vatsim {
+            background: #16834a;
+            color: #ffffff;
+        }
+
+        #tabela-voos-recentes .badge-rede.rede-newsky {
+            background: #596579;
+            color: #ffffff;
+        }
+
+        #tabela-voos-recentes .badge-rede.rede-sayintentions {
+            background: #7650bd;
+            color: #ffffff;
+        }
+    </style>
 </head>
     
 <body>
@@ -812,7 +835,14 @@
                         <td>${dataFormatada}</td>
                         <td><span class="badge-tipo">${voo.type?.toUpperCase() === 'PAX' ? '👥 Passageiros' : '📦 Carga'}</span></td>
                         <td><span class="badge-sim">${voo.simulator?.toUpperCase() || 'N/A'}</span></td>
-                        <td><span class="badge-rede">${voo.network?.name?.toUpperCase() || 'NEWSKY'}</span></td>
+                        
+                        <td><span class="badge-rede rede-${(() => {
+                            const rede = (voo.network?.name || 'NEWSKY').toLowerCase();
+                            if (rede === 'ivao') return 'ivao';
+                            if (rede === 'vatsim') return 'vatsim';
+                            if (rede.includes('sayintentions')) return 'sayintentions';
+                            return 'newsky';
+                        })()}">${voo.network?.name?.toUpperCase() || 'NEWSKY'}</span></td>
                     `;
                     
                     container.appendChild(row);
