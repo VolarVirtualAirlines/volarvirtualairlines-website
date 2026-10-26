@@ -10,6 +10,72 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+    /* AVISO DE COMPATIBILIDADE DAS LIVERIES - VOLAR */
+    .vvx-aviso-liveries {
+        max-width: 900px;
+        margin: 0 auto 35px;
+        padding: 22px 26px;
+        background: linear-gradient(135deg, #10243a, #172f49);
+        border: 1px solid rgba(65, 145, 225, 0.25);
+        border-left: 4px solid #3289e8;
+        border-radius: 12px;
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        text-align: left;
+        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+    }
+    
+    .vvx-aviso-liveries .aviso-icone {
+        color: #58aaff;
+        font-size: 23px;
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+    
+    .vvx-aviso-liveries h3 {
+        color: #ffffff;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0 0 12px;
+    }
+    
+    .vvx-aviso-liveries p {
+        color: #d5e1ed;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        line-height: 1.75;
+        margin: 0 0 10px;
+    }
+    
+    .vvx-aviso-liveries p:last-child {
+        margin-bottom: 0;
+    }
+    
+    .vvx-aviso-liveries strong {
+        color: #ffffff;
+        font-weight: 600;
+    }
+    
+    @media (max-width: 600px) {
+        .vvx-aviso-liveries {
+            padding: 18px;
+            gap: 12px;
+        }
+    
+        .vvx-aviso-liveries h3 {
+            font-size: 14px;
+        }
+    
+        .vvx-aviso-liveries p {
+            font-size: 12px;
+        }
+    }
+    </style>
+
 </head>
 
 <body>
@@ -35,6 +101,47 @@
         das liveries disponíveis para os simuladores suportados.
     </p>
 
+
+    <!-- AVISO DE COMPATIBILIDADE DAS LIVERIES -->
+    <div class="vvx-aviso-liveries" role="note">
+    
+        <div class="aviso-icone">
+            <i class="fas fa-circle-info" aria-hidden="true"></i>
+        </div>
+    
+        <div class="aviso-conteudo">
+    
+            <h3>Aviso de Compatibilidade das Liveries</h3>
+    
+            <p>
+                Todas as liveries disponibilizadas pela
+                <strong>Volar Virtual Airlines</strong> são desenvolvidas
+                para versões originais e oficiais das aeronaves de seus
+                respectivos desenvolvedores, incluindo produtos gratuitos
+                distribuídos oficialmente.
+            </p>
+    
+            <p>
+                A utilização em versões não oficiais, modificadas ou
+                incompatíveis poderá ocasionar falhas na instalação,
+                problemas de exibição da pintura ou até mesmo impedir
+                que a livery seja reconhecida pelo simulador.
+            </p>
+    
+            <p>
+                A <strong>Volar Virtual Airlines não garante o funcionamento
+                de suas liveries em versões não oficiais das aeronaves.</strong>
+                Para garantir a melhor experiência, recomendamos utilizar
+                sempre produtos originais, atualizados e compatíveis com
+                o simulador correspondente.
+            </p>
+    
+        </div>
+    
+    </div>
+    <!-- FIM DO AVISO DE COMPATIBILIDADE -->
+
+    
     <!-- INICIO A TABELA DE FROTA -->
 
     <!--- Status 
