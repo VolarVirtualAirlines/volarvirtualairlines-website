@@ -862,6 +862,29 @@ document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
         
         });
 
+
+/* ORDENAÇÃO AUTOMÁTICA DA FROTA POR AERONAVE */
+
+const corpoTabelaFrota = document.querySelector(".tabela-frota tbody");
+
+const linhasOrdenadasFrota = Array.from(
+    corpoTabelaFrota.querySelectorAll("tr")
+).sort((a, b) => {
+
+    const aeronaveA = a.children[1]?.textContent.trim() || "";
+    const aeronaveB = b.children[1]?.textContent.trim() || "";
+
+    return aeronaveA.localeCompare(aeronaveB, "pt-BR", {
+        numeric: true,
+        sensitivity: "base"
+    });
+
+});
+
+// Reorganiza as linhas na tabela
+corpoTabelaFrota.append(...linhasOrdenadasFrota);
+
+// Mantém a integração com os filtros existentes
 const linhasFrota = document.querySelectorAll(".tabela-frota tbody tr");
 
 const filtroStatus = document.getElementById("filtro-status");
