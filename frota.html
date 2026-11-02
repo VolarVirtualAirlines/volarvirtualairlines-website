@@ -798,7 +798,7 @@ function getLiveryEdition(row) {
 }
     
 document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
-    const aeronave = row.children[1]?.textContent.trim().replace(" BCF", "BCF");
+    const aeronave = row.children[1]?.textContent.trim();
     const preview = row.querySelector(".liverie-preview");
 
     if (!preview || !dadosAeronaves[aeronave]) return;
