@@ -926,6 +926,19 @@
                             </button>
                         </td>
                     `;
+
+                    // VOLAR RAOV: disponível somente para rating abaixo de 8.0.
+                    const elegivelRAOV =
+                        Number.isFinite(ratingNumero) &&
+                        ratingNumero >= 0 &&
+                        ratingNumero < 8;
+
+                    if (!elegivelRAOV) {
+                        const celulaRAOV = row.querySelector(".col-raov");
+                        if (celulaRAOV) {
+                            celulaRAOV.textContent = "—";
+                        }
+                    }
                     
                     container.appendChild(row);
                 });
