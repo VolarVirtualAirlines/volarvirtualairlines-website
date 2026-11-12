@@ -1,30 +1,17 @@
-
 /*
- * ============================================================
- * VOLAR RAOV — API DE INTEGRAÇÃO COM OPENAI
- * Volar Virtual Airlines / Volar Academy
- * ============================================================
+ * VOLAR RAOV — Cloudflare Pages Function
+ * Arquivo no GitHub: functions/api/raov.js
+ * VVX / VAX — integração em homologação
  *
- * Cloudflare Pages Function: functions/api/raov.js
- *
- * Diagnóstico 1: validação do token
- * Diagnóstico 2: consulta ao modelo OpenAI
- * Diagnóstico 3: teste de POST sem geração
- * Diagnóstico 4: geração mínima com limite de tempo
- *
- * Teste principal: geração de texto pela IA
- *
- * Ainda não recebe o JSON operacional do NewSky
- * nem gera o PDF oficial do RAOV.
- * ============================================================
+ * Mantém os diagnósticos 1 a 4 e o teste principal existentes.
+ * NOVO: POST /api/raov?acao=analisar aceita JSON otimizado v2
+ * com RAOV_TEST_TOKEN, pede análise estruturada à OpenAI.
+ * Não gera PDF nem autoriza pilotos na interface pública.
  */
 
 const MODELO = "gpt-6-luna";
 const URL_RESPONSES = "https://api.openai.com/v1/responses";
-
-// ============================================================
-// FUNÇÕES AUXILIARES
-// ============================================================
+const TAMANHO_MAXIMO_JSON = 40000;
 
 function responder(dados, status = 200) {
   return new Response(JSON.stringify(dados), {
@@ -37,11 +24,8 @@ function responder(dados, status = 200) {
 }
 
 async function lerJSON(resposta) {
-  try {
-    return await resposta.json();
-  } catch {
-    return null;
-  }
+  try { return await resposta.json(); }
+  catch { return null; }
 }
 
 function extrairTexto(dados) {
@@ -53,9 +37,90 @@ function extrairTexto(dados) {
     .trim();
 }
 
-// ============================================================
-// GET /api/raov — STATUS DA INTEGRAÇÃO
-// ============================================================
+function validarVooV2(voo) {
+  if (!voo || typeof voo !== "object" || Array.isArray(voo))
+    return "O JSON operacional deve ser um objeto.";
+  if (voo.versaoEstrutura !== 2)
+    return "Versão de JSON inválida: esperado versaoEstrutura = 2.";
+  if (!/^[a-f\d]{24}$/i.test(voo.identificacao?.id || ""))
+    return "ID do voo ausente ou inválido.";
+  if (typeof voo.identificacao?.callsign !== "string" || !voo.identificacao.callsign.trim())
+    return "Callsign ausente.";
+  if (!voo.resumoOperacional || !voo.financeiro || !voo.horariosUTC)
+    return "Resumo operacional, financeiro ou horários ausentes.";
+  if (typeof voo.avaliacao?.rating !== "number" || !Number.isFinite(voo.avaliacao.rating))
+    return "Rating ausente ou inválido.";
+  if (!Array.isArray(voo.ocorrencias) || voo.ocorrencias.length > 100)
+    return "Lista de ocorrências ausente ou acima do limite de teste.";
+  if (voo.avaliacao.quantidadeOcorrencias !== voo.ocorrencias.length)
+    return "Quantidade de ocorrências divergente.";
+  for (const [i, ocorrencia] of voo.ocorrencias.entries()) {
+    if (typeof ocorrencia?.descricaoECriteriosNewSky !== "string" ||
+        !ocorrencia.descricaoECriteriosNewSky.trim())
+      return `Ocorrência ${i + 1} sem descrição do NewSky.`;
+    if (typeof ocorrencia.descontoRating !== "number" ||
+        !Number.isFinite(ocorrencia.descontoRating))
+      return `Ocorrência ${i + 1} com desconto de rating inválido.`;
+    // Não utilizar tipoEvento: fonte principal é a descrição exibida pelo NewSky.
+    if ("tipoEvento" in ocorrencia)
+      return `Ocorrência ${i + 1} contém tipoEvento: use o JSON otimizado v2.`;
+  }
+  return null;
+}
+
+// Formato estruturado para alimentar futuramente o PDF oficial.
+// Regras strict: todas as propriedades requeridas, sem chaves extras.
+const FORMATO_ANALISE = {
+  type: "json_schema",
+  name: "volar_raov_analise_v1",
+  strict: true,
+  schema: {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      sumarioExecutivo: { type: "string" },
+      analiseOperacional: { type: "string" },
+      analiseFinanceira: { type: "string" },
+      analiseOcorrencias: {
+        type: "array",
+        items: {
+          type: "object",
+          additionalProperties: false,
+          properties: {
+            ordem: { type: "integer" },
+            titulo: { type: "string" },
+            pontosPositivos: { type: "string" },
+            pontosAtencao: { type: "string" },
+            recomendacao: { type: "string" }
+          },
+          required: ["ordem", "titulo", "pontosPositivos", "pontosAtencao", "recomendacao"]
+        }
+      },
+      indicadores: { type: "string" },
+      planoEvolucao: { type: "array", items: { type: "string" } },
+      observacoesSistema: { type: "array", items: { type: "string" } }
+    },
+    required: [
+      "sumarioExecutivo", "analiseOperacional", "analiseFinanceira",
+      "analiseOcorrencias", "indicadores", "planoEvolucao", "observacoesSistema"
+    ]
+  }
+};
+
+const INSTRUCOES_RAOV = `Você é o analista técnico da VOLAR Virtual Airlines (VVX) e VAX.
+Produza uma análise RAOV educacional, objetiva e em português do Brasil, para futura diagramação em PDF.
+Use exclusivamente o JSON recebido como dados factuais; não invente fatos, causas, parâmetros, limites ou procedimentos atribuídos ao NewSky.
+O campo descricaoECriteriosNewSky é a FONTE PRINCIPAL para identificar e interpretar cada ocorrência.
+Jamais tente inferir o tipo da ocorrência por classificações internas como tipoEvento.
+Para CADA ocorrência, escreva título, pontos positivos, pontos de atenção e recomendações específicas.
+Nos pontos de atenção, compare EXPLICITAMENTE o valor medido com o critério/limite presente na própria descricaoECriteriosNewSky.
+Se não houver critério explícito, diga que não foi informado e não atribua um limite ao NewSky.
+Mantenha um item em analiseOcorrencias para cada ocorrência, na ordem numérica recebida, sem juntar, omitir ou inventar eventos.
+Os descontos do rating são distintos das penalidades financeiras; não misture os dois conceitos.
+Não altere números, unidades, horários ou valores financeiros. Use os dados de toque quando disponíveis.
+Se faltar informação, explique a limitação em observacoesSistema. Não simule acesso a links externos.
+O texto deve ser compreensível para o piloto e oferecer metas de melhoria práticas e mensuráveis.
+Responda somente no JSON estruturado solicitado.`;
 
 export async function onRequestGet(context) {
   return responder({
@@ -66,306 +131,256 @@ export async function onRequestGet(context) {
   });
 }
 
-// ============================================================
-// POST /api/raov — TESTES E INTEGRAÇÃO
-// ============================================================
-
 export async function onRequestPost(context) {
   const { OPENAI_API_KEY, RAOV_TEST_TOKEN } = context.env;
-
-  // 1. Verificar credenciais
   if (!OPENAI_API_KEY || !RAOV_TEST_TOKEN) {
-    return responder({
-      status: "erro_configuracao",
-      mensagem: "Credenciais não configuradas."
-    }, 503);
+    return responder({ status: "erro_configuracao", mensagem: "Credenciais não configuradas." }, 503);
   }
 
-  // 2. Validar token de autorização
   const token = context.request.headers.get("X-RAOV-Test-Token");
-
   if (!token || token !== RAOV_TEST_TOKEN) {
-    return responder({
-      status: "nao_autorizado",
-      mensagem: "Acesso não autorizado."
-    }, 401);
+    return responder({ status: "nao_autorizado", mensagem: "Acesso não autorizado." }, 401);
   }
 
-  // 3. Identificar diagnóstico solicitado
-  const diagnostico = new URL(context.request.url)
-    .searchParams.get("diagnostico");
+  const parametros = new URL(context.request.url).searchParams;
+  const diagnostico = parametros.get("diagnostico");
+  const acao = parametros.get("acao");
 
-  // ==========================================================
-  // DIAGNÓSTICO 1 — VALIDAR TOKEN
-  // Não consulta a OpenAI
-  // ==========================================================
-
+  // Diagnóstico 1 — autenticação local
   if (diagnostico === "1") {
     return responder({
-      sistema: "VOLAR RAOV",
-      diagnostico: "validacao_token",
-      status: "token_validado",
-      mensagem: "Autorização funcionando corretamente.",
+      sistema: "VOLAR RAOV", diagnostico: "validacao_token",
+      status: "token_validado", mensagem: "Autorização funcionando corretamente.",
       openaiConsultada: false
     });
   }
 
-  // ==========================================================
-  // DIAGNÓSTICO 2 — CONSULTAR MODELO NA OPENAI
-  // Não gera conteúdo
-  // ==========================================================
-
+  // Diagnóstico 2 — acesso ao modelo
   if (diagnostico === "2") {
     try {
-      const resposta = await fetch(
-        `https://api.openai.com/v1/models/${MODELO}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${OPENAI_API_KEY}`,
-            Accept: "application/json"
-          },
-          cache: "no-store"
-        }
-      );
-
-      return responder({
-        sistema: "VOLAR RAOV",
-        diagnostico: "conexao_get_openai",
-        status: resposta.ok ? "conexao_ok" : "erro_api",
-        httpOpenAI: resposta.status,
-        openaiConsultada: true
+      const resposta = await fetch(`https://api.openai.com/v1/models/${MODELO}`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${OPENAI_API_KEY}`, Accept: "application/json" },
+        cache: "no-store"
       });
-
-    } catch (erro) {
-      console.error(
-        "VOLAR RAOV - Diagnóstico 2:",
-        erro.name,
-        erro.message
-      );
-
       return responder({
-        sistema: "VOLAR RAOV",
-        diagnostico: "conexao_get_openai",
-        status: "erro_comunicacao",
-        tipoErro: erro.name,
-        mensagem: erro.message
-      }, 502);
+        sistema: "VOLAR RAOV", diagnostico: "conexao_get_openai",
+        status: resposta.ok ? "conexao_ok" : "erro_api",
+        httpOpenAI: resposta.status, openaiConsultada: true
+      });
+    } catch (erro) {
+      return responder({ status: "erro_comunicacao", diagnostico: "conexao_get_openai", tipoErro: erro.name }, 502);
     }
   }
 
-  // ==========================================================
-  // DIAGNÓSTICO 3 — TESTAR POST SEM GERAÇÃO
-  // Utiliza modelo propositalmente inexistente
-  // ==========================================================
-
+  // Diagnóstico 3 — POST deliberadamente inválido (sem geração)
   if (diagnostico === "3") {
     try {
       const resposta = await fetch(URL_RESPONSES, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${OPENAI_API_KEY}`,
-          "Content-Type": "application/json",
-          Accept: "application/json"
+          "Content-Type": "application/json", Accept: "application/json"
         },
-        body: JSON.stringify({
-          model: "volar-modelo-inexistente-teste",
-          input: "Teste de conectividade VOLAR RAOV."
-        })
+        body: JSON.stringify({ model: "volar-modelo-inexistente-teste", input: "Teste." })
       });
-
       const dados = await lerJSON(resposta);
-
       return responder({
-        sistema: "VOLAR RAOV",
-        diagnostico: "conexao_post_openai",
+        sistema: "VOLAR RAOV", diagnostico: "conexao_post_openai",
         status: resposta.ok ? "conexao_ok" : "erro_api",
-        httpOpenAI: resposta.status,
-        tipoErro: dados?.error?.type || null,
+        httpOpenAI: resposta.status, tipoErro: dados?.error?.type || null,
         codigoErro: dados?.error?.code || null,
-        respostaRecebida: true,
-        geracaoExecutada: false
+        respostaRecebida: true, geracaoExecutada: false
       });
-
     } catch (erro) {
-      console.error(
-        "VOLAR RAOV - Diagnóstico 3:",
-        erro.name,
-        erro.message
-      );
-
-      return responder({
-        sistema: "VOLAR RAOV",
-        diagnostico: "conexao_post_openai",
-        status: "erro_comunicacao",
-        tipoErro: erro.name,
-        mensagem: erro.message
-      }, 502);
+      return responder({ status: "erro_comunicacao", diagnostico: "conexao_post_openai", tipoErro: erro.name }, 502);
     }
   }
 
-  // ==========================================================
-  // DIAGNÓSTICO 4 — GERAÇÃO MÍNIMA COM GPT-6 LUNA
-  //
-  // Solicitação simples: responder OK
-  // Tempo limite: 25 segundos
-  // Não envia dados de voos
-  // ==========================================================
-
+  // Diagnóstico 4 — geração mínima validada anteriormente
   if (diagnostico === "4") {
     const inicio = Date.now();
+    try {
+      const resposta = await fetch(URL_RESPONSES, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+          "Content-Type": "application/json", Accept: "application/json"
+        },
+        body: JSON.stringify({ model: MODELO, input: "Responda apenas OK.", max_output_tokens: 32, store: false }),
+        signal: AbortSignal.timeout(25000)
+      });
+      const dados = await lerJSON(resposta);
+      return responder({
+        sistema: "VOLAR RAOV", diagnostico: "geracao_minima",
+        status: resposta.ok ? "conexao_ok" : "erro_api",
+        httpOpenAI: resposta.status, duracaoMs: Date.now() - inicio,
+        modelo: dados?.model || null, estadoResposta: dados?.status || null,
+        respostaIA: extrairTexto(dados) || null,
+        codigoErro: dados?.error?.code || null,
+        mensagemErro: dados?.error?.message || null,
+        uso: dados?.usage || null
+      });
+    } catch (erro) {
+      const expirou = ["AbortError", "TimeoutError"].includes(erro.name);
+      return responder({
+        sistema: "VOLAR RAOV", diagnostico: "geracao_minima",
+        status: expirou ? "tempo_esgotado" : "erro_comunicacao",
+        duracaoMs: Date.now() - inicio, tipoErro: erro.name
+      }, expirou ? 504 : 502);
+    }
+  }
+
+  if (diagnostico !== null) {
+    return responder({ status: "diagnostico_invalido", mensagem: "Diagnóstico não reconhecido." }, 400);
+  }
+
+  // NOVA AÇÃO — análise de voo real pelo modelo, ainda sob token manual de teste
+  if (acao === "analisar") {
+    const tipo = context.request.headers.get("content-type") || "";
+    if (!tipo.includes("application/json")) {
+      return responder({ status: "formato_invalido", mensagem: "Use Content-Type: application/json." }, 415);
+    }
+    const declarado = Number(context.request.headers.get("content-length") || 0);
+    if (declarado > TAMANHO_MAXIMO_JSON) {
+      return responder({ status: "dados_excessivos", mensagem: "JSON acima do limite de teste." }, 413);
+    }
+
+    let voo;
+    try {
+      const texto = await context.request.text();
+      if (texto.length > TAMANHO_MAXIMO_JSON) {
+        return responder({ status: "dados_excessivos", mensagem: "JSON acima do limite de teste." }, 413);
+      }
+      voo = JSON.parse(texto);
+    } catch {
+      return responder({ status: "json_invalido", mensagem: "Corpo JSON inválido." }, 400);
+    }
+
+    const erroValidacao = validarVooV2(voo);
+    if (erroValidacao) {
+      return responder({ status: "voo_invalido", mensagem: erroValidacao }, 400);
+    }
+
+    // Lista branca: nunca envia telemetria completa nem propriedades inesperadas.
+    const vooMinimo = {
+      versaoEstrutura: 2,
+      identificacao: voo.identificacao,
+      horariosUTC: voo.horariosUTC,
+      resumoOperacional: voo.resumoOperacional,
+      financeiro: voo.financeiro,
+      avaliacao: voo.avaliacao,
+      ocorrencias: voo.ocorrencias.map(o => ({
+        ordem: o.ordem,
+        momentoUTC: o.momentoUTC,
+        descricaoECriteriosNewSky: o.descricaoECriteriosNewSky,
+        descontoRating: o.descontoRating,
+        penalidadeFinanceira: o.penalidadeFinanceira,
+        toque: o.toque,
+        referenciaNewSky: o.referenciaNewSky
+      }))
+    };
 
     try {
       const resposta = await fetch(URL_RESPONSES, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${OPENAI_API_KEY}`,
-          "Content-Type": "application/json",
-          Accept: "application/json"
+          "Content-Type": "application/json", Accept: "application/json"
         },
         body: JSON.stringify({
           model: MODELO,
-          input: "Responda apenas OK.",
-          max_output_tokens: 32,
-          store: false
+          store: false,
+          reasoning: { effort: "none" },
+          max_output_tokens: 4200,
+          instructions: INSTRUCOES_RAOV,
+          input: JSON.stringify(vooMinimo),
+          text: { format: FORMATO_ANALISE }
         }),
-        signal: AbortSignal.timeout(25000)
+        signal: AbortSignal.timeout(55000)
       });
-
       const dados = await lerJSON(resposta);
+      if (!resposta.ok) {
+        return responder({
+          sistema: "VOLAR RAOV", status: "erro_openai",
+          httpOpenAI: resposta.status,
+          codigoErro: dados?.error?.code || null,
+          mensagem: dados?.error?.message || "A OpenAI rejeitou a análise."
+        }, resposta.status === 429 ? 429 : 502);
+      }
+      if (dados?.status !== "completed") {
+        return responder({
+          sistema: "VOLAR RAOV", status: "analise_incompleta",
+          estadoResposta: dados?.status || null,
+          motivo: dados?.incomplete_details?.reason || null,
+          uso: dados?.usage || null
+        }, 502);
+      }
+      const texto = extrairTexto(dados);
+      let analise;
+      try { analise = JSON.parse(texto); }
+      catch { return responder({ status: "formato_resposta_invalido", mensagem: "A IA não produziu JSON válido." }, 502); }
 
+      if (!Array.isArray(analise.analiseOcorrencias) ||
+          analise.analiseOcorrencias.length !== voo.ocorrencias.length ||
+          analise.analiseOcorrencias.some((o, i) => o.ordem !== voo.ocorrencias[i].ordem)) {
+        return responder({
+          status: "analise_incompleta",
+          mensagem: "A IA não preservou todos os eventos e suas ordens; relatório não liberado."
+        }, 502);
+      }
       return responder({
-        sistema: "VOLAR RAOV",
-        diagnostico: "geracao_minima",
-        status: resposta.ok ? "conexao_ok" : "erro_api",
-        httpOpenAI: resposta.status,
-        duracaoMs: Date.now() - inicio,
-        modelo: dados?.model || null,
-        estadoResposta: dados?.status || null,
-        respostaIA: extrairTexto(dados) || null,
-        codigoErro: dados?.error?.code || null,
-        mensagemErro: dados?.error?.message || null,
-        uso: dados?.usage || null
+        sistema: "VOLAR RAOV", status: "analise_concluida",
+        voo: { id: voo.identificacao.id, callsign: voo.identificacao.callsign },
+        modelo: dados.model,
+        analise,
+        uso: dados.usage || null,
+        pdfGerado: false
       });
-
     } catch (erro) {
-      console.error(
-        "VOLAR RAOV - Diagnóstico 4:",
-        erro.name,
-        erro.message
-      );
-
-      const expirou =
-        erro.name === "TimeoutError" ||
-        erro.name === "AbortError";
-
+      const expirou = ["AbortError", "TimeoutError"].includes(erro.name);
+      console.error("VOLAR RAOV - análise:", erro.name);
       return responder({
-        sistema: "VOLAR RAOV",
-        diagnostico: "geracao_minima",
-        status: expirou
-          ? "tempo_esgotado"
-          : "erro_comunicacao",
-        duracaoMs: Date.now() - inicio,
-        tipoErro: erro.name,
-        mensagem: erro.message
+        status: expirou ? "tempo_esgotado" : "erro_comunicacao",
+        mensagem: "Não foi possível concluir a análise do voo."
       }, expirou ? 504 : 502);
     }
   }
 
-  // Rejeitar diagnósticos não reconhecidos
-  if (diagnostico !== null) {
-    return responder({
-      status: "diagnostico_invalido",
-      mensagem: "Diagnóstico não reconhecido."
-    }, 400);
+  if (acao !== null) {
+    return responder({ status: "acao_invalida", mensagem: "Ação não reconhecida." }, 400);
   }
 
-  // ==========================================================
-  // TESTE PRINCIPAL DE GERAÇÃO COM A OPENAI
-  //
-  // Não recebe o JSON do NewSky nesta etapa.
-  // ==========================================================
-
+  // Mantém o POST principal de teste simples já homologado.
   try {
     const resposta = await fetch(URL_RESPONSES, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
-        Accept: "application/json"
+        "Content-Type": "application/json", Accept: "application/json"
       },
       body: JSON.stringify({
-        model: MODELO,
-        store: false,
-        max_output_tokens: 160,
-        reasoning: {
-          effort: "none"
-        },
-        input:
-          "Responda em português, com uma única frase: " +
-          "VOLAR RAOV - conexão com a inteligência " +
-          "artificial estabelecida."
+        model: MODELO, store: false, max_output_tokens: 160,
+        reasoning: { effort: "none" },
+        input: "Responda em português, com uma única frase: VOLAR RAOV - conexão com a inteligência artificial estabelecida."
       })
     });
-
     const dados = await lerJSON(resposta);
-
-    // Verificar erro HTTP da OpenAI
     if (!resposta.ok) {
       return responder({
-        sistema: "VOLAR RAOV",
-        status: "erro_openai",
-        codigoHTTP: resposta.status,
+        status: "erro_openai", codigoHTTP: resposta.status,
         codigoAPI: dados?.error?.code || null,
-        tipoErro: dados?.error?.type || null,
-        mensagem:
-          dados?.error?.message ||
-          "A OpenAI não concluiu a solicitação."
+        mensagem: "A OpenAI não concluiu a solicitação."
       }, 502);
     }
-
-    // Verificar JSON retornado
-    if (!dados) {
-      return responder({
-        sistema: "VOLAR RAOV",
-        status: "resposta_invalida",
-        mensagem: "A OpenAI não retornou JSON válido."
-      }, 502);
-    }
-
-    // Extrair texto
     const texto = extrairTexto(dados);
-
-    if (!texto) {
-      return responder({
-        sistema: "VOLAR RAOV",
-        status: "resposta_vazia",
-        estadoResposta: dados.status || null,
-        uso: dados.usage || null
-      }, 502);
-    }
-
-    // Retorno de sucesso
+    if (!texto) return responder({ status: "resposta_vazia", mensagem: "A OpenAI não retornou texto." }, 502);
     return responder({
-      sistema: "VOLAR RAOV",
-      status: "conexao_ok",
-      modelo: dados.model,
-      respostaIA: texto,
-      uso: dados.usage || null
+      sistema: "VOLAR RAOV", status: "conexao_ok",
+      modelo: dados.model, respostaIA: texto, uso: dados.usage || null
     });
-
   } catch (erro) {
-    console.error(
-      "VOLAR RAOV - Geração principal:",
-      erro.name,
-      erro.message
-    );
-
-    return responder({
-      sistema: "VOLAR RAOV",
-      status: "erro_comunicacao",
-      mensagem: "Falha na comunicação com a OpenAI.",
-      tipoErro: erro.name
-    }, 502);
+    console.error("VOLAR RAOV - teste principal:", erro.name);
+    return responder({ status: "erro_comunicacao", mensagem: "Falha na comunicação com a OpenAI." }, 502);
   }
 }
