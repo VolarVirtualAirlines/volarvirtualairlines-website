@@ -59,7 +59,7 @@ export async function onRequestPost(context) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "gpt-5.6-luna",
+          model: "gpt-6-luna",
           store: false,
           max_output_tokens: 160,
           reasoning: {
