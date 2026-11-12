@@ -902,8 +902,10 @@
                             return 'newsky';
                         })()}">${voo.network?.name?.toUpperCase() || 'NEWSKY'}</span></td>
 
-                        <td style="text-align: center; font-weight: bold;">
-                            ${ratingTexto}
+                        <td style="text-align: center;">
+                            <span class="badge-rating ${ratingClasse}">
+                                ${ratingTexto}
+                            </span>
                         </td>
 
                         <td style="text-align: center;">
