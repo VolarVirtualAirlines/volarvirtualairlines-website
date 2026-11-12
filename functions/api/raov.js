@@ -49,6 +49,18 @@ export async function onRequestPost(context) {
     }, 401);
   }
 
+  // VOLAR RAOV - Diagnóstico sem chamar a OpenAI
+  if (new URL(context.request.url)
+      .searchParams.get("diagnostico") === "1") {
+
+    return responder({
+      sistema: "VOLAR RAOV",
+      status: "token_validado",
+      mensagem: "Autorização funcionando corretamente.",
+      openaiConsultada: false
+    });
+  }
+  
   try {
     const resposta = await fetch(
       "https://api.openai.com/v1/responses",
