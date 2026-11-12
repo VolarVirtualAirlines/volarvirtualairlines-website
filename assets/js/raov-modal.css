@@ -1,0 +1,153 @@
+/* VOLAR RAOV — modal compartilhado entre VVX e VAX */
+.raov-modal-backdrop[hidden], .raov-modal-voo[hidden],
+.raov-modal-detalhe[hidden], .raov-modal-link[hidden] { display: none !important; }
+
+.raov-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    padding: 18px;
+    background: rgba(1, 6, 22, 0.82);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.raov-modal {
+    position: relative;
+    width: min(100%, 480px);
+    max-height: min(90vh, 720px);
+    overflow: auto;
+    padding: 28px;
+    background: linear-gradient(155deg, #101d3b 0%, #080f24 72%);
+    border: 1px solid rgba(46, 219, 226, 0.33);
+    border-top: 3px solid var(--turquoise, #28d6df);
+    border-radius: 16px;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55);
+    color: #eaf3ff;
+    font-family: Inter, Arial, sans-serif;
+    text-align: left;
+}
+
+.raov-modal-marca {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    color: var(--turquoise, #28d6df);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+}
+.raov-modal-marca strong { color: #fff; }
+.raov-modal-marca-ponto {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--turquoise, #28d6df);
+    box-shadow: 0 0 14px rgba(46, 219, 226, .7);
+}
+.raov-modal-fechar {
+    position: absolute;
+    top: 13px;
+    right: 15px;
+    border: 0;
+    padding: 5px 9px;
+    background: transparent;
+    color: #b8c8dc;
+    font-size: 27px;
+    line-height: 1;
+    cursor: pointer;
+}
+.raov-modal-fechar:hover { color: #fff; }
+
+.raov-modal-cabecalho { display: flex; align-items: center; gap: 14px; }
+.raov-modal-icone {
+    flex: 0 0 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: rgba(46, 219, 226, .12);
+    color: var(--turquoise, #28d6df);
+    font-size: 27px;
+    font-weight: 800;
+}
+.raov-modal-sucesso .raov-modal-icone { background: rgba(30, 170, 101, .18); color: #41db95; }
+.raov-modal-alerta .raov-modal-icone { background: rgba(247, 181, 38, .15); color: #ffc857; }
+.raov-modal-erro .raov-modal-icone { background: rgba(234, 77, 92, .14); color: #ff7382; }
+
+.raov-modal h3 {
+    margin: 0;
+    font-family: Montserrat, Inter, Arial, sans-serif;
+    font-size: clamp(18px, 3.7vw, 21px);
+    line-height: 1.3;
+    color: #fff;
+}
+.raov-modal-subtitulo { margin: 5px 0 0; color: #8da6c3; font-size: 12px; }
+.raov-modal-corpo { margin-top: 22px; }
+.raov-modal-voo {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 6px 11px;
+    border-radius: 7px;
+    background: rgba(34, 211, 238, 0.1);
+    border: 1px solid rgba(34, 211, 238, 0.22);
+    color: #66e7ee;
+    font-size: 13px;
+    font-weight: 800;
+}
+#raov-modal-mensagem { margin: 0; line-height: 1.6; font-size: 14px; color: #e4eaf5; }
+.raov-modal-detalhe {
+    margin: 14px 0 0;
+    padding: 12px 13px;
+    border-left: 3px solid rgba(46, 219, 226, .6);
+    border-radius: 0 7px 7px 0;
+    background: rgba(255,255,255,.045);
+    color: #a8bdd5;
+    font-size: 13px;
+    line-height: 1.55;
+}
+.raov-modal-acoes {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 26px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,.09);
+}
+.raov-modal-link, .raov-modal-ok {
+    min-height: 40px;
+    padding: 10px 15px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: Inter, Arial, sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+}
+.raov-modal-link {
+    color: #d5faff;
+    border: 1px solid rgba(46, 219, 226, .45);
+    background: rgba(46, 219, 226, .06);
+}
+.raov-modal-link:hover { background: rgba(46, 219, 226, .15); }
+.raov-modal-ok {
+    color: #06152a;
+    border: 1px solid transparent;
+    background: var(--turquoise, #28d6df);
+}
+.raov-modal-ok:hover { filter: brightness(1.11); }
+.raov-modal :focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@media (max-width: 480px) {
+    .raov-modal { padding: 23px 18px; }
+    .raov-modal-acoes { justify-content: stretch; }
+    .raov-modal-link, .raov-modal-ok { flex: 1; text-align: center; }
+}
