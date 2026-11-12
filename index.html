@@ -856,10 +856,29 @@
                     const dataFormatada = dataObj.toLocaleDateString('pt-BR') + ' ' + 
                                           dataObj.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
 
-                    const ratingTexto =
+                    
+                    const ratingValor =
                         typeof voo.rating === 'number' && Number.isFinite(voo.rating)
-                            ? voo.rating.toFixed(2).replace('.', ',')
-                            : '—';
+                            ? voo.rating
+                            : null;
+                    
+                    const ratingTexto = ratingValor !== null
+                        ? ratingValor.toFixed(2).replace('.', ',')
+                        : '—';
+                    
+                    let ratingClasse = 'rating-indisponivel';
+                    
+                    if (ratingValor !== null) {
+                        if (ratingValor === 0) {
+                            ratingClasse = 'rating-vermelho';
+                        } else if (ratingValor > 8) {
+                            ratingClasse = 'rating-verde';
+                        } else if (ratingValor >= 7) {
+                            ratingClasse = 'rating-azul';
+                        } else {
+                            ratingClasse = 'rating-amarelo';
+                        }
+                    }
                 
                     const row = document.createElement('tr');
                     
