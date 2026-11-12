@@ -268,6 +268,18 @@ export async function onRequestPost(context) {
       return responder({ status: "voo_invalido", mensagem: erroValidacao }, 400);
     }
 
+    // VOLAR RAOV — somente voos com rating inferior a 8.0
+    const ratingRAOV = voo.avaliacao.rating;
+
+    if (ratingRAOV < 0 || ratingRAOV >= 8) {
+      return responder({
+        sistema: "VOLAR RAOV",
+        status: "rating_nao_elegivel",
+        mensagem: "O RAOV está disponível somente para voos com rating NewSky inferior a 8,00.",
+        rating: ratingRAOV
+      }, 403);
+    }
+    
     // Lista branca: nunca envia telemetria completa nem propriedades inesperadas.
     const vooMinimo = {
       versaoEstrutura: 2,
