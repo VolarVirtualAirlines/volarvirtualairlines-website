@@ -497,6 +497,8 @@
                             <th>Tipo</th>
                             <th>Simulador</th>
                             <th>Rede</th>
+                            <th>Rating</th>
+                            <th>RAOV</th>
                         </tr>
                     </thead>
                     <tbody id="corpo-tabela-voos-recentes">
@@ -853,6 +855,11 @@
                     const dataObj = new Date(voo.depTime);
                     const dataFormatada = dataObj.toLocaleDateString('pt-BR') + ' ' + 
                                           dataObj.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+
+                    const ratingTexto =
+                        typeof voo.rating === 'number' && Number.isFinite(voo.rating)
+                            ? voo.rating.toFixed(2).replace('.', ',')
+                            : '—';
                 
                     const row = document.createElement('tr');
                     
@@ -876,6 +883,17 @@
                             if (rede.includes('sayintentions')) return 'sayintentions';
                             return 'newsky';
                         })()}">${voo.network?.name?.toUpperCase() || 'NEWSKY'}</span></td>
+
+                        <td style="text-align: center; font-weight: bold;">
+                            ${ratingTexto}
+                        </td>
+
+                        <td style="text-align: center;">
+                            <button type="button" class="btn-gerar-raov" disabled
+                                title="RAOV automático em preparação">
+                                📋 Gerar RAOV
+                            </button>
+                        </td>
                     `;
                     
                     container.appendChild(row);
