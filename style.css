@@ -8040,3 +8040,43 @@ body.menu-open {
     }
 
 }
+
+
+/* VOLAR - BADGES DE RATING DOS VOOS RECENTES */
+
+#tabela-voos-recentes .badge-rating {
+    display: inline-block;
+    min-width: 56px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.85em;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.2;
+}
+
+#tabela-voos-recentes .rating-verde {
+    background: #16834a;
+    color: #ffffff;
+}
+
+#tabela-voos-recentes .rating-azul {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+#tabela-voos-recentes .rating-amarelo {
+    background: #eab308;
+    color: #111827;
+}
+
+#tabela-voos-recentes .rating-vermelho {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+#tabela-voos-recentes .rating-indisponivel {
+    background: #596579;
+    color: #ffffff;
+}
+
