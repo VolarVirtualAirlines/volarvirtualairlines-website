@@ -878,7 +878,11 @@
                             ratingClasse = 'rating-amarelo';
                         }
                     }
-                
+
+                    const idRAOV = /^[a-f0-9]{24}$/i.test(voo._id || '')
+                        ? voo._id
+                        : '';
+
                     const row = document.createElement('tr');
                     
                     row.innerHTML = `
@@ -909,8 +913,12 @@
                         </td>
 
                         <td style="text-align: center;">
-                            <button type="button" class="btn-gerar-raov" disabled
-                                title="RAOV automático em preparação">
+                            <button
+                                type="button"
+                                class="btn-gerar-raov"
+                                data-raov-flight-id="${idRAOV}"
+                                ${idRAOV ? '' : 'disabled'}
+                                title="Gerar RAOV deste voo">
                                 📋 Gerar RAOV
                             </button>
                         </td>
@@ -1254,6 +1262,10 @@ function criarLinha(piloto) {
   setInterval(atualizarPilotos, REFRESH_INTERVAL);
 })();
 </script>
+
+<!-- ====== VOLAR RAOV - INTEGRAÇÃO ====== -->
+<script src="assets/js/raov-ia.js"></script>
+<script src="assets/js/raov.js"></script>
     
 </body>
 </html>
