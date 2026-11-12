@@ -1,6 +1,6 @@
 
 /*
- * VOLAR RAOV — Integração OpenAI
+ * VOLAR RAOV — Integração OpenAI --
  * Cloudflare Pages Function
  *
  * Etapa: primeiro teste de comunicação com a IA.
