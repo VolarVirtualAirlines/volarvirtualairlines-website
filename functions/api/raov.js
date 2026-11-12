@@ -147,7 +147,8 @@ export async function onRequestPost(context) {
     try {
 
       const teste = await fetch(
-        "https://api.openai.com/v1/models",
+        /*"https://api.openai.com/v1/models",*/
+        "https://api.openai.com/v1/models/gpt-6-luna",
         {
           method: "GET",
           headers: {
