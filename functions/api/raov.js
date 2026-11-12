@@ -4,8 +4,9 @@
  * VVX / VAX — integração em homologação
  *
  * Mantém os diagnósticos 1 a 4 e o teste principal existentes.
- * NOVO: POST /api/raov?acao=analisar aceita JSON otimizado v2
+ * POST /api/raov?acao=analisar aceita JSON otimizado v2
  * com RAOV_TEST_TOKEN, pede análise estruturada à OpenAI.
+ * v3.1: refina exclusivamente as instruções de análise (pontos positivos reais).
  * Não gera PDF nem autoriza pilotos na interface pública.
  */
 
@@ -113,13 +114,18 @@ Use exclusivamente o JSON recebido como dados factuais; não invente fatos, caus
 O campo descricaoECriteriosNewSky é a FONTE PRINCIPAL para identificar e interpretar cada ocorrência.
 Jamais tente inferir o tipo da ocorrência por classificações internas como tipoEvento.
 Para CADA ocorrência, escreva título, pontos positivos, pontos de atenção e recomendações específicas.
-Nos pontos de atenção, compare EXPLICITAMENTE o valor medido com o critério/limite presente na própria descricaoECriteriosNewSky.
-Se não houver critério explícito, diga que não foi informado e não atribua um limite ao NewSky.
+Em pontosPositivos, registre SOMENTE desempenho favorável do piloto ou da operação comprovado por medições e critérios disponíveis naquela ocorrência (por exemplo, distância do toque dentro da faixa aceita).
+Não apresente como pontos positivos: a existência ou clareza dos registros, uma medição ter sido informada, as condições serem normais, a possibilidade de comparação, a ausência de multa ou o próprio fato de o evento ter sido registrado.
+Se a ocorrência não contiver um resultado operacional positivo comprovado, escreva em pontosPositivos exatamente: "Não há pontos positivos específicos comprovados para esta ocorrência nos dados fornecidos."
+Não transforme resultados negativos em elogios. Se houver simultaneamente um aspecto positivo e outro negativo, descreva-os separadamente e com os valores corretos.
+Em pontosAtencao, compare EXPLICITAMENTE o valor medido com o critério/limite presente na própria descricaoECriteriosNewSky e informe o desconto real de rating da ocorrência.
+Se não houver critério explícito para uma medida, diga que não foi informado; não atribua um limite ao NewSky nem invente aprovação/reprovação numérica.
+Em recomendacao, dê orientações práticas e específicas ao piloto, ligadas às medições e critérios disponíveis, sem afirmar causas não demonstradas.
 Mantenha um item em analiseOcorrencias para cada ocorrência, na ordem numérica recebida, sem juntar, omitir ou inventar eventos.
 Os descontos do rating são distintos das penalidades financeiras; não misture os dois conceitos.
 Não altere números, unidades, horários ou valores financeiros. Use os dados de toque quando disponíveis.
 Se faltar informação, explique a limitação em observacoesSistema. Não simule acesso a links externos.
-O texto deve ser compreensível para o piloto e oferecer metas de melhoria práticas e mensuráveis.
+O texto deve ser compreensível para o piloto e oferecer metas de melhoria práticas e mensuráveis quando houver critérios explícitos.
 Responda somente no JSON estruturado solicitado.`;
 
 export async function onRequestGet(context) {
