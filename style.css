@@ -8080,3 +8080,68 @@ body.menu-open {
     color: #ffffff;
 }
 
+
+/* =========================================
+   VOLAR RAOV - BOTÃO PREMIUM
+   ========================================= */
+
+#tabela-voos-recentes .btn-gerar-raov {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 7px 13px;
+    min-width: 116px;
+
+    background: linear-gradient(
+        135deg,
+        #075e80,
+        #087b9b
+    );
+
+    color: #ffffff;
+    border: 1px solid #25cfe0;
+    border-radius: 6px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(0, 210, 230, 0.12);
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Efeito ao passar o mouse */
+#tabela-voos-recentes .btn-gerar-raov:hover:not(:disabled) {
+    background: linear-gradient(
+        135deg,
+        #087b9b,
+        #0aaac1
+    );
+
+    box-shadow: 0 4px 14px rgba(0, 210, 230, 0.30);
+    transform: translateY(-1px);
+}
+
+/* Acessibilidade pelo teclado */
+#tabela-voos-recentes .btn-gerar-raov:focus-visible {
+    outline: 2px solid #56e8f2;
+    outline-offset: 3px;
+}
+
+/* Botão desativado */
+#tabela-voos-recentes .btn-gerar-raov:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
