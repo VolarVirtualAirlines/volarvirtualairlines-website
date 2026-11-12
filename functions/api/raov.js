@@ -1,25 +1,25 @@
 
 /*
  * ============================================================
- * VOLAR RAOV — Integração com OpenAI
+ * VOLAR RAOV — INTEGRAÇÃO COM OPENAI
  * Volar Virtual Airlines / Volar Academy
  * ============================================================
  *
  * Cloudflare Pages Function
  *
- * Etapa atual:
- * - Verificar configuração das credenciais
- * - Validar token de autorização
- * - Diagnóstico 1: validar autorização
- * - Diagnóstico 2: testar comunicação com OpenAI
- * - Testar geração de resposta com IA
+ * Diagnóstico 1: validação do token
+ * Diagnóstico 2: conexão GET com OpenAI
+ * Diagnóstico 3: conexão POST com OpenAI
+ *
+ * Teste principal: geração de resposta pela IA
  *
  * Ainda não recebe logs operacionais do NewSky.
  * ============================================================
  */
 
+
 // ============================================================
-// FUNÇÃO AUXILIAR — RESPOSTA JSON
+// RESPOSTA JSON PADRONIZADA
 // ============================================================
 
 function responder(dados, status = 200) {
@@ -34,7 +34,22 @@ function responder(dados, status = 200) {
 
 
 // ============================================================
-// GET — CONSULTAR STATUS DA INTEGRAÇÃO
+// LEITURA SEGURA DE RESPOSTA JSON
+// ============================================================
+
+async function lerJSON(resposta) {
+  const texto = await resposta.text();
+
+  try {
+    return JSON.parse(texto);
+  } catch {
+    return null;
+  }
+}
+
+
+// ============================================================
+// GET — STATUS DA INTEGRAÇÃO
 // ============================================================
 
 export async function onRequestGet(context) {
@@ -52,7 +67,7 @@ export async function onRequestGet(context) {
 
 
 // ============================================================
-// POST — PROCESSAMENTO RAOV / OPENAI
+// POST — TESTES E INTEGRAÇÃO OPENAI
 // ============================================================
 
 export async function onRequestPost(context) {
@@ -64,7 +79,7 @@ export async function onRequestPost(context) {
 
 
   // ----------------------------------------------------------
-  // 1. VERIFICAR CONFIGURAÇÃO
+  // 1. VERIFICAR CREDENCIAIS
   // ----------------------------------------------------------
 
   if (!OPENAI_API_KEY || !RAOV_TEST_TOKEN) {
@@ -78,7 +93,7 @@ export async function onRequestPost(context) {
 
 
   // ----------------------------------------------------------
-  // 2. VALIDAR TOKEN DE AUTORIZAÇÃO
+  // 2. VALIDAR TOKEN DE TESTE
   // ----------------------------------------------------------
 
   const token = context.request.headers.get(
@@ -96,22 +111,23 @@ export async function onRequestPost(context) {
 
 
   // ----------------------------------------------------------
-  // 3. IDENTIFICAR DIAGNÓSTICO SOLICITADO
+  // 3. IDENTIFICAR DIAGNÓSTICO
   // ----------------------------------------------------------
 
   const diagnostico = new URL(context.request.url)
     .searchParams.get("diagnostico");
 
 
-  // ----------------------------------------------------------
+  // ==========================================================
   // DIAGNÓSTICO 1 — VALIDAR TOKEN
   // Não consulta a OpenAI.
-  // ----------------------------------------------------------
+  // ==========================================================
 
   if (diagnostico === "1") {
 
     return responder({
       sistema: "VOLAR RAOV",
+      diagnostico: "validacao_token",
       status: "token_validado",
       mensagem: "Autorização funcionando corretamente.",
       openaiConsultada: false
@@ -120,10 +136,11 @@ export async function onRequestPost(context) {
   }
 
 
-  // ----------------------------------------------------------
-  // DIAGNÓSTICO 2 — TESTAR CONEXÃO COM OPENAI
-  // Consulta GET /v1/models sem gerar texto.
-  // ----------------------------------------------------------
+  // ==========================================================
+  // DIAGNÓSTICO 2 — TESTAR GET COM OPENAI
+  // Consulta a lista de modelos.
+  // Não realiza geração de conteúdo.
+  // ==========================================================
 
   if (diagnostico === "2") {
 
@@ -143,7 +160,7 @@ export async function onRequestPost(context) {
 
       return responder({
         sistema: "VOLAR RAOV",
-        diagnostico: "conexao_openai",
+        diagnostico: "conexao_get_openai",
         status: teste.ok ? "conexao_ok" : "erro_api",
         httpOpenAI: teste.status,
         openaiConsultada: true
@@ -159,7 +176,7 @@ export async function onRequestPost(context) {
 
       return responder({
         sistema: "VOLAR RAOV",
-        diagnostico: "conexao_openai",
+        diagnostico: "conexao_get_openai",
         status: "erro_comunicacao",
         tipoErro: erro.name,
         mensagem: erro.message
@@ -170,10 +187,75 @@ export async function onRequestPost(context) {
   }
 
 
-  // ----------------------------------------------------------
+  // ==========================================================
+  // DIAGNÓSTICO 3 — TESTAR POST COM OPENAI
+  //
+  // Envia um modelo propositalmente inexistente
+  // para verificar o retorno HTTP da OpenAI.
+  //
+  // Não solicita geração válida de conteúdo.
+  // ==========================================================
+
+  if (diagnostico === "3") {
+
+    try {
+
+      const teste = await fetch(
+        "https://api.openai.com/v1/responses",
+        {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${OPENAI_API_KEY}`,
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            model: "volar-modelo-inexistente-teste",
+            input: "Teste de conectividade VOLAR RAOV."
+          })
+        }
+      );
+
+      const dados = await lerJSON(teste);
+
+      return responder({
+        sistema: "VOLAR RAOV",
+        diagnostico: "conexao_post_openai",
+        status: teste.ok ? "conexao_ok" : "erro_api",
+        httpOpenAI: teste.status,
+        tipoErro: dados?.error?.type || null,
+        codigoErro: dados?.error?.code || null,
+        respostaRecebida: true,
+        geracaoExecutada: false
+      });
+
+    } catch (erro) {
+
+      console.error(
+        "VOLAR RAOV - Diagnóstico 3:",
+        erro.name,
+        erro.message
+      );
+
+      return responder({
+        sistema: "VOLAR RAOV",
+        diagnostico: "conexao_post_openai",
+        status: "erro_comunicacao",
+        tipoErro: erro.name,
+        mensagem: erro.message
+      }, 502);
+
+    }
+
+  }
+
+
+  // ==========================================================
   // 4. TESTE REAL DE GERAÇÃO COM OPENAI
-  // Executado quando não há parâmetro de diagnóstico.
-  // ----------------------------------------------------------
+  //
+  // Executado somente quando não foi solicitado
+  // nenhum dos diagnósticos anteriores.
+  // ==========================================================
 
   try {
 
@@ -209,32 +291,44 @@ export async function onRequestPost(context) {
 
 
     // --------------------------------------------------------
-    // 5. INTERPRETAR RESPOSTA DA OPENAI
+    // 5. INTERPRETAR RESPOSTA
     // --------------------------------------------------------
 
-    const dados = await resposta.json();
-
+    const dados = await lerJSON(resposta);
 
     if (!resposta.ok) {
 
       console.error(
-        "VOLAR RAOV - Erro API OpenAI:",
+        "VOLAR RAOV - Erro OpenAI:",
         resposta.status,
-        dados.error?.code || "sem_codigo"
+        dados?.error?.code || "sem_codigo"
       );
 
       return responder({
+        sistema: "VOLAR RAOV",
         status: "erro_openai",
         codigoHTTP: resposta.status,
-        codigoAPI: dados.error?.code || null,
+        codigoAPI: dados?.error?.code || null,
+        tipoErro: dados?.error?.type || null,
         mensagem: "A OpenAI não concluiu a solicitação."
       }, 502);
 
     }
 
 
+    if (!dados) {
+
+      return responder({
+        sistema: "VOLAR RAOV",
+        status: "resposta_invalida",
+        mensagem: "A OpenAI não retornou um JSON válido."
+      }, 502);
+
+    }
+
+
     // --------------------------------------------------------
-    // 6. EXTRAIR TEXTO GERADO PELA IA
+    // 6. EXTRAIR TEXTO GERADO
     // --------------------------------------------------------
 
     const texto = (dados.output || [])
@@ -247,15 +341,18 @@ export async function onRequestPost(context) {
     if (!texto) {
 
       return responder({
+        sistema: "VOLAR RAOV",
         status: "resposta_vazia",
-        mensagem: "A OpenAI não retornou texto."
+        mensagem: "A OpenAI não retornou texto.",
+        estadoResposta: dados.status || null,
+        uso: dados.usage || null
       }, 502);
 
     }
 
 
     // --------------------------------------------------------
-    // 7. RETORNAR RESULTADO DO TESTE
+    // 7. RETORNAR RESULTADO DA IA
     // --------------------------------------------------------
 
     return responder({
@@ -270,7 +367,7 @@ export async function onRequestPost(context) {
   } catch (erro) {
 
     // --------------------------------------------------------
-    // 8. TRATAR ERROS DE COMUNICAÇÃO
+    // 8. ERROS DE COMUNICAÇÃO
     // --------------------------------------------------------
 
     console.error(
@@ -280,6 +377,7 @@ export async function onRequestPost(context) {
     );
 
     return responder({
+      sistema: "VOLAR RAOV",
       status: "erro_comunicacao",
       mensagem: "Falha na comunicação com a OpenAI."
     }, 502);
