@@ -1,6 +1,8 @@
 /*
  * VOLAR RAOV — preparação compacta dos dados do NewSky.
  * Compartilhado entre VVX e VAX.
+ * Versão 2: interpreta ocorrências pela descrição do NewSky,
+ * sem enviar o campo interno tipoEvento à IA.
  * Etapa atual: não envia informações à OpenAI.
  */
 (function () {
@@ -34,7 +36,7 @@
     const pesos = carga.weights || {};
 
     return {
-      versaoEstrutura: 1,
+      versaoEstrutura: 2,
       identificacao: {
         id: dadosVoo._id,
         callsign: `${dadosVoo.airline?.icao || ""}${dadosVoo.flightNumber || ""}`,
@@ -91,7 +93,6 @@
         const toque = item.entry?.payload?.touchDown;
         return {
           ordem: indice + 1,
-          tipoEvento: item.entry?.type ?? null,
           momentoUTC: item.entry?.createdAt ?? null,
           descricaoECriteriosNewSky: limparDescricao(item.title),
           descontoRating: pontosRating(item.penalty?.points),
