@@ -165,6 +165,21 @@
     elemento.querySelector(".raov-modal-ok").focus();
   }
 
+  // VOLAR RAOV — exibe animação durante o processamento
+  function mostrarCarregandoModal() {
+    const elemento = obterModal();
+
+    elemento.querySelector("#raov-modal-titulo").textContent =
+      "Solicitando RAOV";
+
+    elemento.querySelector(".raov-modal-icone").textContent = "✈";
+
+    elemento.querySelector(".raov-modal-conteudo").hidden = true;
+    elemento.querySelector(".raov-modal-loading").hidden = false;
+
+    elemento.querySelector(".raov-modal-acoes").style.display = "none";
+  }
+  
   async function buscarLogNewSky(flightId) {
     if (!ID_VALIDO.test(flightId)) {
       throw new ErroRAOV("ID_INVALIDO", "O identificador deste voo é inválido.");
