@@ -199,6 +199,30 @@
     if (!botao || botao.disabled) return;
 
     evento.preventDefault();
+
+    // VOLAR RAOV — solicita confirmação antes de consultar o voo.
+    if (botao.dataset.raovConfirmado !== "sim") {
+      mostrarModal({
+        tipo: "info",
+        titulo: "Solicitar RAOV",
+        mensagem:
+          "Deseja solicitar o Relatório de Análise de Operação " +
+          "de Voo (RAOV) para este voo?",
+        detalhe:
+          "Sua identificação e seu vínculo com a VVX ou VAX " +
+          "serão verificados no NewSky.",
+        confirmacao: true,
+        aoConfirmar: () => {
+          fecharModal();
+          botao.dataset.raovConfirmado = "sim";
+          botao.click();
+        }
+      });
+      return;
+    }
+
+    delete botao.dataset.raovConfirmado;
+   
     const textoAnterior = botao.textContent;
     botao.disabled = true;
     botao.textContent = "Consultando...";
