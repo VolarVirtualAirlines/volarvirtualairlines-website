@@ -112,20 +112,13 @@
     prepararDados,
       
       // VOLAR RAOV — comunicação com a API Cloudflare
-      async consultarAPI(resumo, tokenTeste) {
-        if (!tokenTeste) {
-          throw new Error("Autorização de homologação não informada.");
-        }
-
+      async consultarAPI(resumo) {
         
       // VOLAR RAOV — primeiro consulta se o relatório já existe no D1
       const consulta = await fetch(
         `/api/raov?acao=consultar&vooId=${encodeURIComponent(resumo.identificacao.id)}`,
         {
-          method: "POST",
-          headers: {
-            "X-RAOV-Test-Token": tokenTeste
-          }
+          method: "POST"
         }
       );
 
@@ -150,8 +143,7 @@
         const resposta = await fetch("/api/raov?acao=analisar", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            "X-RAOV-Test-Token": tokenTeste
+            "Content-Type": "application/json"
           },
           body: JSON.stringify(resumo)
         });
@@ -269,17 +261,8 @@
           JSON.stringify(resumo).length
         );
 
-        // VOLAR RAOV — consulta a API somente durante a homologação autorizada
-        if (tokenTeste) {
-          return await window.VolarRAOVIA.consultarAPI(resumo, tokenTeste);
-        }
-        
-        return {
-          status: "aguardando_integracao",
-          flightId: dadosVoo._id,
-          resumo: resumo
-        };
-
+        // VOLAR RAOV — integração definitiva
+        return await window.VolarRAOVIA.consultarAPI(resumo);
       }
    
   };
