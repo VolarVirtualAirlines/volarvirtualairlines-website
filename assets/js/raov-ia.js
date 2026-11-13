@@ -116,7 +116,37 @@
         if (!tokenTeste) {
           throw new Error("Autorização de homologação não informada.");
         }
-  
+
+        
+      // VOLAR RAOV — primeiro consulta se o relatório já existe no D1
+      const consulta = await fetch(
+        `/api/raov?acao=consultar&vooId=${encodeURIComponent(resumo.identificacao.id)}`,
+        {
+          method: "POST",
+          headers: {
+            "X-RAOV-Test-Token": tokenTeste
+          }
+        }
+      );
+
+      const relatorio = await consulta.json().catch(() => null);
+
+      // Relatório encontrado: reutiliza a análise sem chamar a OpenAI.
+      if (consulta.ok && relatorio?.status === "analise_concluida") {
+        return relatorio;
+      }
+
+      // Somente a ausência confirmada permite seguir para nova análise.
+      if (
+        consulta.status !== 404 ||
+        relatorio?.status !== "relatorio_nao_encontrado"
+      ) {
+        throw new Error(
+          relatorio?.mensagem ||
+          `Falha ao consultar o RAOV no D1 (HTTP ${consulta.status}).`
+        );
+      }
+       
         const resposta = await fetch("/api/raov?acao=analisar", {
           method: "POST",
           headers: {
