@@ -238,7 +238,12 @@
           "VOLAR RAOV — tamanho otimizado (caracteres):",
           JSON.stringify(resumo).length
         );
-  
+
+        // VOLAR RAOV — consulta a API somente durante a homologação autorizada
+        if (tokenTeste) {
+          return await window.VolarRAOVIA.consultarAPI(resumo, tokenTeste);
+        }
+        
         return {
           status: "aguardando_integracao",
           flightId: dadosVoo._id,
