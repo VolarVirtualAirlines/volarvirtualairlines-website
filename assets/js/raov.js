@@ -343,7 +343,14 @@
       }
 
       const retorno = await window.VolarRAOVIA.gerar(dadosVoo);
-
+      
+      // VOLAR RAOV — apresenta análise concluída e libera o PDF
+      if (retorno?.status === "analise_concluida" && retorno.analise) {
+        await aguardarAnimacao();
+        mostrarRAOVDisponivel(dadosVoo, retorno);
+        return;
+      }
+      
       if (retorno.status === "aguardando_integracao") {
         const voo = `${dadosVoo.airline?.icao || ""}${dadosVoo.flightNumber || ""}`;
         await aguardarAnimacao();
