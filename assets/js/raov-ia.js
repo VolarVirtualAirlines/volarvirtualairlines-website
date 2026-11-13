@@ -111,17 +111,90 @@
   window.VolarRAOVIA = {
     prepararDados,
 
-    async gerar(dadosVoo) {
-      const resumo = prepararDados(dadosVoo);
-      // Apenas diagnóstico local; nenhuma informação é transmitida à IA.
-      console.log("VOLAR RAOV — JSON otimizado:", resumo);
-      console.log("VOLAR RAOV — tamanho original (caracteres):", JSON.stringify(dadosVoo).length);
-      console.log("VOLAR RAOV — tamanho otimizado (caracteres):", JSON.stringify(resumo).length);
-
-      return {
-        status: "aguardando_integracao",
-        flightId: dadosVoo._id
-      };
-    }
+      async gerar(dadosVoo) {
+  
+        // Consulta o ID do piloto autenticado no NewSky.
+        async function obterPilotoLogado() {
+          const resposta = await fetch(
+            "https://newsky.app/api/airline/my",
+            {
+              credentials: "include",
+              cache: "no-store"
+            }
+          );
+  
+          if (!resposta.ok) {
+            throw new Error(
+              "Não foi possível confirmar o login no NewSky."
+            );
+          }
+  
+          const companhias = await resposta.json();
+  
+          if (!Array.isArray(companhias)) {
+            throw new Error("Resposta inválida do NewSky.");
+          }
+  
+          const ids = [...new Set(
+            companhias
+              .map(cia => cia.pilot?.id)
+              .filter(id =>
+                typeof id === "string" &&
+                /^[a-f0-9]{24}$/i.test(id)
+              )
+          )];
+  
+          if (ids.length !== 1) {
+            throw new Error(
+              "Não foi possível identificar um piloto único no NewSky."
+            );
+          }
+  
+          return ids[0];
+        }
+  
+        // 1. Captura o ID da sessão.
+        const pilotoIdInicial = await obterPilotoLogado();
+  
+        // 2. Prepara o JSON otimizado já homologado.
+        const resumo = prepararDados(dadosVoo);
+  
+        // 3. Confirma novamente o ID da sessão.
+        const pilotoIdAtual = await obterPilotoLogado();
+  
+        // 4. Interrompe se os identificadores divergirem.
+        if (pilotoIdInicial !== pilotoIdAtual) {
+          throw new Error(
+            "A identificação do piloto mudou. Solicitação interrompida."
+          );
+        }
+  
+        // 5. Acrescenta o ID do solicitante ao JSON.
+        resumo.solicitante = {
+          pilotoIdNewSky: pilotoIdInicial
+        };
+  
+        console.log(
+          "VOLAR RAOV — identificação NewSky confirmada."
+        );
+  
+        console.log("VOLAR RAOV — JSON otimizado:", resumo);
+  
+        console.log(
+          "VOLAR RAOV — tamanho original (caracteres):",
+          JSON.stringify(dadosVoo).length
+        );
+  
+        console.log(
+          "VOLAR RAOV — tamanho otimizado (caracteres):",
+          JSON.stringify(resumo).length
+        );
+  
+        return {
+          status: "aguardando_integracao",
+          flightId: dadosVoo._id
+        };
+      }
+   
   };
 })();
