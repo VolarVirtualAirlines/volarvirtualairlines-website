@@ -195,11 +195,15 @@
       };
     }
     
-    focoAnterior = document.activeElement;
-    overflowAnterior = document.body.style.overflow;
+    if (elemento.hidden) {
+      focoAnterior = document.activeElement;
+      overflowAnterior = document.body.style.overflow;
+    }
+    
     document.body.style.overflow = "hidden";
     elemento.hidden = false;
     elemento.querySelector(".raov-modal-ok").focus();
+
   }
 
   // VOLAR RAOV — exibe animação durante o processamento
