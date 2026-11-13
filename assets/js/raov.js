@@ -299,7 +299,7 @@ function fecharModal() {
     }
 
     if (!dados || dados._id !== flightId || !Array.isArray(dados.log)) {
-      throw new ErroRAOV("SEM_LOG", "O NewSky respondeu, mas não disponibilizou o log operacional completo deste voo.");
+      throw new ErroRAOV("SEM_LOG", "Você não possui permissão para gerar o RAOV desse voo.");
     }
 
     return dados;
