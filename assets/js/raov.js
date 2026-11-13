@@ -168,7 +168,10 @@
     
     botaoSolicitar.hidden = !confirmacao;
     botaoSolicitar.disabled = true;
-    botaoOk.textContent = confirmacao ? "Cancelar" : "Entendi";
+
+    botaoOk.textContent = (confirmacao || typeof aoGerarPdf === "function")
+      ? "Cancelar"
+      : "Entendi";
     
     botaoSolicitar.onclick = null;
     
