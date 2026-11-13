@@ -340,6 +340,20 @@ export async function onRequestPost(context) {
     if (erroValidacao) {
       return responder({ status: "voo_invalido", mensagem: erroValidacao }, 400);
     }
+    
+    // VOLAR RAOV — identificação do solicitante NewSky
+    const pilotoIdNewSky = voo.solicitante?.pilotoIdNewSky;
+
+    if (
+      typeof pilotoIdNewSky !== "string" ||
+      !/^[a-f0-9]{24}$/i.test(pilotoIdNewSky)
+    ) {
+      return responder({
+        sistema: "VOLAR RAOV",
+        status: "piloto_nao_identificado",
+        mensagem: "Não foi possível identificar o piloto logado no NewSky."
+      }, 400);
+    }
 
     // VOLAR RAOV — somente voos com rating inferior a 8.0
     const ratingRAOV = voo.avaliacao.rating;
