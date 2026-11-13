@@ -45,6 +45,7 @@
         <div class="raov-modal-acoes">
           <a class="raov-modal-link" href="https://newsky.app/" target="_blank"
              rel="noopener noreferrer" hidden>Abrir NewSky ↗</a>
+          <button type="button" class="raov-modal-solicitar" hidden>Solicitar RAOV</button>
           <button type="button" class="raov-modal-ok">Entendi</button>
         </div>
       </section>
