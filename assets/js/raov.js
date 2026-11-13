@@ -117,7 +117,29 @@
     botaoSolicitar.hidden = !confirmacao;
     botaoSolicitar.disabled = true;
     botaoOk.textContent = confirmacao ? "Cancelar" : "Entendi";
-
+    
+    botaoSolicitar.onclick = null;
+    
+    if (confirmacao && typeof aoConfirmar === "function") {
+      botaoSolicitar.disabled = false;
+    
+      botaoSolicitar.onclick = async () => {
+        botaoSolicitar.disabled = true;
+    
+        try {
+          await aoConfirmar();
+        } catch (erro) {
+          console.error("VOLAR RAOV — solicitação:", erro);
+    
+          mostrarModal({
+            tipo: "erro",
+            titulo: "Não foi possível solicitar o RAOV",
+            mensagem: erro.message || "Ocorreu um erro durante a solicitação."
+          });
+        }
+      };
+    }
+    
     focoAnterior = document.activeElement;
     overflowAnterior = document.body.style.overflow;
     document.body.style.overflow = "hidden";
