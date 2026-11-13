@@ -348,7 +348,27 @@
         throw new ErroRAOV("MODULO_IA", "O módulo compartilhado RAOV-IA não foi carregado.");
       }
 
-      const retorno = await window.VolarRAOVIA.gerar(dadosVoo);
+      
+      // VOLAR RAOV — modo de homologação controlado
+      const modoTeste = new URLSearchParams(
+        window.location.search
+      ).get("raovTeste") === "1";
+
+      const tokenTeste = modoTeste
+        ? window.prompt("Informe o token de homologação do VOLAR RAOV:")
+        : null;
+
+      if (modoTeste && !tokenTeste) {
+        throw new ErroRAOV(
+          "TESTE_CANCELADO",
+          "Homologação cancelada."
+        );
+      }
+
+      const retorno = await window.VolarRAOVIA.gerar(
+        dadosVoo,
+        tokenTeste
+      );
       
       // VOLAR RAOV — apresenta análise concluída e libera o PDF
       if (retorno?.status === "analise_concluida" && retorno.analise) {
