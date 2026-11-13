@@ -246,11 +246,13 @@
           "Sua identificação e seu vínculo com a VVX ou VAX " +
           "serão verificados no NewSky.",
         confirmacao: true,
+
         aoConfirmar: () => {
-          fecharModal();
+          mostrarCarregandoModal();
           botao.dataset.raovConfirmado = "sim";
           botao.click();
         }
+
       });
       return;
     }
