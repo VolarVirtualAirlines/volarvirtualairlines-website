@@ -110,7 +110,8 @@
     // VOLAR RAOV — restaura o conteúdo normal do pop-up
     elemento.querySelector(".raov-modal-loading").hidden = true;
     elemento.querySelector(".raov-modal-conteudo").hidden = false;
-    
+    elemento.querySelector(".raov-modal-acoes").style.display = "";
+
     elemento.classList.remove("raov-modal-sucesso", "raov-modal-alerta", "raov-modal-erro", "raov-modal-info");
     elemento.classList.add(`raov-modal-${tipo}`);
 
