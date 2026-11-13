@@ -236,6 +236,40 @@ export async function onRequestPost(context) {
       }, expirou ? 504 : 502);
     }
   }
+  
+  // Diagnóstico 5 — conexão com o banco D1, sem consultar a OpenAI
+  if (diagnostico === "5") {
+    const banco = context.env.RAOV_DB;
+
+    if (!banco) {
+      return responder({
+        status: "banco_nao_configurado",
+        mensagem: "O binding RAOV_DB não está disponível."
+      }, 503);
+    }
+
+    try {
+      const resultado = await banco
+        .prepare("SELECT COUNT(*) AS total FROM raov_solicitacoes")
+        .first();
+
+      return responder({
+        sistema: "VOLAR RAOV",
+        diagnostico: "conexao_d1",
+        status: "banco_conectado",
+        tabela: "raov_solicitacoes",
+        totalRegistros: resultado.total,
+        openaiConsultada: false
+      });
+    } catch (erro) {
+      console.error("VOLAR RAOV - D1:", erro.name);
+
+      return responder({
+        status: "erro_banco",
+        mensagem: "Não foi possível consultar o banco D1."
+      }, 503);
+    }
+  }
 
   if (diagnostico !== null) {
     return responder({ status: "diagnostico_invalido", mensagem: "Diagnóstico não reconhecido." }, 400);
