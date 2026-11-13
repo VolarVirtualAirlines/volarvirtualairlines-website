@@ -229,7 +229,7 @@
       mensagem: "A análise do voo está pronta para gerar o relatório PDF.",
       detalhe: origem,
 
-      aoGerarPdf: () => {
+      aoGerarPdf: async () => {  
         if (typeof window.VolarRAOVPDF?.gerar !== "function") {
           throw new ErroRAOV(
             "MODULO_PDF",
@@ -238,7 +238,8 @@
         }
       
       const resumo = window.VolarRAOVIA.prepararDados(dadosVoo);
-      return window.VolarRAOVPDF.gerar(resumo, resultadoIA);
+      await window.VolarRAOVPDF.gerar(resumo, resultadoIA);
+      fecharModal();
 
       }
     });
