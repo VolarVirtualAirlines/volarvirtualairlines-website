@@ -285,6 +285,7 @@
 
       if (retorno.status === "aguardando_integracao") {
         const voo = `${dadosVoo.airline?.icao || ""}${dadosVoo.flightNumber || ""}`;
+        await aguardarAnimacao();
         mostrarModal({
           tipo: "sucesso",
           titulo: "Log carregado com sucesso",
