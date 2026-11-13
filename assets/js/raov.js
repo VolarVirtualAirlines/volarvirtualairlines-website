@@ -105,7 +105,7 @@
     focoAnterior = null;
   }
 
-  function mostrarModal({ tipo = "info", titulo, mensagem, detalhe = "", voo = "", abrirNewSky = false, confirmacao = false, aoConfirmar = null }) {
+  function mostrarModal({ tipo = "info", titulo, mensagem, detalhe = "", voo = "", abrirNewSky = false, confirmacao = false, aoConfirmar = null, aoGerarPdf = null }) {
     const elemento = obterModal();
 
     // VOLAR RAOV — restaura o conteúdo normal do pop-up
