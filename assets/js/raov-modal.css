@@ -274,3 +274,19 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+
+/* VOLAR RAOV — Cancelar na janela Gerar PDF */
+
+.raov-modal-acoes:has(.raov-modal-pdf:not([hidden])) .raov-modal-ok {
+  margin-left: 0;
+  background: transparent;
+  color: #c4d0df;
+  border: 1px solid #40516b;
+  border-radius: 10px;
+}
+
+.raov-modal-acoes:has(.raov-modal-pdf:not([hidden])) .raov-modal-ok:hover {
+  background: #1c2a42;
+  color: #ffffff;
+}
