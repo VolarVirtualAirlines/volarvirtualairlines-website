@@ -236,8 +236,10 @@
             "O gerador de PDF não está disponível."
           );
         }
+      
+      const resumo = window.VolarRAOVIA.prepararDados(dadosVoo);
+      return window.VolarRAOVPDF.gerar(resumo, resultadoIA);
 
-        return window.VolarRAOVPDF.gerar(dadosVoo, resultadoIA);
       }
     });
   }
