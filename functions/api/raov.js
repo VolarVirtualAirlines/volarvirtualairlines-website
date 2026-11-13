@@ -6,7 +6,8 @@
  * Mantém os diagnósticos 1 a 4 e o teste principal existentes.
  * POST /api/raov?acao=analisar aceita JSON otimizado v2
  * com RAOV_TEST_TOKEN, pede análise estruturada à OpenAI.
- * v3.1: refina exclusivamente as instruções de análise (pontos positivos reais).
+ * v3.2: reserva atômica antes da IA e conclusão em transação no D1;
+ *       libera reservas em caso de falha; mantém 60 min por piloto.
  * Não gera PDF nem autoriza pilotos na interface pública.
  */
 
@@ -340,14 +341,12 @@ export async function onRequestPost(context) {
     if (erroValidacao) {
       return responder({ status: "voo_invalido", mensagem: erroValidacao }, 400);
     }
-    
-    // VOLAR RAOV — identificação do solicitante NewSky
-    const pilotoIdNewSky = voo.solicitante?.pilotoIdNewSky;
 
-    if (
-      typeof pilotoIdNewSky !== "string" ||
-      !/^[a-f0-9]{24}$/i.test(pilotoIdNewSky)
-    ) {
+    // ID informado pela sessão NewSky no navegador (uso em HOMOLOGAÇÃO).
+    // Formato válido não comprova autenticação: manter RAOV_TEST_TOKEN.
+    const pilotoIdNewSky = voo.solicitante?.pilotoIdNewSky;
+    if (typeof pilotoIdNewSky !== "string" ||
+        !/^[a-f0-9]{24}$/i.test(pilotoIdNewSky)) {
       return responder({
         sistema: "VOLAR RAOV",
         status: "piloto_nao_identificado",
@@ -425,51 +424,107 @@ export async function onRequestPost(context) {
         pdfGerado: false
       });
     }
-
-    // VOLAR RAOV — verifica o intervalo de 60 minutos por piloto
-    // Executado apenas quando o relatório ainda não existe no D1.
-
+    
+    // VOLAR RAOV v3.2 — libera uma reserva abandonada após 5 minutos.
+    // A chamada à OpenAI tem timeout de 55 segundos.
     try {
-      const ultimaSolicitacao = await bancoRAOV
-        .prepare(`
-          SELECT solicitado_em
-          FROM raov_solicitacoes
-          WHERE piloto_id = ?
-            AND status IN ('processando', 'concluido')
-            AND solicitado_em > unixepoch() - 3600
-          ORDER BY solicitado_em DESC
-          LIMIT 1
-        `)
-        .bind(pilotoIdNewSky)
-        .first();
-
-      if (ultimaSolicitacao) {
-        const agora = Math.floor(Date.now() / 1000);
-
-        const segundosRestantes = Math.max(
-          1,
-          ultimaSolicitacao.solicitado_em + 3600 - agora
-        );
-
-        return responder({
-          sistema: "VOLAR RAOV",
-          status: "intervalo_nao_cumprido",
-          mensagem:
-            "Você já solicitou um RAOV recentemente. " +
-            "Aguarde o intervalo de 60 minutos para uma nova análise.",
-          minutosRestantes: Math.ceil(segundosRestantes / 60)
-        }, 429);
-      }
-
+      await bancoRAOV.prepare(`
+        UPDATE raov_solicitacoes
+           SET status = 'erro', finalizado_em = unixepoch(),
+               mensagem_erro = 'Reserva expirada antes da conclusão.'
+         WHERE status = 'processando'
+           AND solicitado_em <= unixepoch() - 300
+      `).run();
     } catch (erro) {
-      console.error("VOLAR RAOV — controle de intervalo:", erro.name);
-
+      console.error("VOLAR RAOV - limpeza D1:", erro.name);
       return responder({
         status: "erro_controle_raov",
-        mensagem: "Não foi possível verificar o intervalo de solicitações."
+        mensagem: "Não foi possível verificar as reservas de processamento."
       }, 503);
     }
-    
+
+    // Feedback amigável: bloqueia nova análise durante os 60 minutos.
+    // Relatórios já concluídos foram devolvidos antes desta etapa.
+    try {
+      const ultima = await bancoRAOV.prepare(`
+        SELECT solicitado_em, status
+          FROM raov_solicitacoes
+         WHERE piloto_id = ?
+           AND status IN ('processando', 'concluido')
+           AND solicitado_em > unixepoch() - 3600
+         ORDER BY solicitado_em DESC LIMIT 1
+      `).bind(pilotoIdNewSky).first();
+
+      if (ultima) {
+        if (ultima.status === "processando") {
+          return responder({
+            sistema: "VOLAR RAOV",
+            status: "processamento_em_andamento",
+            mensagem: "Você já possui uma análise em andamento."
+          }, 409);
+        }
+        const minutosRestantes = Math.max(1, Math.ceil(
+          (Number(ultima.solicitado_em) + 3600 - Math.floor(Date.now() / 1000)) / 60
+        ));
+        return responder({
+          sistema: "VOLAR RAOV", status: "intervalo_nao_cumprido",
+          mensagem: "Aguarde 60 minutos entre novas análises RAOV.",
+          minutosRestantes
+        }, 429);
+      }
+    } catch (erro) {
+      console.error("VOLAR RAOV - intervalo D1:", erro.name);
+      return responder({
+        status: "erro_controle_raov",
+        mensagem: "Não foi possível consultar o controle de 60 minutos."
+      }, 503);
+    }
+
+    // Reserva ATÔMICA: mesmo com duas solicitações concorrentes,
+    // apenas uma pode obter o direito de acionar a OpenAI.
+    // Os dois índices UNIQUE parciais são indispensáveis.
+    let reservaId;
+    try {
+      const reserva = await bancoRAOV.prepare(`
+        INSERT OR IGNORE INTO raov_solicitacoes
+          (piloto_id, voo_id, callsign, rating, status, solicitado_em)
+        SELECT ?, ?, ?, ?, 'processando', unixepoch()
+         WHERE NOT EXISTS (
+           SELECT 1 FROM raov_solicitacoes
+            WHERE piloto_id = ?
+              AND status IN ('processando', 'concluido')
+              AND solicitado_em > unixepoch() - 3600
+         )
+           AND NOT EXISTS (
+             SELECT 1 FROM raov_relatorios
+              WHERE voo_id = ? AND status = 'concluido'
+           )
+      `).bind(
+        pilotoIdNewSky, voo.identificacao.id,
+        voo.identificacao.callsign, voo.avaliacao.rating,
+        pilotoIdNewSky, voo.identificacao.id
+      ).run();
+
+      if (!reserva?.success) throw new Error("Reserva D1 não confirmada.");
+      if (reserva.meta?.changes !== 1) {
+        return responder({
+          sistema: "VOLAR RAOV",
+          status: "solicitacao_em_conflito",
+          mensagem: "Já existe análise deste voo ou outra solicitação em processamento. Reabra o RAOV para consultar o relatório armazenado."
+        }, 409);
+      }
+      reservaId = reserva.meta?.last_row_id;
+      if (!Number.isSafeInteger(reservaId) || reservaId < 1) {
+        throw new Error("Identificador da reserva não retornado pelo D1.");
+      }
+    } catch (erro) {
+      console.error("VOLAR RAOV - reserva D1:", erro.name);
+      return responder({
+        status: "erro_reserva",
+        mensagem: "Não foi possível reservar o processamento do RAOV."
+      }, 503);
+    }
+
     // Lista branca: nunca envia telemetria completa nem propriedades inesperadas.
     const vooMinimo = {
       versaoEstrutura: 2,
@@ -489,6 +544,7 @@ export async function onRequestPost(context) {
       }))
     };
 
+    let processamentoConcluido = false;
     try {
       const resposta = await fetch(URL_RESPONSES, {
         method: "POST",
@@ -538,88 +594,59 @@ export async function onRequestPost(context) {
         }, 502);
       }
 
-      // VOLAR RAOV — armazena a análise concluída no D1
+      // Conclusão ATÔMICA no D1: encerra a reserva E grava a análise.
+      // Em caso de erro, o batch reverte as duas operações.
       try {
-        const gravacao = await bancoRAOV.prepare(`
-          INSERT INTO raov_relatorios (
-            voo_id,
-            callsign,
-            rating,
-            status,
-            analise_json,
-            finalizado_em,
-            tokens_entrada,
-            tokens_saida
+        const resultados = await bancoRAOV.batch([
+          bancoRAOV.prepare(`
+            UPDATE raov_solicitacoes
+               SET status = 'concluido', finalizado_em = unixepoch(),
+                   tokens_entrada = ?, tokens_saida = ?, mensagem_erro = NULL
+             WHERE id = ? AND status = 'processando'
+          `).bind(
+            dados.usage?.input_tokens ?? 0,
+            dados.usage?.output_tokens ?? 0,
+            reservaId
+          ),
+          bancoRAOV.prepare(`
+            INSERT INTO raov_relatorios (
+              voo_id, callsign, rating, status, analise_json,
+              finalizado_em, tokens_entrada, tokens_saida
+            )
+            VALUES (?, ?, ?, 'concluido', ?, unixepoch(), ?, ?)
+            ON CONFLICT(voo_id) DO UPDATE SET
+              status = 'concluido', analise_json = excluded.analise_json,
+              atualizado_em = unixepoch(), finalizado_em = unixepoch(),
+              tokens_entrada = excluded.tokens_entrada,
+              tokens_saida = excluded.tokens_saida, mensagem_erro = NULL
+            WHERE raov_relatorios.status != 'concluido'
+          `).bind(
+            voo.identificacao.id, voo.identificacao.callsign,
+            voo.avaliacao.rating, JSON.stringify(analise),
+            dados.usage?.input_tokens ?? 0,
+            dados.usage?.output_tokens ?? 0
           )
-          VALUES (?, ?, ?, 'concluido', ?, unixepoch(), ?, ?)
-          ON CONFLICT(voo_id) DO UPDATE SET
-            status = 'concluido',
-            analise_json = excluded.analise_json,
-            atualizado_em = unixepoch(),
-            finalizado_em = unixepoch(),
-            tokens_entrada = excluded.tokens_entrada,
-            tokens_saida = excluded.tokens_saida,
-            mensagem_erro = NULL
-          WHERE raov_relatorios.status != 'concluido'
-        `).bind(
-          voo.identificacao.id,
-          voo.identificacao.callsign,
-          voo.avaliacao.rating,
-          JSON.stringify(analise),
-          dados.usage?.input_tokens ?? 0,
-          dados.usage?.output_tokens ?? 0
-        ).run();
+        ]);
 
-        if (!gravacao.success) {
-          throw new Error("Falha ao gravar análise.");
+        if (!resultados?.every(r => r.success) ||
+            resultados[0]?.meta?.changes !== 1 ||
+            resultados[1]?.meta?.changes !== 1) {
+          throw new Error("Gravação D1 não confirmada.");
         }
-
-        // VOLAR RAOV — registra a geração para controle de 60 minutos
-        const registro = await bancoRAOV.prepare(`
-          INSERT INTO raov_solicitacoes (
-            piloto_id,
-            voo_id,
-            callsign,
-            rating,
-            status,
-            solicitado_em,
-            finalizado_em,
-            tokens_entrada,
-            tokens_saida
-          )
-          VALUES (?, ?, ?, ?, 'concluido',
-                  unixepoch(), unixepoch(), ?, ?)
-        `).bind(
-          pilotoIdNewSky,
-          voo.identificacao.id,
-          voo.identificacao.callsign,
-          voo.avaliacao.rating,
-          dados.usage?.input_tokens ?? 0,
-          dados.usage?.output_tokens ?? 0
-        ).run();
-
-        if (!registro.success) {
-          throw new Error("Falha ao registrar solicitação do RAOV.");
-        }
-        
-        console.log(
-          "VOLAR RAOV — análise armazenada no D1:",
-          voo.identificacao.callsign
-        );
-
+        processamentoConcluido = true;
       } catch (erro) {
-        console.error("VOLAR RAOV — gravação D1:", erro);
-
+        console.error("VOLAR RAOV - conclusão D1:", erro.name);
         return responder({
           status: "erro_gravacao",
           mensagem: "A análise foi produzida, mas não pôde ser armazenada."
         }, 503);
       }
-      
+
       return responder({
         sistema: "VOLAR RAOV", status: "analise_concluida",
         voo: { id: voo.identificacao.id, callsign: voo.identificacao.callsign },
         modelo: dados.model,
+        origem: "openai",
         analise,
         uso: dados.usage || null,
         pdfGerado: false
@@ -631,6 +658,22 @@ export async function onRequestPost(context) {
         status: expirou ? "tempo_esgotado" : "erro_comunicacao",
         mensagem: "Não foi possível concluir a análise do voo."
       }, expirou ? 504 : 502);
+    } finally {
+      // Sem conclusão, solta a reserva — mesmo em resposta incompleta,
+      // erro da API ou falha de gravação. Não consome os 60 minutos.
+      if (!processamentoConcluido) {
+        try {
+          await bancoRAOV.prepare(`
+            UPDATE raov_solicitacoes
+               SET status = 'erro', finalizado_em = unixepoch(),
+                   mensagem_erro = 'Análise não concluída.'
+             WHERE id = ? AND status = 'processando'
+          `).bind(reservaId).run();
+        } catch (erro) {
+          // A limpeza periódica de reservas expiradas é a proteção adicional.
+          console.error("VOLAR RAOV - liberação de reserva:", erro.name);
+        }
+      }
     }
   }
 
