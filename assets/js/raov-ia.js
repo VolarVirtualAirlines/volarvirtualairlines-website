@@ -116,16 +116,16 @@
       async consultarAPI(resumo) {
         const siteKey = window.VOLAR_RAOV_TURNSTILE_SITE_KEY;
         const turnstile = window.turnstile;
-
+      
         if (
-          !siteKey ||
-          siteKey === "0x4AAAAAAF_-JXYvK987Hzia" ||
-          !turnstile
-        ) {
-          throw new Error(
-            "A proteção Turnstile do VOLAR RAOV não está disponível."
-          );
-        }
+        !siteKey ||
+        siteKey === "COLE_AQUI_SUA_SITE_KEY" ||
+        !turnstile
+      ) {
+        throw new Error(
+          "A proteção Turnstile do VOLAR RAOV não está disponível."
+        );
+      }
 
         const area = document.querySelector(".raov-modal-loading");
 
