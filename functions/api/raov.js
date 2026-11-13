@@ -139,19 +139,103 @@ export async function onRequestGet(context) {
 }
 
 export async function onRequestPost(context) {
-  const { OPENAI_API_KEY, RAOV_TEST_TOKEN } = context.env;
-  if (!OPENAI_API_KEY || !RAOV_TEST_TOKEN) {
-    return responder({ status: "erro_configuracao", mensagem: "Credenciais não configuradas." }, 503);
-  }
+  const {
+    OPENAI_API_KEY,
+    RAOV_TEST_TOKEN,
+    TURNSTILE_SECRET_KEY
+  } = context.env;
 
-  const token = context.request.headers.get("X-RAOV-Test-Token");
-  if (!token || token !== RAOV_TEST_TOKEN) {
-    return responder({ status: "nao_autorizado", mensagem: "Acesso não autorizado." }, 401);
+  if (!OPENAI_API_KEY || !RAOV_TEST_TOKEN) {
+    return responder({
+      status: "erro_configuracao",
+      mensagem: "Credenciais não configuradas."
+    }, 503);
   }
 
   const parametros = new URL(context.request.url).searchParams;
   const diagnostico = parametros.get("diagnostico");
   const acao = parametros.get("acao");
+
+  // VOLAR RAOV — proteção da análise em produção
+  if (acao === "analisar" && diagnostico === null) {
+
+    if (!TURNSTILE_SECRET_KEY) {
+      return responder({
+        status: "turnstile_nao_configurado",
+        mensagem: "Proteção do RAOV não configurada."
+      }, 503);
+    }
+
+    const tokenTurnstile =
+      context.request.headers.get("X-RAOV-Turnstile");
+
+    if (!tokenTurnstile || tokenTurnstile.length > 2048) {
+      return responder({
+        status: "turnstile_ausente",
+        mensagem: "Validação de segurança não informada."
+      }, 403);
+    }
+
+    let verificacao;
+
+    try {
+      const respostaTurnstile = await fetch(
+        "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: new URLSearchParams({
+            secret: TURNSTILE_SECRET_KEY,
+            response: tokenTurnstile
+          }),
+          signal: AbortSignal.timeout(10000)
+        }
+      );
+
+      if (!respostaTurnstile.ok) {
+        throw new Error("Falha na consulta ao Siteverify.");
+      }
+
+      verificacao = await lerJSON(respostaTurnstile);
+
+    } catch (erro) {
+      console.error(
+        "VOLAR RAOV — validação Turnstile:",
+        erro.name
+      );
+
+      return responder({
+        status: "erro_turnstile",
+        mensagem: "Não foi possível validar a segurança do RAOV."
+      }, 503);
+    }
+
+    if (
+      verificacao?.success !== true ||
+      verificacao?.hostname !== "volarvirtualairlines.com"
+    ) {
+      return responder({
+        status: "turnstile_invalido",
+        mensagem: "Validação de segurança não aprovada. Solicite novamente."
+      }, 403);
+    }
+
+  } else {
+
+    // Diagnósticos e operações administrativas:
+    // mantém a proteção pelo token de homologação.
+    const token =
+      context.request.headers.get("X-RAOV-Test-Token");
+
+    if (!token || token !== RAOV_TEST_TOKEN) {
+      return responder({
+        status: "nao_autorizado",
+        mensagem: "Acesso não autorizado."
+      }, 401);
+    }
+  }
 
   // Diagnóstico 1 — autenticação local
   if (diagnostico === "1") {
