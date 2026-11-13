@@ -131,6 +131,10 @@
   
           const companhias = await resposta.json();
 
+          if (!Array.isArray(companhias)) {
+            throw new Error("Resposta inválida do NewSky.");
+          }
+
           // VOLAR RAOV — verifica vínculo com VVX ou VAX
           const pertenceVolar = companhias.some(cia => {
             const codigo = String(cia.icao || "").toUpperCase();
@@ -149,10 +153,6 @@
             );
           }
           
-          if (!Array.isArray(companhias)) {
-            throw new Error("Resposta inválida do NewSky.");
-          }
-  
           const ids = [...new Set(
             companhias
               .map(cia => cia.pilot?.id)
@@ -210,8 +210,10 @@
   
         return {
           status: "aguardando_integracao",
-          flightId: dadosVoo._id
+          flightId: dadosVoo._id,
+          resumo: resumo
         };
+
       }
    
   };
