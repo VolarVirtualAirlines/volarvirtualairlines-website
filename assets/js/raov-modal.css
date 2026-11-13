@@ -247,3 +247,30 @@
   to   { transform: rotate(360deg); }
 }
 
+
+/* VOLAR RAOV — Botão Gerar PDF */
+
+.raov-modal-pdf[hidden] {
+  display: none !important;
+}
+
+.raov-modal-pdf {
+  background: #00cfea;
+  color: #071525;
+  border: 1px solid #00cfea;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.raov-modal-pdf:hover:not(:disabled) {
+  background: #38e4fa;
+}
+
+.raov-modal-pdf:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
