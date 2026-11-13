@@ -37,11 +37,24 @@
             <p class="raov-modal-subtitulo">Relatório de Análise de Operação de Voo</p>
           </div>
         </div>
+  
         <div class="raov-modal-corpo">
           <div class="raov-modal-voo" hidden></div>
-          <p id="raov-modal-mensagem"></p>
-          <p class="raov-modal-detalhe" hidden></p>
+        
+          <div class="raov-modal-loading" hidden>
+            <div class="raov-modal-loading-icone">✈</div>
+            <p class="raov-modal-loading-texto">Processando sua solicitação...</p>
+            <p class="raov-modal-loading-subtexto">
+              Estamos consultando os dados do voo no NewSky.
+            </p>
+          </div>
+        
+          <div class="raov-modal-conteudo">
+            <p id="raov-modal-mensagem"></p>
+            <p class="raov-modal-detalhe" hidden></p>
+          </div>
         </div>
+
         <div class="raov-modal-acoes">
           <a class="raov-modal-link" href="https://newsky.app/" target="_blank"
              rel="noopener noreferrer" hidden>Abrir NewSky ↗</a>
