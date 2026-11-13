@@ -482,8 +482,11 @@ async function carregarVoosRecentesVAX() {
         if (data.error) {
             throw new Error(data.message);
         }
-
-        const voos = data.results || [];
+        
+        const voos = (data.results || []).filter(voo => {
+            const rating = Number(voo.rating);
+            return !Number.isFinite(rating) || rating >= 0;
+        });
 
         if (voos.length === 0) {
             mensagem.textContent = "Nenhum voo recente da VAX encontrado.";
