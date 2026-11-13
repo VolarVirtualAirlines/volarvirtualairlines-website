@@ -143,8 +143,8 @@
   
           if (!pertenceVolar) {
             throw new Error(
-              "Você não é piloto da Volar Virtual Airlines (VVX) " +
-              "ou da Volar Virtual Academy Excellence (VAX). " +
+              "Você não é piloto da Volar Virtual Airlines " +
+              "ou da Volar Virtual Academy Excellence. " +
               "Portanto, não possui permissão para solicitar o VOLAR RAOV."
             );
           }
