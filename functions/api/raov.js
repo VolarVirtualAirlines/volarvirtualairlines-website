@@ -479,6 +479,57 @@ export async function onRequestPost(context) {
           mensagem: "A IA não preservou todos os eventos e suas ordens; relatório não liberado."
         }, 502);
       }
+
+      // VOLAR RAOV — armazena a análise concluída no D1
+      try {
+        const gravacao = await bancoRAOV.prepare(`
+          INSERT INTO raov_relatorios (
+            voo_id,
+            callsign,
+            rating,
+            status,
+            analise_json,
+            finalizado_em,
+            tokens_entrada,
+            tokens_saida
+          )
+          VALUES (?, ?, ?, 'concluido', ?, unixepoch(), ?, ?)
+          ON CONFLICT(voo_id) DO UPDATE SET
+            status = 'concluido',
+            analise_json = excluded.analise_json,
+            atualizado_em = unixepoch(),
+            finalizado_em = unixepoch(),
+            tokens_entrada = excluded.tokens_entrada,
+            tokens_saida = excluded.tokens_saida,
+            mensagem_erro = NULL
+          WHERE raov_relatorios.status != 'concluido'
+        `).bind(
+          voo.identificacao.id,
+          voo.identificacao.callsign,
+          voo.avaliacao.rating,
+          JSON.stringify(analise),
+          dados.usage?.input_tokens ?? 0,
+          dados.usage?.output_tokens ?? 0
+        ).run();
+
+        if (!gravacao.success) {
+          throw new Error("Falha ao gravar análise.");
+        }
+
+        console.log(
+          "VOLAR RAOV — análise armazenada no D1:",
+          voo.identificacao.callsign
+        );
+
+      } catch (erro) {
+        console.error("VOLAR RAOV — gravação D1:", erro);
+
+        return responder({
+          status: "erro_gravacao",
+          mensagem: "A análise foi produzida, mas não pôde ser armazenada."
+        }, 503);
+      }
+      
       return responder({
         sistema: "VOLAR RAOV", status: "analise_concluida",
         voo: { id: voo.identificacao.id, callsign: voo.identificacao.callsign },
