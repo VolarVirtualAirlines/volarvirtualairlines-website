@@ -91,7 +91,7 @@
     focoAnterior = null;
   }
 
-  function mostrarModal({ tipo = "info", titulo, mensagem, detalhe = "", voo = "", abrirNewSky = false }) {
+  function mostrarModal({ tipo = "info", titulo, mensagem, detalhe = "", voo = "", abrirNewSky = false, confirmacao = false }) {
     const elemento = obterModal();
     elemento.classList.remove("raov-modal-sucesso", "raov-modal-alerta", "raov-modal-erro", "raov-modal-info");
     elemento.classList.add(`raov-modal-${tipo}`);
@@ -110,6 +110,13 @@
 
     const link = elemento.querySelector(".raov-modal-link");
     link.hidden = !abrirNewSky;
+    
+    const botaoSolicitar = elemento.querySelector(".raov-modal-solicitar");
+    const botaoOk = elemento.querySelector(".raov-modal-ok");
+    
+    botaoSolicitar.hidden = !confirmacao;
+    botaoSolicitar.disabled = true;
+    botaoOk.textContent = confirmacao ? "Cancelar" : "Entendi";
 
     focoAnterior = document.activeElement;
     overflowAnterior = document.body.style.overflow;
