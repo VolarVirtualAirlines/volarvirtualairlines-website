@@ -111,57 +111,112 @@
   window.VolarRAOVIA = {
     prepararDados,
       
-      // VOLAR RAOV — comunicação com a API Cloudflare
+
+      // VOLAR RAOV — consulta protegida pelo Cloudflare Turnstile
       async consultarAPI(resumo) {
-        
-      // VOLAR RAOV — primeiro consulta se o relatório já existe no D1
-      const consulta = await fetch(
-        `/api/raov?acao=consultar&vooId=${encodeURIComponent(resumo.identificacao.id)}`,
-        {
-          method: "POST"
-        }
-      );
+        const siteKey = window.VOLAR_RAOV_TURNSTILE_SITE_KEY;
+        const turnstile = window.turnstile;
 
-      const relatorio = await consulta.json().catch(() => null);
-
-      // Relatório encontrado: reutiliza a análise sem chamar a OpenAI.
-      if (consulta.ok && relatorio?.status === "analise_concluida") {
-        return relatorio;
-      }
-
-      // Somente a ausência confirmada permite seguir para nova análise.
-      if (
-        consulta.status !== 404 ||
-        relatorio?.status !== "relatorio_nao_encontrado"
-      ) {
-        throw new Error(
-          relatorio?.mensagem ||
-          `Falha ao consultar o RAOV no D1 (HTTP ${consulta.status}).`
-        );
-      }
-       
-        const resposta = await fetch("/api/raov?acao=analisar", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(resumo)
-        });
-  
-        const resultado = await resposta.json().catch(() => null);
-  
-        if (!resposta.ok) {
+        if (
+          !siteKey ||
+          siteKey === "0x4AAAAAAF_-JXYvK987Hzia" ||
+          !turnstile
+        ) {
           throw new Error(
-            resultado?.mensagem ||
-            `Não foi possível consultar o RAOV (HTTP ${resposta.status}).`
+            "A proteção Turnstile do VOLAR RAOV não está disponível."
           );
         }
-  
-        if (!resultado) {
-          throw new Error("A API retornou uma resposta inválida.");
+
+        const area = document.querySelector(".raov-modal-loading");
+
+        if (!area) {
+          throw new Error(
+            "A área de processamento do RAOV não foi encontrada."
+          );
         }
-  
-        return resultado;
+
+        const container = document.createElement("div");
+        container.style.margin = "14px auto 0";
+        area.appendChild(container);
+
+        let widgetId = null;
+
+        try {
+          // Obtém um token novo para esta solicitação.
+          const token = await new Promise((resolve, reject) => {
+            let finalizado = false;
+
+            function concluir(erro, valor) {
+              if (finalizado) return;
+              finalizado = true;
+
+              if (erro) {
+                reject(new Error(erro));
+              } else {
+                resolve(valor);
+              }
+            }
+
+            widgetId = turnstile.render(container, {
+              sitekey: siteKey,
+              theme: "dark",
+              execution: "execute",
+              appearance: "interaction-only",
+
+              callback: token => concluir(null, token),
+
+              "error-callback": () => concluir(
+                "Não foi possível validar a proteção Turnstile."
+              ),
+
+              "expired-callback": () => concluir(
+                "A validação Turnstile expirou. Solicite novamente."
+              ),
+
+              "timeout-callback": () => concluir(
+                "A validação Turnstile excedeu o tempo permitido."
+              )
+            });
+
+            turnstile.execute(widgetId);
+          });
+
+          // A Function consulta primeiro o D1.
+          // Somente se não existir relatório, aciona a OpenAI.
+          const resposta = await fetch("/api/raov?acao=analisar", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-RAOV-Turnstile": token
+            },
+            body: JSON.stringify(resumo)
+          });
+
+          const resultado = await resposta.json().catch(() => null);
+
+          if (!resposta.ok) {
+            throw new Error(
+              resultado?.mensagem ||
+              `Falha ao solicitar o RAOV (HTTP ${resposta.status}).`
+            );
+          }
+
+          if (!resultado || resultado.status !== "analise_concluida") {
+            throw new Error(
+              resultado?.mensagem ||
+              "A API não retornou uma análise RAOV concluída."
+            );
+          }
+
+          return resultado;
+
+        } finally {
+          if (widgetId !== null) {
+            turnstile.remove(widgetId);
+          }
+
+          container.remove();
+        }
       },
 
       async gerar(dadosVoo) {
