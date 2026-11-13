@@ -151,3 +151,54 @@
     .raov-modal-acoes { justify-content: stretch; }
     .raov-modal-link, .raov-modal-ok { flex: 1; text-align: center; }
 }
+
+
+/* VOLAR RAOV — Botões da janela de confirmação */
+
+.raov-modal-solicitar {
+  background: #00cfea;
+  color: #071525;
+  border: 1px solid #00cfea;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.raov-modal-solicitar:hover:not(:disabled) {
+  background: #38e4fa;
+  transform: translateY(-1px);
+}
+
+.raov-modal-solicitar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.raov-modal-solicitar[hidden] {
+  display: none !important;
+}
+
+/* Ajusta os botões somente no modo de confirmação */
+
+.raov-modal-acoes:has(.raov-modal-solicitar:not([hidden])) {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.raov-modal-acoes:has(.raov-modal-solicitar:not([hidden])) .raov-modal-ok {
+  margin-left: 0;
+  background: transparent;
+  color: #c4d0df;
+  border: 1px solid #40516b;
+  border-radius: 10px;
+}
+
+.raov-modal-acoes:has(.raov-modal-solicitar:not([hidden])) .raov-modal-ok:hover {
+  background: #1c2a42;
+  color: #ffffff;
+}
