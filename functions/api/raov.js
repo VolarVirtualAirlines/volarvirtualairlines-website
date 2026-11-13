@@ -271,6 +271,45 @@ export async function onRequestPost(context) {
     }
   }
 
+  // Diagnóstico 6 — consulta de relatório no D1, sem OpenAI
+  if (diagnostico === "6") {
+    const banco = context.env.RAOV_DB;
+    const vooId = "6af58338d962ff40f15b6598";
+
+    if (!banco) {
+      return responder({
+        status: "banco_nao_configurado"
+      }, 503);
+    }
+
+    try {
+      const relatorio = await banco
+        .prepare(
+          "SELECT status FROM raov_relatorios WHERE voo_id = ?"
+        )
+        .bind(vooId)
+        .first();
+
+      return responder({
+        sistema: "VOLAR RAOV",
+        diagnostico: "consulta_relatorio_d1",
+        status: "consulta_ok",
+        vooId: vooId,
+        relatorioEncontrado: Boolean(relatorio),
+        situacao: relatorio?.status || null,
+        openaiConsultada: false
+      });
+
+    } catch (erro) {
+      console.error("VOLAR RAOV - Diagnóstico 6:", erro.name);
+
+      return responder({
+        status: "erro_consulta_d1",
+        mensagem: "Não foi possível consultar o relatório."
+      }, 503);
+    }
+  }
+  
   if (diagnostico !== null) {
     return responder({ status: "diagnostico_invalido", mensagem: "Diagnóstico não reconhecido." }, 400);
   }
