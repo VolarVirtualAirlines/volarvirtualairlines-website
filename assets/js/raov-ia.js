@@ -130,7 +130,25 @@
           }
   
           const companhias = await resposta.json();
+
+          // VOLAR RAOV — verifica vínculo com VVX ou VAX
+          const pertenceVolar = companhias.some(cia => {
+            const codigo = String(cia.icao || "").toUpperCase();
   
+            return (
+              (codigo === "VVX" || codigo === "VAX") &&
+              typeof cia.pilot?.id === "string"
+            );
+          });
+  
+          if (!pertenceVolar) {
+            throw new Error(
+              "Você não é piloto da Volar Virtual Airlines (VVX) " +
+              "ou da Volar Virtual Academy Excellence (VAX). " +
+              "Portanto, não possui permissão para solicitar o VOLAR RAOV."
+            );
+          }
+          
           if (!Array.isArray(companhias)) {
             throw new Error("Resposta inválida do NewSky.");
           }
