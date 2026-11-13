@@ -110,6 +110,37 @@
 
   window.VolarRAOVIA = {
     prepararDados,
+      
+      // VOLAR RAOV — comunicação com a API Cloudflare
+      async consultarAPI(resumo, tokenTeste) {
+        if (!tokenTeste) {
+          throw new Error("Autorização de homologação não informada.");
+        }
+  
+        const resposta = await fetch("/api/raov?acao=analisar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-RAOV-Test-Token": tokenTeste
+          },
+          body: JSON.stringify(resumo)
+        });
+  
+        const resultado = await resposta.json().catch(() => null);
+  
+        if (!resposta.ok) {
+          throw new Error(
+            resultado?.mensagem ||
+            `Não foi possível consultar o RAOV (HTTP ${resposta.status}).`
+          );
+        }
+  
+        if (!resultado) {
+          throw new Error("A API retornou uma resposta inválida.");
+        }
+  
+        return resultado;
+      },
 
       async gerar(dadosVoo) {
   
