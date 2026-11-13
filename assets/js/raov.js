@@ -97,13 +97,20 @@
     return modal;
   }
 
-  function fecharModal() {
-    if (!modal || modal.hidden) return;
-    modal.hidden = true;
-    document.body.style.overflow = overflowAnterior;
-    if (focoAnterior && typeof focoAnterior.focus === "function") focoAnterior.focus();
-    focoAnterior = null;
+
+function fecharModal() {
+  if (!modal || modal.hidden) return;
+  modal.hidden = true;
+
+  // VOLAR RAOV — libera a rolagem ao fechar o pop-up
+  document.body.style.overflow = "";
+
+  if (focoAnterior && typeof focoAnterior.focus === "function") {
+    focoAnterior.focus();
   }
+  focoAnterior = null;
+}
+
 
   function mostrarModal({ tipo = "info", titulo, mensagem, detalhe = "", voo = "", abrirNewSky = false, confirmacao = false, aoConfirmar = null, aoGerarPdf = null }) {
     const elemento = obterModal();
