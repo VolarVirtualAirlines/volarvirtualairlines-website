@@ -91,7 +91,7 @@
     focoAnterior = null;
   }
 
-  function mostrarModal({ tipo = "info", titulo, mensagem, detalhe = "", voo = "", abrirNewSky = false, confirmacao = false }) {
+  function mostrarModal({ tipo = "info", titulo, mensagem, detalhe = "", voo = "", abrirNewSky = false, confirmacao = false, aoConfirmar = null }) {
     const elemento = obterModal();
     elemento.classList.remove("raov-modal-sucesso", "raov-modal-alerta", "raov-modal-erro", "raov-modal-info");
     elemento.classList.add(`raov-modal-${tipo}`);
