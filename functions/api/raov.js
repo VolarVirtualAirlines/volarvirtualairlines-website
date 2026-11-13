@@ -425,6 +425,50 @@ export async function onRequestPost(context) {
         pdfGerado: false
       });
     }
+
+    // VOLAR RAOV — verifica o intervalo de 60 minutos por piloto
+    // Executado apenas quando o relatório ainda não existe no D1.
+
+    try {
+      const ultimaSolicitacao = await bancoRAOV
+        .prepare(`
+          SELECT solicitado_em
+          FROM raov_solicitacoes
+          WHERE piloto_id = ?
+            AND status IN ('processando', 'concluido')
+            AND solicitado_em > unixepoch() - 3600
+          ORDER BY solicitado_em DESC
+          LIMIT 1
+        `)
+        .bind(pilotoIdNewSky)
+        .first();
+
+      if (ultimaSolicitacao) {
+        const agora = Math.floor(Date.now() / 1000);
+
+        const segundosRestantes = Math.max(
+          1,
+          ultimaSolicitacao.solicitado_em + 3600 - agora
+        );
+
+        return responder({
+          sistema: "VOLAR RAOV",
+          status: "intervalo_nao_cumprido",
+          mensagem:
+            "Você já solicitou um RAOV recentemente. " +
+            "Aguarde o intervalo de 60 minutos para uma nova análise.",
+          minutosRestantes: Math.ceil(segundosRestantes / 60)
+        }, 429);
+      }
+
+    } catch (erro) {
+      console.error("VOLAR RAOV — controle de intervalo:", erro.name);
+
+      return responder({
+        status: "erro_controle_raov",
+        mensagem: "Não foi possível verificar o intervalo de solicitações."
+      }, 503);
+    }
     
     // Lista branca: nunca envia telemetria completa nem propriedades inesperadas.
     const vooMinimo = {
