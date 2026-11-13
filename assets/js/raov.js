@@ -134,6 +134,10 @@
     const botaoSolicitar = elemento.querySelector(".raov-modal-solicitar");
     const botaoOk = elemento.querySelector(".raov-modal-ok");
     
+    const botaoPdf = elemento.querySelector(".raov-modal-pdf");
+    botaoPdf.hidden = true;
+    botaoPdf.disabled = true;
+    
     botaoSolicitar.hidden = !confirmacao;
     botaoSolicitar.disabled = true;
     botaoOk.textContent = confirmacao ? "Cancelar" : "Entendi";
