@@ -106,6 +106,11 @@
 
   function mostrarModal({ tipo = "info", titulo, mensagem, detalhe = "", voo = "", abrirNewSky = false, confirmacao = false, aoConfirmar = null }) {
     const elemento = obterModal();
+
+    // VOLAR RAOV — restaura o conteúdo normal do pop-up
+    elemento.querySelector(".raov-modal-loading").hidden = true;
+    elemento.querySelector(".raov-modal-conteudo").hidden = false;
+    
     elemento.classList.remove("raov-modal-sucesso", "raov-modal-alerta", "raov-modal-erro", "raov-modal-info");
     elemento.classList.add(`raov-modal-${tipo}`);
 
