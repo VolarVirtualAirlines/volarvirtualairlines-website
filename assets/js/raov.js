@@ -60,6 +60,7 @@
              rel="noopener noreferrer" hidden>Abrir NewSky ↗</a>
           <button type="button" class="raov-modal-ok">Entendi</button>
           <button type="button" class="raov-modal-solicitar" hidden>Solicitar RAOV</button>
+          <button type="button" class="raov-modal-pdf" hidden>Gerar PDF</button>
         </div>
       </section>
     `;
