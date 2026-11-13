@@ -137,6 +137,34 @@
     const botaoPdf = elemento.querySelector(".raov-modal-pdf");
     botaoPdf.hidden = true;
     botaoPdf.disabled = true;
+
+    // VOLAR RAOV — configura a ação de geração do PDF
+    botaoPdf.onclick = null;
+
+    if (typeof aoGerarPdf === "function") {
+      botaoPdf.hidden = false;
+      botaoPdf.disabled = false;
+
+      botaoPdf.onclick = async () => {
+        botaoPdf.disabled = true;
+
+        try {
+          await aoGerarPdf();
+        } catch (erro) {
+          console.error("VOLAR RAOV — geração do PDF:", erro);
+
+          mostrarModal({
+            tipo: "erro",
+            titulo: "Não foi possível gerar o PDF",
+            mensagem: erro.message || "Ocorreu um erro ao gerar o relatório."
+          });
+        } finally {
+          if (!botaoPdf.hidden) {
+            botaoPdf.disabled = false;
+          }
+        }
+      };
+    }
     
     botaoSolicitar.hidden = !confirmacao;
     botaoSolicitar.disabled = true;
