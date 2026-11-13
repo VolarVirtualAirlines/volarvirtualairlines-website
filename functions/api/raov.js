@@ -313,6 +313,65 @@ export async function onRequestPost(context) {
         rating: ratingRAOV
       }, 403);
     }
+
+
+    // VOLAR RAOV — procura uma análise já concluída no D1
+    const bancoRAOV = context.env.RAOV_DB;
+
+    if (!bancoRAOV) {
+      return responder({
+        status: "banco_nao_configurado",
+        mensagem: "O banco RAOV_DB não está disponível."
+      }, 503);
+    }
+
+    let relatorioExistente;
+
+    try {
+      relatorioExistente = await bancoRAOV
+        .prepare(
+          "SELECT status, analise_json FROM raov_relatorios WHERE voo_id = ?"
+        )
+        .bind(voo.identificacao.id)
+        .first();
+    } catch (erro) {
+      console.error("VOLAR RAOV - consulta D1:", erro.name);
+
+      return responder({
+        status: "erro_banco",
+        mensagem: "Não foi possível consultar os relatórios armazenados."
+      }, 503);
+    }
+
+    // Reutiliza a análise sem consultar novamente a OpenAI
+    if (relatorioExistente?.status === "concluido" &&
+        relatorioExistente.analise_json) {
+
+      let analiseSalva;
+
+      try {
+        analiseSalva = JSON.parse(relatorioExistente.analise_json);
+      } catch {
+        return responder({
+          status: "relatorio_invalido",
+          mensagem: "A análise armazenada não pôde ser recuperada."
+        }, 503);
+      }
+
+      return responder({
+        sistema: "VOLAR RAOV",
+        status: "analise_concluida",
+        origem: "banco_d1",
+        voo: {
+          id: voo.identificacao.id,
+          callsign: voo.identificacao.callsign
+        },
+        modelo: MODELO,
+        analise: analiseSalva,
+        uso: null,
+        pdfGerado: false
+      });
+    }
     
     // Lista branca: nunca envia telemetria completa nem propriedades inesperadas.
     const vooMinimo = {
