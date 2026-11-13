@@ -65,7 +65,8 @@
         evento.preventDefault();
         fecharModal();
       } else if (evento.key === "Tab") {
-        const elementos = [...modal.querySelectorAll('button:not([disabled]), a:not([hidden])')];
+        const elementos = [...modal.querySelectorAll('button:not([disabled]):not([hidden]), a:not([hidden])')];
+
         if (!elementos.length) return;
         const primeiro = elementos[0];
         const ultimo = elementos[elementos.length - 1];
