@@ -298,6 +298,7 @@
       console.error("VOLAR RAOV:", erro.codigo || erro.name || "ERRO", erro.message);
       const login = erro.codigo === "LOGIN_NECESSARIO";
       const indisponivel = erro.codigo === "CORS_OU_REDE";
+      await aguardarAnimacao();
       mostrarModal({
         tipo: login ? "alerta" : "erro",
         titulo: login ? "Login no NewSky necessário" : "Não foi possível consultar o voo",
