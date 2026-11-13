@@ -142,7 +142,7 @@
         return resultado;
       },
 
-      async gerar(dadosVoo) {
+      async gerar(dadosVoo, tokenTeste = null) {
   
         // Consulta o ID do piloto autenticado no NewSky.
         async function obterPilotoLogado() {
