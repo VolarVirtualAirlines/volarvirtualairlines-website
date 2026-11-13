@@ -315,6 +315,75 @@ export async function onRequestPost(context) {
     return responder({ status: "diagnostico_invalido", mensagem: "Diagnóstico não reconhecido." }, 400);
   }
 
+  // VOLAR RAOV — consulta exclusiva ao D1, sem OpenAI
+  if (acao === "consultar") {
+    const vooId = parametros.get("vooId");
+
+    if (!/^[a-f0-9]{24}$/i.test(vooId || "")) {
+      return responder({
+        status: "voo_invalido",
+        mensagem: "Identificador do voo inválido."
+      }, 400);
+    }
+
+    const banco = context.env.RAOV_DB;
+
+    if (!banco) {
+      return responder({
+        status: "banco_nao_configurado"
+      }, 503);
+    }
+
+    try {
+      const relatorio = await banco.prepare(`
+        SELECT callsign, status, analise_json
+        FROM raov_relatorios
+        WHERE voo_id = ?
+      `).bind(vooId).first();
+
+      if (
+        relatorio?.status !== "concluido" ||
+        !relatorio.analise_json
+      ) {
+        return responder({
+          sistema: "VOLAR RAOV",
+          status: "relatorio_nao_encontrado"
+        }, 404);
+      }
+
+      let analise;
+
+      try {
+        analise = JSON.parse(relatorio.analise_json);
+      } catch {
+        return responder({
+          status: "relatorio_invalido"
+        }, 503);
+      }
+
+      return responder({
+        sistema: "VOLAR RAOV",
+        status: "analise_concluida",
+        origem: "banco_d1",
+        voo: {
+          id: vooId,
+          callsign: relatorio.callsign
+        },
+        analise,
+        uso: null,
+        pdfGerado: false
+      });
+
+    } catch (erro) {
+      console.error("VOLAR RAOV — consulta D1:", erro.name);
+
+      return responder({
+        status: "erro_consulta_d1",
+        mensagem: "Não foi possível consultar o RAOV."
+      }, 503);
+    }
+  }
+  
   // NOVA AÇÃO — análise de voo real pelo modelo, ainda sob token manual de teste
   if (acao === "analisar") {
     const tipo = context.request.headers.get("content-type") || "";
