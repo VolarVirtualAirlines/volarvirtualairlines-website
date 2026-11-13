@@ -258,7 +258,18 @@
     }
 
     delete botao.dataset.raovConfirmado;
-   
+
+    // VOLAR RAOV — tempo mínimo de animação: 2 segundos
+    const inicioCarregamento = Date.now();
+
+    async function aguardarAnimacao() {
+      const restante = 2000 - (Date.now() - inicioCarregamento);
+
+      if (restante > 0) {
+        await new Promise(resolve => setTimeout(resolve, restante));
+      }
+    }
+    
     const textoAnterior = botao.textContent;
     botao.disabled = true;
     botao.textContent = "Consultando...";
