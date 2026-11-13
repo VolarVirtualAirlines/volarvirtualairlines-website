@@ -3,7 +3,7 @@
  * Compartilhado entre VVX e VAX.
  * Versão 2: interpreta ocorrências pela descrição do NewSky,
  * sem enviar o campo interno tipoEvento à IA.
- * Etapa atual: não envia informações à OpenAI.
+ * Integração com Cloudflare D1 e OpenAI.
  */
 (function () {
   "use strict";
@@ -164,7 +164,7 @@
         return resultado;
       },
 
-      async gerar(dadosVoo, tokenTeste = null) {
+      async gerar(dadosVoo) {
   
         // Consulta o ID do piloto autenticado no NewSky.
         async function obterPilotoLogado() {
