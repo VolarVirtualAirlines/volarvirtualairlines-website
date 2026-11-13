@@ -574,6 +574,34 @@ export async function onRequestPost(context) {
           throw new Error("Falha ao gravar análise.");
         }
 
+        // VOLAR RAOV — registra a geração para controle de 60 minutos
+        const registro = await bancoRAOV.prepare(`
+          INSERT INTO raov_solicitacoes (
+            piloto_id,
+            voo_id,
+            callsign,
+            rating,
+            status,
+            solicitado_em,
+            finalizado_em,
+            tokens_entrada,
+            tokens_saida
+          )
+          VALUES (?, ?, ?, ?, 'concluido',
+                  unixepoch(), unixepoch(), ?, ?)
+        `).bind(
+          pilotoIdNewSky,
+          voo.identificacao.id,
+          voo.identificacao.callsign,
+          voo.avaliacao.rating,
+          dados.usage?.input_tokens ?? 0,
+          dados.usage?.output_tokens ?? 0
+        ).run();
+
+        if (!registro.success) {
+          throw new Error("Falha ao registrar solicitação do RAOV.");
+        }
+        
         console.log(
           "VOLAR RAOV — análise armazenada no D1:",
           voo.identificacao.callsign
