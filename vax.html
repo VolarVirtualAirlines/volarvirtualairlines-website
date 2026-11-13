@@ -472,14 +472,43 @@ async function carregarVoosRecentesVAX() {
                     minute: '2-digit'
                 });
 
+            // RATING - MESMA REGRA DA VVX
+            const ratingValor =
+                typeof voo.rating === 'number' && Number.isFinite(voo.rating)
+                    ? voo.rating
+                    : null;
+
+            const ratingTexto = ratingValor !== null
+                ? ratingValor.toFixed(2).replace('.', ',')
+                : '—';
+
+            let ratingClasse = 'rating-indisponivel';
+
+            if (ratingValor !== null) {
+                if (ratingValor === 0) {
+                    ratingClasse = 'rating-vermelho';
+                } else if (ratingValor > 8) {
+                    ratingClasse = 'rating-verde';
+                } else if (ratingValor >= 7) {
+                    ratingClasse = 'rating-azul';
+                } else {
+                    ratingClasse = 'rating-amarelo';
+                }
+            }
+
+            // IDENTIFICADOR ORIGINAL DO VOO NEWSKY
+            const idRAOV = /^[a-f0-9]{24}$/i.test(voo._id || '')
+                ? voo._id
+                : '';
+
             const row = document.createElement('tr');
 
             row.innerHTML = `
                 <td style="color: var(--turquoise); font-weight: bold; font-family: var(--font-headers);">VAX${voo.flightNumber || 'N/A'}</td>
                 <td>👨‍✈️ ${voo.pilot?.fullname || 'N/A'}</td>
                 <td>
-                    <span style="color: #00E676;">🛫 ${voo.dep?.icao || '---'}</span> 
-                    → 
+                    <span style="color: #00E676;">🛫 ${voo.dep?.icao || '---'}</span>
+                    →
                     <span style="color: #FF9100;">🛬 ${voo.arr?.icao || '---'}</span>
                 </td>
                 <td style="color: var(--text-muted); font-weight: 500;">✈️ ${voo.aircraft?.airframe?.ident || 'N/A'}</td>
@@ -487,7 +516,37 @@ async function carregarVoosRecentesVAX() {
                 <td><span class="badge-tipo">${voo.type?.toUpperCase() === 'PAX' ? '👥 Passageiros' : '📦 Carga'}</span></td>
                 <td><span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.08); font-size: 0.85em; font-weight: bold;">${voo.simulator?.toUpperCase() || 'N/A'}</span></td>
                 <td><span style="background: #2563eb; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.85em; font-weight: bold;">${voo.network?.name?.toUpperCase() || 'NEWSKY'}</span></td>
+
+                <td style="text-align: center;">
+                    <span class="badge-rating ${ratingClasse}">
+                        ${ratingTexto}
+                    </span>
+                </td>
+
+                <td style="text-align: center;">
+                    <button
+                        type="button"
+                        class="btn-gerar-raov"
+                        data-raov-flight-id="${idRAOV}"
+                        ${idRAOV ? '' : 'disabled'}
+                        title="Gerar RAOV deste voo">
+                        📋 Gerar RAOV
+                    </button>
+                </td>
             `;
+
+            // RAOV SOMENTE PARA RATING INFERIOR A 8.0
+            const elegivelRAOV =
+                Number.isFinite(ratingValor) &&
+                ratingValor >= 0 &&
+                ratingValor < 8;
+
+            if (!elegivelRAOV) {
+                const celulaRAOV = row.querySelector("td:last-child");
+                if (celulaRAOV) {
+                    celulaRAOV.textContent = "—";
+                }
+            }
 
             container.appendChild(row);
         });
