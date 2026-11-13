@@ -213,6 +213,34 @@
 
     elemento.querySelector(".raov-modal-acoes").style.display = "none";
   }
+
+  // VOLAR RAOV — apresenta o relatório disponível para PDF
+  function mostrarRAOVDisponivel(dadosVoo, resultadoIA) {
+    const voo = `${dadosVoo.airline?.icao || ""}${dadosVoo.flightNumber || ""}`;
+
+    const origem = resultadoIA.origem === "banco_d1"
+      ? "Relatório recuperado do banco D1."
+      : "Nova análise realizada pela inteligência artificial.";
+
+    mostrarModal({
+      tipo: "sucesso",
+      titulo: "RAOV disponível",
+      voo,
+      mensagem: "A análise do voo está pronta para gerar o relatório PDF.",
+      detalhe: origem,
+
+      aoGerarPdf: () => {
+        if (typeof window.VolarRAOVPDF?.gerar !== "function") {
+          throw new ErroRAOV(
+            "MODULO_PDF",
+            "O gerador de PDF não está disponível."
+          );
+        }
+
+        return window.VolarRAOVPDF.gerar(dadosVoo, resultadoIA);
+      }
+    });
+  }
   
   async function buscarLogNewSky(flightId) {
     if (!ID_VALIDO.test(flightId)) {
