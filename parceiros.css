@@ -401,20 +401,33 @@ a.vp-marquee-logo:focus-visible {
    VOLAR - QUADRO PREMIUM PARCEIROS NA HOME
    ============================================ */
 
-#parceiros.vp-home-partners {
-    width: min(1160px, calc(100% - 40px));
-    margin: 32px auto 50px;
-    padding: 30px 0 28px;
 
-    border: 1px solid rgba(79, 211, 231, 0.28);
-    border-radius: 18px;
+/* ============================================
+   VOLAR - QUADRO PREMIUM PARCEIROS NA HOME
+   ============================================ */
 
-    background: linear-gradient(
-        120deg,
-        #0c1e38 0%,
-        #102b45 50%,
-        #0b1c32 100%
-    );
+   #parceiros.vp-home-partners {
+       width: calc(100% - 40px);
+       max-width: none;
+       box-sizing: border-box;
+   
+       margin: 32px auto 50px;
+       padding: 30px 0 28px;
+   
+       border: 1px solid rgba(79, 211, 231, 0.28);
+       border-radius: 18px;
+   
+       background: linear-gradient(
+           120deg,
+           #0c1e38 0%,
+           #102b45 50%,
+           #0b1c32 100%
+       );
+
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.20);
+    overflow: hidden;
+}
+
 
     box-shadow: 0 14px 35px rgba(0, 0, 0, 0.20);
     overflow: hidden;
