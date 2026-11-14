@@ -390,3 +390,47 @@ a.vp-marquee-logo:focus-visible {
     .vp-marquee-group[aria-hidden="true"] { display: none; }
     .vp-partner-card, .vp-invite-button, .vp-marquee-logo { transition: none; }
 }
+
+
+/* ============================================
+   VOLAR - QUADRO PREMIUM PARCEIROS NA HOME
+   ============================================ */
+
+#parceiros.vp-home-partners {
+    width: min(1160px, calc(100% - 40px));
+    margin: 32px auto 50px;
+    padding: 30px 0 28px;
+
+    border: 1px solid rgba(79, 211, 231, 0.28);
+    border-radius: 18px;
+
+    background: linear-gradient(
+        120deg,
+        #0c1e38 0%,
+        #102b45 50%,
+        #0b1c32 100%
+    );
+
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.20);
+    overflow: hidden;
+}
+
+/* Cabeçalho dentro do quadro */
+#parceiros .vp-home-partners-heading {
+    width: calc(100% - 48px);
+    margin-bottom: 18px;
+}
+
+/* Ajustes para celulares */
+@media (max-width: 580px) {
+    #parceiros.vp-home-partners {
+        width: calc(100% - 24px);
+        margin: 24px auto 38px;
+        padding: 22px 0 24px;
+        border-radius: 14px;
+    }
+
+    #parceiros .vp-home-partners-heading {
+        width: calc(100% - 30px);
+    }
+}
