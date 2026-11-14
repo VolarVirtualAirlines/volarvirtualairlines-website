@@ -7825,7 +7825,6 @@ body.menu-open {
     line-height: 1.7;
 }
 
-
 /* =========================================================
    BOTÕES
 ========================================================= */
@@ -8153,3 +8152,82 @@ body.menu-open {
 #links.links-premium {
     background: #050b1b;
 }
+
+
+/* ============================================
+   VOLAR - ACESSO AO MAPA DA VAX
+   ============================================ */
+
+.vax-map-info {
+    max-width: 1100px;
+    margin: 25px auto 30px;
+    padding: 18px 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    background: rgba(15, 40, 68, 0.65);
+    border: 1px solid rgba(0, 229, 255, 0.22);
+    border-radius: 12px;
+}
+
+.vax-map-text {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #c3d6e8;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.vax-map-text i {
+    color: #00e5ff;
+    font-size: 1.4rem;
+}
+
+.vax-map-text strong {
+    color: #ffffff;
+}
+
+.vax-map-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-shrink: 0;
+
+    background: #00d5ea;
+    color: #061728;
+    padding: 12px 18px;
+    border-radius: 8px;
+
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+
+.vax-map-button:hover {
+    background: #72f1f7;
+    transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .vax-map-info {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .vax-map-text {
+        flex-direction: column;
+    }
+
+    .vax-map-button {
+        width: 100%;
+    }
+}
+
