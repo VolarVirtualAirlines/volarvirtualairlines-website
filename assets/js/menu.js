@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <div class="menu-dropdown-content">
                     <a href="index.html#social">Redes Sociais</a>
-                    <a href="index.html#parceiros">Parceiros</a>
+                    <a href="parceiros.html">Parceiros</a>
                     <a href="index.html#links">Links Úteis</a>
                 </div>
             </div>
