@@ -28,6 +28,9 @@
     font-weight: 800;
     letter-spacing: -.025em;
     text-align: left;
+    width: calc(100% - 40px);
+    max-width: none;
+    box-sizing: border-box;
 }
 .vp-home-partners-more {
     color: #5fe2e5;
@@ -369,7 +372,9 @@ a.vp-marquee-logo:focus-visible {
     .vp-partner-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 580px) {
-    #parceiros.vp-home-partners { padding: 32px 0 38px; }
+    #parceiros.vp-home-partners {
+        width: calc(100% - 24px);
+    }
     .vp-home-partners-heading { width: calc(100% - 30px); gap: 10px; flex-wrap: wrap; }
     .vp-home-partners-more { font-size: .8rem; }
     .vp-marquee-logo { width: 164px; flex-basis: 164px; height: 98px; }
