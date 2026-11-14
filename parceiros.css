@@ -60,13 +60,13 @@
     padding-right: 24px; /* garante o encaixe perfeito do loop */
 }
 .vp-marquee-logo {
-    width: 176px;
-    height: 94px;
-    flex: 0 0 176px;
+    width: 200px;
+    height: 118px;
+    flex: 0 0 200px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 14px;
+    padding: 8px;
     box-sizing: border-box;
     border-radius: 10px;
     background: transparent;
