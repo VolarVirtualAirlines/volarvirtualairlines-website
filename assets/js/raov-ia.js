@@ -27,7 +27,7 @@
     if (!dadosVoo || !Array.isArray(dadosVoo.log) ||
         !Array.isArray(dadosVoo.result?.violations) ||
         !dadosVoo.result?.totals) {
-      throw new Error("O NewSky não disponibilizou os dados completos para o RAOV.");
+      throw new Error("Não foi possível gerar o RAOV porque os dados deste voo estão incompletos.");
     }
 
     const resultado = dadosVoo.result;
@@ -122,8 +122,9 @@
         siteKey === "COLE_AQUI_SUA_SITE_KEY" ||
         !turnstile
       ) {
-        throw new Error(
-          "A proteção Turnstile do VOLAR RAOV não está disponível."
+        // "A proteção Turnstile do VOLAR RAOV não está disponível."
+         throw new Error(
+          "Não foi possível iniciar a verificação de segurança. Atualize a página e tente novamente."
         );
       }
 
@@ -131,7 +132,7 @@
 
         if (!area) {
           throw new Error(
-            "A área de processamento do RAOV não foi encontrada."
+            "Não foi possível iniciar o RAOV. Atualize a página e tente novamente."
           );
         }
 
@@ -164,17 +165,20 @@
               appearance: "interaction-only",
 
               callback: token => concluir(null, token),
-
+              
+              //"Não foi possível validar a proteção Turnstile."
               "error-callback": () => concluir(
-                "Não foi possível validar a proteção Turnstile."
+                "A verificação de segurança não foi concluída. Tente novamente."
               ),
 
+              //"A validação Turnstile expirou. Solicite novamente."
               "expired-callback": () => concluir(
-                "A validação Turnstile expirou. Solicite novamente."
+                "O tempo de verificação expirou. Solicite seu RAOV novamente."
               ),
 
+              //"A validação Turnstile excedeu o tempo permitido."
               "timeout-callback": () => concluir(
-                "A validação Turnstile excedeu o tempo permitido."
+                "A verificação de segurança demorou mais que o esperado. Tente novamente."
               )
             });
 
@@ -204,7 +208,7 @@
           if (!resultado || resultado.status !== "analise_concluida") {
             throw new Error(
               resultado?.mensagem ||
-              "A API não retornou uma análise RAOV concluída."
+              "A análise do voo não foi concluída pela IA. Tente novamente."
             );
           }
 
@@ -233,14 +237,14 @@
   
           if (!resposta.ok) {
             throw new Error(
-              "Não foi possível confirmar o login no NewSky."
+              "Não foi possível confirmar seu acesso ao NewSky. Entre na sua conta e tente novamente."
             );
           }
   
           const companhias = await resposta.json();
 
           if (!Array.isArray(companhias)) {
-            throw new Error("Resposta inválida do NewSky.");
+            throw new Error("Não foi possível consultar os dados da sua conta no NewSky. Tente novamente.");
           }
 
           // VOLAR RAOV — verifica vínculo com VVX ou VAX
@@ -272,7 +276,7 @@
   
           if (ids.length !== 1) {
             throw new Error(
-              "Não foi possível identificar um piloto único no NewSky."
+              "Não foi possível confirmar sua identificação no NewSky. Tente novamente."
             );
           }
   
@@ -291,7 +295,7 @@
         // 4. Interrompe se os identificadores divergirem.
         if (pilotoIdInicial !== pilotoIdAtual) {
           throw new Error(
-            "A identificação do piloto mudou. Solicitação interrompida."
+            "Sua sessão do NewSky foi alterada durante a solicitação. Atualize a página e tente novamente."
           );
         }
   
