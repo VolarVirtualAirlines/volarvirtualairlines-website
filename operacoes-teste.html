@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Central de operações em teste — voos ativos VVX e VAX.">
+  <title>Volar Operations | VVX + VAX — Teste</title>
+  <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    :root{--bg:#06111f;--surface:#102338;--panel:#0b1b2c;--border:#263e52;--text:#ecf7ff;--muted:#a7c1d1;--vvx:#21d6d7;--vax:#b58cff;--error:#ff9f9f;--success:#85e1b2}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 40%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}
+    h1,h2,h3{font-family:Montserrat,Inter,sans-serif;margin:0;line-height:1.25} a{color:inherit;text-decoration:none} button,input{font:inherit}
+    button{cursor:pointer} button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--vvx);outline-offset:3px}
+    header{background:#081828ed;border-bottom:1px solid var(--border)}
+    .topbar{max-width:1420px;margin:auto;padding:18px 25px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:15px}.brand img{height:49px;max-width:170px;object-fit:contain}.brand strong{display:block;font:800 15px Montserrat}.brand span{font-size:11px;color:var(--muted);letter-spacing:.13em}
+    .top-links{display:flex;gap:10px;flex-wrap:wrap}.nav-link{border:1px solid var(--border);background:#10263a;border-radius:10px;padding:10px 14px;font-size:13px;color:#d8e9f4}.nav-link:hover{border-color:var(--vvx)}
+    main{max-width:1420px;margin:auto;padding:32px 25px 60px}
+    .eyebrow{display:flex;align-items:center;gap:9px;color:#89eaf0;letter-spacing:.18em;text-transform:uppercase;font-size:11px;font-weight:700;margin-bottom:12px}
+    .live-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#32d8a4;box-shadow:0 0 0 5px #32d8a41b;flex:0 0 auto}
+    .hero{display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:24px}
+    h1{font-size:clamp(27px,4vw,46px);letter-spacing:-.035em} h1 span{color:var(--vvx)}
+    .subtitle{max-width:710px;color:var(--muted);font-size:14px;line-height:1.65;margin:10px 0 0}
+    .test-label{background:#193348;border:1px solid #2c6b78;color:#a9ecf0;border-radius:100px;padding:7px 12px;white-space:nowrap;font-size:11px;font-weight:700;letter-spacing:.08em}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:22px}
+    .stat{border:1px solid var(--border);border-radius:15px;background:linear-gradient(145deg,#10283d,#0d1d2d);padding:20px 18px}
+    .stat .num{font-size:32px;font-weight:800;line-height:1.2;margin-top:9px;font-variant-numeric:tabular-nums}
+    .stat .label{font-size:12px;letter-spacing:.025em;color:var(--muted)}.stat.vvx .num{color:var(--vvx)}.stat.vax .num{color:var(--vax)}
+    .toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:0 0 15px}
+    .filters{display:flex;gap:6px;background:#0f2537;border:1px solid var(--border);padding:5px;border-radius:12px}
+    .filter{border:0;border-radius:8px;background:transparent;color:var(--muted);padding:10px 16px;font-size:13px;font-weight:700}
+    .filter.active{background:#24506a;color:white}.filter:hover:not(.active){color:white}
+    .right-actions{display:flex;align-items:center;flex-wrap:wrap;gap:9px}.btn{border:1px solid #355269;color:var(--text);background:#143047;border-radius:10px;padding:11px 15px;font-size:12px;font-weight:700}.btn:hover{border-color:var(--vvx)}.btn:disabled{opacity:.55;cursor:wait}
+    .status{font-size:12px;color:var(--muted)}
+    .operations{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(325px,.88fr);align-items:stretch;gap:16px}
+    .map-wrap{position:relative;background:#0b1c2c;border:1px solid var(--border);border-radius:16px;overflow:hidden;min-width:0}
+    #flight-map{width:100%;height:610px;background:#0a2536}
+    .map-note{position:absolute;z-index:600;top:14px;left:14px;right:14px;max-width:440px;background:#081827eb;border:1px solid #3b5263;border-radius:11px;padding:12px 15px;font-size:12px;line-height:1.6;box-shadow:0 8px 25px #0008;pointer-events:none}
+    .map-note strong{color:#eafcff}.map-note.hidden{display:none}
+    .map-legend{position:absolute;z-index:600;bottom:19px;left:15px;background:#071827df;border:1px solid #335063;border-radius:9px;padding:10px 12px;font-size:11px;display:flex;gap:16px;align-items:center;color:#e6f5fb}
+    .legend-dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px}.vvx-dot{background:var(--vvx)}.vax-dot{background:var(--vax)}
+    .flight-icon{background:transparent;border:0}.plane-marker{display:grid;place-items:center;height:32px;width:32px;border-radius:50%;border:2px solid #fff9;background:var(--vvx);color:#07202b;box-shadow:0 4px 14px #000b;font-size:20px}.plane-marker.vax{background:var(--vax)}.plane-marker .plane-rot{display:block;line-height:1;transform:rotate(var(--heading,0deg))}
+    .leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#0d2538;color:#e9f5ff}.leaflet-popup-content{font-family:Inter,sans-serif;line-height:1.6}.leaflet-popup-content b{font-size:13px}.leaflet-popup-content small{color:#b4c9d9}
+    .list-panel{border:1px solid var(--border);background:linear-gradient(180deg,#0d2133,#0a1a2b);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+    .list-head{padding:20px 19px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+    .list-head h2{font-size:17px}.list-head small{color:var(--muted);font-size:11px}
+    .search-area{padding:12px 14px;border-bottom:1px solid var(--border)}.search-area input{width:100%;padding:11px 12px;border-radius:9px;background:#061524;color:#eaf5ff;border:1px solid #284256;outline:0}.search-area input::placeholder{color:#92a9bb}
+    .flights{overflow:auto;max-height:490px;flex:1}.flight{border:0;border-bottom:1px solid #223a4b;background:transparent;color:inherit;display:block;width:100%;text-align:left;padding:15px 18px}.flight:hover{background:#17364a}.flight-title{display:flex;justify-content:space-between;gap:10px;align-items:center}.callsign{font-weight:800;font-size:14px}.airline{font-size:10px;border-radius:6px;padding:4px 7px;font-weight:800;letter-spacing:.06em}.airline.vvx{background:#123f49;color:#4aebec}.airline.vax{background:#352a53;color:#d1afff}.flight-route{margin:8px 0;font-size:15px;font-weight:700}.flight-meta{font-size:11px;color:var(--muted);line-height:1.6}.flight-position{display:inline-block;font-size:10px;margin-top:8px;color:#85e1b2}.flight-position.missing{color:#e1b98c}.empty{padding:24px;color:var(--muted);font-size:13px;line-height:1.7}
+    .foot-row{border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:10px;padding:12px 17px;font-size:11px;color:var(--muted);flex-wrap:wrap}
+    .below{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+    .info-panel{background:#0d2133;border:1px solid var(--border);border-radius:14px;padding:21px}.info-panel h3{font-size:16px;margin:0 0 10px}.info-panel p{color:var(--muted);line-height:1.65;font-size:13px;margin:0}
+    .connection{margin-top:10px;display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #264055;padding:9px 0;font-size:12px}.connection:last-child{border:0}.connection strong{font-size:12px}.ok{color:var(--success)}.bad{color:var(--error)}
+    .diag{margin-top:15px}.diag summary{font-size:12px;font-weight:700;cursor:pointer;color:#a9dcf0}.diag pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;background:#071724;border:1px solid #233c4b;padding:12px;border-radius:8px;color:#aac9d9}
+    footer{border-top:1px solid var(--border);font-size:12px;color:var(--muted);padding:25px;text-align:center}
+    @media(max-width:960px){.operations{grid-template-columns:1fr}#flight-map{height:500px}.flights{max-height:420px}}
+    @media(max-width:640px){main{padding:25px 14px 40px}.topbar{padding:14px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{padding:15px}.stat .num{font-size:26px}.below{grid-template-columns:1fr}#flight-map{height:420px}.map-legend{bottom:10px}.brand img{height:36px}.map-note{font-size:11px}.filter{padding:9px 11px}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="topbar">
+    <a class="brand" href="index.html" aria-label="Página inicial Volar Virtual Airlines">
+      <img src="assets/LOGO_WEBSITE.png" alt="Volar Virtual Airlines">
+      <div><strong>VOLAR OPERATIONS</strong><span>FLY BEYOND · CENTRO DE OPERAÇÕES</span></div>
+    </a>
+    <nav class="top-links" aria-label="Navegação">
+      <a class="nav-link" href="index.html">Página inicial</a>
+      <a class="nav-link" href="vax.html">Academy VAX</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div>
+      <div class="eyebrow"><span class="live-dot" aria-hidden="true"></span> Operações integradas · VVX + VAX</div>
+      <h1>Volar <span>Live Operations</span></h1>
+      <p class="subtitle">Um único centro de acompanhamento dos voos ativos da Volar Virtual Airlines e da Volar Virtual Academy. As informações são obtidas em paralelo pelas integrações NewSky já utilizadas no site.</p>
+    </div>
+    <span class="test-label">AMBIENTE DE TESTE</span>
+  </section>
+  <section class="stats" aria-label="Indicadores operacionais">
+    <article class="stat"><div class="label">Voos ativos no ecossistema</div><div class="num" id="stat-all">—</div></article>
+    <article class="stat vvx"><div class="label">Operações VVX</div><div class="num" id="stat-vvx">—</div></article>
+    <article class="stat vax"><div class="label">Operações VAX</div><div class="num" id="stat-vax">—</div></article>
+    <article class="stat"><div class="label">Aeronaves com posição no mapa</div><div class="num" id="stat-mapped">—</div></article>
+  </section>
+  <div class="toolbar">
+    <div class="filters" role="group" aria-label="Filtrar companhia">
+      <button class="filter active" data-airline="ALL" aria-pressed="true">Todos os voos</button>
+      <button class="filter" data-airline="VVX" aria-pressed="false">VVX</button>
+      <button class="filter" data-airline="VAX" aria-pressed="false">VAX</button>
+    </div>
+    <div class="right-actions">
+      <span class="status" id="last-updated" role="status" aria-live="polite">Aguardando consulta...</span>
+      <button class="btn" id="fit-map" type="button">Enquadrar aeronaves</button>
+      <button class="btn" id="refresh" type="button">↻ Atualizar agora</button>
+    </div>
+  </div>
+  <section class="operations" aria-label="Mapa e relação de voos">
+    <div class="map-wrap">
+      <div id="flight-map" aria-label="Mapa de posições atuais das aeronaves"></div>
+      <div id="map-note" class="map-note"><strong>Inicializando mapa...</strong> Carregando os dados das duas companhias.</div>
+      <div class="map-legend"><span><i class="legend-dot vvx-dot"></i> VVX</span><span><i class="legend-dot vax-dot"></i> VAX</span></div>
+    </div>
+    <aside class="list-panel" aria-label="Voos em andamento">
+      <div class="list-head"><h2>Voos em andamento</h2><small id="list-count">—</small></div>
+      <div class="search-area"><input id="search" type="search" placeholder="Pesquisar piloto, callsign, origem..." aria-label="Pesquisar voos"></div>
+      <div class="flights" id="flight-list"><div class="empty">Carregando operações da VVX e VAX...</div></div>
+      <div class="foot-row"><span>Atualização automática a cada 60 segundos</span><span id="map-count-message"></span></div>
+    </aside>
+  </section>
+  <section class="below">
+    <article class="info-panel">
+      <h3>Fontes de dados</h3>
+      <p>Os voos das duas companhias são consultados separadamente, usando as rotas que já funcionam no site. A página reúne os resultados, sem alterar as páginas atuais e sem incluir novas chaves de API.</p>
+      <div class="connection"><span>NewSky · VVX <code>/voos</code></span><strong id="status-vvx">Aguardando</strong></div>
+      <div class="connection"><span>NewSky · VAX <code>/vax_voos</code></span><strong id="status-vax">Aguardando</strong></div>
+    </article>
+    <article class="info-panel">
+      <h3>Diagnóstico de posições</h3>
+      <p>O mapa mostra uma aeronave somente quando a API fornece latitude e longitude da posição atual. Se nenhum voo possuir coordenadas, a lista continua funcionando e o diagnóstico ajuda a identificar os campos disponíveis.</p>
+      <details class="diag"><summary>Ver diagnóstico técnico da consulta</summary><pre id="diagnostic">Aguardando dados...</pre></details>
+    </article>
+  </section>
+</main>
+<footer>Volar Virtual Airlines · Volar Virtual Academy Excellence · Fly Beyond.</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+  'use strict';
+  // Mesmas rotas já consumidas por index.html e vax.html.
+  // As credenciais existentes permanecem nos endpoints atuais; nenhuma chave nova é necessária aqui.
+  const SOURCES = [{airline:'VVX',url:'/voos'},{airline:'VAX',url:'/vax_voos'}];
+  const REFRESH_MS = 60000;
+  const el = id => document.getElementById(id);
+  const safe = text => String(text ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  let flights = [];
+  let filter = 'ALL';
+  let query = '';
+  let map = null;
+  let markerLayer = null;
+  let markersById = new Map();
+  let isFetching = false;
+  let hasCenteredMap = false;
+  let failures = {};
+  let rawSamples = {};
+
+  function get(obj,path){return path.split('.').reduce((v,k) => v && typeof v==='object'?v[k]:undefined,obj);}
+  function firstText(...values){for(const value of values){if(value!==undefined && value!==null && String(value).trim()!=='')return String(value).trim();}return '';}
+  function num(value){if(value===null||value===undefined||value==='')return null;const n=Number(value);return Number.isFinite(n)?n:null;}
+
+  // Um ponto representa a POSIÇÃO ATUAL, nunca a coordenada do aeroporto de partida/destino.
+  // Os nomes abaixo são candidatos; o formato exato depende do JSON recebido do NewSky.
+  function positionOf(raw){
+    const candidates = [raw.position,raw.currentPosition,raw.lastPosition,raw.livePosition,
+      raw.telemetry,raw.flightData,raw.tracking,raw.location,raw.liveData,
+      get(raw,'aircraft.position'),get(raw,'aircraft.currentPosition'),get(raw,'data.position'),raw];
+    for(const p of candidates){
+      if(!p || typeof p!=='object')continue;
+      let lat = num(p.latitude ?? p.lat);
+      let lon = num(p.longitude ?? p.lon ?? p.lng ?? p.long);
+      // GeoJSON [longitude, latitude], apenas para campos de posição atual.
+      if((lat===null||lon===null) && Array.isArray(p.coordinates) && p.coordinates.length>=2){
+        lon = num(p.coordinates[0]);lat = num(p.coordinates[1]);
+      }
+      if(lat!==null && lon!==null && lat>=-90 && lat<=90 && lon>=-180 && lon<=180){
+        return {lat,lon,heading:num(p.heading ?? p.track ?? p.bearing) ?? 0,
+          altitude:num(p.altitude ?? p.alt ?? p.altFt),speed:num(p.groundSpeed ?? p.groundspeed ?? p.gs ?? p.speed)};
+      }
+    }
+    return null;
+  }
+  function unwrap(data){
+    if(Array.isArray(data))return data;
+    for(const candidate of [data?.results,data?.flights,data?.data,data?.data?.results,data?.data?.flights]){
+      if(Array.isArray(candidate))return candidate;
+    }
+    if(data?.error)throw Error(firstText(data.message,'API reportou erro'));
+    throw Error('Formato de resposta inesperado (não há lista de voos)');
+  }
+  async function fetchAirline(source){
+    const ctl=new AbortController();
+    const timeout=setTimeout(()=>ctl.abort(),15000);
+    try{
+      const response=await fetch(source.url,{headers:{Accept:'application/json'},cache:'no-store',signal:ctl.signal});
+      if(!response.ok)throw Error('HTTP '+response.status);
+      const data=await response.json();
+      return {airline:source.airline,rows:unwrap(data),error:null};
+    }catch(e){return {airline:source.airline,rows:[],error:e.name==='AbortError'?'Tempo limite excedido':String(e.message||e)};}
+    finally{clearTimeout(timeout);}
+  }
+  function normalize(row,airline,index){
+    const declared = firstText(row?.airline?.icao).toUpperCase();
+    const va=(declared==='VVX'||declared==='VAX')?declared:airline;
+    const flightNumber=firstText(row?.flightNumber,row?.number);
+    const possibleCallsign=firstText(row?.callsign);
+    const callsign=possibleCallsign || (flightNumber.toUpperCase().startsWith(va)?flightNumber:va+flightNumber) || va;
+    return { id:va+':'+firstText(row?._id,row?.id,callsign+'-'+index),airline:va,callsign,
+      pilot:firstText(row?.pilot?.fullname,row?.pilot?.name,row?.pilotName,'Piloto não informado'),
+      dep:firstText(row?.dep?.icao,row?.departure?.icao,'---'),arr:firstText(row?.arr?.icao,row?.arrival?.icao,'---'),
+      aircraft:firstText(row?.aircraft?.airframe?.ident,row?.aircraft?.ident,row?.aircraft?.type,'N/D'),
+      network:firstText(row?.network?.name,'NewSky'),position:positionOf(row)};
+  }
+  function visibleFlights(){
+    return flights.filter(f => (filter==='ALL'||f.airline===filter) &&
+      [f.callsign,f.pilot,f.dep,f.arr,f.aircraft,f.network].join(' ').toLowerCase().includes(query));
+  }
+  function setStatus(airline,error,count){
+    const target=el('status-'+airline.toLowerCase());
+    if(error){target.className='bad';target.textContent='Erro · '+error;}
+    else{target.className='ok';target.textContent='Conectado · '+count+' voos';}
+  }
+  function initMap(){
+    if(typeof L==='undefined'){
+      el('map-note').innerHTML='<strong>Mapa indisponível.</strong> Não foi possível carregar a biblioteca Leaflet. A lista de voos continuará disponível.';
+      return;
+    }
+    map=L.map('flight-map',{zoomControl:true,worldCopyJump:true}).setView([-14,-48],3);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+      maxZoom:19,subdomains:'abcd',attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
+    }).addTo(map);
+    markerLayer=L.layerGroup().addTo(map);
+  }
+  function mapIcon(f){
+    return L.divIcon({className:'flight-icon',iconSize:[32,32],iconAnchor:[16,16],popupAnchor:[0,-12],
+      html:`<div class="plane-marker ${f.airline.toLowerCase()}"><span class="plane-rot" style="--heading:${Number(f.position.heading)||0}deg">✈</span></div>`});
+  }
+  function fitMap(){
+    if(!map)return;
+    const positions=visibleFlights().filter(f=>f.position).map(f=>[f.position.lat,f.position.lon]);
+    if(!positions.length)return;
+    if(positions.length===1)map.setView(positions[0],7);
+    else map.fitBounds(L.latLngBounds(positions),{padding:[50,50],maxZoom:8});
+    hasCenteredMap=true;
+  }
+  function updateMap(recenter=false){
+    if(!map)return;
+    markerLayer.clearLayers();markersById.clear();
+    const shown=visibleFlights();
+    const plotted=shown.filter(f=>f.position);
+    for(const f of plotted){
+      const p=f.position;
+      const popup=`<b>${safe(f.callsign)} · ${safe(f.airline)}</b><div>${safe(f.pilot)}</div>`+
+        `<div>${safe(f.dep)} → ${safe(f.arr)} · ${safe(f.aircraft)}</div>`+
+        `<small>${safe(f.network)} · Lat ${p.lat.toFixed(4)}, Lon ${p.lon.toFixed(4)}`+
+        `${p.altitude!==null?' · ALT '+safe(p.altitude):''}${p.speed!==null?' · SPD '+safe(p.speed):''}</small>`;
+      const marker=L.marker([p.lat,p.lon],{icon:mapIcon(f)}).bindPopup(popup);
+      markerLayer.addLayer(marker);markersById.set(f.id,marker);
+    }
+    const msg=el('map-note');
+    if(plotted.length>0){msg.classList.add('hidden');if(recenter||!hasCenteredMap)fitMap();}
+    else{
+      msg.classList.remove('hidden');
+      if(shown.length===0){msg.innerHTML='<strong>Nenhum voo encontrado.</strong> Não há voos que correspondam ao filtro atual (ou as companhias estão sem operações).';}
+      else{msg.innerHTML='<strong>Voos recebidos, mas sem posições identificáveis.</strong> A lista está carregada. Para posicionar aviões, precisamos confirmar no JSON do NewSky os campos de latitude e longitude da aeronave em tempo real.';}
+    }
+    el('map-count-message').textContent=plotted.length+' com posição · '+(shown.length-plotted.length)+' sem posição';
+  }
+  function createFlightElement(f){
+    const button=document.createElement('button');button.type='button';button.className='flight';
+    button.setAttribute('aria-label',`${f.callsign}, ${f.pilot}, ${f.dep} para ${f.arr}${f.position?', localizar no mapa':''}`);
+    button.innerHTML=`<div class="flight-title"><span class="callsign">${safe(f.callsign)}</span><span class="airline ${f.airline.toLowerCase()}">${safe(f.airline)}</span></div>`+
+      `<div class="flight-route">${safe(f.dep)} <span style="color:#69a9c8">→</span> ${safe(f.arr)}</div>`+
+      `<div class="flight-meta">${safe(f.pilot)}<br>${safe(f.aircraft)} · ${safe(f.network)}</div>`+
+      `<span class="flight-position ${f.position?'':'missing'}">${f.position?'● Posição disponível · clique para localizar':'○ Sem coordenadas na resposta'}</span>`;
+    button.addEventListener('click',()=>{if(!map||!f.position)return;map.flyTo([f.position.lat,f.position.lon],Math.max(map.getZoom(),7));setTimeout(()=>markersById.get(f.id)?.openPopup(),280);});
+    return button;
+  }
+  function redraw(recenter=false){
+    const shown=visibleFlights();
+    const list=el('flight-list');list.replaceChildren();
+    el('list-count').textContent=shown.length+' voo(s)';
+    if(!shown.length){const div=document.createElement('div');div.className='empty';div.textContent='Nenhum voo em andamento encontrado para a seleção atual.';list.append(div);}
+    else shown.forEach(f=>list.append(createFlightElement(f)));
+    updateMap(recenter);
+  }
+  function renderDiagnostics(){
+    const text=SOURCES.map(({airline,url})=>{
+      const row=rawSamples[airline];
+      const state=failures[airline]?'ERRO: '+failures[airline]:'OK';
+      const count=flights.filter(f=>f.airline===airline).length;
+      const mapped=flights.filter(f=>f.airline===airline&&f.position).length;
+      const keys=row&&typeof row==='object'?Object.keys(row).slice(0,35).join(', '):'Sem voo de amostra';
+      const candidates=row&&typeof row==='object'?['position','currentPosition','lastPosition','livePosition','telemetry','flightData','tracking','location','liveData'].filter(k=>row[k]!=null).map(k=>k+': '+(typeof row[k]==='object'?Object.keys(row[k]).slice(0,12).join(', '):typeof row[k])).join(' | '):'Nenhum campo de posição conhecido na amostra';
+      return `${airline} [${url}]: ${state}\nVoos: ${count}; com posição: ${mapped}\nCampos recebidos: ${keys}\nCandidatos de posição: ${candidates||'Nenhum identificado'}`;
+    }).join('\n\n');
+    el('diagnostic').textContent=text;
+  }
+  async function refresh(){
+    if(isFetching)return;
+    isFetching=true;el('refresh').disabled=true;el('refresh').textContent='Consultando...';
+    el('last-updated').textContent='Consultando VVX e VAX...';
+    try{
+      // Duas consultas independentes em paralelo. Cada rota já usa sua integração NewSky.
+      const [vvx,vax]=await Promise.all(SOURCES.map(fetchAirline));
+      const results=[vvx,vax];
+      failures={};rawSamples={};
+      for(const r of results){failures[r.airline]=r.error;rawSamples[r.airline]=r.rows[0]||null;setStatus(r.airline,r.error,r.rows.length);}
+      const voosVVX=vvx.rows.map((row,i)=>normalize(row,'VVX',i));
+      const voosVAX=vax.rows.map((row,i)=>normalize(row,'VAX',i));
+      flights=voosVVX.concat(voosVAX);
+      // Em caso de erro em uma VA, as operações da outra continuam disponíveis.
+      el('stat-all').textContent=flights.length;
+      el('stat-vvx').textContent=vvx.rows.length;
+      el('stat-vax').textContent=vax.rows.length;
+      el('stat-mapped').textContent=flights.filter(f=>f.position).length;
+      redraw(false);renderDiagnostics();
+      const timestamp=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+      el('last-updated').textContent=(vvx.error||vax.error?'Consulta parcial':'Atualizado')+' · '+timestamp;
+    }finally{isFetching=false;el('refresh').disabled=false;el('refresh').textContent='↻ Atualizar agora';}
+  }
+  document.querySelectorAll('[data-airline]').forEach(btn=>btn.addEventListener('click',()=>{
+    filter=btn.dataset.airline;
+    document.querySelectorAll('[data-airline]').forEach(other=>{const active=other===btn;other.classList.toggle('active',active);other.setAttribute('aria-pressed',String(active));});
+    redraw(true);
+  }));
+  el('search').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();redraw(false);});
+  el('fit-map').addEventListener('click',fitMap);
+  el('refresh').addEventListener('click',refresh);
+  initMap();refresh();setInterval(refresh,REFRESH_MS);
+})();
+</script>
+</body>
+</html>
