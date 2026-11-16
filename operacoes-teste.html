@@ -43,6 +43,8 @@
     .map-legend{position:absolute;z-index:600;bottom:19px;left:15px;background:#071827df;border:1px solid #335063;border-radius:9px;padding:10px 12px;font-size:11px;display:flex;gap:16px;align-items:center;color:#e6f5fb}
     .legend-dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px}.vvx-dot{background:var(--vvx)}.vax-dot{background:var(--vax)}
     .flight-icon{background:transparent;border:0}.plane-marker{display:grid;place-items:center;height:32px;width:32px;border-radius:50%;border:2px solid #fff9;background:var(--vvx);color:#07202b;box-shadow:0 4px 14px #000b;font-size:20px}.plane-marker.vax{background:var(--vax)}.plane-marker .plane-rot{display:block;line-height:1;transform:rotate(var(--heading,0deg))}
+    /* OSM padrão estilizado apenas na camada de tiles para manter o tema escuro sem API key. */
+    .leaflet-tile-pane{filter:grayscale(.95) invert(1) hue-rotate(180deg) brightness(.74) contrast(1.1)}
     .leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#0d2538;color:#e9f5ff}.leaflet-popup-content{font-family:Inter,sans-serif;line-height:1.6}.leaflet-popup-content b{font-size:13px}.leaflet-popup-content small{color:#b4c9d9}
     .list-panel{border:1px solid var(--border);background:linear-gradient(180deg,#0d2133,#0a1a2b);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
     .list-head{padding:20px 19px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
@@ -219,8 +221,11 @@
       return;
     }
     map=L.map('flight-map',{zoomControl:true,worldCopyJump:true}).setView([-14,-48],3);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
-      maxZoom:19,subdomains:'abcd',attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
+    // CARTO exige chave desde 2026. Tiles padrão OSM para a página de testes,
+    // sem chave; manter atribuição visível e usar apenas tiles exibidos ao usuário.
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+      maxZoom:19,
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
     }).addTo(map);
     markerLayer=L.layerGroup().addTo(map);
   }
