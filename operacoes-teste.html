@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Central de operações em teste — voos ativos VVX e VAX.">
-  <title>Volar Operations | VVX + VAX — Teste</title>
+  <title>Volar Operations | VVX + VAX — Teste V4</title>
   <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -40,6 +40,10 @@
     #flight-map{width:100%;height:610px;background:#0a2536}
     .map-note{position:absolute;z-index:600;top:14px;left:14px;right:14px;max-width:440px;background:#081827eb;border:1px solid #3b5263;border-radius:11px;padding:12px 15px;font-size:12px;line-height:1.6;box-shadow:0 8px 25px #0008;pointer-events:none}
     .map-note strong{color:#eafcff}.map-note.hidden{display:none}
+    .route-hint{position:absolute;z-index:600;right:13px;bottom:17px;max-width:320px;background:#071827e8;border:1px solid #35566c;color:#d5eaf6;border-radius:9px;padding:9px 12px;font-size:11px;line-height:1.5;pointer-events:none;text-align:right}
+    .airport-route-label{background:#0a2032ed;color:#effaff;border:1px solid #46667b;border-radius:6px;box-shadow:0 3px 10px #0008;padding:4px 7px;font:700 11px Inter,sans-serif}
+    .airport-route-label::before{display:none}
+    .route-legend{font-size:10px;color:#aec8da;margin-left:4px}
     .map-legend{position:absolute;z-index:600;bottom:19px;left:15px;background:#071827df;border:1px solid #335063;border-radius:9px;padding:10px 12px;font-size:11px;display:flex;gap:16px;align-items:center;color:#e6f5fb}
     .legend-dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px}.vvx-dot{background:var(--vvx)}.vax-dot{background:var(--vax)}
     .flight-icon{background:transparent;border:0}.plane-marker{display:grid;place-items:center;height:32px;width:32px;border-radius:50%;border:2px solid #fff9;background:var(--vvx);color:#07202b;box-shadow:0 4px 14px #000b;font-size:20px}.plane-marker.vax{background:var(--vax)}.plane-marker .plane-rot{display:block;line-height:1;transform:rotate(var(--heading,0deg))}
@@ -58,7 +62,7 @@
     .diag{margin-top:15px}.diag summary{font-size:12px;font-weight:700;cursor:pointer;color:#a9dcf0}.diag pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;background:#071724;border:1px solid #233c4b;padding:12px;border-radius:8px;color:#aac9d9}
     footer{border-top:1px solid var(--border);font-size:12px;color:var(--muted);padding:25px;text-align:center}
     @media(max-width:960px){.operations{grid-template-columns:1fr}#flight-map{height:500px}.flights{max-height:420px}}
-    @media(max-width:640px){main{padding:25px 14px 40px}.topbar{padding:14px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{padding:15px}.stat .num{font-size:26px}.below{grid-template-columns:1fr}#flight-map{height:420px}.map-legend{bottom:10px}.brand img{height:36px}.map-note{font-size:11px}.filter{padding:9px 11px}}
+    @media(max-width:640px){.route-hint{max-width:210px;font-size:10px;right:8px;bottom:55px}.map-legend{bottom:10px}.airport-route-label{font-size:10px}main{padding:25px 14px 40px}.topbar{padding:14px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{padding:15px}.stat .num{font-size:26px}.below{grid-template-columns:1fr}#flight-map{height:420px}.map-legend{bottom:10px}.brand img{height:36px}.map-note{font-size:11px}.filter{padding:9px 11px}}
   </style>
 </head>
 <body>
@@ -106,6 +110,7 @@
       <div id="flight-map" aria-label="Mapa de posições atuais das aeronaves"></div>
       <div id="map-note" class="map-note"><strong>Inicializando mapa...</strong> Carregando os dados das duas companhias.</div>
       <div class="map-legend"><span><i class="legend-dot vvx-dot"></i> VVX</span><span><i class="legend-dot vax-dot"></i> VAX</span></div>
+      <div id="route-hint" class="route-hint" aria-live="polite">Passe o mouse sobre um avião para ver sua rota.<br>Clique para fixar e enquadrar.</div>
     </div>
     <aside class="list-panel" aria-label="Voos em andamento">
       <div class="list-head"><h2>Voos em andamento</h2><small id="list-count">—</small></div>
@@ -120,10 +125,11 @@
       <p>Os voos das duas companhias são consultados separadamente, usando as rotas que já funcionam no site. A página reúne os resultados, sem alterar as páginas atuais e sem incluir novas chaves de API.</p>
       <div class="connection"><span>NewSky · VVX <code>/voos</code></span><strong id="status-vvx">Aguardando</strong></div>
       <div class="connection"><span>NewSky · VAX <code>/vax_voos</code></span><strong id="status-vax">Aguardando</strong></div>
+      <div class="connection"><span>Aeroportos · referência ICAO</span><strong id="status-airports">Aguardando</strong></div>
     </article>
     <article class="info-panel">
       <h3>Diagnóstico de posições</h3>
-      <p>O mapa mostra uma aeronave somente quando a API fornece latitude e longitude da posição atual. Se nenhum voo possuir coordenadas, a lista continua funcionando e o diagnóstico ajuda a identificar os campos disponíveis.</p>
+      <p>O mapa localiza aeronaves por <code>lastState.location</code> do NewSky. Ao passar o mouse, desenha uma <strong>rota esquemática</strong> entre origem, aeronave e destino — não os waypoints reais do plano SimBrief. Clique para fixar e enquadrar a rota.</p>
       <details class="diag"><summary>Ver diagnóstico técnico da consulta</summary><pre id="diagnostic">Aguardando dados...</pre></details>
     </article>
   </section>
@@ -149,6 +155,17 @@
   let hasCenteredMap = false;
   let failures = {};
   let rawSamples = {};
+  // Estado do traçado: hover temporário e clique fixado (inclusive em telas sensíveis ao toque).
+  let routeLayer = null;
+  let hoveredFlightId = null;
+  let pinnedFlightId = null;
+  let airportIndex = null;
+  let airportLoading = null;
+  let airportError = null;
+  const AIRPORT_DATA_URLS = [
+    'https://cdn.jsdelivr.net/gh/mwgg/Airports@master/airports.json',
+    'https://raw.githubusercontent.com/mwgg/Airports/master/airports.json'
+  ];
 
   function get(obj,path){return path.split('.').reduce((v,k) => v && typeof v==='object'?v[k]:undefined,obj);}
   function firstText(...values){for(const value of values){if(value!==undefined && value!==null && String(value).trim()!=='')return String(value).trim();}return '';}
@@ -177,6 +194,120 @@
       }
     }
     return null;
+  }
+  // Coordenadas de origem/destino, quando fornecidas pelo próprio NewSky.
+  // IMPORTANTE: estes dados não são usados como posição atual da aeronave.
+  function airportInFlight(airport){
+    if(!airport || typeof airport!=='object')return null;
+    const candidates=[airport.location,airport.position,airport.geo,airport.geolocation,airport];
+    for(const obj of candidates){
+      if(!obj || typeof obj!=='object')continue;
+      let lat=num(obj.lat ?? obj.latitude ?? obj.latitude_deg);
+      let lon=num(obj.lon ?? obj.lng ?? obj.longitude ?? obj.longitude_deg);
+      if((lat===null || lon===null) && Array.isArray(obj.coordinates) && obj.coordinates.length>=2){
+        lon=num(obj.coordinates[0]);lat=num(obj.coordinates[1]);
+      }
+      if(lat!==null && lon!==null && lat>=-90 && lat<=90 && lon>=-180 && lon<=180){return {lat,lon};}
+    }
+    return null;
+  }
+  function airportOf(f,kind){
+    if(!f)return null;
+    const embedded=kind==='dep'?f.depPosition:f.arrPosition;
+    if(embedded)return embedded;
+    const icao=(kind==='dep'?f.dep:f.arr).toUpperCase();
+    const item=airportIndex?.[icao];
+    if(!item)return null;
+    const lat=num(item.lat), lon=num(item.lon);
+    return lat!==null && lon!==null && lat>=-90 && lat<=90 && lon>=-180 && lon<=180 ? {lat,lon} : null;
+  }
+  // Base pública por ICAO. É consultada uma única vez por visita, não a cada 60 segundos.
+  // O voo e sua posição continuam funcionando mesmo que a base de aeroportos não carregue.
+  async function loadAirports(){
+    if(airportIndex || airportLoading)return airportLoading;
+    const status=el('status-airports');
+    status.className='';status.textContent='Carregando coordenadas...';
+    airportLoading=(async()=>{
+      let lastError=null;
+      for(const url of AIRPORT_DATA_URLS){
+        const ctl=new AbortController();
+        const timer=setTimeout(()=>ctl.abort(),20000);
+        try{
+          const response=await fetch(url,{signal:ctl.signal});
+          if(!response.ok)throw Error('HTTP '+response.status);
+          const data=await response.json();
+          if(!data || typeof data!=='object' || Array.isArray(data) || !data.SBGR){
+            throw Error('Formato de aeroportos não reconhecido');
+          }
+          airportIndex=data;
+          airportError=null;
+          status.className='ok';
+          status.textContent='Disponível · códigos ICAO';
+          drawSelectedRoute();
+          return;
+        }catch(error){lastError=error;}
+        finally{clearTimeout(timer);}
+      }
+      airportError=lastError?.message || 'Falha na consulta';
+      status.className='bad';status.textContent='Indisponível';
+      drawSelectedRoute();
+    })();
+    return airportLoading;
+  }
+  function routeColor(f){return f.airline==='VAX'?'#b58cff':'#21d6d7';}
+  function routeLabel(pos,icao,title,color){
+    L.circleMarker([pos.lat,pos.lon],{radius:5.5,weight:2,color:'#081e2e',fillColor:color,
+      fillOpacity:1,interactive:false,bubblingMouseEvents:false}).addTo(routeLayer)
+      .bindTooltip(`${safe(icao)} · ${title}`,{permanent:true,direction:'top',offset:[0,-8],className:'airport-route-label'});
+  }
+  function routeBounds(f){
+    if(!f?.position)return [];
+    const origin=airportOf(f,'dep'),destination=airportOf(f,'arr');
+    return [origin,[f.position.lat,f.position.lon],destination].filter(Boolean)
+      .map(point=>Array.isArray(point)?point:[point.lat,point.lon]);
+  }
+  function focusRoute(f){
+    if(!map)return;
+    const points=routeBounds(f);
+    if(points.length>=2)map.fitBounds(L.latLngBounds(points),{padding:[60,60],maxZoom:8});
+    else if(points.length===1)map.flyTo(points[0],7);
+  }
+  function drawSelectedRoute(){
+    if(!map || !routeLayer)return;
+    routeLayer.clearLayers();
+    const selectedId=hoveredFlightId || pinnedFlightId;
+    const f=visibleFlights().find(f=>f.id===selectedId && f.position);
+    const hint=el('route-hint');
+    if(!f){hint.innerHTML='Passe o mouse sobre um avião para ver sua rota.<br>Clique para fixar e enquadrar.';return;}
+    const origin=airportOf(f,'dep'), destination=airportOf(f,'arr');
+    const here=[f.position.lat,f.position.lon],color=routeColor(f);
+    if(origin){
+      // Segmento origem → posição atual: linha contínua, puramente esquemática.
+      L.polyline([[origin.lat,origin.lon],here],{color,weight:3,opacity:.95,interactive:false}).addTo(routeLayer);
+      routeLabel(origin,f.dep,'Origem',color);
+    }
+    if(destination){
+      // Segmento posição atual → destino: tracejado para distinguir a parte restante.
+      L.polyline([here,[destination.lat,destination.lon]],{color,weight:3,opacity:.95,
+        dashArray:'9 8',interactive:false}).addTo(routeLayer);
+      routeLabel(destination,f.arr,'Destino',color);
+    }
+    const loading=!airportIndex && !airportError && airportLoading;
+    const missing=[];
+    if(!origin)missing.push('origem');
+    if(!destination)missing.push('destino');
+    const extra=missing.length ? (loading?' · carregando aeroportos...':' · faltam coordenadas: '+missing.join(' e ')) : '';
+    const mode=pinnedFlightId===f.id?'Rota fixada':'Rota em destaque';
+    hint.innerHTML=`<strong style="color:${color}">${safe(f.callsign)} · ${mode}</strong><br>${safe(f.dep)} → ${safe(f.arr)}${safe(extra)}`;
+  }
+  function pinFlight(f){
+    if(!f?.position || !map)return;
+    pinnedFlightId=f.id;
+    hoveredFlightId=null;
+    drawSelectedRoute();
+    focusRoute(f);
+    const marker=markersById.get(f.id);
+    if(marker)marker.openPopup();
   }
   function unwrap(data){
     if(Array.isArray(data))return data;
@@ -207,7 +338,9 @@
       pilot:firstText(row?.pilot?.fullname,row?.pilot?.name,row?.pilotName,'Piloto não informado'),
       dep:firstText(row?.dep?.icao,row?.departure?.icao,'---'),arr:firstText(row?.arr?.icao,row?.arrival?.icao,'---'),
       aircraft:firstText(row?.aircraft?.airframe?.ident,row?.aircraft?.ident,row?.aircraft?.type,'N/D'),
-      network:firstText(row?.network?.name,'NewSky'),position:positionOf(row)};
+      network:firstText(row?.network?.name,'NewSky'),position:positionOf(row),
+      depPosition:airportInFlight(row?.dep || row?.departure),
+      arrPosition:airportInFlight(row?.arr || row?.arrival)};
   }
   function visibleFlights(){
     return flights.filter(f => (filter==='ALL'||f.airline===filter) &&
@@ -230,7 +363,10 @@
       maxZoom:19,
       attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
     }).addTo(map);
+    // A rota fica sobre as cartas e abaixo dos ícones das aeronaves.
+    routeLayer=L.layerGroup().addTo(map);
     markerLayer=L.layerGroup().addTo(map);
+    map.on('click',()=>{pinnedFlightId=null;hoveredFlightId=null;drawSelectedRoute();});
   }
   function mapIcon(f){
     return L.divIcon({className:'flight-icon',iconSize:[32,32],iconAnchor:[16,16],popupAnchor:[0,-12],
@@ -248,6 +384,9 @@
   function updateMap(recenter=false){
     if(!map)return;
     markerLayer.clearLayers();markersById.clear();
+    hoveredFlightId=null;
+    // Depois de 60s, a rota fixada acompanha a nova posição (sem dar zoom novamente).
+    if(pinnedFlightId && !visibleFlights().some(f=>f.id===pinnedFlightId && f.position))pinnedFlightId=null;
     const shown=visibleFlights();
     const plotted=shown.filter(f=>f.position);
     for(const f of plotted){
@@ -257,6 +396,12 @@
         `<small>${safe(f.network)} · Rumo ${Math.round(p.heading)}° · Lat ${p.lat.toFixed(4)}, Lon ${p.lon.toFixed(4)}`+
         `${p.altitude!==null?' · ALT '+safe(p.altitude):''}${p.speed!==null?' · SPD '+safe(p.speed):''}</small>`;
       const marker=L.marker([p.lat,p.lon],{icon:mapIcon(f)}).bindPopup(popup);
+      marker.on('mouseover',()=>{hoveredFlightId=f.id;drawSelectedRoute();});
+      marker.on('mouseout',()=>{if(hoveredFlightId===f.id)hoveredFlightId=null;drawSelectedRoute();});
+      marker.on('click',event=>{
+        if(event.originalEvent)L.DomEvent.stopPropagation(event.originalEvent);
+        pinFlight(f);
+      });
       markerLayer.addLayer(marker);markersById.set(f.id,marker);
     }
     const msg=el('map-note');
@@ -267,6 +412,7 @@
       else{msg.innerHTML='<strong>Voos recebidos, mas sem posições identificáveis.</strong> A lista está carregada. Para posicionar aviões, precisamos confirmar no JSON do NewSky os campos de latitude e longitude da aeronave em tempo real.';}
     }
     el('map-count-message').textContent=plotted.length+' com posição · '+(shown.length-plotted.length)+' sem posição';
+    drawSelectedRoute();
   }
   function createFlightElement(f){
     const button=document.createElement('button');button.type='button';button.className='flight';
@@ -275,7 +421,7 @@
       `<div class="flight-route">${safe(f.dep)} <span style="color:#69a9c8">→</span> ${safe(f.arr)}</div>`+
       `<div class="flight-meta">${safe(f.pilot)}<br>${safe(f.aircraft)} · ${safe(f.network)}</div>`+
       `<span class="flight-position ${f.position?'':'missing'}">${f.position?'● Posição disponível · clique para localizar':'○ Sem coordenadas na resposta'}</span>`;
-    button.addEventListener('click',()=>{if(!map||!f.position)return;map.flyTo([f.position.lat,f.position.lon],Math.max(map.getZoom(),7));setTimeout(()=>markersById.get(f.id)?.openPopup(),280);});
+    button.addEventListener('click',()=>pinFlight(f));
     return button;
   }
   function redraw(recenter=false){
@@ -298,7 +444,7 @@
         .map(({path,value})=>path+': '+(typeof value==='object'?Object.keys(value).slice(0,12).join(', '):typeof value)).join(' | '):'Nenhum campo de posição conhecido na amostra';
       return `${airline} [${url}]: ${state}\nVoos: ${count}; com posição: ${mapped}\nCampos recebidos: ${keys}\nCandidatos de posição: ${candidates||'Nenhum identificado'}`;
     }).join('\n\n');
-    el('diagnostic').textContent=text;
+    el('diagnostic').textContent=text+'\n\nAeroportos: '+(airportIndex?'base global carregada':airportError?'indisponível: '+airportError:'consulta pendente')+'\nRota: origem → posição atual (contínuo); posição atual → destino (tracejado).';
   }
   async function refresh(){
     if(isFetching)return;
@@ -318,6 +464,7 @@
       el('stat-vvx').textContent=vvx.rows.length;
       el('stat-vax').textContent=vax.rows.length;
       el('stat-mapped').textContent=flights.filter(f=>f.position).length;
+      if(flights.some(f=>f.position && (!f.depPosition || !f.arrPosition)))void loadAirports();
       redraw(false);renderDiagnostics();
       const timestamp=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
       el('last-updated').textContent=(vvx.error||vax.error?'Consulta parcial':'Atualizado')+' · '+timestamp;
