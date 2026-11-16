@@ -16,14 +16,33 @@ export async function onRequestGet(context) {
       })
     });
 
-    const text = await response.text();
+const text = await response.text();
 
-    return new Response(text, {
-      status: response.status,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
+if (!response.ok) {
+  return new Response(text, {
+    status: response.status,
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+}
+
+const data = JSON.parse(text);
+
+// Excluir voos com rating negativo
+if (Array.isArray(data.results)) {
+  data.results = data.results.filter(voo => {
+    const rating = Number(voo.rating);
+    return !Number.isFinite(rating) || rating >= 0;
+  });
+}
+
+return new Response(JSON.stringify(data), {
+  status: response.status,
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
 
   } catch (error) {
     return new Response(
