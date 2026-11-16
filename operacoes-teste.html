@@ -155,9 +155,12 @@
   function num(value){if(value===null||value===undefined||value==='')return null;const n=Number(value);return Number.isFinite(n)?n:null;}
 
   // Um ponto representa a POSIÇÃO ATUAL, nunca a coordenada do aeroporto de partida/destino.
-  // Os nomes abaixo são candidatos; o formato exato depende do JSON recebido do NewSky.
+  // Formato confirmado no NewSky: voo.lastState.location = {lat,lon,hdg}.
+  // Mantemos os demais formatos como alternativas para preservar a compatibilidade.
   function positionOf(raw){
-    const candidates = [raw.position,raw.currentPosition,raw.lastPosition,raw.livePosition,
+    if(!raw || typeof raw!=='object')return null;
+    const candidates = [get(raw,'lastState.location'),get(raw,'lastState.position'),
+      raw.position,raw.currentPosition,raw.lastPosition,raw.livePosition,
       raw.telemetry,raw.flightData,raw.tracking,raw.location,raw.liveData,
       get(raw,'aircraft.position'),get(raw,'aircraft.currentPosition'),get(raw,'data.position'),raw];
     for(const p of candidates){
@@ -169,7 +172,7 @@
         lon = num(p.coordinates[0]);lat = num(p.coordinates[1]);
       }
       if(lat!==null && lon!==null && lat>=-90 && lat<=90 && lon>=-180 && lon<=180){
-        return {lat,lon,heading:num(p.heading ?? p.track ?? p.bearing) ?? 0,
+        return {lat,lon,heading:num(p.hdg ?? p.heading ?? p.track ?? p.bearing) ?? 0,
           altitude:num(p.altitude ?? p.alt ?? p.altFt),speed:num(p.groundSpeed ?? p.groundspeed ?? p.gs ?? p.speed)};
       }
     }
@@ -231,7 +234,8 @@
   }
   function mapIcon(f){
     return L.divIcon({className:'flight-icon',iconSize:[32,32],iconAnchor:[16,16],popupAnchor:[0,-12],
-      html:`<div class="plane-marker ${f.airline.toLowerCase()}"><span class="plane-rot" style="--heading:${Number(f.position.heading)||0}deg">✈</span></div>`});
+      // O SVG aponta originalmente para o norte (000°); hdg gira o ícone no rumo real.
+      html:`<div class="plane-marker ${f.airline.toLowerCase()}"><span class="plane-rot" style="--heading:${Number(f.position.heading)||0}deg"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.5 14.6 9 21 12v3l-7-1.7V20l3 2v1l-5-1.5L7 23v-1l3-2v-6.7L3 15v-3l6.4-3z"/></svg></span></div>`});
   }
   function fitMap(){
     if(!map)return;
@@ -250,7 +254,7 @@
       const p=f.position;
       const popup=`<b>${safe(f.callsign)} · ${safe(f.airline)}</b><div>${safe(f.pilot)}</div>`+
         `<div>${safe(f.dep)} → ${safe(f.arr)} · ${safe(f.aircraft)}</div>`+
-        `<small>${safe(f.network)} · Lat ${p.lat.toFixed(4)}, Lon ${p.lon.toFixed(4)}`+
+        `<small>${safe(f.network)} · Rumo ${Math.round(p.heading)}° · Lat ${p.lat.toFixed(4)}, Lon ${p.lon.toFixed(4)}`+
         `${p.altitude!==null?' · ALT '+safe(p.altitude):''}${p.speed!==null?' · SPD '+safe(p.speed):''}</small>`;
       const marker=L.marker([p.lat,p.lon],{icon:mapIcon(f)}).bindPopup(popup);
       markerLayer.addLayer(marker);markersById.set(f.id,marker);
@@ -289,7 +293,9 @@
       const count=flights.filter(f=>f.airline===airline).length;
       const mapped=flights.filter(f=>f.airline===airline&&f.position).length;
       const keys=row&&typeof row==='object'?Object.keys(row).slice(0,35).join(', '):'Sem voo de amostra';
-      const candidates=row&&typeof row==='object'?['position','currentPosition','lastPosition','livePosition','telemetry','flightData','tracking','location','liveData'].filter(k=>row[k]!=null).map(k=>k+': '+(typeof row[k]==='object'?Object.keys(row[k]).slice(0,12).join(', '):typeof row[k])).join(' | '):'Nenhum campo de posição conhecido na amostra';
+      const candidates=row&&typeof row==='object'?['lastState.location','lastState.position','position','currentPosition','lastPosition','livePosition','telemetry','flightData','tracking','location','liveData']
+        .map(path=>({path,value:get(row,path)})).filter(item=>item.value!=null)
+        .map(({path,value})=>path+': '+(typeof value==='object'?Object.keys(value).slice(0,12).join(', '):typeof value)).join(' | '):'Nenhum campo de posição conhecido na amostra';
       return `${airline} [${url}]: ${state}\nVoos: ${count}; com posição: ${mapped}\nCampos recebidos: ${keys}\nCandidatos de posição: ${candidates||'Nenhum identificado'}`;
     }).join('\n\n');
     el('diagnostic').textContent=text;
