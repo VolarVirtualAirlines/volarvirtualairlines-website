@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Central de operações em teste — voos ativos VVX e VAX.">
-  <title>Volar Operations | VVX + VAX — Teste V4</title>
+  <title>Volar Operations | VVX + VAX — Teste V5</title>
   <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -63,6 +63,27 @@
     footer{border-top:1px solid var(--border);font-size:12px;color:var(--muted);padding:25px;text-align:center}
     @media(max-width:960px){.operations{grid-template-columns:1fr}#flight-map{height:500px}.flights{max-height:420px}}
     @media(max-width:640px){.route-hint{max-width:210px;font-size:10px;right:8px;bottom:55px}.map-legend{bottom:10px}.airport-route-label{font-size:10px}main{padding:25px 14px 40px}.topbar{padding:14px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{padding:15px}.stat .num{font-size:26px}.below{grid-template-columns:1fr}#flight-map{height:420px}.map-legend{bottom:10px}.brand img{height:36px}.map-note{font-size:11px}.filter{padding:9px 11px}}
+
+    /* V5 — informações de voo e camadas operacionais */
+    .route-options{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin:-2px 0 15px;padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:#0c2032;color:#d8e9f4;font-size:11px}
+    .route-options strong{font-size:11px;color:#9bcce0;margin-right:4px}.route-option{display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none}
+    .route-option input{accent-color:#21d6d7;width:14px;height:14px}.route-key{height:0;width:23px;display:inline-block;border-top:3px solid var(--vvx)}
+    .route-key.actual{border-top-color:#ffae69;border-top-style:dashed}.route-help{margin-left:auto;color:#9ab6c6}
+    .fix-route-label{background:#0a2134ef;color:#ecfaff;border:1px solid #457187;border-radius:5px;box-shadow:0 2px 6px #0008;padding:2px 5px;font:700 10px Inter,sans-serif}
+    .fix-route-label::before{display:none}.fix-point-label{background:#102638e8;color:white;border-radius:4px}
+    .selected-panel{margin-top:16px;background:linear-gradient(135deg,#102a3d,#0c1d2d)}.selected-panel[hidden]{display:none}
+    .selected-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px}.selected-top h2{font-size:18px}
+    .selected-remark{color:var(--muted);font-size:12px;line-height:1.5;margin:5px 0 0}
+    .detail-chip{display:inline-block;background:#15394e;border:1px solid #35607a;border-radius:100px;padding:6px 9px;color:#dcf6ff;font-size:11px}
+    .telemetry-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:16px 0}
+    .telemetry-cell{background:#081b2d;border:1px solid #284256;border-radius:10px;padding:11px 12px;min-width:0}
+    .telemetry-cell small{display:block;color:#9dbbcd;font-size:10px}.telemetry-cell strong{display:block;margin-top:7px;font-size:16px;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .detail-section-title{font-size:12px;font-weight:800;color:#bce4f3;letter-spacing:.04em;margin:12px 0 8px}
+    .ofp-route{font-size:12px;line-height:1.7;color:#e3f5ff;background:#071829;border:1px solid #2a4259;padding:11px;border-radius:8px;overflow-wrap:anywhere}
+    .fixes-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.fix-pill{font-size:10px;padding:6px 8px;border-radius:6px;border:1px solid #375367;background:#102c41;color:#d9eefe}
+    .fix-pill.special{color:#ffdab0;border-color:#765c42}.detail-state{color:#b6cddc;font-size:12px;line-height:1.7}
+    @media(max-width:1050px){.telemetry-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(max-width:580px){.telemetry-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.route-help{margin-left:0;width:100%}.route-options{gap:10px}}
   </style>
 </head>
 <body>
@@ -105,12 +126,19 @@
       <button class="btn" id="refresh" type="button">↻ Atualizar agora</button>
     </div>
   </div>
+  <div class="route-options" aria-label="Camadas de navegação">
+    <strong>CAMADAS DO MAPA</strong>
+    <label class="route-option"><input id="show-planned" type="checkbox" checked><span class="route-key"></span> Plano SimBrief</label>
+    <label class="route-option"><input id="show-actual" type="checkbox" checked><span class="route-key actual"></span> Trajeto percorrido</label>
+    <label class="route-option"><input id="show-fixes" type="checkbox" checked> Mostrar fixos</label>
+    <span class="route-help">Passe o mouse no avião ou clique para fixar a rota</span>
+  </div>
   <section class="operations" aria-label="Mapa e relação de voos">
     <div class="map-wrap">
       <div id="flight-map" aria-label="Mapa de posições atuais das aeronaves"></div>
       <div id="map-note" class="map-note"><strong>Inicializando mapa...</strong> Carregando os dados das duas companhias.</div>
       <div class="map-legend"><span><i class="legend-dot vvx-dot"></i> VVX</span><span><i class="legend-dot vax-dot"></i> VAX</span></div>
-      <div id="route-hint" class="route-hint" aria-live="polite">Passe o mouse sobre um avião para ver sua rota.<br>Clique para fixar e enquadrar.</div>
+      <div id="route-hint" class="route-hint" aria-live="polite">Passe o mouse para ver a rota SimBrief e o caminho voado.<br>Clique para fixar e ver a telemetria.</div>
     </div>
     <aside class="list-panel" aria-label="Voos em andamento">
       <div class="list-head"><h2>Voos em andamento</h2><small id="list-count">—</small></div>
@@ -118,6 +146,21 @@
       <div class="flights" id="flight-list"><div class="empty">Carregando operações da VVX e VAX...</div></div>
       <div class="foot-row"><span>Atualização automática a cada 60 segundos</span><span id="map-count-message"></span></div>
     </aside>
+  </section>
+  <section class="info-panel selected-panel" id="selected-panel" hidden aria-live="polite">
+    <div class="selected-top">
+      <div>
+        <h2 id="detail-title">Detalhes do voo</h2>
+        <p class="selected-remark" id="detail-description">Consultando plano de voo e telemetria...</p>
+      </div>
+      <span class="detail-chip" id="detail-badge">NewSky · Detalhes</span>
+    </div>
+    <div class="telemetry-grid" id="telemetry-grid"></div>
+    <div class="detail-section-title">PLANO DE VOO (SIMBRIEF)</div>
+    <div class="ofp-route" id="ofp-route">Aguardando dados detalhados do NewSky...</div>
+    <div class="detail-section-title" id="fix-heading">FIXOS E PONTOS DE NAVEGAÇÃO</div>
+    <div class="fixes-list" id="fixes-list"></div>
+    <p class="detail-state" id="details-message"></p>
   </section>
   <section class="below">
     <article class="info-panel">
@@ -128,8 +171,8 @@
       <div class="connection"><span>Aeroportos · referência ICAO</span><strong id="status-airports">Aguardando</strong></div>
     </article>
     <article class="info-panel">
-      <h3>Diagnóstico de posições</h3>
-      <p>O mapa localiza aeronaves por <code>lastState.location</code> do NewSky. Ao passar o mouse, desenha uma <strong>rota esquemática</strong> entre origem, aeronave e destino — não os waypoints reais do plano SimBrief. Clique para fixar e enquadrar a rota.</p>
+      <h3>Diagnóstico operacional</h3>
+      <p>O mapa localiza aeronaves por <code>lastState.location</code> do NewSky. Ao passar o mouse ou clicar no avião, a V5 consulta os detalhes do voo: <strong>rota do SimBrief, fixos, trajetória percorrida e telemetria</strong>. Na falta de detalhes, a rota esquemática da V4 continua funcionando.</p>
       <details class="diag"><summary>Ver diagnóstico técnico da consulta</summary><pre id="diagnostic">Aguardando dados...</pre></details>
     </article>
   </section>
@@ -162,6 +205,13 @@
   let airportIndex = null;
   let airportLoading = null;
   let airportError = null;
+  const DETAIL_ENDPOINT='/api/operacoes-detalhe';
+  const DETAIL_TTL_MS=45000;
+  let detailCache=new Map();
+  let detailPending=new Map();
+  let hoverLoadTimer=null;
+  let detailFailures={};
+
   const AIRPORT_DATA_URLS = [
     'https://cdn.jsdelivr.net/gh/mwgg/Airports@master/airports.json',
     'https://raw.githubusercontent.com/mwgg/Airports/master/airports.json'
@@ -260,11 +310,70 @@
       fillOpacity:1,interactive:false,bubblingMouseEvents:false}).addTo(routeLayer)
       .bindTooltip(`${safe(icao)} · ${title}`,{permanent:true,direction:'top',offset:[0,-8],className:'airport-route-label'});
   }
+  function detailCached(id){
+    const cached=detailCache.get(id);
+    return cached && cached.expires>Date.now()?cached.value:null;
+  }
+  async function fetchDetails(f,force=false){
+    if(!f || !/^[a-f0-9]{24}$/i.test(f.newskyId))return null;
+    if(!force){const cached=detailCached(f.id);if(cached)return cached;}
+    if(detailPending.has(f.id))return detailPending.get(f.id);
+    const task=(async()=>{
+      const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),17000);
+      try{
+        const response=await fetch(`${DETAIL_ENDPOINT}?airline=${encodeURIComponent(f.airline)}&id=${encodeURIComponent(f.newskyId)}`,
+          {cache:'no-store',headers:{Accept:'application/json'},signal:ctl.signal});
+        const json=await response.json().catch(()=>({}));
+        if(!response.ok || json.error)throw Error(json.error||`HTTP ${response.status}`);
+        if(json.airline!==f.airline || json.id!==f.newskyId)throw Error('Dados detalhados não correspondem ao voo.');
+        const detail={...json, fixes:Array.isArray(json.fixes)?json.fixes:[],
+          path:Array.isArray(json.path)?json.path:[]};
+        detailFailures[f.id]=null;
+        detailCache.set(f.id,{value:detail,expires:Date.now()+DETAIL_TTL_MS});
+        return detail;
+      }catch(error){
+        detailFailures[f.id]=error.name==='AbortError'?'Tempo limite da consulta detalhada.':String(error.message||error);
+        detailCache.set(f.id,{value:{error:detailFailures[f.id]},expires:Date.now()+15000});
+        return detailCache.get(f.id).value;
+      }finally{clearTimeout(timer);detailPending.delete(f.id);
+        if(hoveredFlightId===f.id || pinnedFlightId===f.id)drawSelectedRoute();
+        if(pinnedFlightId===f.id)showSelectedPanel(f);
+        const marker=markersById.get(f.id);
+        if(marker?.isPopupOpen())marker.setPopupContent(popupHtml(f));
+      }
+    })();
+    detailPending.set(f.id,task);
+    return task;
+  }
+  function onHoverFlight(f){
+    clearTimeout(hoverLoadTimer);
+    hoveredFlightId=f.id;
+    drawSelectedRoute();
+    hoverLoadTimer=setTimeout(()=>{
+      if(hoveredFlightId===f.id)fetchDetails(f);
+    },220);
+  }
+  function onLeaveFlight(f){
+    clearTimeout(hoverLoadTimer);
+    if(hoveredFlightId===f.id)hoveredFlightId=null;
+    drawSelectedRoute();
+  }
+  function pointsFromPlan(detail){
+    return (detail?.fixes||[]).filter(pt=>pointValid(pt));
+  }
+  function pointValid(p){
+    return p && Number.isFinite(Number(p.lat)) && Number.isFinite(Number(p.lon)) &&
+      Number(p.lat)>=-90 && Number(p.lat)<=90 && Number(p.lon)>=-180 && Number(p.lon)<=180;
+  }
   function routeBounds(f){
     if(!f?.position)return [];
-    const origin=airportOf(f,'dep'),destination=airportOf(f,'arr');
-    return [origin,[f.position.lat,f.position.lon],destination].filter(Boolean)
-      .map(point=>Array.isArray(point)?point:[point.lat,point.lon]);
+    const detail=detailCached(f.id);
+    const fixes=pointsFromPlan(detail);
+    const origin=detail?.airports?.dep?.position || airportOf(f,'dep');
+    const destination=detail?.airports?.arr?.position || airportOf(f,'arr');
+    const pts=fixes.length>=2 ? fixes.map(p=>[p.lat,p.lon]) : [origin,destination].filter(pointValid).map(p=>[p.lat,p.lon]);
+    pts.push([f.position.lat,f.position.lon]);
+    return pts;
   }
   function focusRoute(f){
     if(!map)return;
@@ -272,40 +381,128 @@
     if(points.length>=2)map.fitBounds(L.latLngBounds(points),{padding:[60,60],maxZoom:8});
     else if(points.length===1)map.flyTo(points[0],7);
   }
+  function drawSimplified(f,color){
+    const detail=detailCached(f.id);
+    const origin=detail?.airports?.dep?.position||airportOf(f,'dep');
+    const destination=detail?.airports?.arr?.position||airportOf(f,'arr');
+    const here=[f.position.lat,f.position.lon];
+    if(pointValid(origin)){
+      L.polyline([[origin.lat,origin.lon],here],{color,weight:3,opacity:.9,interactive:false}).addTo(routeLayer);
+      routeLabel(origin,f.dep,'Origem',color);
+    }
+    if(pointValid(destination)){
+      L.polyline([here,[destination.lat,destination.lon]],{color,weight:3,opacity:.9,
+        dashArray:'9 8',interactive:false}).addTo(routeLayer);
+      routeLabel(destination,f.arr,'Destino',color);
+    }
+    return pointValid(origin)||pointValid(destination);
+  }
   function drawSelectedRoute(){
     if(!map || !routeLayer)return;
     routeLayer.clearLayers();
     const selectedId=hoveredFlightId || pinnedFlightId;
-    const f=visibleFlights().find(f=>f.id===selectedId && f.position);
+    const f=visibleFlights().find(item=>item.id===selectedId && item.position);
     const hint=el('route-hint');
-    if(!f){hint.innerHTML='Passe o mouse sobre um avião para ver sua rota.<br>Clique para fixar e enquadrar.';return;}
-    const origin=airportOf(f,'dep'), destination=airportOf(f,'arr');
-    const here=[f.position.lat,f.position.lon],color=routeColor(f);
-    if(origin){
-      // Segmento origem → posição atual: linha contínua, puramente esquemática.
-      L.polyline([[origin.lat,origin.lon],here],{color,weight:3,opacity:.95,interactive:false}).addTo(routeLayer);
-      routeLabel(origin,f.dep,'Origem',color);
+    if(!f){hint.innerHTML='Passe o mouse para ver a rota SimBrief e o caminho voado.<br>Clique para fixar e ver a telemetria.';return;}
+    const detail=detailCached(f.id),color=routeColor(f);
+    const showPlanned=el('show-planned').checked,showActual=el('show-actual').checked,showFixes=el('show-fixes').checked;
+    const fixes=pointsFromPlan(detail);
+    const planAvailable=fixes.length>=2;
+    let display='';
+    if(showPlanned && planAvailable){
+      L.polyline(fixes.map(p=>[p.lat,p.lon]),{color,weight:3.5,opacity:.98,interactive:false,
+        lineJoin:'round'}).addTo(routeLayer);
+      display=`Plano SimBrief: ${fixes.length} pontos`;
+      if(showFixes){
+        for(let i=0;i<fixes.length;i++){
+          const fix=fixes[i],special=/^(TOD|TOC|T\/D|T\/C)$/i.test(fix.ident);
+          const major=fix.type==='apt'||special||i===0||i===fixes.length-1;
+          const label=safe(fix.ident);
+          L.circleMarker([fix.lat,fix.lon],{radius:major?4.8:3.4,color:'#07202b',weight:1.5,
+            fillColor:special?'#ffb46f':color,fillOpacity:1,bubblingMouseEvents:false})
+            .bindTooltip(`${label}${special?' · top of descent/climb':''}`,{
+              permanent:true,direction:'top',offset:[0,-5],className:'fix-route-label',opacity:.96
+            }).addTo(routeLayer);
+        }
+      }
+    }else if(showPlanned){
+      drawSimplified(f,color);
+      display=detail?.error?'Rota simplificada (detalhes indisponíveis)':
+        detailPending.has(f.id)?'Rota simplificada · consultando plano...':
+        detail?'Rota simplificada · sem OFP disponível':'Rota simplificada · preparando OFP...';
+    }else{display='Plano oculto';}
+    const actual=Array.isArray(detail?.path)?detail.path.filter(pointValid):[];
+    if(showActual && actual.length>=2){
+      L.polyline(actual.map(p=>[p.lat,p.lon]),{color:'#ffab67',weight:3,opacity:.9,
+        dashArray:'8 6',lineJoin:'round',interactive:false}).addTo(routeLayer);
+      display+=` · Percorrido: ${actual.length} pontos`;
     }
-    if(destination){
-      // Segmento posição atual → destino: tracejado para distinguir a parte restante.
-      L.polyline([here,[destination.lat,destination.lon]],{color,weight:3,opacity:.95,
-        dashArray:'9 8',interactive:false}).addTo(routeLayer);
-      routeLabel(destination,f.arr,'Destino',color);
+    const state=pinnedFlightId===f.id?'Rota fixada':'Rota em destaque';
+    hint.innerHTML=`<strong style="color:${color}">${safe(f.callsign)} · ${state}</strong><br>${safe(f.dep)} → ${safe(f.arr)}<br>${safe(display)}`;
+  }
+  function textNumber(value,digits=0){
+    const x=num(value);
+    return x===null?'—':x.toLocaleString('pt-BR',{maximumFractionDigits:digits,minimumFractionDigits:digits});
+  }
+  function renderTelemetry(f,detail){
+    const p=detail?.telemetry || {};
+    const items=[
+      ['ALTITUDE',p.altitudeFt,'ft',0],['GROUND SPEED',p.groundSpeedKt,'kt',0],
+      ['IAS',p.indicatedSpeedKt,'kt',0],['TAS',p.trueSpeedKt,'kt',0],
+      ['VERTICAL SPEED',p.verticalSpeedFpm,'ft/min',0],['HEADING',p.heading??f.position?.heading,'°',0]
+    ];
+    el('telemetry-grid').innerHTML=items.map(([name,value,unit,digits])=>
+      `<div class="telemetry-cell"><small>${safe(name)}</small><strong>${textNumber(value,digits)}${value===null||value===undefined?'':' '+safe(unit)}</strong></div>`).join('');
+  }
+  function showSelectedPanel(f){
+    if(pinnedFlightId!==f.id)return;
+    el('selected-panel').hidden=false;
+    el('detail-title').textContent=f.callsign+' · '+f.dep+' → '+f.arr;
+    el('detail-description').textContent=f.pilot+' · '+f.aircraft+' · '+f.network;
+    el('detail-badge').textContent=f.airline+' · NewSky / SimBrief';
+    const detail=detailCached(f.id);
+    renderTelemetry(f,detail);
+    const loading=detailPending.has(f.id);
+    const error=detail?.error;
+    const plan=firstText(detail?.plannedRoute);
+    el('ofp-route').textContent=loading&&!detail?'Consultando plano de voo no NewSky...':
+      plan || (error?'Plano detalhado indisponível. A rota simplificada permanece ativa.':
+      detail?'Não há OFP/SimBrief disponível para este voo.':'Aguardando consulta detalhada...');
+    const fixList=el('fixes-list');fixList.replaceChildren();
+    const fixes=pointsFromPlan(detail);
+    for(const fix of fixes){
+      const chip=document.createElement('span');chip.className='fix-pill'+(/^(TOD|TOC)$/i.test(fix.ident)?' special':'');
+      chip.textContent=fix.ident;chip.title=`${fix.stage||fix.type||'FIX'} · ${Number(fix.lat).toFixed(4)}, ${Number(fix.lon).toFixed(4)}`;
+      fixList.appendChild(chip);
     }
-    const loading=!airportIndex && !airportError && airportLoading;
-    const missing=[];
-    if(!origin)missing.push('origem');
-    if(!destination)missing.push('destino');
-    const extra=missing.length ? (loading?' · carregando aeroportos...':' · faltam coordenadas: '+missing.join(' e ')) : '';
-    const mode=pinnedFlightId===f.id?'Rota fixada':'Rota em destaque';
-    hint.innerHTML=`<strong style="color:${color}">${safe(f.callsign)} · ${mode}</strong><br>${safe(f.dep)} → ${safe(f.arr)}${safe(extra)}`;
+    el('fix-heading').textContent='FIXOS E PONTOS DE NAVEGAÇÃO'+(fixes.length?' · '+fixes.length:'');
+    const pathLength=Array.isArray(detail?.path)?detail.path.length:0;
+    el('details-message').textContent=error?'Consulta detalhada: '+error:
+      loading?'Atualizando informações do voo...':
+      detail?`Trajeto real registrado: ${pathLength} pontos. O histórico e os fixos dependem do que o NewSky fornece para cada voo.`:
+      'Aguarde a consulta de detalhes. As aeronaves e as rotas simplificadas seguem disponíveis.';
+  }
+  function popupHtml(f){
+    const p=f.position,detail=detailCached(f.id),t=detail?.telemetry||{};
+    return `<b>${safe(f.callsign)} · ${safe(f.airline)}</b><div>${safe(f.pilot)}</div>`+
+      `<div>${safe(f.dep)} → ${safe(f.arr)} · ${safe(f.aircraft)}</div>`+
+      `<small>${safe(f.network)} · Rumo ${textNumber(t.heading??p.heading)}° · Lat ${p.lat.toFixed(4)}, Lon ${p.lon.toFixed(4)}`+
+      `${t.altitudeFt!=null?' · ALT '+textNumber(t.altitudeFt)+' ft':''}`+
+      `${t.groundSpeedKt!=null?' · GS '+textNumber(t.groundSpeedKt)+' kt':''}</small>`;
   }
   function pinFlight(f){
     if(!f?.position || !map)return;
     pinnedFlightId=f.id;
     hoveredFlightId=null;
+    clearTimeout(hoverLoadTimer);
     drawSelectedRoute();
     focusRoute(f);
+    showSelectedPanel(f);
+    fetchDetails(f).then(()=>{
+      if(pinnedFlightId!==f.id)return;
+      drawSelectedRoute();
+      focusRoute(f);
+    });
     const marker=markersById.get(f.id);
     if(marker)marker.openPopup();
   }
@@ -334,7 +531,8 @@
     const flightNumber=firstText(row?.flightNumber,row?.number);
     const possibleCallsign=firstText(row?.callsign);
     const callsign=possibleCallsign || (flightNumber.toUpperCase().startsWith(va)?flightNumber:va+flightNumber) || va;
-    return { id:va+':'+firstText(row?._id,row?.id,callsign+'-'+index),airline:va,callsign,
+    return { id:va+':'+firstText(row?._id,row?.id,callsign+'-'+index),
+      newskyId:firstText(row?._id,row?.id),airline:va,callsign,
       pilot:firstText(row?.pilot?.fullname,row?.pilot?.name,row?.pilotName,'Piloto não informado'),
       dep:firstText(row?.dep?.icao,row?.departure?.icao,'---'),arr:firstText(row?.arr?.icao,row?.arrival?.icao,'---'),
       aircraft:firstText(row?.aircraft?.airframe?.ident,row?.aircraft?.ident,row?.aircraft?.type,'N/D'),
@@ -366,7 +564,8 @@
     // A rota fica sobre as cartas e abaixo dos ícones das aeronaves.
     routeLayer=L.layerGroup().addTo(map);
     markerLayer=L.layerGroup().addTo(map);
-    map.on('click',()=>{pinnedFlightId=null;hoveredFlightId=null;drawSelectedRoute();});
+    map.on('click',()=>{pinnedFlightId=null;hoveredFlightId=null;
+      el('selected-panel').hidden=true;drawSelectedRoute();});
   }
   function mapIcon(f){
     return L.divIcon({className:'flight-icon',iconSize:[32,32],iconAnchor:[16,16],popupAnchor:[0,-12],
@@ -386,18 +585,14 @@
     markerLayer.clearLayers();markersById.clear();
     hoveredFlightId=null;
     // Depois de 60s, a rota fixada acompanha a nova posição (sem dar zoom novamente).
-    if(pinnedFlightId && !visibleFlights().some(f=>f.id===pinnedFlightId && f.position))pinnedFlightId=null;
+    if(pinnedFlightId && !visibleFlights().some(f=>f.id===pinnedFlightId && f.position)){pinnedFlightId=null;el('selected-panel').hidden=true;}
     const shown=visibleFlights();
     const plotted=shown.filter(f=>f.position);
     for(const f of plotted){
       const p=f.position;
-      const popup=`<b>${safe(f.callsign)} · ${safe(f.airline)}</b><div>${safe(f.pilot)}</div>`+
-        `<div>${safe(f.dep)} → ${safe(f.arr)} · ${safe(f.aircraft)}</div>`+
-        `<small>${safe(f.network)} · Rumo ${Math.round(p.heading)}° · Lat ${p.lat.toFixed(4)}, Lon ${p.lon.toFixed(4)}`+
-        `${p.altitude!==null?' · ALT '+safe(p.altitude):''}${p.speed!==null?' · SPD '+safe(p.speed):''}</small>`;
-      const marker=L.marker([p.lat,p.lon],{icon:mapIcon(f)}).bindPopup(popup);
-      marker.on('mouseover',()=>{hoveredFlightId=f.id;drawSelectedRoute();});
-      marker.on('mouseout',()=>{if(hoveredFlightId===f.id)hoveredFlightId=null;drawSelectedRoute();});
+      const marker=L.marker([p.lat,p.lon],{icon:mapIcon(f)}).bindPopup(()=>popupHtml(f));
+      marker.on('mouseover',()=>onHoverFlight(f));
+      marker.on('mouseout',()=>onLeaveFlight(f));
       marker.on('click',event=>{
         if(event.originalEvent)L.DomEvent.stopPropagation(event.originalEvent);
         pinFlight(f);
@@ -444,7 +639,7 @@
         .map(({path,value})=>path+': '+(typeof value==='object'?Object.keys(value).slice(0,12).join(', '):typeof value)).join(' | '):'Nenhum campo de posição conhecido na amostra';
       return `${airline} [${url}]: ${state}\nVoos: ${count}; com posição: ${mapped}\nCampos recebidos: ${keys}\nCandidatos de posição: ${candidates||'Nenhum identificado'}`;
     }).join('\n\n');
-    el('diagnostic').textContent=text+'\n\nAeroportos: '+(airportIndex?'base global carregada':airportError?'indisponível: '+airportError:'consulta pendente')+'\nRota: origem → posição atual (contínuo); posição atual → destino (tracejado).';
+    el('diagnostic').textContent=text+'\n\nAeroportos: '+(airportIndex?'base global carregada':airportError?'indisponível: '+airportError:'consulta pendente')+'\nDetalhes: /api/operacoes-detalhe?airline=...&id=... (consultado sob demanda).\nSimBrief: ofp.content.navlog.fix; Trajeto: flight.path; Telemetria: lastState.';
   }
   async function refresh(){
     if(isFetching)return;
@@ -466,6 +661,9 @@
       el('stat-mapped').textContent=flights.filter(f=>f.position).length;
       if(flights.some(f=>f.position && (!f.depPosition || !f.arrPosition)))void loadAirports();
       redraw(false);renderDiagnostics();
+      const pinned=flights.find(f=>f.id===pinnedFlightId);
+      if(pinned){showSelectedPanel(pinned);fetchDetails(pinned);}
+      else if(pinnedFlightId){pinnedFlightId=null;el('selected-panel').hidden=true;}
       const timestamp=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
       el('last-updated').textContent=(vvx.error||vax.error?'Consulta parcial':'Atualizado')+' · '+timestamp;
     }finally{isFetching=false;el('refresh').disabled=false;el('refresh').textContent='↻ Atualizar agora';}
@@ -476,6 +674,9 @@
     redraw(true);
   }));
   el('search').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();redraw(false);});
+  for(const id of ['show-planned','show-actual','show-fixes']){
+    el(id).addEventListener('change',drawSelectedRoute);
+  }
   el('fit-map').addEventListener('click',fitMap);
   el('refresh').addEventListener('click',refresh);
   initMap();refresh();setInterval(refresh,REFRESH_MS);
