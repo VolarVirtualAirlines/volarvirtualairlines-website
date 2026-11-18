@@ -382,7 +382,10 @@ main.vlo{background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 4
   const el = id => document.getElementById(id);
   const safe = text => String(text ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   let flights = [];
-  let filter = 'ALL';
+  // Permite atalhos externos: ?va=VAX ou ?va=VVX; mantém ALL como padrão.
+  const requestedVA = new URLSearchParams(window.location.search).get('va');
+  const initialVA = String(requestedVA || '').trim().toUpperCase();
+  let filter = (initialVA === 'VAX' || initialVA === 'VVX') ? initialVA : 'ALL';
   let query = '';
   let map = null;
   let markerLayer = null;
@@ -918,6 +921,12 @@ main.vlo{background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 4
       el('service-sync').textContent=(vvx.error&&vax.error?'Última tentativa: ':vvx.error||vax.error?'Sincronização parcial: ':'Última sincronização: ')+timestamp;
     }finally{isFetching=false;el('refresh').disabled=false;el('refresh').textContent='↻ Atualizar agora';}
   }
+  // Atualiza a interface do filtro antes da primeira busca, inclusive ao abrir por link da VAX.
+  document.querySelectorAll('[data-airline]').forEach(btn=>{
+    const active = btn.dataset.airline === filter;
+    btn.classList.toggle('active',active);
+    btn.setAttribute('aria-pressed',String(active));
+  });
   document.querySelectorAll('[data-airline]').forEach(btn=>btn.addEventListener('click',()=>{
     filter=btn.dataset.airline;
     document.querySelectorAll('[data-airline]').forEach(other=>{const active=other===btn;other.classList.toggle('active',active);other.setAttribute('aria-pressed',String(active));});
