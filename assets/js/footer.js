@@ -115,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                     Volar Virtual Airlines
                                 </a>
                             </li>
-                            </li>
 
                             <li>
                                 <a href="cargo.html">Volar Cargo</a>
@@ -309,36 +308,35 @@ document.addEventListener("DOMContentLoaded", () => {
         return String(value).padStart(2, "0");
     }
 
+    // Mesmo fuso usado no cabeçalho do Volar Live Operations.
+    const saoPauloTime = new Intl.DateTimeFormat("pt-BR", {
+        timeZone: "America/Sao_Paulo",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23"
+    });
+
+    const saoPauloOffset = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Sao_Paulo",
+        timeZoneName: "shortOffset"
+    });
+
     function getUtcOffset(date) {
-        const offsetInMinutes = -date.getTimezoneOffset();
-
-        if (offsetInMinutes === 0) {
-            return "UTC";
-        }
-
-        const signal = offsetInMinutes >= 0 ? "+" : "-";
-        const absoluteOffset = Math.abs(offsetInMinutes);
-        const hours = Math.floor(absoluteOffset / 60);
-        const minutes = absoluteOffset % 60;
-
-        if (minutes === 0) {
-            return `UTC${signal}${hours}`;
-        }
-
-        return `UTC${signal}${formatTime(hours)}:${formatTime(minutes)}`;
+        const part = saoPauloOffset.formatToParts(date).find(p => p.type === "timeZoneName");
+        return (part?.value || "GMT-3").replace("GMT", "UTC");
     }
 
     function updateFooterClock() {
         const now = new Date();
 
-        const localHours = formatTime(now.getHours());
-        const localMinutes = formatTime(now.getMinutes());
+        const localTime = saoPauloTime.format(now);
 
         const utcHours = formatTime(now.getUTCHours());
         const utcMinutes = formatTime(now.getUTCMinutes());
 
         if (localTimeElement) {
-            localTimeElement.textContent = `${localHours}:${localMinutes}`;
+            localTimeElement.textContent = localTime;
+            localTimeElement.title = "Horário de São Paulo";
             localTimeElement.dateTime = now.toISOString();
         }
 
