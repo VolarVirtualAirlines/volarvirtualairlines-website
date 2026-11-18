@@ -76,9 +76,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 </a>
 
                 <div class="menu-dropdown-content">
+                    <!-- VOLAR LIVE OPERATIONS: centro oficial de voos VVX + VAX -->
+                    <a href="volar_live_operations.html" class="menu-live-link">
+                        <span class="menu-live-text"><i class="fas fa-satellite-dish" aria-hidden="true"></i> Volar Live Operations</span>
+                        <span class="menu-live-label"><span class="menu-live-dot" aria-hidden="true"></span> AO VIVO</span>
+                    </a>
                     <a href="rotas.html">Rotas Oficiais</a>
-                    <a href="index.html#mapa">Mapa Online</a>
-                    <a href="index.html#voos-reais">Voos em Tempo Real</a>
                     <a href="index.html#voos-recentes">Voos Recentes</a>
                     <a href="ferramentas.html">Ferramentas Recomendadas</a>
                 </div>
@@ -263,6 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "news.html": "volar",
         "staff.html": "volar",
         "rotas.html": "operacoes",
+        "volar_live_operations.html": "operacoes",
         "ferramentas.html": "operacoes",
         "cargo.html": "divisoes",
         "executive.html": "divisoes",
