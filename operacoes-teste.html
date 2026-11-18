@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Central de operações em teste — voos ativos VVX e VAX.">
-  <title>Volar Operations | VVX + VAX — Teste V5</title>
+  <title>Volar Operations | VVX + VAX — Teste V5.1</title>
   <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -49,7 +49,10 @@
     .flight-icon{background:transparent;border:0}.plane-marker{display:grid;place-items:center;height:32px;width:32px;border-radius:50%;border:2px solid #fff9;background:var(--vvx);color:#07202b;box-shadow:0 4px 14px #000b;font-size:20px}.plane-marker.vax{background:var(--vax)}.plane-marker .plane-rot{display:block;line-height:1;transform:rotate(var(--heading,0deg))}
     /* OSM padrão estilizado apenas na camada de tiles para manter o tema escuro sem API key. */
     .leaflet-tile-pane{filter:grayscale(.95) invert(1) hue-rotate(180deg) brightness(.74) contrast(1.1)}
-    .leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#0d2538;color:#e9f5ff}.leaflet-popup-content{font-family:Inter,sans-serif;line-height:1.6}.leaflet-popup-content b{font-size:13px}.leaflet-popup-content small{color:#b4c9d9}
+    /* O cartão do voo aparece somente ao passar o mouse; não altera o traçado. */
+    .leaflet-tooltip.flight-summary-card{background:#0d2538;color:#e9f5ff;border:1px solid #35566b;box-shadow:0 7px 22px #0009;border-radius:9px;padding:10px 13px;font:12px/1.65 Inter,sans-serif;white-space:nowrap;pointer-events:none}
+    .leaflet-tooltip.flight-summary-card b{font-size:13px}
+    .leaflet-tooltip-top.flight-summary-card:before{border-top-color:#0d2538}
     .list-panel{border:1px solid var(--border);background:linear-gradient(180deg,#0d2133,#0a1a2b);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
     .list-head{padding:20px 19px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
     .list-head h2{font-size:17px}.list-head small{color:var(--muted);font-size:11px}
@@ -131,14 +134,14 @@
     <label class="route-option"><input id="show-planned" type="checkbox" checked><span class="route-key"></span> Plano SimBrief</label>
     <label class="route-option"><input id="show-actual" type="checkbox" checked><span class="route-key actual"></span> Trajeto percorrido</label>
     <label class="route-option"><input id="show-fixes" type="checkbox" checked> Mostrar fixos</label>
-    <span class="route-help">Passe o mouse no avião ou clique para fixar a rota</span>
+    <span class="route-help">Passe o mouse: resumo do voo · Clique: rota e telemetria</span>
   </div>
   <section class="operations" aria-label="Mapa e relação de voos">
     <div class="map-wrap">
       <div id="flight-map" aria-label="Mapa de posições atuais das aeronaves"></div>
       <div id="map-note" class="map-note"><strong>Inicializando mapa...</strong> Carregando os dados das duas companhias.</div>
       <div class="map-legend"><span><i class="legend-dot vvx-dot"></i> VVX</span><span><i class="legend-dot vax-dot"></i> VAX</span></div>
-      <div id="route-hint" class="route-hint" aria-live="polite">Passe o mouse para ver a rota SimBrief e o caminho voado.<br>Clique para fixar e ver a telemetria.</div>
+      <div id="route-hint" class="route-hint" aria-live="polite">Passe o mouse: resumo do voo.<br>Clique: rota, fixos e telemetria.</div>
     </div>
     <aside class="list-panel" aria-label="Voos em andamento">
       <div class="list-head"><h2>Voos em andamento</h2><small id="list-count">—</small></div>
@@ -172,7 +175,7 @@
     </article>
     <article class="info-panel">
       <h3>Diagnóstico operacional</h3>
-      <p>O mapa localiza aeronaves por <code>lastState.location</code> do NewSky. Ao passar o mouse ou clicar no avião, a V5 consulta os detalhes do voo: <strong>rota do SimBrief, fixos, trajetória percorrida e telemetria</strong>. Na falta de detalhes, a rota esquemática da V4 continua funcionando.</p>
+      <p>O mapa localiza aeronaves por <code>lastState.location</code> do NewSky. Ao passar o mouse, exibe apenas o resumo do voo. <strong>Ao clicar</strong>, consulta e exibe a rota do SimBrief, os fixos, a trajetória percorrida e a telemetria. Na falta de detalhes, a rota esquemática permanece disponível.</p>
       <details class="diag"><summary>Ver diagnóstico técnico da consulta</summary><pre id="diagnostic">Aguardando dados...</pre></details>
     </article>
   </section>
@@ -198,9 +201,8 @@
   let hasCenteredMap = false;
   let failures = {};
   let rawSamples = {};
-  // Estado do traçado: hover temporário e clique fixado (inclusive em telas sensíveis ao toque).
+  // O traçado é exibido SOMENTE após clique ou toque; hover mostra apenas o cartão resumido.
   let routeLayer = null;
-  let hoveredFlightId = null;
   let pinnedFlightId = null;
   let airportIndex = null;
   let airportLoading = null;
@@ -209,7 +211,6 @@
   const DETAIL_TTL_MS=45000;
   let detailCache=new Map();
   let detailPending=new Map();
-  let hoverLoadTimer=null;
   let detailFailures={};
 
   const AIRPORT_DATA_URLS = [
@@ -336,27 +337,14 @@
         detailCache.set(f.id,{value:{error:detailFailures[f.id]},expires:Date.now()+15000});
         return detailCache.get(f.id).value;
       }finally{clearTimeout(timer);detailPending.delete(f.id);
-        if(hoveredFlightId===f.id || pinnedFlightId===f.id)drawSelectedRoute();
-        if(pinnedFlightId===f.id)showSelectedPanel(f);
-        const marker=markersById.get(f.id);
-        if(marker?.isPopupOpen())marker.setPopupContent(popupHtml(f));
+        if(pinnedFlightId===f.id){
+          drawSelectedRoute();
+          showSelectedPanel(f);
+        }
       }
     })();
     detailPending.set(f.id,task);
     return task;
-  }
-  function onHoverFlight(f){
-    clearTimeout(hoverLoadTimer);
-    hoveredFlightId=f.id;
-    drawSelectedRoute();
-    hoverLoadTimer=setTimeout(()=>{
-      if(hoveredFlightId===f.id)fetchDetails(f);
-    },220);
-  }
-  function onLeaveFlight(f){
-    clearTimeout(hoverLoadTimer);
-    if(hoveredFlightId===f.id)hoveredFlightId=null;
-    drawSelectedRoute();
   }
   function pointsFromPlan(detail){
     return (detail?.fixes||[]).filter(pt=>pointValid(pt));
@@ -400,10 +388,10 @@
   function drawSelectedRoute(){
     if(!map || !routeLayer)return;
     routeLayer.clearLayers();
-    const selectedId=hoveredFlightId || pinnedFlightId;
+    const selectedId=pinnedFlightId;
     const f=visibleFlights().find(item=>item.id===selectedId && item.position);
     const hint=el('route-hint');
-    if(!f){hint.innerHTML='Passe o mouse para ver a rota SimBrief e o caminho voado.<br>Clique para fixar e ver a telemetria.';return;}
+    if(!f){hint.innerHTML='Passe o mouse: resumo do voo.<br>Clique: rota, fixos e telemetria.';return;}
     const detail=detailCached(f.id),color=routeColor(f);
     const showPlanned=el('show-planned').checked,showActual=el('show-actual').checked,showFixes=el('show-fixes').checked;
     const fixes=pointsFromPlan(detail);
@@ -437,8 +425,7 @@
         dashArray:'8 6',lineJoin:'round',interactive:false}).addTo(routeLayer);
       display+=` · Percorrido: ${actual.length} pontos`;
     }
-    const state=pinnedFlightId===f.id?'Rota fixada':'Rota em destaque';
-    hint.innerHTML=`<strong style="color:${color}">${safe(f.callsign)} · ${state}</strong><br>${safe(f.dep)} → ${safe(f.arr)}<br>${safe(display)}`;
+    hint.innerHTML=`<strong style="color:${color}">${safe(f.callsign)} · Rota selecionada</strong><br>${safe(f.dep)} → ${safe(f.arr)}<br>${safe(display)}`;
   }
   function textNumber(value,digits=0){
     const x=num(value);
@@ -482,19 +469,15 @@
       detail?`Trajeto real registrado: ${pathLength} pontos. O histórico e os fixos dependem do que o NewSky fornece para cada voo.`:
       'Aguarde a consulta de detalhes. As aeronaves e as rotas simplificadas seguem disponíveis.';
   }
-  function popupHtml(f){
-    const p=f.position,detail=detailCached(f.id),t=detail?.telemetry||{};
+  function summaryCardHtml(f){
+    // Somente os três campos existentes: identificação, piloto e rota/aeronave.
+    // O tooltip abre no hover e fecha no mouseout sem buscar dados detalhados.
     return `<b>${safe(f.callsign)} · ${safe(f.airline)}</b><div>${safe(f.pilot)}</div>`+
-      `<div>${safe(f.dep)} → ${safe(f.arr)} · ${safe(f.aircraft)}</div>`+
-      `<small>${safe(f.network)} · Rumo ${textNumber(t.heading??p.heading)}° · Lat ${p.lat.toFixed(4)}, Lon ${p.lon.toFixed(4)}`+
-      `${t.altitudeFt!=null?' · ALT '+textNumber(t.altitudeFt)+' ft':''}`+
-      `${t.groundSpeedKt!=null?' · GS '+textNumber(t.groundSpeedKt)+' kt':''}</small>`;
+      `<div>${safe(f.dep)} → ${safe(f.arr)} · ${safe(f.aircraft)}</div>`;
   }
   function pinFlight(f){
     if(!f?.position || !map)return;
     pinnedFlightId=f.id;
-    hoveredFlightId=null;
-    clearTimeout(hoverLoadTimer);
     drawSelectedRoute();
     focusRoute(f);
     showSelectedPanel(f);
@@ -503,8 +486,6 @@
       drawSelectedRoute();
       focusRoute(f);
     });
-    const marker=markersById.get(f.id);
-    if(marker)marker.openPopup();
   }
   function unwrap(data){
     if(Array.isArray(data))return data;
@@ -564,7 +545,7 @@
     // A rota fica sobre as cartas e abaixo dos ícones das aeronaves.
     routeLayer=L.layerGroup().addTo(map);
     markerLayer=L.layerGroup().addTo(map);
-    map.on('click',()=>{pinnedFlightId=null;hoveredFlightId=null;
+    map.on('click',()=>{pinnedFlightId=null;
       el('selected-panel').hidden=true;drawSelectedRoute();});
   }
   function mapIcon(f){
@@ -583,16 +564,16 @@
   function updateMap(recenter=false){
     if(!map)return;
     markerLayer.clearLayers();markersById.clear();
-    hoveredFlightId=null;
     // Depois de 60s, a rota fixada acompanha a nova posição (sem dar zoom novamente).
     if(pinnedFlightId && !visibleFlights().some(f=>f.id===pinnedFlightId && f.position)){pinnedFlightId=null;el('selected-panel').hidden=true;}
     const shown=visibleFlights();
     const plotted=shown.filter(f=>f.position);
     for(const f of plotted){
       const p=f.position;
-      const marker=L.marker([p.lat,p.lon],{icon:mapIcon(f)}).bindPopup(()=>popupHtml(f));
-      marker.on('mouseover',()=>onHoverFlight(f));
-      marker.on('mouseout',()=>onLeaveFlight(f));
+      // Tooltip nativo: apenas resumo no hover, sem rota nem acesso à API detalhada.
+      const marker=L.marker([p.lat,p.lon],{icon:mapIcon(f)}).bindTooltip(summaryCardHtml(f),{
+        direction:'top',offset:[0,-13],opacity:1,className:'flight-summary-card'
+      });
       marker.on('click',event=>{
         if(event.originalEvent)L.DomEvent.stopPropagation(event.originalEvent);
         pinFlight(f);
