@@ -86,7 +86,10 @@
         <div class="hero-floating-box">
             <h1>O Destino de <br> <span style="color: var(--turquoise);">Quem Ama Voar Virtualmente</span></h1>
             <p>Prepare o seu cockpit, alinhe na pista e eleve a sua paixão pela aviação virtual a novos patamares. Faça parte de uma comunidade unida pelo mesmo horizonte: cadastre-se, escolha a sua rota, voe com propósito e divirta-se!</p>
-            <a href="https://newsky.app/airline/vvx/info" target="_blank" rel="noopener noreferrer" class="btn-cadastro-hero">Cadastre-se</a>
+            <div class="hero-cta-actions">
+                <a href="https://newsky.app/airline/vvx/info" target="_blank" rel="noopener noreferrer" class="btn-cadastro-hero">Cadastre-se</a>
+                <a href="volar_live_operations.html" class="btn-live-hero"><i class="fas fa-satellite-dish" aria-hidden="true"></i> Acompanhar Voos ao Vivo</a>
+            </div>
         </div>
     </section>
 
@@ -415,65 +418,68 @@
     </section>
 </section>
     
-    <section id="mapa" class="section">
-        <h2>Mapa de Voos On-Line VVX</h2>
+    <!-- VOLAR LIVE OPERATIONS — ACESSO INSTITUCIONAL NA HOME -->
+    <section id="mapa" class="section dark volar-live-home" aria-labelledby="volar-live-home-title">
+        <!-- Compatibilidade com links antigos: index.html#voos-reais -->
+        <span id="voos-reais" class="volar-live-legacy-anchor" aria-hidden="true"></span>
 
-
-        <!-- ACESSO AO MAPA DE VOOS DA VAX -->
-        <div class="vax-map-info">
-            <div class="vax-map-text">
-                <i class="fas fa-plane-departure"></i>
-        
-                <span>
-                    Acompanhe também os voos dos nossos cadetes
-                    da <strong>Volar Virtual Academy (VAX)</strong>
-                    em tempo real!
-                </span>
+        <div class="volar-live-home-inner">
+            <div class="volar-live-home-copy">
+                <div class="volar-live-kicker"><span class="volar-live-pulse" aria-hidden="true"></span> CENTRO DE OPERAÇÕES • VVX + VAX</div>
+                <h2 id="volar-live-home-title">O céu da Volar <span>em tempo real.</span></h2>
+                <p class="volar-live-home-intro">
+                    Acompanhe os voos da Volar Virtual Airlines e da Volar Virtual Academy
+                    em um único centro operacional. Explore aeronaves, rotas planejadas,
+                    fixos de navegação, trajetórias percorridas e telemetria dos voos.
+                </p>
+                <div class="volar-live-feature-list" aria-label="Recursos do Live Operations">
+                    <span><i class="fas fa-plane" aria-hidden="true"></i> Voos VVX + VAX</span>
+                    <span><i class="fas fa-route" aria-hidden="true"></i> Rotas e fixos SimBrief</span>
+                    <span><i class="fas fa-gauge-high" aria-hidden="true"></i> Telemetria</span>
+                </div>
+                <a href="volar_live_operations.html" class="volar-live-home-button">
+                    <i class="fas fa-satellite-dish" aria-hidden="true"></i>
+                    Acompanhar Voos ao Vivo
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+                <p class="volar-live-home-subnote">Um radar operacional integrado ao ecossistema Volar.</p>
             </div>
-        
-            <a href="vax.html#vax-mapa"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="vax-map-button">
-                Visualizar voos da VAX
-                <i class="fas fa-arrow-up-right-from-square"></i>
-            </a>
-        </div>
-       
-        <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.4); border: 1px solid var(--glass-border); margin-top: 25px;">
-            <iframe 
-              src="https://newsky.app/airline/public/map?style=dark&token=VVX_gFOhy8XuCKJLZ0DUhhHj9kpDUi55Zq" 
-              width="100%" 
-              height="600px" 
-              style="border:none; display: block;">
-            </iframe>
-        </div>
-    </section>
 
-    <section id="voos-reais" class="section dark">
-        <h2>Painel de Voos em Tempo Real VVX</h2>
-        
-        <div id="mensagem-voos">
-            Carregando voos em andamento...
-        </div>
-
-        <div class="tabela-responsiva">
-            <table id="tabela-voos">
-                <thead>
-                    <tr>
-                        <th>Callsign</th>
-                        <th>Piloto</th>
-                        <th>Rota</th>
-                        <th>Aeronave</th>
-                        <th>Tipo</th>
-                        <th>Simulador</th>
-                        <th>Rede</th>
-                    </tr>
-                </thead> 
-                
-                <tbody id="corpo-tabela-voos">
-                </tbody>
-            </table>
+            <!-- Arte estática, sem duplicar chamadas de mapa e APIs da página oficial -->
+            <div class="volar-live-home-preview" aria-label="Ilustração do radar operacional Volar">
+                <div class="volar-live-preview-header">
+                    <span><i class="fas fa-globe-americas" aria-hidden="true"></i> VOLAR LIVE RADAR</span>
+                    <span class="volar-live-preview-chip"><span aria-hidden="true"></span> VVX + VAX</span>
+                </div>
+                <svg class="volar-live-preview-map" viewBox="0 0 520 296" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustração de um mapa com rotas da VVX e da VAX">
+                    <defs>
+                        <pattern id="vlo-grid" width="38" height="38" patternUnits="userSpaceOnUse">
+                            <path d="M38 0H0V38" fill="none" stroke="#355a70" stroke-width="0.65" opacity="0.55"/>
+                        </pattern>
+                        <linearGradient id="vlo-route" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0" stop-color="#18c7d8"/><stop offset="1" stop-color="#7ff3f1"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="520" height="296" fill="#0a2236"/>
+                    <rect width="520" height="296" fill="url(#vlo-grid)"/>
+                    <path d="M120 0L145 22 150 50 178 68 192 103 183 137 217 155 221 183 243 218 224 242 238 296H149L128 253 102 212 113 164 89 125 99 70 75 41 86 0Z" fill="#1c455d" stroke="#477c94" stroke-width="1.4"/>
+                    <path d="M0 15L43 23 70 64 53 104 72 139 51 169 23 145 0 88Z" fill="#17394f" stroke="#477c94" stroke-width="1"/>
+                    <path d="M405 0L397 38 415 78 403 121 424 160 410 204 438 248 440 296H520V0Z" fill="#17394f" stroke="#477c94" stroke-width="1"/>
+                    <path d="M128 61Q189 109 257 150T414 224" stroke="url(#vlo-route)" stroke-width="3" stroke-dasharray="8 6" fill="none"/>
+                    <path d="M169 235Q245 277 366 98" stroke="#bd93fc" stroke-width="2.8" stroke-dasharray="8 7" fill="none"/>
+                    <g fill="#5ce2e6"><circle cx="128" cy="61" r="4"/><circle cx="257" cy="150" r="4"/><circle cx="414" cy="224" r="4"/></g>
+                    <g fill="#bd93fc"><circle cx="169" cy="235" r="4"/><circle cx="366" cy="98" r="4"/></g>
+                    <g transform="translate(257 150) rotate(133)"><path d="M0-16L4-4 15 4 15 8 3 5 3 11 7 15 7 17 0 14-7 17-7 15-3 11-3 5-15 8-15 4-4-4Z" fill="#37d6e2" stroke="#d6ffff" stroke-width="0.7"/></g>
+                    <g transform="translate(270 196) rotate(40)"><path d="M0-16L4-4 15 4 15 8 3 5 3 11 7 15 7 17 0 14-7 17-7 15-3 11-3 5-15 8-15 4-4-4Z" fill="#bd93fc" stroke="#f9efff" stroke-width="0.7"/></g>
+                    <text x="130" y="49" font-size="11" font-family="Inter,Arial,sans-serif" fill="#b9e6ef">ORIGEM</text>
+                    <text x="392" y="246" font-size="11" font-family="Inter,Arial,sans-serif" fill="#b9e6ef">DESTINO</text>
+                </svg>
+                <div class="volar-live-preview-footer">
+                    <span><i class="fas fa-circle" aria-hidden="true"></i> VVX</span>
+                    <span><i class="fas fa-circle" aria-hidden="true"></i> VAX</span>
+                    <small>Prévia ilustrativa • Dados ao vivo no painel</small>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -626,93 +632,8 @@
 <div id="footer-container"></div>
     
 <script>
-        const URL_VOOS = "/voos";
-
-        async function carregarVoosEmTempoReal() {
-            const msgVoos = document.getElementById('mensagem-voos');
-            const tabelaVoos = document.getElementById('tabela-voos');
-            const corpoTabela = document.getElementById('corpo-tabela-voos');
-        
-            try {
-                const resposta = await fetch(URL_VOOS);
-                if (!resposta.ok) throw new Error("Erro ao ler rota interna");
-        
-                const dados = await resposta.json();
-
-                // LOG PARA VOCÊ ANALISAR NO CONSOLE DO NAVEGADOR
-                console.log("JSON BRUTO COMPLETO:", dados)
-        
-                let voos = dados.results || dados.flights || dados.data || [];
-                if (Array.isArray(dados)) {
-                    voos = dados;
-                }
-        
-                if (voos.length === 0) {
-                    msgVoos.innerHTML = "✈️ Nenhum piloto voando no momento. Que tal iniciar um voo?";
-                    tabelaVoos.style.display = 'none';
-                    return;
-                }
-        
-                corpoTabela.innerHTML = '';
-        
-                voos.forEach(voo => {
-                    const prefixo = voo.airline?.icao || 'VVX';
-                    const numeroVoo = voo.flightNumber || '';
-                    const callsign = numeroVoo ? `${prefixo}${numeroVoo}` : 'VOLAR';
-        
-                    const piloto = voo.pilot?.fullname || 'Piloto Virtual';
-                    const dep = voo.dep?.icao || '???';
-                    const arr = voo.arr?.icao || '???';
-                    const acft = voo.aircraft?.airframe?.ident || 'B738';
-
-                    let tipoVooTexto = "✈️ Comercial";
-                    if (voo.type === "pax") tipoVooTexto = "👥 Passageiros";
-                    else if (voo.type === "cargo") tipoVooTexto = "📦 Carga";
-                    if (voo.charter === true) tipoVooTexto = "⭐ Fretado";
-
-                    let simuladorTexto = String(voo.simulator || "MSFS").toUpperCase();
-                    if (simuladorTexto === "MSFS") simuladorTexto = "MSFS";
-                    else if (simuladorTexto === "XP" || simuladorTexto === "XP11" || simuladorTexto === "XP12") simuladorTexto = "X-Plane";
-                    else if (simuladorTexto === "P3D") simuladorTexto = "Prepar3D";
-                    else if (simuladorTexto === "FSX") simuladorTexto = "FSX";
-
-                    let redeTexto = "NEWSKY";
-                    let redeCor = "#2d3748";
-                    if (voo.network && voo.network.name) {
-                        const redeNome = voo.network.name.toLowerCase();
-                        if (redeNome === "ivao") {
-                            redeTexto = "IVAO";
-                            redeCor = "#0d6efd";
-                        } else if (redeNome === "vatsim") {
-                            redeTexto = "VATSIM";
-                            redeCor = "#e67e22";
-                        } else {
-                            redeTexto = redeNome.toUpperCase();
-                            redeCor = "var(--turquoise)";
-                        }
-                    }
-                                            
-                    corpoTabela.innerHTML += `
-                        <tr>
-                            <td style="font-weight: bold; color: var(--turquoise); font-family: var(--font-headers);">${callsign}</td>
-                            <td>👨‍✈️ ${piloto}</td>
-                            <td style="font-weight: 500;">🛫 <span style="color: #4ade80;">${dep}</span> ➔ 🛬 <span style="color: #f97316;">${arr}</span></td>
-                            <td style="color: var(--text-muted); font-weight: 500;">✈️ ${acft}</td>
-                            <td style="color: var(--text-muted); font-size: 0.9em;">${tipoVooTexto}</td>
-                            <td><span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.08); font-size: 0.85em;">${simuladorTexto}</span></td>
-                            <td><span style="background: ${redeCor}; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.85em; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">${redeTexto}</span></td>
-                        </tr>
-                    `;
-                });
-        
-                msgVoos.style.display = 'none';
-                tabelaVoos.style.display = 'table';
-        
-            } catch (erro) {
-                console.error("Erro ao carregar voos:", erro);
-                msgVoos.innerHTML = `<span style="color: #ff5252; font-weight: 600;">⚠️ Não foi possível conectar ao radar de voos ativos no momento.</span>`;
-            }
-        }
+        // O antigo painel de voos ativos foi substituído pelo acesso ao Volar Live Operations.
+        // Voos Recentes, RAOV e Pilotos Online continuam com consultas independentes.
 
         function iniciarHeroSlider() {
             const slides = document.querySelectorAll('.hero-slider .slide');
@@ -740,8 +661,6 @@
         }
         
         document.addEventListener('DOMContentLoaded', () => {
-            carregarVoosEmTempoReal();
-            setInterval(carregarVoosEmTempoReal, 120000);
             iniciarHeroSlider();
 
             // Lógica para abrir imagem da liverie em tela cheia

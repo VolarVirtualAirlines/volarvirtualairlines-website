@@ -8237,3 +8237,232 @@ body.menu-open {
 #vax-mapa {
     scroll-margin-top: 100px;
 }
+
+/* ========================================================================
+   VOLAR LIVE OPERATIONS — INTEGRAÇÃO INSTITUCIONAL / HOME + MENU
+   Escopo específico. Não modifica estilos existentes do restante do site.
+   ======================================================================== */
+
+/* Primeiro item do dropdown Operações com destaque suave */
+.menu-dropdown-content a.menu-live-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 10px;
+    margin-bottom: 4px;
+    border: 1px solid rgba(0, 229, 255, 0.26);
+    border-radius: 8px;
+    background: rgba(0, 229, 255, 0.07);
+    white-space: normal;
+}
+.menu-live-text { display: inline-flex; align-items: center; gap: 7px; font-size: .83rem; }
+.menu-live-text i { color: var(--turquoise); }
+.menu-live-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    font-size: .61rem;
+    font-weight: 800;
+    letter-spacing: .5px;
+    color: #90f2c7;
+}
+.menu-live-dot, .volar-live-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+    background: #3de0a4;
+    box-shadow: 0 0 12px rgba(61,224,164,.55);
+    flex-shrink: 0;
+}
+
+/* Slider: CTA duplo sem mudar o comportamento nem a altura do slider */
+.hero-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+}
+.hero-cta-actions .btn-cadastro-hero { margin: 0; }
+.btn-live-hero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 28px;
+    border: 2px solid var(--turquoise);
+    border-radius: 6px;
+    background: var(--turquoise);
+    color: var(--night-blue);
+    font-family: var(--font-headers);
+    font-size: .95rem;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 8px 26px rgba(0,229,255,.2);
+    transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
+}
+.btn-live-hero:hover {
+    background: #6df3fb;
+    transform: translateY(-2px);
+    box-shadow: 0 9px 32px rgba(0,229,255,.4);
+}
+
+/* Seção oficial: substitui exclusivamente o mapa/tabela antigos da Home */
+.section.volar-live-home {
+    position: relative;
+    padding: 78px 26px 84px;
+    text-align: left;
+    background: radial-gradient(ellipse at 85% 32%, rgba(0,229,255,.085), transparent 46%), #071427;
+    overflow: hidden;
+}
+.volar-live-home-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, .93fr) minmax(0, 1.07fr);
+    align-items: center;
+    gap: clamp(25px, 5vw, 76px);
+}
+.volar-live-home-copy { min-width: 0; }
+.volar-live-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: #7cecf5;
+    letter-spacing: 1.2px;
+    font: 700 .7rem var(--font-headers);
+    margin-bottom: 18px;
+}
+.section.volar-live-home h2 {
+    display: block;
+    max-width: 660px;
+    margin: 0 0 21px;
+    font-size: clamp(2rem, 3.4vw, 3.4rem);
+    line-height: 1.16;
+    text-align: left;
+    letter-spacing: -.8px;
+}
+.section.volar-live-home h2 span { color: var(--turquoise); }
+.section.volar-live-home h2::after { margin: 18px 0 0; }
+.section.volar-live-home p.volar-live-home-intro {
+    max-width: 640px;
+    margin: 0 0 26px;
+    font-size: clamp(.98rem, 1.35vw, 1.08rem);
+    line-height: 1.8;
+    text-align: left;
+    color: #bdd0df;
+}
+.volar-live-feature-list { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
+.volar-live-feature-list span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 11px;
+    border: 1px solid rgba(0,229,255,.18);
+    border-radius: 8px;
+    background: rgba(0,229,255,.045);
+    color: #d8edf5;
+    font-size: .76rem;
+}
+.volar-live-feature-list i { color: #32d8e8; }
+.volar-live-home-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-radius: 9px;
+    padding: 15px 22px;
+    background: var(--turquoise);
+    color: #042037;
+    font-family: var(--font-headers);
+    font-weight: 800;
+    font-size: .9rem;
+    text-decoration: none;
+    transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+}
+.volar-live-home-button:hover {
+    background: #65edfa;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 26px rgba(0,229,255,.28);
+}
+.section.volar-live-home p.volar-live-home-subnote {
+    margin: 13px 0 0;
+    font-size: .78rem;
+    text-align: left;
+    color: #90aabd;
+}
+.volar-live-home-preview {
+    min-width: 0;
+    border: 1px solid rgba(0,229,255,.22);
+    border-radius: 16px;
+    overflow: hidden;
+    background: #0b2234;
+    box-shadow: 0 20px 65px rgba(0,0,0,.35), 0 0 28px rgba(0,229,255,.045);
+}
+.volar-live-preview-header, .volar-live-preview-footer {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 17px;
+    color: #badbe6;
+    font-size: .73rem;
+    letter-spacing: .35px;
+}
+.volar-live-preview-header { justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,.08); }
+.volar-live-preview-header i { color: var(--turquoise); margin-right: 5px; }
+.volar-live-preview-chip { color: #9edacb; font-size: .66rem; }
+.volar-live-preview-chip span { display: inline-block; width: 6px; height: 6px; background: #3de0a4; border-radius: 50%; margin-right: 6px; }
+.volar-live-preview-map { width: 100%; height: auto; display: block; }
+.volar-live-preview-footer { border-top: 1px solid rgba(255,255,255,.07); flex-wrap: wrap; }
+.volar-live-preview-footer span:nth-child(1) i { color: #21d8e2; }
+.volar-live-preview-footer span:nth-child(2) i { color: #b58cf0; }
+.volar-live-preview-footer small { margin-left: auto; color: #91a9bb; font-size: .67rem; }
+/* Manter links legados index.html#voos-reais funcionais, sem o antigo painel */
+.volar-live-home #voos-reais.volar-live-legacy-anchor {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    pointer-events: none;
+}
+
+@media (max-width: 1100px) {
+    .menu-dropdown-content a.menu-live-link { align-items: center; }
+}
+@media (max-width: 900px) {
+    .volar-live-home-inner { grid-template-columns: 1fr; gap: 36px; }
+    .section.volar-live-home { padding: 63px 22px; }
+    .volar-live-home-copy { text-align: center; }
+    .section.volar-live-home h2,
+    .section.volar-live-home p.volar-live-home-intro,
+    .section.volar-live-home p.volar-live-home-subnote { text-align: center; margin-left: auto; margin-right: auto; }
+    .section.volar-live-home h2::after { margin-left: auto; margin-right: auto; }
+    .volar-live-feature-list { justify-content: center; }
+    .volar-live-home-preview { max-width: 700px; width: 100%; margin: 0 auto; }
+}
+@media (max-width: 600px) {
+    .hero-cta-actions { flex-direction: column; gap: 12px; }
+    .hero-cta-actions .btn-cadastro-hero,
+    .hero-cta-actions .btn-live-hero { width: min(100%, 320px); padding: 13px 16px; font-size: .8rem; }
+    .section.volar-live-home { padding: 55px 16px; }
+    .volar-live-kicker { font-size: .62rem; letter-spacing: .6px; }
+    .volar-live-feature-list { gap: 7px; }
+    .volar-live-feature-list span { font-size: .72rem; }
+    .volar-live-home-button { width: min(100%, 340px); }
+    .volar-live-preview-header, .volar-live-preview-footer { font-size: .62rem; padding: 10px 12px; }
+    .volar-live-preview-footer small { width: 100%; margin-left: 0; }
+}
+
