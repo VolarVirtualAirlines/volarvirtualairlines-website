@@ -180,6 +180,31 @@ main.vlo{background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 4
 @media(max-width:900px){.vlo .service-grid{grid-template-columns:1fr}.vlo .service-item{padding:13px}}
 @media(max-width:640px){main.vlo{padding:25px 14px 45px}.vlo .service-monitor{padding:17px 14px}.vlo .vlo-hero{gap:10px}}
 
+  
+/* V6.1 — Hubs oficiais da Volar: marcadores institucionais discretos e acessíveis. */
+.vlo .hub-flight-icon{background:transparent;border:0;overflow:visible}
+.vlo .hub-pin{position:relative;display:flex;align-items:center;flex-direction:column;width:48px;overflow:visible;filter:drop-shadow(0 5px 9px #000c)}
+.vlo .hub-symbol{width:33px;height:33px;border-radius:11px;display:grid;place-items:center;
+  border:1.5px solid currentColor;background:#071827f2;box-shadow:inset 0 0 0 3px #ffffff0c}
+.vlo .hub-symbol svg{width:20px;height:20px;display:block;fill:currentColor}
+.vlo .hub-icao{font:800 10px/1.5 Montserrat,Inter,sans-serif;background:#071827f2;border:1px solid #365c72;
+  border-radius:5px;color:#edfaff;padding:1px 5px;margin-top:3px;white-space:nowrap;letter-spacing:.025em}
+.vlo .hub-pin.principal{color:#d4af37}
+.vlo .hub-pin.secundario{color:#00d5ea}
+.vlo .hub-pin.cargo{color:#d4af37}
+.vlo .hub-pin.norte{color:#4ade80}
+.vlo .leaflet-tooltip.hub-tooltip{background:#0b2336;color:#edfaff;border:1px solid #436477;
+  border-radius:9px;padding:8px 11px;box-shadow:0 6px 18px #000b;font:12px/1.65 Inter,sans-serif;white-space:nowrap}
+.vlo .leaflet-tooltip-top.hub-tooltip:before{border-top-color:#0b2336}
+.vlo .leaflet-popup-content-wrapper.hub-popup{background:#0c2336;color:#eaf5ff;border:1px solid #426376;border-radius:12px;box-shadow:0 10px 35px #0009}
+.vlo .leaflet-popup-content-wrapper.hub-popup .leaflet-popup-content{font:12px/1.6 Inter,sans-serif;max-width:265px;margin:13px 17px}
+.vlo .leaflet-popup-content-wrapper.hub-popup .leaflet-popup-content strong{color:#fff;font-size:14px}
+.vlo .leaflet-popup-content-wrapper.hub-popup .hub-popup-type{font-weight:800;color:#9ddfee;font-size:11px;letter-spacing:.04em}
+.vlo .leaflet-popup-content-wrapper.hub-popup .hub-popup-desc{display:block;margin-top:7px;color:#b7cede}
+.vlo .leaflet-popup-tip{background:#0c2336}
+.vlo .hub-option-symbol{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;color:#d4af37;font-size:14px}
+@media(max-width:640px){.vlo .hub-pin{width:42px}.vlo .hub-symbol{width:30px;height:30px}.vlo .hub-symbol svg{width:18px;height:18px}}
+
   </style>
 </head>
 <body>
@@ -225,6 +250,7 @@ main.vlo{background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 4
     <label class="route-option"><input id="show-planned" type="checkbox" checked><span class="route-key"></span> Plano SimBrief</label>
     <label class="route-option"><input id="show-actual" type="checkbox" checked><span class="route-key actual"></span> Trajeto percorrido</label>
     <label class="route-option"><input id="show-fixes" type="checkbox" checked> Mostrar fixos</label>
+    <label class="route-option"><input id="show-hubs" type="checkbox" checked><span class="hub-option-symbol" aria-hidden="true">♛</span> Hubs Volar</label>
     <span class="route-help">Passe o mouse: resumo do voo · Clique: rota e telemetria</span>
   </div>
   <section class="operations" aria-label="Mapa e relação de voos">
@@ -360,6 +386,30 @@ main.vlo{background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 4
   let query = '';
   let map = null;
   let markerLayer = null;
+  let hubLayer = null;
+  // V6.1 — Referência ARP (Airport Reference Point), AISWEB/DECEA AIP 2026 / WGS84.
+  // Não dependemos do NewSky nem da base auxiliar de aeroportos para estes quatro pontos.
+  const VOLAR_HUBS = Object.freeze([
+    {icao:'SBGR',type:'principal',role:'Hub Principal',city:'São Paulo / Guarulhos',
+      name:'Aeroporto Internacional de São Paulo / Guarulhos',lat:-(23+26/60+8/3600),lon:-(46+28/60+23/3600),
+      description:'Base principal da Volar para operações de passageiros e cargas.'},
+    {icao:'SBBR',type:'secundario',role:'Hub Secundário',city:'Brasília',
+      name:'Aeroporto Internacional de Brasília',lat:-(15+52/60+16/3600),lon:-(47+55/60+7/3600),
+      description:'Centro estratégico para conexões nacionais e integração da malha aérea.'},
+    {icao:'SBKP',type:'cargo',role:'Hub Cargo',city:'Campinas / Viracopos',
+      name:'Aeroporto Internacional de Viracopos',lat:-(23+0/60+25/3600),lon:-(47+8/60+4/3600),
+      description:'Base de apoio a operações cargueiras e conexões logísticas.'},
+    {icao:'SBEG',type:'norte',role:'Hub Norte',city:'Manaus',
+      name:'Aeroporto Internacional Eduardo Gomes',lat:-(3+2/60+28/3600),lon:-(60+3/60+2/3600),
+      description:'Base regional da Região Norte, para integração amazônica e operações estratégicas.'}
+  ]);
+  // SVGs locais: os ícones são desenhados no HTML, não exigem mais uma CDN.
+  const HUB_SVG = {
+    principal:'<path d="M2 7.1 6.9 10.5 12 3.2 17.1 10.5 22 7.1 20.1 18H3.9L2 7.1ZM4.7 20h14.6v2H4.7z"/>',
+    secundario:'<path d="M2 18.5h20v2H2zM6 15.8l4.4-1.2 8.2-10.2a1.8 1.8 0 0 1 2.5-.3 1.8 1.8 0 0 1 .2 2.5L13 17H7a2 2 0 0 1-1-.2L2.5 14l1.3-1.7 4.9 2.4Z"/>',
+    cargo:'<path d="M2 3h9v9H2zM13 3h9v9h-9zM7.5 14h9v8h-9z"/>',
+    norte:'<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-2 2.4L8.8 7.8 5.2 9 4 11A8 8 0 0 1 10 4.4Zm2 15.6-2.8-3.1.5-3.2-3.5-1.6 2.4-2.2 2.8 1.2 2.5-1.8 3.8 1.5 1.6 3.7A8 8 0 0 1 12 20Z"/>'
+  };
   let markersById = new Map();
   let isFetching = false;
   let hasCenteredMap = false;
@@ -744,10 +794,42 @@ main.vlo{background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 4
     }).addTo(map);
     // A rota fica sobre as cartas e abaixo dos ícones das aeronaves.
     routeLayer=L.layerGroup().addTo(map);
+    createHubLayer();
     markerLayer=L.layerGroup().addTo(map);
     map.on('click',()=>{pinnedFlightId=null;
       el('selected-panel').hidden=true;drawSelectedRoute();});
   }
+
+  function hubIcon(hub){
+    const iconContent=HUB_SVG[hub.type] || HUB_SVG.principal;
+    return L.divIcon({className:'hub-flight-icon',iconSize:[48,58],iconAnchor:[24,17],popupAnchor:[0,-20],
+      html:`<div class="hub-pin ${hub.type}"><div class="hub-symbol"><svg viewBox="0 0 24 24" aria-hidden="true">${iconContent}</svg></div><span class="hub-icao">${hub.icao}</span></div>`});
+  }
+  function createHubLayer(){
+    if(!map || hubLayer)return;
+    hubLayer=L.layerGroup();
+    for(const hub of VOLAR_HUBS){
+      const marker=L.marker([hub.lat,hub.lon],{
+        icon:hubIcon(hub),keyboard:true,title:`${hub.icao} · ${hub.role}`,alt:`${hub.icao} · ${hub.role}`
+      });
+      marker.bindTooltip(`<strong>${hub.icao} · ${safe(hub.role)}</strong><br>${safe(hub.city)}`,
+        {direction:'top',offset:[0,-12],opacity:1,className:'hub-tooltip'});
+      marker.bindPopup(`<strong>${hub.icao} · ${safe(hub.role)}</strong><br>`+
+          `${safe(hub.name)}<br><span class="hub-popup-type">${safe(hub.city)}</span>`+
+          `<span class="hub-popup-desc">${safe(hub.description)}</span>`,
+          {className:'hub-popup',maxWidth:280,closeButton:true});
+      marker.on('click',event=>{if(event.originalEvent)L.DomEvent.stopPropagation(event.originalEvent);});
+      hubLayer.addLayer(marker);
+    }
+    toggleHubs();
+  }
+  function toggleHubs(){
+    if(!map || !hubLayer)return;
+    const show=el('show-hubs').checked;
+    if(show && !map.hasLayer(hubLayer))map.addLayer(hubLayer);
+    else if(!show && map.hasLayer(hubLayer))map.removeLayer(hubLayer);
+  }
+
   function mapIcon(f){
     return L.divIcon({className:'flight-icon',iconSize:[32,32],iconAnchor:[16,16],popupAnchor:[0,-12],
       // O SVG aponta originalmente para o norte (000°); hdg gira o ícone no rumo real.
@@ -845,6 +927,7 @@ main.vlo{background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 4
   for(const id of ['show-planned','show-actual','show-fixes']){
     el(id).addEventListener('change',drawSelectedRoute);
   }
+  el('show-hubs').addEventListener('change',toggleHubs);
   el('fit-map').addEventListener('click',fitMap);
   el('refresh').addEventListener('click',refresh);
   initMap();refresh();setInterval(refresh,REFRESH_MS);
