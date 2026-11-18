@@ -205,6 +205,37 @@ main.vlo{background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 4
 .vlo .hub-option-symbol{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;color:#d4af37;font-size:14px}
 @media(max-width:640px){.vlo .hub-pin{width:42px}.vlo .hub-symbol{width:30px;height:30px}.vlo .hub-symbol svg{width:18px;height:18px}}
 
+
+/* ============================================================
+   VOLAR LIVE OPERATIONS V6.2 — relógios e radar do cabeçalho
+   Classes isoladas no main.vlo. Sem alterações no CSS global.
+   ============================================================ */
+.vlo .vlo-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(400px,455px);gap:30px;align-items:start;justify-content:space-between;margin-bottom:24px}
+.vlo .vlo-header-content{min-width:0}
+.vlo .vlo-header-content .subtitle{max-width:710px}
+.vlo .vlo-hero .eyebrow{display:flex;align-items:center;gap:11px;margin-bottom:14px;min-height:29px}
+.vlo .vlo-radar-beacon{position:relative;flex:0 0 25px;width:25px;height:25px;display:grid;place-items:center;border:1px solid #26e8aa90;border-radius:50%;background:#0b4f48;box-shadow:0 0 15px #1effaf4d}
+.vlo .vlo-radar-beacon span{z-index:1;width:10px;height:10px;border:2px solid #c3ffde;border-radius:50%;background:#38eab1;box-shadow:0 0 10px #28f0a0}
+.vlo .vlo-radar-beacon::before,.vlo .vlo-radar-beacon::after{position:absolute;inset:5px;content:"";border:1px solid #44f5ad;border-radius:50%;animation:vlo-radar-pulse 2.6s ease-out infinite;pointer-events:none}
+.vlo .vlo-radar-beacon::after{animation-delay:1.3s}
+@keyframes vlo-radar-pulse{0%{opacity:.85;transform:scale(.6)}80%{opacity:.16}100%{opacity:0;transform:scale(2.6)}}
+.vlo .vlo-clock-side{display:flex;flex-direction:column;align-items:flex-end;gap:19px;width:100%;min-width:0}
+.vlo .vlo-clock-box{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;padding:14px 5px;border-radius:17px;background:linear-gradient(125deg,#0b263b,#071827);border:1px solid #04d7e6a8;box-shadow:0 9px 27px #0007,0 0 18px #04ccdf18}
+.vlo .vlo-clock-entry{display:flex;gap:11px;min-width:0;align-items:flex-start;padding:4px 12px}
+.vlo .vlo-clock-entry.utc{border-left:1px solid #2c5c72}
+.vlo .vlo-clock-icon{font-size:27px;line-height:1.15;flex:0 0 27px;margin-top:3px}
+.vlo .vlo-clock-icon.local{color:#42e9b7}
+.vlo .vlo-clock-icon.utc{color:#39b1ff}
+.vlo .vlo-clock-data{min-width:0;display:flex;flex-direction:column;align-items:flex-start}
+.vlo .vlo-clock-label{font-family:Montserrat,Inter,sans-serif;color:#eaf6ff;font-size:10px;font-weight:800;letter-spacing:.075em;white-space:nowrap}
+.vlo .vlo-clock-digits{font-family:Montserrat,Inter,sans-serif;display:block;margin:6px 0 4px;color:#fff;font-size:31px;line-height:1.08;font-weight:800;letter-spacing:-.035em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.vlo .vlo-clock-small{color:#75dbe9;font-size:10px;line-height:1.4;white-space:nowrap}
+.vlo .vlo-top-official{font-family:Montserrat,Inter,sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;color:#dbeaf6;white-space:nowrap}
+.vlo .vlo-top-official b{color:#73f7b9}
+@media(max-width:1150px){.vlo .vlo-hero{grid-template-columns:1fr;gap:20px}.vlo .vlo-clock-side{max-width:455px;align-items:flex-start;gap:11px}}
+@media(max-width:550px){.vlo .vlo-hero .eyebrow{font-size:10px;letter-spacing:.12em}.vlo .vlo-clock-box{grid-template-columns:1fr;padding:5px 13px}.vlo .vlo-clock-entry{padding:10px 7px}.vlo .vlo-clock-entry.utc{border-left:none;border-top:1px solid #2c5c72}.vlo .vlo-clock-digits{font-size:29px}}
+@media(prefers-reduced-motion:reduce){.vlo .vlo-radar-beacon::before,.vlo .vlo-radar-beacon::after{animation:none;opacity:.25;transform:scale(1.5)}}
+
   </style>
 </head>
 <body>
@@ -219,13 +250,34 @@ main.vlo{background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 4
 </header>
 <main class="vlo">
 
+  <!-- V6.2 | Cabeçalho operacional / Radar e relógios Local + UTC -->
   <section class="vlo-hero">
-    <div>
-      <div class="eyebrow"><span class="live-dot" aria-hidden="true"></span> Operações integradas · VVX + VAX</div>
+    <div class="vlo-header-content">
+      <div class="eyebrow"><span class="vlo-radar-beacon" aria-hidden="true"><span></span></span> OPERAÇÕES INTEGRADAS · VVX + VAX</div>
       <h1>Volar <span>Live Operations</span></h1>
       <p class="subtitle">Acompanhe em tempo real as operações da Volar Virtual Airlines e da Volar Virtual Academy. Consulte aeronaves, rotas planejadas, fixos, trajetórias percorridas e informações de voo em um único centro operacional.</p>
     </div>
-    <span class="test-label">CENTRO OFICIAL · LIVE</span>
+    <div class="vlo-clock-side">
+      <div class="vlo-clock-box" role="group" aria-label="Relógios operacionais: São Paulo e horário UTC">
+        <div class="vlo-clock-entry">
+          <i class="far fa-clock vlo-clock-icon local" aria-hidden="true"></i>
+          <div class="vlo-clock-data">
+            <span class="vlo-clock-label">HORÁRIO LOCAL</span>
+            <time id="vlo-time-local" class="vlo-clock-digits" aria-label="Horário de São Paulo">--:--</time>
+            <span class="vlo-clock-small" id="vlo-time-zone">São Paulo · UTC−3</span>
+          </div>
+        </div>
+        <div class="vlo-clock-entry utc">
+          <i class="fas fa-globe vlo-clock-icon utc" aria-hidden="true"></i>
+          <div class="vlo-clock-data">
+            <span class="vlo-clock-label">HORÁRIO UTC</span>
+            <time id="vlo-time-utc" class="vlo-clock-digits" aria-label="Horário UTC">--:--Z</time>
+            <span class="vlo-clock-small">Coordinated Universal Time</span>
+          </div>
+        </div>
+      </div>
+      <span class="vlo-top-official">CENTRO OFICIAL · <b>LIVE</b></span>
+    </div>
   </section>
   <section class="stats" aria-label="Indicadores operacionais">
     <article class="stat"><div class="label">Voos ativos no ecossistema</div><div class="num" id="stat-all">—</div></article>
@@ -941,6 +993,38 @@ main.vlo{background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 4
   el('refresh').addEventListener('click',refresh);
   initMap();refresh();setInterval(refresh,REFRESH_MS);
   setInterval(updateStaleHealth,REFRESH_MS);
+})();
+</script>
+
+<script>
+/* V6.2 | Relógios independentes da consulta à NewSky. */
+(() => {
+  'use strict';
+  const local=document.getElementById('vlo-time-local');
+  const utc=document.getElementById('vlo-time-utc');
+  const zone=document.getElementById('vlo-time-zone');
+  if(!local||!utc)return;
+  const saoPaulo=new Intl.DateTimeFormat('pt-BR',{
+    timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit',hourCycle:'h23'
+  });
+  const saoPauloZone=new Intl.DateTimeFormat('en-US',{
+    timeZone:'America/Sao_Paulo',timeZoneName:'shortOffset'
+  });
+  const pad=value=>String(value).padStart(2,'0');
+  function atualizarRelogios(){
+    const agora=new Date();
+    local.textContent=saoPaulo.format(agora);
+    utc.textContent=`${pad(agora.getUTCHours())}:${pad(agora.getUTCMinutes())}Z`;
+    const iso=agora.toISOString();
+    local.dateTime=iso;utc.dateTime=iso;
+    if(zone){
+      const short=saoPauloZone.formatToParts(agora).find(p=>p.type==='timeZoneName')?.value || 'GMT-3';
+      zone.textContent='São Paulo · '+short.replace('GMT','UTC').replace('-','−');
+    }
+  }
+  atualizarRelogios();
+  setInterval(atualizarRelogios,1000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)atualizarRelogios()});
 })();
 </script>
 
