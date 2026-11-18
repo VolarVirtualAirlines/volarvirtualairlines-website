@@ -236,6 +236,104 @@ main.vlo{background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 4
 @media(max-width:550px){.vlo .vlo-hero .eyebrow{font-size:10px;letter-spacing:.12em}.vlo .vlo-clock-box{grid-template-columns:1fr;padding:5px 13px}.vlo .vlo-clock-entry{padding:10px 7px}.vlo .vlo-clock-entry.utc{border-left:none;border-top:1px solid #2c5c72}.vlo .vlo-clock-digits{font-size:29px}}
 @media(prefers-reduced-motion:reduce){.vlo .vlo-radar-beacon::before,.vlo .vlo-radar-beacon::after{animation:none;opacity:.25;transform:scale(1.5)}}
 
+
+/* ============================================================
+   V6.3 — ADAPTIVE OPERATIONS DISPLAY
+   Layout fluido para notebooks, Full HD e ultrawide.
+   Não modifica a identidade visual nem as funções do radar.
+   Regras isoladas em .vlo e aplicadas após V6.2.
+   ============================================================ */
+main.vlo{
+  width:100%;
+  max-width:3200px;
+  min-width:0;
+  padding:clamp(24px,2.2vw,48px) clamp(15px,2.1vw,56px) 60px;
+}
+.vlo .vlo-hero{
+  grid-template-columns:minmax(0,1fr) minmax(390px,485px);
+  gap:clamp(20px,2.5vw,46px);
+}
+.vlo h1{font-size:clamp(29px,2.65vw,54px)}
+.vlo .vlo-header-content .subtitle{
+  max-width:880px;
+  font-size:clamp(13px,.84vw,16px);
+}
+.vlo .stats{gap:clamp(10px,1vw,20px);margin-bottom:clamp(16px,1.5vw,26px)}
+.vlo .stat{min-width:0;padding:clamp(14px,1.3vw,24px)}
+.vlo .stat .num{font-size:clamp(28px,2vw,39px)}
+.vlo .stat .label{font-size:clamp(11px,.73vw,13px);line-height:1.45}
+.vlo .operations{
+  grid-template-columns:minmax(0,1fr) clamp(350px,27vw,620px);
+  gap:clamp(12px,1vw,22px);
+  align-items:stretch;
+}
+.vlo .map-wrap,.vlo .list-panel{min-width:0;min-height:0}
+.vlo #flight-map{
+  width:100%;
+  height:clamp(540px,67dvh,1080px);
+}
+.vlo .list-panel{height:100%}
+.vlo .flights{min-height:0;max-height:none;overflow-y:auto;overscroll-behavior:contain}
+.vlo .toolbar,.vlo .route-options{min-width:0}
+.vlo .right-actions{justify-content:flex-end}
+.vlo .route-help{margin-left:auto;text-align:right}
+.vlo .service-monitor{min-width:0}
+/* Notebook: mapa e lista empilhados antes que as colunas fiquem apertadas. */
+@media (max-width:1100px){
+  .vlo .operations{grid-template-columns:minmax(0,1fr)}
+  .vlo #flight-map{height:clamp(470px,62dvh,750px)}
+  .vlo .list-panel{height:auto;min-height:275px;max-height:475px}
+  .vlo .flights{max-height:330px}
+  .vlo .vlo-hero{grid-template-columns:1fr;gap:18px}
+  .vlo .vlo-clock-side{max-width:485px;align-items:flex-start;gap:12px}
+  .vlo .route-help{margin-left:0;text-align:left;flex-basis:100%}
+}
+/* Tablet e telas pequenas: cards e comandos quebram em linhas sem rolagem horizontal. */
+@media (max-width:760px){
+  main.vlo{padding:22px 16px 46px}
+  .vlo .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .vlo .stat{padding:15px 13px}
+  .vlo .stat .num{font-size:30px}
+  .vlo .toolbar{align-items:stretch;gap:10px}
+  .vlo .right-actions{justify-content:flex-start}
+  .vlo .filters{max-width:100%;overflow-x:auto}
+  .vlo .route-options{gap:10px 12px}
+  .vlo .below,.vlo .service-grid{grid-template-columns:minmax(0,1fr)}
+}
+/* Smartphone: mapa útil, botões com quebra e relógios lado a lado. */
+@media (max-width:640px){
+  main.vlo{padding:20px 13px 42px}
+  .vlo #flight-map{height:clamp(390px,58dvh,620px)}
+  .vlo .map-note{left:70px;right:9px;max-width:calc(100% - 80px);font-size:11px;padding:9px 10px}
+  .vlo .map-legend{left:10px;gap:10px;padding:8px}
+  .vlo .route-hint{max-width:min(210px,65%)}
+  .vlo .list-panel{max-height:460px}
+  .vlo .flights{max-height:310px}
+  .vlo .vlo-clock-side{max-width:none;align-items:stretch}
+  .vlo .vlo-clock-box{grid-template-columns:repeat(2,minmax(0,1fr));padding:9px 6px}
+  .vlo .vlo-clock-entry{gap:7px;padding:7px 8px;align-items:flex-start}
+  .vlo .vlo-clock-entry.utc{border-top:0;border-left:1px solid #2c5c72}
+  .vlo .vlo-clock-icon{font-size:20px;flex:0 0 21px;margin-top:3px}
+  .vlo .vlo-clock-label{font-size:9px;white-space:normal;line-height:1.25}
+  .vlo .vlo-clock-digits{font-size:clamp(20px,6vw,27px);margin:5px 0 3px}
+  .vlo .vlo-clock-small{font-size:9px;white-space:normal;line-height:1.3}
+  .vlo .vlo-top-official{font-size:10px}
+  .vlo .route-help{font-size:10px}
+}
+/* Telefones especialmente estreitos preservam legibilidade dos relógios. */
+@media (max-width:355px){
+  .vlo .vlo-clock-box{grid-template-columns:1fr;padding:6px 10px}
+  .vlo .vlo-clock-entry{padding:8px 6px}
+  .vlo .vlo-clock-entry.utc{border-left:0;border-top:1px solid #2c5c72}
+  .vlo .vlo-clock-digits{font-size:26px}
+  .vlo .vlo-clock-small{white-space:nowrap}
+}
+@supports not (height:1dvh){
+  .vlo #flight-map{height:clamp(540px,67vh,1080px)}
+  @media(max-width:1100px){.vlo #flight-map{height:clamp(470px,62vh,750px)}}
+  @media(max-width:640px){.vlo #flight-map{height:clamp(390px,58vh,620px)}}
+}
+
   </style>
 </head>
 <body>
@@ -853,6 +951,23 @@ main.vlo{background:radial-gradient(ellipse at 75% -15%,#163650 0%,transparent 4
     markerLayer=L.layerGroup().addTo(map);
     map.on('click',()=>{pinnedFlightId=null;
       el('selected-panel').hidden=true;drawSelectedRoute();});
+    // V6.3: quando o Grid muda de tamanho, atualiza a projeção interna do Leaflet.
+    // O ResizeObserver também cobre redimensionamentos que não disparam window.resize.
+    const mapElement=el('flight-map');
+    if(mapElement && typeof ResizeObserver!=='undefined'){
+      let resizeQueued=false;
+      const mapSizeObserver=new ResizeObserver(()=>{
+        if(resizeQueued)return;
+        resizeQueued=true;
+        requestAnimationFrame(()=>{
+          resizeQueued=false;
+          if(map && mapElement.clientWidth>0 && mapElement.clientHeight>0){
+            map.invalidateSize({pan:false,animate:false});
+          }
+        });
+      });
+      mapSizeObserver.observe(mapElement);
+    }
   }
 
   function hubIcon(hub){
