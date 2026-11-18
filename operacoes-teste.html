@@ -405,10 +405,14 @@
         for(let i=0;i<fixes.length;i++){
           const fix=fixes[i],special=/^(TOD|TOC|T\/D|T\/C)$/i.test(fix.ident);
           const major=fix.type==='apt'||special||i===0||i===fixes.length-1;
-          const label=safe(fix.ident);
+          const label=safe(
+            fix.ident === 'TOC' ? 'Top of Climb' :
+            fix.ident === 'TOD' ? 'Top of Descend' :
+            fix.ident
+          );          
           L.circleMarker([fix.lat,fix.lon],{radius:major?4.8:3.4,color:'#07202b',weight:1.5,
             fillColor:special?'#ffb46f':color,fillOpacity:1,bubblingMouseEvents:false})
-            .bindTooltip(`${label}${special?' · top of descent/climb':''}`,{
+            .bindTooltip(label,{
               permanent:true,direction:'top',offset:[0,-5],className:'fix-route-label',opacity:.96
             }).addTo(routeLayer);
         }
@@ -459,7 +463,11 @@
     const fixes=pointsFromPlan(detail);
     for(const fix of fixes){
       const chip=document.createElement('span');chip.className='fix-pill'+(/^(TOD|TOC)$/i.test(fix.ident)?' special':'');
-      chip.textContent=fix.ident;chip.title=`${fix.stage||fix.type||'FIX'} · ${Number(fix.lat).toFixed(4)}, ${Number(fix.lon).toFixed(4)}`;
+      chip.textContent=
+      fix.ident === 'TOC' ? 'Top of Climb' :
+      fix.ident === 'TOD' ? 'Top of Descend' :
+      fix.ident;      
+      chip.title=`${fix.stage||fix.type||'FIX'} · ${Number(fix.lat).toFixed(4)}, ${Number(fix.lon).toFixed(4)}`;
       fixList.appendChild(chip);
     }
     el('fix-heading').textContent='FIXOS E PONTOS DE NAVEGAÇÃO'+(fixes.length?' · '+fixes.length:'');
