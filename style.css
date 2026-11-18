@@ -8466,3 +8466,127 @@ body.menu-open {
     .volar-live-preview-footer small { width: 100%; margin-left: 0; }
 }
 
+
+
+/* ============================================================================
+   VOLAR V6.4 — ADAPTIVE FOOTER / RODAPÉ FLUIDO
+   Mantém o footer.js compartilhado e acompanha a largura do Live Operations V6.3.
+   Regras aplicadas depois dos estilos existentes; não afetam as seções do site.
+   ============================================================================ */
+.site-footer .footer-main,
+.site-footer .footer-bottom-content {
+    width: 100%;
+    max-width: 3200px;
+    box-sizing: border-box;
+    margin-inline: auto;
+    padding-inline: clamp(15px, 2.1vw, 56px);
+}
+.site-footer .footer-main {
+    padding-block: clamp(38px, 2.8vw, 64px) clamp(30px, 2.4vw, 54px);
+}
+.site-footer .footer-bottom-content {
+    min-width: 0;
+    padding-block: 21px;
+    gap: clamp(16px, 2vw, 36px);
+    flex-wrap: wrap;
+}
+.site-footer .footer-grid {
+    display: grid;
+    grid-template-columns: minmax(230px, 1.25fr) repeat(3, minmax(145px, 1fr)) minmax(165px, .86fr);
+    gap: clamp(24px, 2.1vw, 64px);
+    align-items: start;
+    min-width: 0;
+}
+.site-footer .footer-brand,
+.site-footer .footer-column,
+.site-footer .footer-time {
+    min-width: 0;
+    max-width: none;
+    grid-row: auto;
+    grid-column: auto;
+}
+.site-footer .footer-brand-description {max-width: 320px;}
+.site-footer .footer-logo {height: clamp(48px, 2.4vw, 64px);}
+.site-footer .footer-title {font-size: clamp(.78rem, .62vw, .9rem);}
+.site-footer .footer-menu a {font-size: clamp(.88rem, .68vw, 1rem);}
+.site-footer .footer-time-value {font-size: clamp(1.28rem, 1.06vw, 1.65rem);}
+.site-footer .footer-copyright {overflow-wrap: anywhere;}
+.site-footer .footer-networks {flex-shrink: 0;}
+
+/* Telas intermediárias: três colunas sem espremer os links. */
+@media (max-width: 1300px) {
+    .site-footer .footer-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: clamp(24px, 3vw, 50px);
+        row-gap: 37px;
+    }
+    .site-footer .footer-brand,
+    .site-footer .footer-time {
+        grid-row: auto;
+        grid-column: auto;
+    }
+}
+
+/* Tablets: duas colunas e relógios lado a lado. */
+@media (max-width: 900px) {
+    .site-footer .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        row-gap: 34px;
+    }
+    .site-footer .footer-time {grid-column: 1 / -1;}
+    .site-footer .footer-time-block {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 510px;
+        gap: 10px;
+    }
+    .site-footer .footer-time-offset {grid-column: 1 / -1;}
+    .site-footer .footer-bottom-content {justify-content: center; text-align: center;}
+}
+
+/* Celulares: uma coluna, espaçamento confortável, ícones sem corte. */
+@media (max-width: 640px) {
+    .site-footer .footer-main {
+        padding-block: 40px 34px;
+        padding-inline: clamp(16px, 5vw, 25px);
+    }
+    .site-footer .footer-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 29px;
+    }
+    .site-footer .footer-brand,
+    .site-footer .footer-column,
+    .site-footer .footer-time {
+        width: 100%;
+        max-width: none;
+        text-align: center;
+        grid-column: auto;
+    }
+    .site-footer .footer-title::after {left: 50%; transform: translateX(-50%);}
+    .site-footer .footer-menu {align-items: center;}
+    .site-footer .footer-socials {justify-content: center;}
+    .site-footer .footer-brand-description {margin-inline: auto;}
+    .site-footer .footer-logo {height: 50px; margin-inline: auto;}
+    .site-footer .footer-time-block {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 460px;
+        width: 100%;
+        margin-inline: auto;
+        gap: 10px;
+    }
+    .site-footer .footer-time-item {min-width: 0; padding: 13px 11px;}
+    .site-footer .footer-time-value {font-size: clamp(1.1rem, 4.6vw, 1.4rem);}
+    .site-footer .footer-time-offset {grid-column: 1 / -1;}
+    .site-footer .footer-bottom-content {
+        flex-direction: column;
+        align-items: center;
+        padding: 19px clamp(16px, 5vw, 25px);
+        gap: 13px;
+    }
+    .site-footer .footer-copyright {width: 100%; text-align: center; line-height: 1.75;}
+}
+@media (max-width: 360px) {
+    .site-footer .footer-time-item {padding: 11px 7px;}
+    .site-footer .footer-time-value {font-size: 1.1rem; letter-spacing: .5px;}
+    .site-footer .footer-menu a {font-size: .86rem;}
+}
