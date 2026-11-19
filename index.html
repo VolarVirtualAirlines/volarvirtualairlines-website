@@ -53,6 +53,58 @@
             background: #7650bd;
             color: #ffffff;
         }
+
+        /* VOLAR | PILOTOS ONLINE — acesso ao Live Operations (escopo isolado) */
+        #pilotos-online .po-live-link {
+            display: inline-flex;
+            flex: 0 1 auto; /* Deixa área livre no cabeçalho para arrastar o painel. */
+            align-items: center;
+            gap: 7px;
+            min-width: 0;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: color .2s ease;
+        }
+        #pilotos-online .po-count { margin-left: auto; }
+        #pilotos-online .po-live-link i {
+            font-size: 10px;
+            color: #5de1e8;
+            transition: transform .2s ease;
+        }
+        #pilotos-online .po-live-link:hover,
+        #pilotos-online .po-live-link:focus-visible { color: #6febef; }
+        #pilotos-online .po-live-link:hover i { transform: translate(2px, -2px); }
+        #pilotos-online .po-live-link:focus-visible,
+        #pilotos-online .po-live-cta:focus-visible {
+            outline: 2px solid #00e5ff;
+            outline-offset: 3px;
+            border-radius: 3px;
+        }
+        #pilotos-online .po-live-cta {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 11px 12px;
+            border-top: 1px solid rgba(255,255,255,.08);
+            background: rgba(0,213,234,.06);
+            color: #72e9ef;
+            text-decoration: none;
+            font: 600 12px/1.3 'Segoe UI', Arial, sans-serif;
+            transition: background .2s ease, color .2s ease;
+        }
+        #pilotos-online .po-live-cta:hover {
+            background: rgba(0,213,234,.13);
+            color: #fff;
+        }
+        #pilotos-online .po-live-cta .po-cta-arrow {
+            font-size: 10px;
+            transition: transform .2s ease;
+        }
+        #pilotos-online .po-live-cta:hover .po-cta-arrow { transform: translateX(3px); }
     </style>
 
     <!-- VOLAR RAOV - MODAL DE MENSAGENS -->
@@ -923,11 +975,18 @@
 <div id="pilotos-online" style="display:none;">
   <div class="po-header" id="po-drag-handle">
     <span class="po-live-dot"></span>
-    <span class="po-live-text">PILOTOS ONLINE</span>
+    <a class="po-live-text po-live-link" href="volar_live_operations.html" title="Acessar Volar Live Operations" aria-label="Acessar Volar Live Operations">
+      PILOTOS ONLINE <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+    </a>
     <span class="po-count" id="po-count">0</span>
     <button class="po-close" id="po-close-btn" title="Fechar">✕</button>
   </div>
   <div class="po-list" id="po-list"></div>
+  <a class="po-live-cta" href="volar_live_operations.html" aria-label="Acompanhar pilotos no Volar Live Operations">
+    <i class="fas fa-satellite-dish" aria-hidden="true"></i>
+    <span>Acompanhar no Live Operations</span>
+    <i class="fas fa-arrow-right po-cta-arrow" aria-hidden="true"></i>
+  </a>
 </div>
 
 <script>
@@ -1069,8 +1128,9 @@ function criarLinha(piloto) {
     var offsetY = 0;
 
     handle.addEventListener("mousedown", function(e) {
-      // Não inicia drag se clicou no botão fechar
-      if (e.target.classList.contains("po-close")) return;
+      // Links do Live Operations e botão fechar não devem iniciar o arraste.
+      // O restante do cabeçalho continua servindo como alça da janela.
+      if (e.target.closest("a, button")) return;
 
       arrastando = true;
       var rect = overlay.getBoundingClientRect();
