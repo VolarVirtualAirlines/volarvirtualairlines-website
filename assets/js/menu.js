@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
             </div>
 
-            <a href="index.html" data-menu="home">Home</a>
+            <a href="index.html" data-menu="home">Início</a>
 
             <div class="menu-dropdown">
                 <a
