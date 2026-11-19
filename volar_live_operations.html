@@ -360,28 +360,28 @@ main.vlo{
 
 
 /* =============================================================
-   VOLAR LIVE OPERATIONS V6.5 — CARDS DE VOOS EM ANDAMENTO
-   Duas colunas operacionais; dados dinâmicos da API NewSky.
-   Regras isoladas em .vlo. Preserva Leaflet, RAOV e demais áreas.
+   VOLAR LIVE OPERATIONS V6.6 — CARDS COMPACTOS
+   4 linhas visuais, sem divisórias internas; redes em maiúsculas.
+   Mantém dados dinâmicos e click/teclado para localizar aeronave.
    ============================================================= */
 .vlo .flights{
   display:flex;
   flex-direction:column;
-  gap:11px;
-  padding:12px;
+  gap:7px;
+  padding:9px;
 }
 .vlo .flight{
   flex:0 0 auto;
   display:block;
   width:100%;
   min-width:0;
-  padding:15px 16px 13px;
+  padding:11px 13px 10px;
   border:1px solid #29485e;
-  border-radius:12px;
+  border-radius:11px;
   background:linear-gradient(135deg,#112b40,#0b2032);
   color:var(--vlo-text);
   text-align:left;
-  box-shadow:0 3px 10px #00000017;
+  box-shadow:0 2px 7px #00000015;
   transition:background .2s ease,border-color .2s ease,transform .2s ease;
 }
 .vlo .flight:hover{
@@ -394,40 +394,87 @@ main.vlo{
   outline:2px solid var(--vlo-vvx);
   outline-offset:2px;
 }
-.vlo .flight-title{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.vlo .callsign{font-size:16px;font-weight:800;letter-spacing:.02em;color:#f6fbff}
-.vlo .airline{flex:0 0 auto}
-.vlo .flight-route{display:flex;gap:10px;align-items:center;margin:10px 0 12px;font-size:16px;font-weight:750;letter-spacing:.035em}
-.vlo .flight-route-arrow{color:#37d8e1;font-weight:800}
-.vlo .flight-operational-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  column-gap:15px;
-  row-gap:10px;
-  border-top:1px solid #274459;
-  padding-top:12px;
+/* Cabeçalho: callsign · origem → destino + badge à direita */
+.vlo .flight-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  min-width:0;
 }
-.vlo .flight-data{display:flex;flex-direction:column;gap:4px;min-width:0}
-.vlo .flight-data-label{font-size:9px;letter-spacing:.08em;color:#86acc2;font-weight:800}
-.vlo .flight-data-value{font-size:12px;line-height:1.4;color:#e6f2fb;font-weight:650;overflow-wrap:anywhere}
-.vlo .flight-status-active{color:#86e6b7}
+.vlo .flight-heading-main{
+  display:flex;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:6px;
+  min-width:0;
+}
+.vlo .callsign{
+  color:#f6fbff;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:.015em;
+  white-space:nowrap;
+}
+.vlo .flight-heading-route{
+  display:inline-flex;
+  align-items:baseline;
+  gap:6px;
+  color:#e9f6ff;
+  white-space:nowrap;
+  font-size:13px;
+  font-weight:750;
+}
+.vlo .flight-header-separator{color:#6c9eb1;font-weight:500}
+.vlo .flight-route-arrow{color:#37d8e1;font-weight:850}
+.vlo .airline{flex:0 0 auto;font-size:10px;padding:4px 7px}
+/* Segunda e terceira linhas: piloto/aeronave e rede/status */
+.vlo .flight-compact-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.4fr) minmax(0,.9fr);
+  column-gap:12px;
+  row-gap:5px;
+  align-items:baseline;
+  margin-top:8px;
+}
+.vlo .flight-compact-cell{
+  min-width:0;
+  font-size:12px;
+  font-weight:650;
+  line-height:1.35;
+  color:#e6f2fb;
+  overflow-wrap:anywhere;
+}
+.vlo .flight-compact-cell.align-right{text-align:right}
+.vlo .flight-compact-network{
+  font-size:11px;
+  font-weight:750;
+  color:#b9d5e6;
+  letter-spacing:.035em;
+}
+.vlo .flight-status-active{
+  color:#86e6b7;
+  font-size:11.5px;
+  font-weight:750;
+}
+/* Quarta linha: posição real; sem régua horizontal */
 .vlo .flight-position{
   display:flex;
   align-items:center;
   gap:7px;
   width:100%;
-  padding-top:11px;
-  margin-top:12px;
-  border-top:1px solid #274459;
-  font-size:11px;
-  line-height:1.5;
-  font-weight:650;
+  margin-top:7px;
+  padding:0;
+  border:0;
+  font-size:10.5px;
+  font-weight:700;
+  line-height:1.4;
   color:#8ce3bc;
 }
 .vlo .flight-position.missing{color:#e1b98c}
 .vlo .flight-position-dot{
   display:inline-block;
-  width:8px;height:8px;flex:0 0 8px;
+  width:7px;height:7px;flex:0 0 7px;
   border-radius:50%;background:#50dda2;
   box-shadow:0 0 0 3px #50dda21c;
 }
@@ -435,10 +482,14 @@ main.vlo{
   background:#d4a86b;box-shadow:0 0 0 3px #d4a86b1c;
 }
 @media(max-width:420px){
-  .vlo .flights{padding:9px;gap:9px}
-  .vlo .flight{padding:13px 12px 12px}
-  .vlo .flight-operational-grid{column-gap:9px}
-  .vlo .flight-route{font-size:15px}
+  .vlo .flights{padding:7px;gap:7px}
+  .vlo .flight{padding:10px 10px 9px}
+  .vlo .flight-heading-main{gap:5px}
+  .vlo .callsign{font-size:13px}
+  .vlo .flight-heading-route{font-size:12px;gap:5px}
+  .vlo .flight-compact-grid{column-gap:8px}
+  .vlo .flight-compact-cell{font-size:11.5px}
+  .vlo .flight-position{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){
   .vlo .flight{transition:none}
@@ -1157,27 +1208,26 @@ main.vlo{
     button.type='button';
     button.className='flight';
     button.setAttribute('aria-label',
-      `${f.callsign}, ${f.pilot}, de ${f.dep} para ${f.arr}, aeronave ${f.aircraft}, rede ${f.network}, `+
+      `${f.callsign}, ${f.pilot}, de ${f.dep} para ${f.arr}, aeronave ${f.aircraft}, rede ${String(f.network).toUpperCase()}, `+
       `em andamento, ${f.position?'posição disponível; clique para localizar':'posição indisponível no mapa'}`);
-    // Layout V6.5: identificação, rota, dados em duas colunas e posição real.
+    // V6.6: cabeçalho único, duas colunas operacionais e status compacto.
+    // Maiúsculas somente na apresentação: o valor original continua disponível nos dados da API.
+    const networkDisplay=String(f.network || 'NEWSKY').toLocaleUpperCase('pt-BR');
     button.innerHTML=
       `<div class="flight-title">`+
-        `<span class="callsign">${safe(f.callsign)}</span>`+
+        `<div class="flight-heading-main">`+
+          `<span class="callsign">${safe(f.callsign)}</span>`+
+          `<span class="flight-heading-route"><span class="flight-header-separator" aria-hidden="true">·</span>`+
+          `<span>${safe(f.dep)}</span><span class="flight-route-arrow" aria-hidden="true">→</span>`+
+          `<span>${safe(f.arr)}</span></span>`+
+        `</div>`+
         `<span class="airline ${f.airline.toLowerCase()}">${safe(f.airline)}</span>`+
       `</div>`+
-      `<div class="flight-route">`+
-        `<span>${safe(f.dep)}</span><span class="flight-route-arrow" aria-hidden="true">→</span>`+
-        `<span>${safe(f.arr)}</span>`+
-      `</div>`+
-      `<div class="flight-operational-grid">`+
-        `<div class="flight-data"><span class="flight-data-label">PILOTO</span>`+
-          `<span class="flight-data-value">${safe(f.pilot)}</span></div>`+
-        `<div class="flight-data"><span class="flight-data-label">AERONAVE</span>`+
-          `<span class="flight-data-value">${safe(f.aircraft)}</span></div>`+
-        `<div class="flight-data"><span class="flight-data-label">REDE</span>`+
-          `<span class="flight-data-value">${safe(f.network)}</span></div>`+
-        `<div class="flight-data"><span class="flight-data-label">STATUS</span>`+
-          `<span class="flight-data-value flight-status-active">Em andamento</span></div>`+
+      `<div class="flight-compact-grid">`+
+        `<span class="flight-compact-cell" title="${safe(f.pilot)}">${safe(f.pilot)}</span>`+
+        `<span class="flight-compact-cell align-right" title="${safe(f.aircraft)}">${safe(f.aircraft)}</span>`+
+        `<span class="flight-compact-cell flight-compact-network" title="${safe(networkDisplay)}">${safe(networkDisplay)}</span>`+
+        `<span class="flight-compact-cell align-right flight-status-active">Em andamento</span>`+
       `</div>`+
       `<span class="flight-position ${f.position?'':'missing'}">`+
         `<span class="flight-position-dot" aria-hidden="true"></span>`+
