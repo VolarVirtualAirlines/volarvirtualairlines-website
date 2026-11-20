@@ -117,7 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 </a>
 
                 <div class="menu-dropdown-content">
-                    <a href="frota.html">Frota Operacional</a>
+                    <a href="frota.html">Frota VVX</a>
+                    <a href="frota_vax.html">Frota VAX</a>
                     <a href="liveries.html">Liveries Oficiais</a>
                 </div>
             </div>
@@ -273,6 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "executive.html": "divisoes",
         "vax.html": "divisoes",
         "frota.html": "frota",
+        "frota_vax.html": "frota",
         "liveries.html": "frota",
         "pilotos.html": "pilotos",
         "cadetes.html": "pilotos",
