@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
    Consome o endpoint da Volar validado anteriormente; sem chave no navegador. */
 (() => {
   'use strict';
-  const API_URL = '/api/test-frota'; // Endpoint já testado; trocar por /api/frota quando publicado.
+  const API_URL = '/api/frota'; // Endpoint já testado; trocar por /api/frota quando publicado.
   const $ = (id) => document.getElementById(id);
   const intFmt = new Intl.NumberFormat('pt-BR');
   const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
