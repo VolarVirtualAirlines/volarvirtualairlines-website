@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
 (() => {
   'use strict';
   const VAX_API = '/api/frota-vax';
-  const VVX_API = '/api/test-frota';
+  const VVX_API = '/api/frota';
   const $ = (id) => document.getElementById(id);
   const intFmt = new Intl.NumberFormat('pt-BR');
   const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
