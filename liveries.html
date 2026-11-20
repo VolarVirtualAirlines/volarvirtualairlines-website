@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liveries | Volar Virtual Airlines</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+    /* AVISO DE COMPATIBILIDADE DAS LIVERIES - VOLAR */
+    .vvx-aviso-liveries {
+        max-width: 900px;
+        margin: 0 auto 35px;
+        padding: 22px 26px;
+        background: linear-gradient(135deg, #10243a, #172f49);
+        border: 1px solid rgba(65, 145, 225, 0.25);
+        border-left: 4px solid #3289e8;
+        border-radius: 12px;
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        text-align: left;
+        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+    }
+    
+    .vvx-aviso-liveries .aviso-icone {
+        color: #58aaff;
+        font-size: 23px;
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+    
+    .vvx-aviso-liveries h3 {
+        color: #ffffff;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0 0 12px;
+    }
+    
+    .vvx-aviso-liveries p {
+        color: #d5e1ed;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        line-height: 1.75;
+        margin: 0 0 10px;
+    }
+    
+    .vvx-aviso-liveries p:last-child {
+        margin-bottom: 0;
+    }
+    
+    .vvx-aviso-liveries strong {
+        color: #ffffff;
+        font-weight: 600;
+    }
+    
+    @media (max-width: 600px) {
+        .vvx-aviso-liveries {
+            padding: 18px;
+            gap: 12px;
+        }
+    
+        .vvx-aviso-liveries h3 {
+            font-size: 14px;
+        }
+    
+        .vvx-aviso-liveries p {
+            font-size: 12px;
+        }
+    }
+    </style>
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo-container">
+        <a href="index.html">
+            <img src="assets/LOGO_WEBSITE.png" alt="Logotipo Volar Virtual Airlines" class="logo">
+        </a>
+    </div>
+
+<div id="menu-container"></div>
+
+</header>
+
+<section id="frota" class="section">
+
+    <h2>Nossas Liveries</h2>
+
+    <p style="max-width:900px;margin:auto;margin-bottom:40px;">
+        Conheça as pinturas oficiais da Volar Virtual Airlines e faça o download
+        das liveries disponíveis para as aeronaves e simuladores suportados.
+    </p>
+
+    <!-- AVISO DE COMPATIBILIDADE DAS LIVERIES -->
+    <div class="vvx-aviso-liveries" role="note">
+    
+        <div class="aviso-icone">
+            <i class="fas fa-circle-info" aria-hidden="true"></i>
+        </div>
+    
+        <div class="aviso-conteudo">
+    
+            <h3>Aviso de Compatibilidade das Liveries</h3>
+    
+            <p>
+                Todas as liveries disponibilizadas pela
+                <strong>Volar Virtual Airlines</strong> são desenvolvidas
+                para versões originais e oficiais das aeronaves de seus
+                respectivos desenvolvedores, incluindo produtos gratuitos
+                distribuídos oficialmente.
+            </p>
+    
+            <p>
+                A utilização em versões não oficiais, modificadas ou
+                incompatíveis poderá ocasionar falhas na instalação,
+                problemas de exibição da pintura ou até mesmo impedir
+                que a livery seja reconhecida pelo simulador.
+            </p>
+    
+            <p>
+                A <strong>Volar Virtual Airlines não garante o funcionamento
+                de suas liveries em versões não oficiais das aeronaves.</strong>
+                Para garantir a melhor experiência, recomendamos utilizar
+                sempre produtos originais, atualizados e compatíveis com
+                o simulador correspondente.
+            </p>
+    
+        </div>
+    
+    </div>
+    <!-- FIM DO AVISO DE COMPATIBILIDADE -->
+    
+    <!-- INÍCIO DA TABELA DE LIVERIES -->
+
+    <!--- Status 
+        🔜 EM BREVE
+        🟡 EM DESENVOLVIMENTO
+        🎨 EM PINTURA
+        ✅ EM HOMOLOGAÇÃO
+        🟢 EM OPERAÇÃO
+    -->
+
+        <div class="filtros-frota">
+            <select id="filtro-status">
+                <option value="">Todos os status</option>
+            </select>            
+            <select id="filtro-aeronave">
+                <option value="">Todas as aeronaves</option>
+            </select>
+        
+            <select id="filtro-tipo">
+                <option value="">Todos os tipos</option>
+            </select>
+        
+            <select id="filtro-desenvolvedor">
+                <option value="">Todos os desenvolvedores</option>
+            </select>
+
+            <select id="filtro-livery">
+                <option value="">Todas as liveries</option>
+            </select>
+        
+            <select id="filtro-simulador">
+                <option value="">Todos os simuladores</option>
+            </select>
+        
+            <button type="button" id="btn-limpar-filtros-frota">
+                <i class="fas fa-eraser"></i> Limpar
+            </button>
+        </div>
+
+        <div id="contador-frota" class="contador-frota">
+            Mostrando 0 de 0 liveries
+        </div>
+    
+        <div class="tabela-responsiva">
+            <table class="tabela-frota">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Aeronave</th>
+                        <th>Tipo</th>
+                        <th>Desenvolvedor</th>
+                        <th>Livery</th>
+                        <th>Preview</th>
+                        <th>Simulador</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>A320 NEO</td>
+                        <td>👥 Passageiros</td>
+                        <td>TOLISS</td>
+                        <td>WHITE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/A320N_WHITE.png" alt="A320N White"></div></td>
+                        <td><span class="badge-sim">X-PLANE 11/12</span></td>
+                        <td><a href="https://drive.google.com/file/d/1naSIt0fXqpbU2pMB1cvLO9D3aEWaykGD/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>B737-800WL</td>
+                        <td>👥 Passageiros</td>
+                        <td>LEVEL UP</td>
+                        <td>BLUE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/B738_BLUE.png" alt="B737-800WL Blue"></div></td>
+                        <td><span class="badge-sim">X-PLANE 11/12</span></td>
+                        <td><a href="https://drive.google.com/file/d/163OF-2Jn010YpCgimM_GdW8O66o0wBcC/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>B737-800WL</td>
+                        <td>👥 Passageiros</td>
+                        <td>LEVEL UP</td>
+                        <td>WHITE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/B738_WHITE.png" alt="B737-800WL White"></div></td>
+                        <td><span class="badge-sim">X-PLANE 11/12</span></td>
+                        <td><a href="https://drive.google.com/file/d/1si9s9FB9iHS5DiHxeXSxIvf6peA3vWu7/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>B737-800WL</td>
+                        <td>👥 Passageiros</td>
+                        <td>PMDG</td>
+                        <td>BLUE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/B738_BLUE.png" alt="B737-800WL Blue"></div></td>
+                        <td><span class="badge-sim">MSFS 2020</span></td>
+                        <td><a href="https://drive.google.com/file/d/1rgASadRJVtTQiNy85PGqqUs-VeE6nDuk/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>B737-800WL</td>
+                        <td>👥 Passageiros</td>
+                        <td>PMDG</td>
+                        <td>BLUE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/B738_BLUE.png" alt="B737-800WL Blue"></div></td>
+                        <td><span class="badge-sim">MSFS 2024</span></td>
+                        <td><a href="https://drive.google.com/file/d/1FNJhrZW64bbayJ8L3cTPSkj8M9D-phzE/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>B737-800WL</td>
+                        <td>👥 Passageiros</td>
+                        <td>PMDG</td>
+                        <td>WHITE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/B738_WHITE.png" alt="B737-800WL White"></div></td>
+                        <td><span class="badge-sim">MSFS 2020</span></td>
+                        <td><a href="https://drive.google.com/file/d/167NPCTJkTWIAs182XrasosMYFCzbPvKP/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>                        
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>B737-800WL</td>
+                        <td>👥 Passageiros</td>
+                        <td>PMDG</td>
+                        <td>WHITE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/B738_WHITE.png" alt="B737-800WL White"></div></td>
+                        <td><span class="badge-sim">MSFS 2024</span></td>
+                        <td><a href="https://drive.google.com/file/d/19iW8i_LJ-dnjF2s_SAAWwYoEpb1bssGF/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>                        
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>B737-800WL</td>
+                        <td>👥 Passageiros</td>
+                        <td>PMDG</td>
+                        <td>KIDS</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/B738_KIDS.png" alt="B737-800WL Kids"></div></td>
+                        <td><span class="badge-sim">MSFS 2020</span></td>
+                        <td><a href="https://drive.google.com/file/d/1Orw1KkwQCA-iOhwq6roTVmiqKf0XaWnp/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>                        
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>B737-800WL</td>
+                        <td>👥 Passageiros</td>
+                        <td>PMDG</td>
+                        <td>KIDS</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/B738_KIDS.png" alt="B737-800WL Kids"></div></td>
+                        <td><span class="badge-sim">MSFS 2024</span></td>
+                        <td><a href="https://drive.google.com/file/d/1FoPbW4ZxBeh58oTQc_7BL7-DQRPSFKyO/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>                        
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>B737-800WL BCF</td>
+                        <td>📦 Carga</td>
+                        <td>PMDG</td>
+                        <td>TURQUOISE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/B738BCF_TURQUOISE.png" alt="B737-800WL BCF Turquoise"></div></td>
+                        <td><span class="badge-sim">MSFS 2020</span></td>
+                        <td><a href="https://drive.google.com/file/d/1ZXvRvStzr_7tuSHFoVf1QOyxoey1HI01/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>   
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>B737-800WL BCF</td>
+                        <td>📦 Carga</td>
+                        <td>PMDG</td>
+                        <td>TURQUOISE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/B738BCF_TURQUOISE.png" alt="B737-800WL BCF Turquoise"></div></td>
+                        <td><span class="badge-sim">MSFS 2024</span></td>
+                        <td><a href="https://drive.google.com/file/d/1LEwJR0EavHg8xiLqMO7CrziiETjfqXs_/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>   
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>B737-800WL</td>
+                        <td>👥 Passageiros</td>
+                        <td>ZIBO</td>
+                        <td>BLUE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/B738_BLUE.png" alt="B737-800WL Blue"></div></td>
+                        <td><span class="badge-sim">X-PLANE 11/12</span></td>
+                        <td><a href="https://drive.google.com/file/d/10ndMwyIRYJj2rhQSIyKqLIYiWW7_7LlI/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>   
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>B737-800WL</td>
+                        <td>👥 Passageiros</td>
+                        <td>ZIBO</td>
+                        <td>WHITE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/B738_WHITE.png" alt="B737-800WL White"></div></td>
+                        <td><span class="badge-sim">X-PLANE 11/12</span></td>
+                        <td><a href="https://drive.google.com/file/d/17_QxLPwU_GbqWB61WIandCCsByK9ykCy/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>   
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>E195</td>
+                        <td>👥 Passageiros</td>
+                        <td>X-CRAFTS</td>
+                        <td>WHITE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/E195_WHITE.png" alt="E195 White"></div></td>
+                        <td><span class="badge-sim">X-PLANE 11/12</span></td>
+                        <td><a href="https://drive.google.com/file/d/1XmsV1-JgHmLfjIGvR5q-jFja-qV7wePX/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td> 
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>FOKKER 100</td>
+                        <td>👥 Passageiros</td>
+                        <td>JUST FLIGHT</td>
+                        <td>BLUE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/F100_BLUE.png" alt="Fokker 100"></div></td>
+                        <td><span class="badge-sim">MSFS 2020</span></td>
+                        <td><a href="https://drive.google.com/drive/folders/1ZPvkiiwfbw19lSFFHA1hmMyvwwRbHXds?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td> 
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>FOKKER 100</td>
+                        <td>👥 Passageiros</td>
+                        <td>JUST FLIGHT</td>
+                        <td>BLUE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/F100_BLUE.png" alt="Fokker 100"></div></td>
+                        <td><span class="badge-sim">MSFS 2024</span></td>
+                        <td><a href="https://drive.google.com/drive/folders/1GK9iIStsQI-C5uwnVjGYdUBPRnroz7Vd?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td> 
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>A220-300</td>
+                        <td>👥 Passageiros</td>
+                        <td>INIBUILDS</td>
+                        <td>PURPLE HAZE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/A220_PURPLE_HAZE.png" alt="A220-300 Purple HAZE"></div></td>
+                        <td><span class="badge-sim">MSFS 2024</span></td>
+                        <td><a href="https://drive.google.com/file/d/1jZZb0jSMQvC9cXygzT7NSgA6krrDHuma/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td> 
+                    </tr>  
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>A220-300</td>
+                        <td>👥 Passageiros</td>
+                        <td>INIBUILDS</td>
+                        <td>PURPLE HAZE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/A220_PURPLE_HAZE.png" alt="A220 Purple"></div></td>
+                        <td><span class="badge-sim">MSFS 2020</span></td>
+                        <td><a href="https://drive.google.com/file/d/1uRCCuResu4LcUUSNS-2dx3Ze_BgdQROw/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td> 
+                    </tr> 
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>A321 NEO</td>
+                        <td>👥 Passageiros</td>
+                        <td>FSLABS</td>
+                        <td>BLUE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/A321N_BLUE.png" alt="A321N White"></div></td>
+                        <td><span class="badge-sim">MSFS 2020</span></td>
+                        <td><a href="https://drive.google.com/file/d/1dgaq23dCTRNzEV_MYqrM68wn_3AbTtHd/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td> 
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>A321 NEO</td>
+                        <td>👥 Passageiros</td>
+                        <td>FSLABS</td>
+                        <td>BLUE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/A321N_BLUE.png" alt="A321N White"></div></td>
+                        <td><span class="badge-sim">MSFS 2024</span></td>
+                        <td><a href="https://drive.google.com/file/d/1j_bnvWki9AxG-GjsMEvYfQXwZBE_K-mB/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td> 
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>A320 CFM SL</td>
+                        <td>👥 Passageiros</td>
+                        <td>FENIX</td>
+                        <td>TURQUOISE WAVE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/A320_TURQUOISE_WAVE.png" alt="A320 CFM SL Turquoise"></div></td>
+                        <td><span class="badge-sim">MSFS 2020</span></td>
+                        <td><a href="https://drive.google.com/file/d/13Kjeut1zIsnhZ57mhJl1SOxxGnuyXfyB/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td> 
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>A320 CFM SL</td>
+                        <td>👥 Passageiros</td>
+                        <td>FENIX</td>
+                        <td>TURQUOISE WAVE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/A320_TURQUOISE_WAVE.png" alt="A320 CFM SL Turquoise"></div></td>
+                        <td><span class="badge-sim">MSFS 2024</span></td>
+                        <td><a href="https://drive.google.com/file/d/1nRfjQIFrV2tLWqb0N01AE1GLPJ-DGatl/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>A320 CFM SL</td>
+                        <td>👥 Passageiros</td>
+                        <td>FENIX</td>
+                        <td>PURPLE HAZE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/A320_PURPLE_HAZE.png" alt="A320 CFM SL Purple"></div></td>
+                        <td><span class="badge-sim">MSFS 2020</span></td>
+                        <td><a href="https://drive.google.com/file/d/1Brk3TjL54ReCFRHZQPL44Q4fsqHhBbxT/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>🟢 EM OPERAÇÃO</td>
+                        <td>A320 CFM SL</td>
+                        <td>👥 Passageiros</td>
+                        <td>FENIX</td>
+                        <td>PURPLE HAZE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/A320_PURPLE_HAZE.png" alt="A320 CFM SL Purple"></div></td>
+                        <td><span class="badge-sim">MSFS 2024</span></td>
+                        <td><a href="https://drive.google.com/file/d/1rFy1rTw0yJGC4raBI-oLssBgxIY_G-Fs/view?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>✅ EM HOMOLOGAÇÃO</td>
+                        <td>B777F</td>
+                        <td>📦 Carga</td>
+                        <td>PMDG</td>
+                        <td>PURPLE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/HOMOLOG.png" alt="PURPLE"></div></td>
+                        <td><span class="badge-sim">MSFS 2020</span></td>
+                    </tr>
+                    <tr>
+                        <td>✅ EM HOMOLOGAÇÃO</td>
+                        <td>B777F</td>
+                        <td>📦 Carga</td>
+                        <td>PMDG</td>
+                        <td>PURPLE</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/HOMOLOG.png" alt="PURPLE"></div></td>
+                        <td><span class="badge-sim">MSFS 2024</span></td>
+                    </tr>                    
+                    <tr>
+                        <td>🔜 EM BREVE</td>
+                        <td>B738 MAX</td>
+                        <td>👥 Passageiros</td>
+                        <td>IFLY</td>
+                        <td>FREE LIVERY</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/EM_BREVE.png" alt="FREE LIVERY"></div></td>
+                        <td><span class="badge-sim">MSFS 2020/2024</span></td>
+                    </tr>
+                    <tr>
+                        <td>🔜 EM BREVE</td>
+                        <td>A350-900</td>
+                        <td>👥 Passageiros</td>
+                        <td>INIBUILDS</td>
+                        <td>FREE LIVERY</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/EM_BREVE.png" alt="FREE LIVERY"></div></td>
+                        <td><span class="badge-sim">MSFS 2020/2024</span></td>
+                    </tr>
+                    <tr>
+                        <td>🟡 EM DESENVOLVIMENTO</td>
+                        <td>B777-300ER</td>
+                        <td>👥 Passageiros</td>
+                        <td>PMDG</td>
+                        <td>FREE LIVERY</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/DEV.png" alt="FREE LIVERY"></div></td>
+                        <td><span class="badge-sim">MSFS 2020/2024</span></td>
+                    </tr>
+                    <tr>
+                        <td>🔜 EM BREVE</td>
+                        <td>C750</td>
+                        <td>💼 Executivo</td>
+                        <td>FLIGHTFX</td>
+                        <td>FREE LIVERY</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/EM_BREVE.png" alt="FREE LIVERY"></div></td>
+                        <td><span class="badge-sim">MSFS 2020/2024</span></td>
+                    </tr>
+                    <tr>
+                        <td>🔜 EM BREVE</td>
+                        <td>MD11F</td>
+                        <td>📦 Carga</td>
+                        <td>TFDi</td>
+                        <td>FREE LIVERY</td>
+                        <td><div class="liverie-preview"><img src="assets/liveries/EM_BREVE.png" alt="FREE LIVERY"></div></td>
+                        <td><span class="badge-sim">MSFS 2020/2024</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
+    <!-- FINAL DA TABELA DE LIVERIES -->
+    
+</section>
+
+<div id="modal-aeronave" class="modal-aeronave-container">
+    <div class="modal-aeronave-content">
+        <button type="button" class="btn-fechar-aeronave" id="fechar-aeronave">&times;</button>
+
+        <div class="modal-aeronave-header">
+            <h3 id="modal-aeronave-titulo">Aeronave</h3>
+        <div class="modal-aeronave-meta">
+            <p id="modal-aeronave-edition" class="modal-aeronave-edition">Volar Edition</p>
+            <span id="modal-aeronave-categoria" class="badge-categoria">Categoria C</span>
+        </div>
+        </div>
+
+        <img id="modal-aeronave-img" src="" alt="Preview da aeronave" class="modal-aeronave-img">
+        
+        <p id="modal-aeronave-descricao" class="modal-aeronave-descricao"></p>
+        
+        <div class="modal-aeronave-info" id="modal-aeronave-info"></div>
+        
+        <div class="modal-aeronave-actions">
+            <a id="modal-aeronave-download"
+               href="#"
+               target="_blank"
+               class="btn-modal-download">
+               <i class="fas fa-download"></i>
+               Download Livery
+            </a>
+        </div>
+    </div>
+</div>
+    
+<div id="footer-container"></div>
+
+<button id="btn-voltar-topo" title="Voltar ao topo">
+    ↑
+</button>
+
+<!-- BOTÃO DE SUPORTE FLUTUANTE (Atualizado para abrir o formulário) -->
+<button type="button" id="btn-suporte" title="Precisa de ajuda?">
+    <img src="assets/support/support_icon.png" alt="Suporte">
+    <span class="label-suporte">Precisa de ajuda?</span>
+</button>
+    
+<!-- MODAL DA CENTRAL DE ATENDIMENTO -->
+<div id="modal-suporte" class="modal-suporte-container">
+    <div class="modal-suporte-content">
+            <!-- Botão para fechar o modal -->
+            <button type="button" class="btn-fechar-modal" id="fechar-suporte">&times;</button>
+            
+            <div class="modal-header">
+                <h3>Central de Atendimento</h3>
+                <p>Volar Virtual Airlines</p>
+            </div>
+    
+            <!-- FORMULÁRIO CONFIGURADO PARA O STATICFORMS -->
+            <!-- FORMULÁRIO AJUSTADO COM AS DIRETRIZES EXATAS DO STATICFORMS -->
+            <form action="https://api.staticforms.dev/submit" method="POST" id="form-suporte">
+                
+                <!-- AJUSTADO: Nome mudou para apiKey e o valor correto gerado para você -->
+                <input type="hidden" name="apiKey" value="sf_1f0637f6ba466017621733fb">
+                
+                <!-- Campo Anti-Spam / Honeypot (Obrigatório, mantido invisível para robôs) -->
+                <input type="text" name="honeypot" style="display:none">
+                
+                <!-- AJUSTADO: Assunto padrão sugerido pela plataforma -->
+                <input type="hidden" name="subject" value="Volar Virtual Airlines Suporte submission">
+            
+                <!-- Campo: Nome Completo -->
+                <div class="input-group">
+                    <label for="sup-nome">Nome Completo</label>
+                    <input type="text" id="sup-nome" name="name" placeholder="Digite seu nome" required>
+                </div>
+            
+                <!-- Campo: E-mail de Contato -->
+                <div class="input-group">
+                    <label for="sup-email">E-mail de Contato</label>
+                    <input type="email" id="sup-email" name="email" placeholder="seu-email@exemplo.com" required>
+                </div>
+            
+                <!-- Campo: Mensagem -->
+                <div class="input-group">
+                    <label for="sup-mensagem">Mensagem</label>
+                    <textarea id="sup-mensagem" name="message" rows="4" placeholder="Como podemos ajudar você hoje, piloto?" required></textarea>
+                </div>
+            
+                <!-- Botão Enviar -->
+                <button type="submit" class="btn-enviar-suporte">Enviar Mensagem</button>
+                
+            </form>
+    </div>
+</div>
+    
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const btnTopo = document.getElementById("btn-voltar-topo");
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+            btnTopo.style.display = "flex";
+        } else {
+            btnTopo.style.display = "none";
+        }
+    });
+
+    btnTopo.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+
+});
+   
+</script>
+
+<script>
+const dadosAeronaves = {
+    "A320 CFM SL": {
+        titulo: "Airbus A320 CFM SL — Fenix",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/HOMOLOG.png",
+        descricao: "O Airbus A320 CFM SL da Fenix combina sistemas detalhados, comandos fly-by-wire e versatilidade para operações de curta e média distância. Na Volar, recebe a livery Turquoise Wave Edition, com identidade visual marcante e cabine personalizada.",
+        info: {
+            "Fabricante": "Airbus",
+            "Tipo": "Passageiros",
+            "Capacidade": "Até 180 PAX",
+            "Volume de Carga": "37,4 m³",
+            "Carga Máxima": "9.435 kg (porões, incluindo bagagens)",
+            "Motores": "CFM56-5B / IAE V2500-A5",
+            "MTOW": "Até 78.000 kg",
+            "Alcance": "Até 6.200 km (3.348 NM), com Sharklets",
+            "Cruzeiro": "Mach 0.78",
+            "Teto Operacional": "39.100 ft"
+        }
+    },    
+    "A321 NEO": {
+        titulo: "Airbus A321neo",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/HOMOLOG.png",
+        descricao: "O Airbus A321neo é o maior membro da família A320neo, combinando maior capacidade de passageiros, excelente eficiência operacional e maior alcance para operações de curta, média e longa distância.",
+        info: {
+            "Fabricante": "Airbus",
+            "Tipo": "Passageiros",
+            "Capacidade": "220 PAX",
+            "Volume de Carga": "31 m³",
+            "Carga Máxima": "8.100 kg",
+            "Motores": "PW1133G-JM / LEAP-1A32",
+            "MTOW": "93.500 kg",
+            "Alcance": "7.400 km (4.000 NM)",
+            "Cruzeiro": "Mach 0.78",
+            "Teto Operacional": "39.100 ft"
+        }
+    },    
+    "A320 NEO": {
+        titulo: "Airbus A320neo",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/A320N_WHITE.png",
+        descricao: "O Airbus A320neo representa a nova geração da família A320, oferecendo maior eficiência de combustível, menor emissão de ruído e excelente desempenho em operações de curta e média distância.",
+        info: {
+            "Fabricante": "Airbus",
+            "Tipo": "Passageiros",
+            "Capacidade": "180 PAX",
+            "Volume de Carga": "24 m³",
+            "Carga Máxima": "6.500 kg",
+            "Motores": "PW1100G-JM / LEAP-1A",
+            "MTOW": "79.000 kg",
+            "Alcance": "6.297 km (3.400 NM)",
+            "Cruzeiro": "Mach 0.78",
+            "Teto Operacional": "39.100 ft"
+        }
+    },
+    "B737-800WL": {
+        titulo: "Boeing 737-800",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/B738_BLUE.png",
+        descricao: "O Boeing 737-800 é uma das aeronaves mais utilizadas na aviação comercial mundial, reconhecida por sua eficiência operacional, confiabilidade e versatilidade em rotas domésticas e regionais.",
+        info: {
+            "Fabricante": "Boeing",
+            "Tipo": "Passageiros",
+            "Capacidade": "184 PAX",
+            "Volume de Carga": "24 m³",
+            "Carga Máxima": "6.300 kg",
+            "Motores": "CFM56-7B",
+            "MTOW": "79.015 kg",
+            "Alcance": "5.436 km (2.935 NM)",
+            "Cruzeiro": "Mach 0.785",
+            "Teto Operacional": "41.000 ft"
+        }
+    },
+    "B737-800WL BCF": {
+        titulo: "Boeing 737-800WL BCF",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/B738BCF_TURQUOISE.png",
+        descricao: "O Boeing 737-800WL BCF é a versão cargueira do 737 Next Generation, projetada para operações logísticas de médio alcance, combinando capacidade de carga, economia e alta disponibilidade operacional.",
+        info: {
+            "Fabricante": "Boeing",
+            "Tipo": "Carga",
+            "Volume de Carga": "180 m³",
+            "Carga Máxima": "20.760 kg",
+            "Motores": "CFM56-7B",
+            "MTOW": "79.015 kg",
+            "Alcance": "3.704 km (2.000 NM)",
+            "Cruzeiro": "Mach 0.785",
+            "Teto Operacional": "41.000 ft"
+        }
+    },
+    "E195": {
+        titulo: "Embraer 195",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/E195_WHITE.png",
+        descricao: "O Embraer E195 é o maior jato comercial da primeira geração E-Jets, destacando-se pelo conforto dos passageiros, eficiência operacional e excelente desempenho em aeroportos regionais e nacionais.",
+        info: {
+            "Fabricante": "Embraer",
+            "Tipo": "Passageiros",
+            "Capacidade": "122 PAX",
+            "Volume de Carga": "16 m³",
+            "Carga Máxima": "4.100 kg",
+            "Motores": "GE CF34-10E",
+            "MTOW": "52.290 kg",
+            "Alcance": "4.074 km (2.200 NM)",
+            "Cruzeiro": "Mach 0.82",
+            "Teto Operacional": "41.000 ft"
+        }
+    },
+    "FOKKER 100": {
+        titulo: "Fokker 100",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/HOMOLOG.png",
+        descricao: "O Fokker 100 é uma aeronave regional bimotor a jato, reconhecida por sua robustez, eficiência operacional e versatilidade em rotas de curta e média distância. Na VOLAR, opera configurado para 100 passageiros em classe econômica.",
+        info: {
+            "Fabricante": "Fokker",
+            "Tipo": "Passageiros",
+            "Capacidade": "Até 100 PAX",
+            "Volume de Carga": "15 m³",
+            "Carga Máxima": "4.100 kg",
+            "Motores": "Rolls-Royce Tay 650-15",
+            "MTOW": "44.452 kg",
+            "Alcance": "3.170 km (1.710 NM)",
+            "Cruzeiro": "Mach 0.77",
+            "Teto Operacional": "35.000 ft"
+        }
+    },
+    "A220-300": {
+        titulo: "Airbus A220-300",
+        categoria: "ICAO CATEGORY C",
+        imagem: "assets/liveries/HOMOLOG.png",
+        descricao: "O Airbus A220-300 é uma aeronave narrow-body de última geração, desenvolvida para oferecer elevada eficiência operacional, conforto e excelente desempenho em rotas de curta e média distância. Na VOLAR, opera configurado para até 140 passageiros em classe econômica.",
+        info: {
+            "Fabricante": "Airbus",
+            "Tipo": "Passageiros",
+            "Capacidade": "140 PAX",
+            "Volume de Carga": "20 m³",
+            "Carga Máxima": "5.300 kg",
+            "Motores": "Pratt & Whitney PW1500G",
+            "MTOW": "69.853 kg",
+            "Alcance": "6.300 km (3.400 NM)",
+            "Cruzeiro": "Mach 0.82",
+            "Teto Operacional": "41.000 ft"
+        }
+    },
+    "B777F": {
+        titulo: "Boeing 777F Freighter",
+        categoria: "ICAO CATEGORY D",
+        imagem: "assets/liveries/B777F_PURPLE.png",
+        descricao: "O Boeing 777F Freighter é uma aeronave cargueira de longo alcance, desenvolvida a partir do Boeing 777-200LR. Reconhecido por sua elevada capacidade de transporte, eficiência operacional e confiabilidade, é equipado com dois potentes motores General Electric GE90 e pode transportar aproximadamente 102 toneladas de carga. Com grande autonomia e capacidade para operações intercontinentais, o Boeing 777F é um dos principais cargueiros de fuselagem larga utilizados na aviação mundial.",
+        info: {
+            "Fabricante": "Boeing",
+            "Tipo": "Cargueiro",
+            "Capacidade": "27 posições de pallets",
+            "Volume de Carga": "653 m³",
+            "Carga Máxima": "102.010 kg",
+            "Motores": "GE90-110B1L",
+            "MTOW": "347.810 kg",
+            "Alcance": "9.200 km (4.970 NM)",
+            "Cruzeiro": "Mach 0.84",
+            "Teto Operacional": "43.100 ft"
+        }
+    },
+};
+
+function getImagemLivery(row) {
+    const img = row.querySelector(".liverie-preview img");
+
+    if (img && img.getAttribute("src")) {
+        return img.getAttribute("src");
+    }
+
+    return "";
+}
+
+function getLiveryEdition(row) {
+    const livery = row.children[4]?.textContent.trim().toUpperCase();
+    const tipo = row.children[2]?.textContent.trim().toLowerCase();
+
+    if (livery === "WHITE") return "Volar White Edition";
+    if (livery === "BLUE") return "Volar Blue Edition";
+    if (livery === "KIDS") return "Volar Kids Edition";
+    if (livery === "PURPLE HAZE") return "Volar Purple Haze Edition";
+    if (livery === "PURPLE") return "Volar Purple Cargo Edition";
+    if (livery === "TURQUOISE WAVE") return "Volar Turquoise Wave Edition";
+    if (livery === "TURQUOISE" && tipo.includes("carga")) return "Volar Turquoise Cargo Edition";
+    if (livery === "TURQUOISE") return "Volar Turquoise Edition";
+
+    return "Volar Edition";
+}
+    
+document.querySelectorAll(".tabela-frota tbody tr").forEach(row => {
+    const aeronave = row.children[1]?.textContent.trim();
+    const preview = row.querySelector(".liverie-preview");
+
+    if (!preview || !dadosAeronaves[aeronave]) return;
+
+    preview.style.cursor = "pointer";
+
+    preview.addEventListener("click", () => {
+        const dados = dadosAeronaves[aeronave];
+
+        document.getElementById("modal-aeronave-titulo").textContent = dados.titulo;
+        document.getElementById("modal-aeronave-edition").textContent = getLiveryEdition(row);
+        document.getElementById("modal-aeronave-categoria").textContent = dados.categoria;
+        document.getElementById("modal-aeronave-img").src = getImagemLivery(row);
+        document.getElementById("modal-aeronave-img").alt = dados.titulo;
+        document.getElementById("modal-aeronave-descricao").textContent = dados.descricao;
+
+        const linkDownload = row.querySelector(".btn-download");
+        const botaoDownload = document.getElementById("modal-aeronave-download");
+        
+        if (linkDownload && linkDownload.href) {
+            botaoDownload.href = linkDownload.href;
+            botaoDownload.style.display = "inline-flex";
+        } else {
+            botaoDownload.removeAttribute("href");
+            botaoDownload.style.display = "none";
+        }
+        
+        const infoContainer = document.getElementById("modal-aeronave-info");
+        infoContainer.innerHTML = "";
+
+        Object.entries(dados.info).forEach(([label, valor]) => {
+            infoContainer.innerHTML += `
+                <div class="modal-item">
+                    <span>${label}</span>
+                    <span>${valor}</span>
+                </div>
+            `;
+        });
+
+        const modal = document.getElementById("modal-aeronave");
+        
+        modal.style.display = "flex";
+        
+        setTimeout(() => {
+            modal.classList.add("active");
+        }, 10);
+            });
+        });
+
+        document.getElementById("fechar-aeronave").addEventListener("click", () => {
+        
+            const modal = document.getElementById("modal-aeronave");
+        
+            modal.classList.remove("active");
+        
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 350);
+        
+        });
+
+        document.getElementById("modal-aeronave").addEventListener("click", (e) => {
+        
+            if (e.target.id === "modal-aeronave") {
+        
+                const modal = document.getElementById("modal-aeronave");
+        
+                modal.classList.remove("active");
+        
+                setTimeout(() => {
+                    modal.style.display = "none";
+                }, 350);
+            }
+        
+        });
+
+
+/* ORDENAÇÃO AUTOMÁTICA DAS LIVERIES POR AERONAVE */
+
+const corpoTabelaFrota = document.querySelector(".tabela-frota tbody");
+
+const linhasOrdenadasFrota = Array.from(
+    corpoTabelaFrota.querySelectorAll("tr")
+).sort((a, b) => {
+
+    const aeronaveA = a.children[1]?.textContent.trim() || "";
+    const aeronaveB = b.children[1]?.textContent.trim() || "";
+
+    return aeronaveA.localeCompare(aeronaveB, "pt-BR", {
+        numeric: true,
+        sensitivity: "base"
+    });
+
+});
+
+// Reorganiza as linhas na tabela
+corpoTabelaFrota.append(...linhasOrdenadasFrota);
+
+// Mantém a integração com os filtros existentes
+const linhasFrota = document.querySelectorAll(".tabela-frota tbody tr");
+
+const filtroStatus = document.getElementById("filtro-status");
+const filtroAeronave = document.getElementById("filtro-aeronave");
+const filtroTipo = document.getElementById("filtro-tipo");
+const filtroDesenvolvedor = document.getElementById("filtro-desenvolvedor");
+const filtroLivery = document.getElementById("filtro-livery");
+const filtroSimulador = document.getElementById("filtro-simulador");
+const btnLimparFiltrosFrota = document.getElementById("btn-limpar-filtros-frota");
+
+function limparEmoji(texto) {
+    return texto.replace(/[^\w\s\-\/]/g, "").trim();
+}
+
+function preencherFiltro(select, coluna, limpar = false) {
+    const valores = new Set();
+
+    linhasFrota.forEach(row => {
+        let valor = row.children[coluna]?.textContent.trim();
+
+        if (limpar) {
+            valor = limparEmoji(valor);
+        }
+
+        if (valor) valores.add(valor);
+    });
+
+    [...valores].sort().forEach(valor => {
+        const option = document.createElement("option");
+        option.value = valor.toLowerCase();
+        option.textContent = valor;
+        select.appendChild(option);
+    });
+}
+
+function filtrarFrota() {
+    const status = filtroStatus.value;
+    const aeronave = filtroAeronave.value;
+    const tipo = filtroTipo.value;
+    const desenvolvedor = filtroDesenvolvedor.value;
+        const livery = filtroLivery.value;
+const simulador = filtroSimulador.value;
+    const contadorFrota = document.getElementById("contador-frota");
+
+    let totalVisivel = 0;
+
+    linhasFrota.forEach(row => {
+        const rowStatus = row.children[0]?.textContent.trim().toLowerCase();
+        const rowAeronave = row.children[1]?.textContent.trim().toLowerCase();
+        const rowTipo = limparEmoji(row.children[2]?.textContent.trim()).toLowerCase();
+        const rowDesenvolvedor = row.children[3]?.textContent.trim().toLowerCase();
+                const rowLivery = row.children[4]?.textContent.trim().toLowerCase();
+const rowSimulador = row.children[6]?.textContent.trim().toLowerCase();
+
+        const exibir =
+            (!status || rowStatus === status) &&
+            (!aeronave || rowAeronave === aeronave) &&
+            (!tipo || rowTipo === tipo) &&
+            (!desenvolvedor || rowDesenvolvedor === desenvolvedor) &&
+                        (!livery || rowLivery === livery) &&
+(!simulador || rowSimulador === simulador);
+
+        row.style.display = exibir ? "" : "none";
+
+        if (exibir) {
+            totalVisivel++;
+        }
+    });
+
+    if (contadorFrota) {
+        contadorFrota.textContent = `Mostrando ${totalVisivel} de ${linhasFrota.length} liveries`;
+    }
+}
+
+preencherFiltro(filtroStatus, 0);
+preencherFiltro(filtroAeronave, 1);
+preencherFiltro(filtroTipo, 2, true);
+preencherFiltro(filtroDesenvolvedor, 3);
+preencherFiltro(filtroLivery, 4);
+preencherFiltro(filtroSimulador, 6);
+filtrarFrota();
+
+    
+[filtroStatus, filtroAeronave, filtroTipo, filtroDesenvolvedor, filtroLivery, filtroSimulador].forEach(filtro => {
+    filtro.addEventListener("change", filtrarFrota);
+});
+
+btnLimparFiltrosFrota.addEventListener("click", () => {
+    filtroStatus.value = "";
+    filtroAeronave.value = "";
+    filtroTipo.value = "";
+    filtroDesenvolvedor.value = "";
+    filtroLivery.value = "";
+    filtroSimulador.value = "";
+
+    filtrarFrota();
+});
+    
+</script>
+
+<script src="assets/js/menu.js"></script>
+<script src="assets/js/footer.js"></script>
+<script src="assets/js/support.js"></script>
+    
+</body>
+</html>
