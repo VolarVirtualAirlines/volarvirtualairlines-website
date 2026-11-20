@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#081728">
-  <meta name="description" content="Frota operacional da Volar Virtual Airlines. Consulte aeronaves, matrículas, modelos, aeroportos, capacidade e estatísticas integradas ao NewSky.">
+  <meta name="description" content="Frota operacional da Volar Virtual Airlines. Consulte aeronaves, matrículas, modelos, aeroportos, capacidade e estatísticas operacionais da frota.">
   <title>Frota Operacional | Volar Virtual Airlines</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -13,7 +13,7 @@
   <style>
 
 /* ============================================================
-   VOLAR FLEET OPERATIONS — v1.0
+   VOLAR FLEET OPERATIONS — v1.1
    Isolado sob vvxf- para preservar style.css, menu e suporte.
    ============================================================ */
 .vvxf-root{--f-bg:#07111f;--f-panel:#0e2135;--f-panel-2:#11283e;--f-border:rgba(128,178,212,.18);--f-cyan:#44d6df;--f-soft:#9cb6ca;--f-text:#edf6fd;--f-gold:#e4c686;color:var(--f-text);font-family:'Inter',sans-serif;background:linear-gradient(180deg,#08172a 0%,#071523 42%,#091625 100%);text-align:left;min-height:70vh;isolation:isolate;padding:clamp(20px,2.5vw,52px) 0 clamp(60px,6vw,120px);overflow:hidden}
@@ -123,20 +123,23 @@
 .vvxf-pagination .vvxf-pages{display:flex;gap:8px;align-items:center}
 .vvxf-pagination button:disabled,.vvxf-root button:disabled{opacity:.42;cursor:not-allowed;transform:none}
 .vvxf-footnote{margin:15px 4px 0;color:#7794a9;font-size:11px;line-height:1.7}
-.vvxf-dialog{width:min(690px,calc(100vw - 26px));max-height:min(92dvh,920px);padding:0;border:1px solid rgba(75,201,209,.3);border-radius:22px;background:#0c2135;color:#edf8fe;box-shadow:0 35px 120px rgba(0,0,0,.6);overflow-y:auto;font-family:'Inter',sans-serif}
+/* Modal centralizado independentemente de regras globais do style.css. */
+.vvxf-dialog{box-sizing:border-box;border:1px solid rgba(75,201,209,.3);border-radius:18px;background:#0c2135;color:#edf8fe;box-shadow:0 28px 95px rgba(0,0,0,.64);font-family:'Inter',sans-serif}
+dialog.vvxf-dialog[open]{position:fixed!important;inset:auto!important;top:50%!important;left:50%!important;right:auto!important;bottom:auto!important;transform:translate(-50%,-50%)!important;margin:0!important;width:min(590px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;max-height:min(84dvh,660px)!important;padding:0!important;display:flex;flex-direction:column;overflow:hidden;z-index:2147480000}
+dialog.vvxf-dialog:not([open]){display:none!important}
 .vvxf-dialog::backdrop{background:rgba(1,10,20,.82);backdrop-filter:blur(7px)}
-.vvxf-dialog-header{background:linear-gradient(120deg,#163a51,#0d2940);padding:clamp(22px,2.5vw,34px);position:relative;border-bottom:1px solid rgba(67,196,210,.24)}
-.vvxf-dialog-header h2{font:800 clamp(23px,2vw,32px) 'Montserrat',sans-serif;color:#fff;margin:10px 40px 8px 0}
-.vvxf-dialog-header p{font-size:13px;color:#b2cedb;line-height:1.5;margin:0;overflow-wrap:anywhere}
-.vvxf-dialog-close{position:absolute;right:18px;top:18px;width:35px;height:35px;background:rgba(5,30,48,.55);border:1px solid rgba(131,193,209,.24);color:#d6f9ff;border-radius:9px;font-size:16px}
-.vvxf-dialog-body{padding:clamp(19px,2.6vw,34px)}
-.vvxf-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.vvxf-detail-item{display:flex;flex-direction:column;gap:7px;padding:15px;border-radius:10px;background:#102b40;border:1px solid rgba(136,188,207,.12);min-width:0}
+.vvxf-dialog-header{background:linear-gradient(120deg,#163a51,#0d2940);padding:18px 23px 17px;position:relative;border-bottom:1px solid rgba(67,196,210,.24);flex:0 0 auto}
+.vvxf-dialog-header h2{font:800 clamp(22px,2vw,27px) 'Montserrat',sans-serif;color:#fff;margin:7px 40px 4px 0}
+.vvxf-dialog-header p{font-size:12px;color:#b2cedb;line-height:1.45;margin:0;overflow-wrap:anywhere}
+.vvxf-dialog-close{position:absolute;right:16px;top:16px;width:34px;height:34px;background:rgba(5,30,48,.55);border:1px solid rgba(131,193,209,.24);color:#d6f9ff;border-radius:9px;font-size:16px;cursor:pointer}
+.vvxf-dialog-body{padding:17px 23px 19px;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#325671 #0d263b}
+.vvxf-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.vvxf-detail-item{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:11px 13px;min-height:61px;border-radius:10px;background:#102b40;border:1px solid rgba(136,188,207,.12);min-width:0}
 .vvxf-detail-item span{color:#95b0c5;font-size:11px}
-.vvxf-detail-item strong{font-weight:800;color:#eefdff;font-size:14px;overflow-wrap:anywhere}
-.vvxf-dialog-note{color:#99b7c6;font-size:11px;line-height:1.7;margin:17px 0}
+.vvxf-detail-item strong{font-weight:800;color:#eefdff;font-size:13px;overflow-wrap:anywhere}
+.vvxf-dialog-note{color:#99b7c6;font-size:10.5px;line-height:1.5;margin:12px 0}
 .vvxf-dialog-links{display:flex;gap:10px;flex-wrap:wrap}
-.vvxf-dialog-links a{display:inline-flex;align-items:center;gap:8px;color:#061f2c;background:#48d6da;text-decoration:none;padding:11px 15px;border-radius:10px;font-size:12px;font-weight:800}
+.vvxf-dialog-links a{display:inline-flex;align-items:center;gap:8px;color:#061f2c;background:#48d6da;text-decoration:none;padding:9px 13px;border-radius:10px;font-size:11px;font-weight:800}
 .vvxf-dialog-links a:hover{background:#8beef0}
 @media(min-width:2300px){.vvxf-table th{padding:21px 23px;font-size:12px}.vvxf-table td{padding:20px 23px;font-size:14px}.vvxf-aircraft-meta strong{font-size:14px}.vvxf-aircraft-meta small{font-size:12px}.vvxf-root .vvxf-field :is(input,select){height:54px;font-size:14px}.vvxf-kpi{min-height:160px}.vvxf-card{padding:24px}.vvxf-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:1500px){.vvxf-filters{grid-template-columns:repeat(3,minmax(0,1fr))}.vvxf-field-search{grid-column:auto}.vvxf-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -145,6 +148,7 @@
 @media(max-width:760px){.vvxf-view-switch{display:none}.vvxf-table-panel{display:none!important}.vvxf-card-panel{display:grid!important}.vvxf-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.vvxf-list-tools{width:100%}.vvxf-list-tools select{flex:1;max-width:none}}
 @media(max-width:540px){.vvxf-wrap{width:calc(100% - 26px)}.vvxf-hero{padding:25px 20px;border-radius:16px}.vvxf-hero h1{font-size:34px}.vvxf-hero-side{flex-direction:column;align-items:flex-start;gap:10px}.vvxf-supplement{text-align:left}.vvxf-kpi-grid{gap:9px}.vvxf-kpi{border-radius:13px;min-height:95px;padding:14px}.vvxf-kpi .vvxf-icon{width:31px;height:31px;border-radius:10px;font-size:15px}.vvxf-kpi .vvxf-value{font-size:25px}.vvxf-kpi .vvxf-label{font-size:10px}.vvxf-context{gap:9px}.vvxf-filter-panel,.vvxf-list-panel{padding:16px;border-radius:15px}.vvxf-section-head{flex-direction:column;align-items:stretch}.vvxf-filters{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.vvxf-field-search{grid-column:span 2}.vvxf-field{font-size:10px}.vvxf-field :is(input,select){font-size:11px;padding-right:10px}.vvxf-field input{padding-left:34px}.vvxf-card-panel{grid-template-columns:1fr}.vvxf-card{padding:16px}.vvxf-list-tools{display:grid;grid-template-columns:1fr 1fr}.vvxf-list-tools .vvxf-btn{width:100%}.vvxf-list-title{gap:7px}.vvxf-pagination{justify-content:center;text-align:center}.vvxf-detail-grid{grid-template-columns:1fr 1fr;gap:8px}.vvxf-detail-item{padding:12px}.vvxf-detail-item strong{font-size:12px}}
 @media(max-width:375px){.vvxf-filters{grid-template-columns:1fr}.vvxf-field-search{grid-column:span 1}.vvxf-filters>.vvxf-field:last-child{grid-column:span 1}.vvxf-list-tools{grid-template-columns:1fr}.vvxf-kpi .vvxf-icon{display:none}.vvxf-quick{gap:7px}.vvxf-chip{font-size:10px;padding:7px 10px}.vvxf-detail-grid{grid-template-columns:1fr}}
+@media(max-width:540px){dialog.vvxf-dialog[open]{width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;max-height:88dvh!important;border-radius:14px}.vvxf-dialog-header{padding:17px 16px 14px}.vvxf-dialog-body{padding:14px 16px 17px}.vvxf-dialog-header h2{font-size:23px}.vvxf-detail-item{min-height:58px;padding:10px 11px}.vvxf-detail-item span{font-size:10px}.vvxf-detail-item strong{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.vvxf-root *, .vvxf-dialog *{transition:none!important;animation:none!important}}
 
   </style>
@@ -167,10 +171,10 @@
       <div class="vvxf-hero-copy">
         <div class="vvxf-eyebrow"><i class="fas fa-plane-departure" aria-hidden="true"></i> VOLAR VIRTUAL AIRLINES · FLEET INTELLIGENCE</div>
         <h1 id="vvxf-hero-title">Frota <span>Operacional</span></h1>
-        <p>Explore cada aeronave da Volar: modelo, matrícula, aeroporto de localização, capacidade e desempenho operacional. Dados consultados diretamente no NewSky, em uma experiência criada para nossa comunidade.</p>
+        <p>Explore cada aeronave da Volar: modelo, matrícula, aeroporto de localização, capacidade e desempenho operacional. Informações operacionais organizadas para os pilotos e visitantes da nossa companhia.</p>
       </div>
       <div class="vvxf-hero-side">
-        <div class="vvxf-source"><span class="vvxf-dot" aria-hidden="true"></span> DATA SOURCE · NEWSKY</div>
+        <div class="vvxf-source"><span class="vvxf-dot" aria-hidden="true"></span> INVENTÁRIO OPERACIONAL · VOLAR</div>
         <div class="vvxf-supplement"><i class="far fa-clock" aria-hidden="true"></i> <span id="vvxf-updated-hero">Aguardando consulta</span></div>
       </div>
     </section>
@@ -220,11 +224,11 @@
           <label class="vvxf-field" for="vvxf-sort" style="display:block"><select id="vvxf-sort" aria-label="Ordenar aeronaves"><option value="registration">Matrícula A–Z</option><option value="model">Modelo A–Z</option><option value="location">Aeroporto A–Z</option><option value="flights">Mais voos</option><option value="distance">Maior distância</option><option value="seats">Maior capacidade</option></select></label>
           <label class="vvxf-field" for="vvxf-page-size" style="display:block"><select id="vvxf-page-size" aria-label="Registros por página"><option value="12">12 por página</option><option value="24" selected>24 por página</option><option value="48">48 por página</option><option value="all">Mostrar todas</option></select></label>
           <div class="vvxf-view-switch" role="group" aria-label="Visualização"><button type="button" data-view="table" aria-pressed="true"><i class="fas fa-list" aria-hidden="true"></i> Tabela</button><button type="button" data-view="cards" aria-pressed="false"><i class="fas fa-table-cells-large" aria-hidden="true"></i> Cards</button></div>
-          <button class="vvxf-btn" id="vvxf-refresh" type="button" title="Consultar novamente o NewSky"><i class="fas fa-rotate" aria-hidden="true"></i> Atualizar</button>
+          <button class="vvxf-btn" id="vvxf-refresh" type="button" title="Atualizar dados da frota"><i class="fas fa-rotate" aria-hidden="true"></i> Atualizar</button>
           <button class="vvxf-btn" id="vvxf-export" type="button" title="Exportar registros filtrados para CSV" disabled><i class="fas fa-file-csv" aria-hidden="true"></i> CSV</button>
         </div>
       </div>
-      <div id="vvxf-status" class="vvxf-fetch-state" role="status" aria-live="polite"><i class="fas fa-circle-notch vvxf-spin" aria-hidden="true"></i><h3>Consultando a frota Volar</h3><p>Carregando os registros de aeronaves do NewSky...</p></div>
+      <div id="vvxf-status" class="vvxf-fetch-state" role="status" aria-live="polite"><i class="fas fa-circle-notch vvxf-spin" aria-hidden="true"></i><h3>Consultando a frota Volar</h3><p>Carregando os dados da frota...</p></div>
       <div id="vvxf-results" hidden>
         <div id="vvxf-table-panel" class="vvxf-table-panel">
           <div class="vvxf-table-wrap"><table class="vvxf-table"><thead><tr><th>Aeronave / matrícula</th><th>Modelo ICAO</th><th>Operação</th><th>Localização</th><th>Passageiros</th><th>Carga máx.</th><th>Voos</th><th>Distância</th><th>Detalhes</th></tr></thead><tbody id="vvxf-tbody"></tbody></table></div>
@@ -233,12 +237,12 @@
         <div class="vvxf-pagination"><span id="vvxf-page-info"></span><div class="vvxf-pages"><button type="button" class="vvxf-btn" id="vvxf-prev"><i class="fas fa-chevron-left" aria-hidden="true"></i> Anterior</button><span id="vvxf-page-number" aria-live="polite"></span><button type="button" class="vvxf-btn" id="vvxf-next">Próxima <i class="fas fa-chevron-right" aria-hidden="true"></i></button></div></div>
       </div>
     </section>
-    <p class="vvxf-footnote">Os números refletem o cadastro e as estatísticas disponibilizados pelo NewSky no momento da consulta. O aeroporto indicado corresponde à última localização registrada no sistema, não a rastreamento em tempo real. Esta página utiliza temporariamente o endpoint de teste da Volar, até a integração definitiva ser autorizada e publicada.</p>
+    <p class="vvxf-footnote">Os dados apresentados refletem o cadastro e as estatísticas operacionais disponíveis no momento da atualização. A localização corresponde ao último aeroporto registrado para a aeronave, não à posição em tempo real.</p>
   </div>
 </main>
 <dialog id="vvxf-detail" class="vvxf-dialog" aria-labelledby="vvxf-detail-title">
   <div class="vvxf-dialog-header"><button type="button" class="vvxf-dialog-close" id="vvxf-detail-close" aria-label="Fechar detalhes"><i class="fas fa-xmark" aria-hidden="true"></i></button><div class="vvxf-eyebrow"><i class="fas fa-plane" aria-hidden="true"></i> FICHA OPERACIONAL · VOLAR</div><h2 id="vvxf-detail-title">Aeronave</h2><p id="vvxf-detail-subtitle"></p></div>
-  <div class="vvxf-dialog-body"><div class="vvxf-detail-grid" id="vvxf-detail-grid"></div><p class="vvxf-dialog-note">A localização apresentada é o aeroporto registrado no NewSky. As estatísticas são acumuladas da aeronave e não representam dados de voo em tempo real.</p><div class="vvxf-dialog-links"><a href="liveries.html"><i class="fas fa-palette" aria-hidden="true"></i> Explorar Liveries Volar</a></div></div>
+  <div class="vvxf-dialog-body"><div class="vvxf-detail-grid" id="vvxf-detail-grid"></div><p class="vvxf-dialog-note">A localização corresponde ao aeroporto registrado para a aeronave. As estatísticas são acumuladas e não representam rastreamento em tempo real.</p><div class="vvxf-dialog-links"><a href="liveries.html"><i class="fas fa-palette" aria-hidden="true"></i> Explorar Liveries Volar</a></div></div>
 </dialog>
 <div id="footer-container"></div>
 
@@ -436,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return `<article class="vvxf-card">
       <div class="vvxf-card-head"><div class="vvxf-aircraft-cell"><div class="vvxf-plane-icon"><i class="fas fa-plane" aria-hidden="true"></i></div><div><h3 class="vvxf-card-model">${escapeHTML(reg(a))}</h3><p class="vvxf-card-name">${escapeHTML(a.model)} · ${escapeHTML(a.icao)}</p></div></div><span class="vvxf-tag" data-kind="${kind}">${categories[kind]}</span></div>
       <div class="vvxf-card-metrics"><div><span>Localização registrada</span><strong class="vvxf-loc"><i class="fas fa-location-dot" aria-hidden="true"></i> ${escapeHTML(a.location)}</strong></div><div><span>Capacidade</span><strong>${formatInt(a.passengers)} PAX</strong></div><div><span>Voos acumulados</span><strong>${formatInt(a.flights)}</strong></div><div><span>Carga máxima</span><strong>${formatInt(a.cargoKg)} kg</strong></div></div>
-      <div class="vvxf-card-footer"><span class="vvxf-code">${formatInt(a.distance)} · dist. NewSky</span><button type="button" class="vvxf-open" data-id="${escapeHTML(a.id)}">Ver detalhes <i class="fas fa-arrow-right" aria-hidden="true"></i></button></div>
+      <div class="vvxf-card-footer"><span class="vvxf-code">${formatInt(a.distance)} · distância acum.</span><button type="button" class="vvxf-open" data-id="${escapeHTML(a.id)}">Ver detalhes <i class="fas fa-arrow-right" aria-hidden="true"></i></button></div>
     </article>`;
   }
 
@@ -486,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function load() {
     $('vvxf-refresh').disabled=true;
-    setStatus({icon:'fas fa-circle-notch vvxf-spin',title:'Consultando a frota Volar',message:'Carregando os registros atualizados do NewSky...'});
+    setStatus({icon:'fas fa-circle-notch vvxf-spin',title:'Consultando a frota Volar',message:'Atualizando os dados operacionais da frota...'});
     const controller=new AbortController();
     const timer=setTimeout(()=>controller.abort(),20000);
     try {
@@ -495,7 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const data=await response.json();
       if(data?.success!==true || !Array.isArray(data.aircraft)) throw new Error(data?.message || 'Formato de resposta inesperado.');
       aircraft=data.aircraft.map(normalizeRecord);
-      if (data.complete===false) throw new Error('Consulta incompleta: o NewSky informou mais aeronaves do que recebemos.');
+      if (data.complete===false) throw new Error('Consulta incompleta: o total informado é maior que o número de aeronaves recebidas.');
       fillSelect('vvxf-maker',aircraft.map(maker));
       fillSelect('vvxf-model',aircraft.map(a=>a.icao));
       fillSelect('vvxf-location',aircraft.map(a=>a.location));
@@ -505,7 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
       page=1;render();
     } catch(error) {
       console.error('Volar Frota: falha ao consultar API',error);
-      setStatus({icon:'fas fa-triangle-exclamation',title:'Não foi possível carregar a frota',message:'A consulta ao servidor da Volar falhou. Confira se /api/test-frota está disponível e tente novamente.',canRetry:true});
+      setStatus({icon:'fas fa-triangle-exclamation',title:'Não foi possível carregar a frota',message:'Não foi possível obter as informações da frota. Tente atualizar a página em instantes.',canRetry:true});
       $('vvxf-count').textContent='Consulta indisponível';
       $('vvxf-export').disabled=true;
     } finally {clearTimeout(timer);$('vvxf-refresh').disabled=false;}
@@ -520,14 +524,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const fields=[
       ['Identificação completa',a.name],
       ['Modelo da aeronave',a.model],
-      ['ICAO',a.icao],
       ['Operação',categories[category(a)]],
       ['Aeroporto registrado',a.location],
       ['Capacidade de passageiros',`${formatInt(a.passengers)} PAX`],
       ['Capacidade de carga',`${formatInt(a.cargoKg)} kg`],
       ['Voos realizados',formatInt(a.flights)],
-      ['Distância acumulada (NewSky)',formatInt(a.distance)],
-      ['ID da aeronave no NewSky',a.id]
+      ['Distância acumulada',formatInt(a.distance)]
     ];
     for(const [label,value] of fields){
       const box=document.createElement('div');box.className='vvxf-detail-item';
@@ -542,7 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function exportCSV() {
     if(!filtered.length) return;
-    const rows=[['Matrícula','Nome completo','Modelo','ICAO','Operação','Localização ICAO','Passageiros','Carga (kg)','Voos','Distância (NewSky)'],...filtered.map(a=>[reg(a),a.name,a.model,a.icao,categories[category(a)],a.location,a.passengers,a.cargoKg,a.flights,a.distance])];
+    const rows=[['Matrícula','Nome completo','Modelo','ICAO','Operação','Localização ICAO','Passageiros','Carga (kg)','Voos','Distância acumulada'],...filtered.map(a=>[reg(a),a.name,a.model,a.icao,categories[category(a)],a.location,a.passengers,a.cargoKg,a.flights,a.distance])];
     const cell=(v)=>{let text=String(v ?? '');if(/^[=+@\-\t\r]/.test(text)) text="'"+text;return '"'+text.replaceAll('"','""')+'"';};
     const blob=new Blob(['\uFEFF'+rows.map(r=>r.map(cell).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8;'});
     const url=URL.createObjectURL(blob);
