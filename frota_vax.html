@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#081728">
+  <meta name="description" content="Frota de Treinamento da Volar Academy Excellence. Aeronaves, localização e modelos em testes ou homologação.">
+  <title>Frota de Treinamento VAX | Volar Virtual Airlines</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="assets/LOGO_VOLAR_64x64_FAFICON_WEB.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+
+/* ============================================================
+   VOLAR ACADEMY EXCELLENCE — FROTA VAX v1.0
+   Isolado sob vvxf- para preservar style.css, menu e suporte.
+   ============================================================ */
+.vvxf-root{--f-bg:#07111f;--f-panel:#0e2135;--f-panel-2:#11283e;--f-border:rgba(128,178,212,.18);--f-cyan:#44d6df;--f-soft:#9cb6ca;--f-text:#edf6fd;--f-gold:#e4c686;color:var(--f-text);font-family:'Inter',sans-serif;background:linear-gradient(180deg,#08172a 0%,#071523 42%,#091625 100%);text-align:left;min-height:70vh;isolation:isolate;padding:clamp(20px,2.5vw,52px) 0 clamp(60px,6vw,120px);overflow:hidden}
+.vvxf-root *{box-sizing:border-box}
+.vvxf-root [hidden]{display:none!important}
+.vvxf-root button,.vvxf-root input,.vvxf-root select{font:inherit}
+.vvxf-root button{cursor:pointer}
+.vvxf-wrap{width:calc(100% - clamp(28px,5vw,160px));max-width:2860px;margin:0 auto}
+.vvxf-hero{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:clamp(20px,5vw,120px);min-height:245px;padding:clamp(25px,3.6vw,70px);background:radial-gradient(ellipse at 82% 32%,rgba(32,185,207,.17),transparent 33%),linear-gradient(122deg,#102740,#0b1b31 54%,#09283b);border:1px solid rgba(83,206,219,.22);border-radius:clamp(18px,2vw,30px);box-shadow:0 20px 55px rgba(0,0,0,.18)}
+.vvxf-hero:before{content:'';position:absolute;width:620px;height:620px;right:-80px;top:-310px;border:1px solid rgba(92,210,225,.16);border-radius:50%;box-shadow:0 0 0 75px rgba(92,210,225,.035),0 0 0 160px rgba(92,210,225,.025);pointer-events:none}
+.vvxf-hero:after{content:'';position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px);background-size:42px 42px;opacity:.45;mask-image:linear-gradient(90deg,transparent 48%,black 100%);pointer-events:none}
+.vvxf-hero-copy,.vvxf-hero-side{position:relative;z-index:1}
+.vvxf-eyebrow{display:flex;align-items:center;gap:10px;color:var(--f-cyan);font-weight:800;letter-spacing:.16em;text-transform:uppercase;font-size:clamp(10px,.78vw,13px)}
+.vvxf-eyebrow i{font-size:15px}
+.vvxf-hero h1{font-family:'Montserrat',sans-serif;color:#fff;font-weight:800;font-size:clamp(30px,3.1vw,59px);letter-spacing:-.04em;line-height:1.08;margin:15px 0 13px}
+.vvxf-hero h1 span{color:var(--f-cyan)}
+.vvxf-hero p{color:#b6cada;line-height:1.65;font-size:clamp(13px,.97vw,17px);max-width:850px;margin:0}
+.vvxf-hero-side{display:flex;flex-direction:column;gap:14px;min-width:205px;align-items:flex-end}
+/* CTA institucional: a frota operacional convida o visitante a explorar as pinturas */
+.vvxf-root .vvxf-liveries-link{display:inline-flex;align-items:center;justify-content:center;gap:11px;min-height:52px;padding:13px 19px;border:1px solid #7be7e9;border-radius:13px;background:linear-gradient(115deg,#45dadd,#0cc2dc);box-shadow:0 9px 28px rgba(0,195,214,.17);color:#052335;text-decoration:none;font-size:clamp(12px,.81vw,14px);font-weight:800;letter-spacing:.005em;white-space:nowrap;transition:background .2s,box-shadow .2s,transform .2s}
+.vvxf-root .vvxf-liveries-link:hover{background:linear-gradient(115deg,#84f3f1,#35dcea);box-shadow:0 12px 34px rgba(0,200,214,.3);color:#052335;transform:translateY(-2px)}
+.vvxf-root .vvxf-liveries-link:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.vvxf-liveries-link .vvxf-liveries-arrow{font-size:11px;opacity:.75}
+.vvxf-supplement{font-size:11px;color:#98b4c6;text-align:right;line-height:1.55;opacity:.88}
+.vvxf-kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1vw,22px);margin:clamp(15px,1.2vw,25px) 0}
+.vvxf-kpi{position:relative;overflow:hidden;min-width:0;min-height:128px;display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(145deg,rgba(19,46,70,.98),rgba(11,29,48,.96));border:1px solid var(--f-border);border-radius:18px;padding:clamp(16px,1.55vw,29px)}
+.vvxf-kpi:after{content:'';position:absolute;right:-32px;bottom:-44px;width:112px;height:112px;border:1px solid rgba(84,196,212,.08);border-radius:50%}
+.vvxf-kpi .vvxf-label{font-size:clamp(10px,.75vw,13px);color:#a9c1d3;font-weight:650;letter-spacing:.01em;line-height:1.35}
+.vvxf-kpi .vvxf-value{color:#fff;font:800 clamp(25px,2.1vw,44px)/1.15 'Montserrat',sans-serif;margin:8px 0 0}
+.vvxf-kpi .vvxf-icon{width:clamp(36px,3.1vw,60px);height:clamp(36px,3.1vw,60px);display:grid;place-items:center;flex-shrink:0;border:1px solid rgba(74,210,224,.17);border-radius:16px;background:rgba(41,126,154,.12);color:#63dce0;font-size:clamp(17px,1.3vw,25px)}
+.vvxf-context{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:clamp(16px,1.5vw,28px);color:var(--f-soft);font-size:12px}
+.vvxf-context-points{display:flex;align-items:center;flex-wrap:wrap;gap:14px 24px}
+.vvxf-context strong{color:#f2fbff;font-weight:700}
+.vvxf-context i{color:var(--f-cyan);margin-right:6px}
+.vvxf-context .vvxf-info{line-height:1.6}
+.vvxf-panel{background:linear-gradient(155deg,rgba(15,36,56,.98),rgba(11,28,45,.99));border:1px solid var(--f-border);border-radius:20px;box-shadow:0 14px 32px rgba(0,0,0,.1)}
+.vvxf-filter-panel{padding:clamp(18px,1.8vw,34px);margin-bottom:clamp(15px,1.2vw,24px)}
+.vvxf-section-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+.vvxf-section-head h2{font:800 clamp(17px,1.25vw,23px) 'Montserrat',sans-serif;color:#fff;margin:0 0 5px}
+.vvxf-section-head p{color:var(--f-soft);font-size:12px;margin:0}
+.vvxf-btn{border:1px solid rgba(108,172,202,.28);background:rgba(33,61,82,.55);color:#d6e8f4;padding:11px 15px;border-radius:11px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:9px;white-space:nowrap;transition:background .2s,transform .2s}
+.vvxf-btn:hover{background:rgba(43,94,121,.65);transform:translateY(-1px)}
+.vvxf-btn:focus-visible,.vvxf-field :is(input,select):focus-visible,.vvxf-tab:focus-visible,.vvxf-row-action:focus-visible,.vvxf-card button:focus-visible{outline:2px solid var(--f-cyan);outline-offset:3px}
+.vvxf-btn-primary{background:#20b7c5;color:#04222e;border-color:#47d5df}
+.vvxf-btn-primary:hover{background:#5ce1e4}
+.vvxf-filters{display:grid;grid-template-columns:minmax(230px,2fr) repeat(5,minmax(125px,1fr));gap:12px}
+.vvxf-field{min-width:0;display:flex;flex-direction:column;gap:8px;color:#a7c1d4;font-size:11px;font-weight:750}
+.vvxf-field .vvxf-input-wrap{position:relative}
+.vvxf-field .vvxf-input-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#65c7d0;font-size:13px;pointer-events:none}
+.vvxf-field :is(input,select){display:block;width:100%;min-width:0;height:46px;background:#0a2034;border:1px solid rgba(123,176,209,.23);border-radius:10px;color:#edf8ff;padding:0 13px;font-weight:500;font-size:12px;outline:none;transition:border-color .2s}
+.vvxf-field input{padding-left:38px}
+.vvxf-field input::placeholder{color:#819aaf;opacity:1}
+.vvxf-field select{cursor:pointer;padding-right:30px;text-overflow:ellipsis}
+.vvxf-field :is(input,select):focus{border-color:#45cbd5}
+.vvxf-quick{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:18px}
+.vvxf-quick-label{font-weight:700;font-size:11px;color:#98afc4;margin-right:6px}
+.vvxf-chip{border:1px solid rgba(111,172,206,.24);border-radius:999px;padding:8px 14px;color:#c0d6e5;background:#0c2237;font-size:11px;font-weight:750;transition:all .2s}
+.vvxf-chip:hover{border-color:rgba(64,210,224,.65)}
+.vvxf-chip[aria-pressed=true]{background:rgba(47,195,210,.16);border-color:rgba(62,216,220,.6);color:#6ae7e6}
+.vvxf-list-panel{padding:clamp(17px,1.6vw,30px);min-height:350px}
+.vvxf-list-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:19px}
+.vvxf-list-title{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.vvxf-list-title h2{font:800 clamp(17px,1.25vw,23px) 'Montserrat',sans-serif;color:white;margin:0}
+.vvxf-total-label{color:#69dadd;font-size:12px;font-weight:800;border:1px solid rgba(85,206,212,.26);padding:7px 11px;border-radius:999px}
+.vvxf-list-tools{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.vvxf-list-tools select{min-height:39px;background:#0c253a;border:1px solid rgba(112,173,201,.25);border-radius:10px;color:#e2f4f9;padding:0 11px;font-size:11px;max-width:210px}
+.vvxf-view-switch{display:flex;align-items:center;border:1px solid rgba(112,173,201,.25);border-radius:10px;padding:3px;gap:3px}
+.vvxf-view-switch button{background:transparent;color:#9cbad0;border:none;border-radius:7px;padding:7px 10px;font-size:11px;font-weight:750}
+.vvxf-view-switch button[aria-pressed=true]{background:rgba(69,199,216,.16);color:#7febe8}
+.vvxf-fetch-state{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:13px;padding:74px 20px;text-align:center;color:#b7cfe0}
+.vvxf-fetch-state i{font-size:30px;color:var(--f-cyan)}
+.vvxf-fetch-state h3{color:#f1faff;margin:0;font:800 18px 'Montserrat',sans-serif}
+.vvxf-fetch-state p{max-width:470px;font-size:12px;line-height:1.75;margin:0}
+.vvxf-spin{animation:vvxfspin 1s linear infinite}
+@keyframes vvxfspin{to{transform:rotate(360deg)}}
+.vvxf-table-wrap{overflow-x:auto;border:1px solid rgba(120,167,201,.14);border-radius:15px;scrollbar-color:#285267 #10263a}
+.vvxf-table{width:100%;min-width:990px;border-collapse:collapse;color:#e4f1f9;font-size:12px}
+.vvxf-table thead{background:#0b2337}
+.vvxf-table th{font-size:10px;letter-spacing:.075em;text-transform:uppercase;color:#8eadc4;text-align:left;font-weight:800;padding:17px 16px;white-space:nowrap}
+.vvxf-table td{padding:15px 16px;border-top:1px solid rgba(134,187,209,.09);vertical-align:middle}
+.vvxf-table tbody tr{transition:background .15s}
+.vvxf-table tbody tr:hover{background:rgba(47,120,154,.14)}
+.vvxf-aircraft-cell{display:flex;align-items:center;gap:12px;min-width:0}
+.vvxf-plane-icon{width:38px;height:38px;flex:0 0 38px;border:1px solid rgba(54,193,208,.18);display:grid;place-items:center;background:rgba(46,167,180,.10);border-radius:11px;color:#54d9dc;font-size:17px}
+.vvxf-aircraft-meta{display:flex;flex-direction:column;gap:3px;min-width:0}
+.vvxf-aircraft-meta strong{font-size:12px;color:#fff;font-weight:800;white-space:nowrap}
+.vvxf-aircraft-meta small{font-size:11px;color:#8fadc1;overflow:hidden;text-overflow:ellipsis;max-width:295px;white-space:nowrap}
+.vvxf-code{font:750 11px 'Montserrat',sans-serif;color:#aad2e4;letter-spacing:.025em}
+.vvxf-loc{display:inline-flex;align-items:center;gap:6px;color:#8de5df;font-weight:750;white-space:nowrap}
+.vvxf-tag{display:inline-block;padding:7px 10px;background:rgba(51,142,172,.11);border:1px solid rgba(72,178,200,.19);color:#bedde9;border-radius:8px;font-size:10px;font-weight:800;white-space:nowrap}
+.vvxf-tag[data-kind=cargo]{border-color:rgba(231,186,103,.28);background:rgba(231,186,103,.1);color:#f0cc8f}
+.vvxf-tag[data-kind=exec]{border-color:rgba(179,143,238,.3);background:rgba(179,143,238,.12);color:#d4baf4}
+.vvxf-mono{font-variant-numeric:tabular-nums;font-weight:700;color:#eff9fe}
+.vvxf-row-action{width:34px;height:34px;border:1px solid rgba(92,201,217,.22);background:#102e43;border-radius:9px;color:#56d7da}
+.vvxf-row-action:hover{background:#1c4b5c}
+.vvxf-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.vvxf-card{border:1px solid rgba(123,181,212,.16);background:linear-gradient(155deg,#122c43,#0d2136);border-radius:16px;padding:19px;min-width:0;display:flex;flex-direction:column;gap:16px;transition:border-color .2s,transform .2s}
+.vvxf-card:hover{border-color:rgba(64,203,218,.36);transform:translateY(-2px)}
+.vvxf-card-head{display:flex;gap:12px;justify-content:space-between;align-items:flex-start}
+.vvxf-card-model{font-weight:800;color:#fff;font-size:14px;margin:0 0 3px}
+.vvxf-card-name{color:#8fadc2;font-size:11px;line-height:1.4;overflow-wrap:anywhere;margin:0}
+.vvxf-card-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 10px}
+.vvxf-card-metrics div{min-width:0;display:flex;flex-direction:column;gap:5px}
+.vvxf-card-metrics span{font-size:10px;color:#88aabd}
+.vvxf-card-metrics strong{font-size:12px;color:#eefaff;font-weight:800;overflow-wrap:anywhere}
+.vvxf-card-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:13px;border-top:1px solid rgba(125,182,206,.12)}
+.vvxf-card-footer button{background:rgba(39,153,170,.11);color:#78e6e4;border:1px solid rgba(68,197,209,.2);padding:8px 12px;border-radius:9px;font-size:11px;font-weight:800}
+.vvxf-card-footer button:hover{background:rgba(46,188,204,.22)}
+.vvxf-pagination{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px;margin-top:20px;color:var(--f-soft);font-size:12px}
+.vvxf-pagination .vvxf-pages{display:flex;gap:8px;align-items:center}
+.vvxf-pagination button:disabled,.vvxf-root button:disabled{opacity:.42;cursor:not-allowed;transform:none}
+.vvxf-footnote{margin:15px 4px 0;color:#7794a9;font-size:11px;line-height:1.7}
+/* Modal centralizado independentemente de regras globais do style.css. */
+.vvxf-dialog{box-sizing:border-box;border:1px solid rgba(75,201,209,.3);border-radius:18px;background:#0c2135;color:#edf8fe;box-shadow:0 28px 95px rgba(0,0,0,.64);font-family:'Inter',sans-serif}
+dialog.vvxf-dialog[open]{position:fixed!important;inset:auto!important;top:50%!important;left:50%!important;right:auto!important;bottom:auto!important;transform:translate(-50%,-50%)!important;margin:0!important;width:min(590px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;max-height:min(84dvh,660px)!important;padding:0!important;display:flex;flex-direction:column;overflow:hidden;z-index:2147480000}
+dialog.vvxf-dialog:not([open]){display:none!important}
+.vvxf-dialog::backdrop{background:rgba(1,10,20,.82);backdrop-filter:blur(7px)}
+.vvxf-dialog-header{background:linear-gradient(120deg,#163a51,#0d2940);padding:18px 23px 17px;position:relative;border-bottom:1px solid rgba(67,196,210,.24);flex:0 0 auto}
+.vvxf-dialog-header h2{font:800 clamp(22px,2vw,27px) 'Montserrat',sans-serif;color:#fff;margin:7px 40px 4px 0}
+.vvxf-dialog-header p{font-size:12px;color:#b2cedb;line-height:1.45;margin:0;overflow-wrap:anywhere}
+.vvxf-dialog-close{position:absolute;right:16px;top:16px;width:34px;height:34px;background:rgba(5,30,48,.55);border:1px solid rgba(131,193,209,.24);color:#d6f9ff;border-radius:9px;font-size:16px;cursor:pointer}
+.vvxf-dialog-body{padding:17px 23px 19px;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#325671 #0d263b}
+.vvxf-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.vvxf-detail-item{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:11px 13px;min-height:61px;border-radius:10px;background:#102b40;border:1px solid rgba(136,188,207,.12);min-width:0}
+.vvxf-detail-item span{color:#95b0c5;font-size:11px}
+.vvxf-detail-item strong{font-weight:800;color:#eefdff;font-size:13px;overflow-wrap:anywhere}
+.vvxf-dialog-note{color:#99b7c6;font-size:10.5px;line-height:1.5;margin:12px 0}
+.vvxf-dialog-links{display:flex;gap:10px;flex-wrap:wrap}
+.vvxf-dialog-links a{display:inline-flex;align-items:center;gap:8px;color:#061f2c;background:#48d6da;text-decoration:none;padding:9px 13px;border-radius:10px;font-size:11px;font-weight:800}
+.vvxf-dialog-links a:hover{background:#8beef0}
+@media(min-width:2300px){.vvxf-table th{padding:21px 23px;font-size:12px}.vvxf-table td{padding:20px 23px;font-size:14px}.vvxf-aircraft-meta strong{font-size:14px}.vvxf-aircraft-meta small{font-size:12px}.vvxf-root .vvxf-field :is(input,select){height:54px;font-size:14px}.vvxf-kpi{min-height:160px}.vvxf-card{padding:24px}.vvxf-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:1500px){.vvxf-filters{grid-template-columns:repeat(3,minmax(0,1fr))}.vvxf-field-search{grid-column:auto}.vvxf-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1150px){.vvxf-hero-side{min-width:155px}.vvxf-kpi{padding:17px;min-height:112px}.vvxf-kpi .vvxf-icon{width:36px;height:36px}.vvxf-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:860px){.vvxf-root{padding-top:16px}.vvxf-hero{min-height:0;align-items:flex-start;flex-direction:column;gap:19px}.vvxf-hero-side{flex-direction:row;justify-content:space-between;width:100%;align-items:center}.vvxf-supplement{text-align:right}.vvxf-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.vvxf-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.vvxf-field-search{grid-column:span 2}.vvxf-filters>.vvxf-field:last-child{grid-column:span 2}.vvxf-section-head{align-items:flex-start}}
+@media(max-width:760px){.vvxf-view-switch{display:none}.vvxf-table-panel{display:none!important}.vvxf-card-panel{display:grid!important}.vvxf-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.vvxf-list-tools{width:100%}.vvxf-list-tools select{flex:1;max-width:none}}
+@media(max-width:540px){.vvxf-wrap{width:calc(100% - 26px)}.vvxf-hero{padding:25px 20px;border-radius:16px}.vvxf-hero h1{font-size:34px}.vvxf-hero-side{flex-direction:column;align-items:flex-start;gap:10px}.vvxf-supplement{text-align:left}.vvxf-kpi-grid{gap:9px}.vvxf-kpi{border-radius:13px;min-height:95px;padding:14px}.vvxf-kpi .vvxf-icon{width:31px;height:31px;border-radius:10px;font-size:15px}.vvxf-kpi .vvxf-value{font-size:25px}.vvxf-kpi .vvxf-label{font-size:10px}.vvxf-context{gap:9px}.vvxf-filter-panel,.vvxf-list-panel{padding:16px;border-radius:15px}.vvxf-section-head{flex-direction:column;align-items:stretch}.vvxf-filters{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.vvxf-field-search{grid-column:span 2}.vvxf-field{font-size:10px}.vvxf-field :is(input,select){font-size:11px;padding-right:10px}.vvxf-field input{padding-left:34px}.vvxf-card-panel{grid-template-columns:1fr}.vvxf-card{padding:16px}.vvxf-list-tools{display:grid;grid-template-columns:1fr 1fr}.vvxf-list-tools .vvxf-btn{width:100%}.vvxf-list-title{gap:7px}.vvxf-pagination{justify-content:center;text-align:center}.vvxf-detail-grid{grid-template-columns:1fr 1fr;gap:8px}.vvxf-detail-item{padding:12px}.vvxf-detail-item strong{font-size:12px}}
+@media(max-width:540px){.vvxf-root .vvxf-liveries-link{width:100%;min-height:48px;padding:12px 16px;justify-content:center}.vvxf-hero-side{align-items:stretch}.vvxf-supplement{text-align:left}}
+@media(max-width:375px){.vvxf-filters{grid-template-columns:1fr}.vvxf-field-search{grid-column:span 1}.vvxf-filters>.vvxf-field:last-child{grid-column:span 1}.vvxf-list-tools{grid-template-columns:1fr}.vvxf-kpi .vvxf-icon{display:none}.vvxf-quick{gap:7px}.vvxf-chip{font-size:10px;padding:7px 10px}.vvxf-detail-grid{grid-template-columns:1fr}}
+@media(max-width:540px){dialog.vvxf-dialog[open]{width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;max-height:88dvh!important;border-radius:14px}.vvxf-dialog-header{padding:17px 16px 14px}.vvxf-dialog-body{padding:14px 16px 17px}.vvxf-dialog-header h2{font-size:23px}.vvxf-detail-item{min-height:58px;padding:10px 11px}.vvxf-detail-item span{font-size:10px}.vvxf-detail-item strong{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.vvxf-root *, .vvxf-dialog *{transition:none!important;animation:none!important}}
+
+
+/* VAX: situação do modelo por comparação de códigos ICAO */
+.vvxf-filters{grid-template-columns:minmax(230px,2fr) repeat(6,minmax(125px,1fr))}
+.vvxf-compare-info{display:flex;align-items:flex-start;gap:9px;color:#b1daea;font-size:12px;line-height:1.6;padding:12px 17px;margin:-2px 0 20px;background:rgba(36,124,143,.12);border:1px solid rgba(96,200,213,.2);border-radius:12px}
+.vvxf-compare-info i{margin-top:3px;color:#69dfe0;flex-shrink:0}
+.vvxf-compare-info[data-available="false"]{color:#e9c99a;background:rgba(153,110,48,.1);border-color:rgba(228,181,100,.3)}
+.vvxf-compare-info[data-available="false"] i{color:#e9bd82}
+.vvxf-situation{display:inline-flex;align-items:center;gap:7px;line-height:1.3;font-size:10px;font-weight:800;max-width:225px;padding:7px 10px;background:rgba(40,135,129,.12);border:1px solid rgba(72,196,177,.3);color:#91e8d0;border-radius:9px;white-space:normal}
+.vvxf-situation[data-status="testing"]{background:rgba(158,113,48,.12);color:#f1cc93;border-color:rgba(232,183,102,.34)}
+.vvxf-situation[data-status="unknown"]{background:rgba(103,113,125,.12);color:#c7d0dc;border-color:rgba(165,179,188,.24)}
+.vvxf-kpi-testing .vvxf-icon{background:rgba(232,183,102,.09);border-color:rgba(232,183,102,.25);color:#f1cc93}
+.vvxf-card-situation{display:flex;margin-top:-4px}
+@media(max-width:1500px){.vvxf-filters{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:860px){.vvxf-filters{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:540px){.vvxf-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.vvxf-compare-info{font-size:11px}}
+@media(max-width:375px){.vvxf-filters{grid-template-columns:1fr}}
+
+  </style>
+</head>
+<body>
+<header class="navbar">
+
+    <div class="logo-container">
+        <a href="index.html">
+            <img src="assets/LOGO_WEBSITE.png" alt="Logotipo Volar Virtual Airlines" class="logo">
+        </a>
+    </div>
+
+<div id="menu-container"></div>
+
+</header>
+<main id="frota" class="vvxf-root">
+  <div class="vvxf-wrap">
+    <section class="vvxf-hero" aria-labelledby="vvxf-hero-title">
+      <div class="vvxf-hero-copy">
+        <div class="vvxf-eyebrow"><i class="fas fa-graduation-cap" aria-hidden="true"></i> VOLAR ACADEMY EXCELLENCE · EXCELLENCE STARTS HERE</div>
+        <h1 id="vvxf-hero-title">Frota de <span>Treinamento</span></h1>
+        <p>Conheça a frota VAX, destinada à formação de pilotos, treinamento e testes de aeronaves. Consulte as matrículas, localização e os modelos já operacionais na VVX ou em testes / homologação.</p>
+      </div>
+      <div class="vvxf-hero-side">
+        <a class="vvxf-liveries-link" href="frota.html" aria-label="Consultar frota operacional da VVX">
+          <i class="fas fa-plane" aria-hidden="true"></i>
+          <span>Ver Frota VVX</span>
+          <i class="fas fa-arrow-up-right-from-square vvxf-liveries-arrow" aria-hidden="true"></i>
+        </a>
+        <div class="vvxf-supplement"><i class="far fa-clock" aria-hidden="true"></i> <span id="vvxf-updated-hero">Aguardando consulta</span></div>
+      </div>
+    </section>
+
+    <section class="vvxf-kpi-grid" aria-label="Indicadores da Frota VAX">
+      <article class="vvxf-kpi"><div><div class="vvxf-label">Aeronaves na VAX</div><div class="vvxf-value" id="vvxf-total">—</div></div><div class="vvxf-icon"><i class="fas fa-plane" aria-hidden="true"></i></div></article>
+      <article class="vvxf-kpi"><div><div class="vvxf-label">Modelos ICAO na VAX</div><div class="vvxf-value" id="vvxf-models">—</div></div><div class="vvxf-icon"><i class="fas fa-layer-group" aria-hidden="true"></i></div></article>
+      <article class="vvxf-kpi"><div><div class="vvxf-label">Modelos operacionais na VVX</div><div class="vvxf-value" id="vvxf-approved">—</div></div><div class="vvxf-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></div></article>
+      <article class="vvxf-kpi vvxf-kpi-testing"><div><div class="vvxf-label">Modelos em testes / homologação</div><div class="vvxf-value" id="vvxf-testing">—</div></div><div class="vvxf-icon"><i class="fas fa-flask" aria-hidden="true"></i></div></article>
+    </section>
+
+    <div class="vvxf-context" aria-live="polite">
+      <div class="vvxf-context-points">
+        <span><i class="fas fa-users" aria-hidden="true"></i> Passageiros*: <strong id="vvxf-pax">—</strong></span>
+        <span><i class="fas fa-box" aria-hidden="true"></i> Cargueiras: <strong id="vvxf-cargo">—</strong></span>
+        <span><i class="fas fa-crown" aria-hidden="true"></i> Executivas: <strong id="vvxf-exec">—</strong></span>
+        <span><i class="fas fa-route" aria-hidden="true"></i> Voos acumulados: <strong id="vvxf-flights">—</strong></span>
+        <span><i class="fas fa-location-dot" aria-hidden="true"></i> Aeroportos registrados: <strong id="vvxf-airports">—</strong></span>
+      </div>
+      <span class="vvxf-info">* Inclui aeronaves executivas. Localização = aeroporto registrado, não posição em tempo real.</span>
+    </div>
+
+    <div class="vvxf-compare-info" id="vvxf-compare-info" role="status" aria-live="polite"><i class="fas fa-circle-notch vvxf-spin" aria-hidden="true"></i> Verificando a situação dos modelos da VAX...</div>
+
+    <section class="vvxf-panel vvxf-filter-panel" aria-label="Filtros da frota VAX">
+      <div class="vvxf-section-head">
+        <div><h2>Encontre sua aeronave VAX</h2><p>Combine os filtros por operação, modelo, localização e situação na frota.</p></div>
+        <button class="vvxf-btn" id="vvxf-clear" type="button"><i class="fas fa-eraser" aria-hidden="true"></i> Limpar filtros</button>
+      </div>
+      <div class="vvxf-filters">
+        <label class="vvxf-field vvxf-field-search" for="vvxf-search">Busca por matrícula ou nome<div class="vvxf-input-wrap"><i class="fas fa-magnifying-glass" aria-hidden="true"></i><input id="vvxf-search" type="search" placeholder="Ex.: matrícula, A320, Fokker..." autocomplete="off"></div></label>
+        <label class="vvxf-field" for="vvxf-type">Tipo de operação<select id="vvxf-type"><option value="">Todos os tipos</option><option value="pax">Passageiros</option><option value="cargo">Carga</option><option value="exec">Executiva</option></select></label>
+        <label class="vvxf-field" for="vvxf-maker">Fabricante<select id="vvxf-maker"><option value="">Todos os fabricantes</option></select></label>
+        <label class="vvxf-field" for="vvxf-model">Modelo / ICAO<select id="vvxf-model"><option value="">Todos os modelos</option></select></label>
+        <label class="vvxf-field" for="vvxf-location">Localização da aeronave<select id="vvxf-location"><option value="">Todos os aeroportos</option></select></label>
+        <label class="vvxf-field" for="vvxf-situation">Situação do modelo<select id="vvxf-situation" disabled><option value="">Todas as situações</option><option value="operational">Operacional na VVX</option><option value="testing">Em testes / homologação</option></select></label>
+        <label class="vvxf-field" for="vvxf-activity">Histórico de voos<select id="vvxf-activity"><option value="">Todas as aeronaves</option><option value="active">Já realizou voos</option><option value="zero">Sem voos registrados</option></select></label>
+      </div>
+      <div class="vvxf-quick" role="group" aria-label="Filtros rápidos por operação">
+        <span class="vvxf-quick-label">Filtrar rápido:</span>
+        <button type="button" class="vvxf-chip" data-quick="" aria-pressed="true">Toda a frota</button>
+        <button type="button" class="vvxf-chip" data-quick="pax" aria-pressed="false">Passageiros</button>
+        <button type="button" class="vvxf-chip" data-quick="cargo" aria-pressed="false">Carga</button>
+        <button type="button" class="vvxf-chip" data-quick="exec" aria-pressed="false">Executiva</button>
+      </div>
+    </section>
+
+    <section class="vvxf-panel vvxf-list-panel" aria-label="Relação de aeronaves">
+      <div class="vvxf-list-header">
+        <div class="vvxf-list-title"><h2>Aeronaves de treinamento</h2><span class="vvxf-total-label" id="vvxf-count" aria-live="polite">Carregando...</span></div>
+        <div class="vvxf-list-tools">
+          <label class="vvxf-field" for="vvxf-sort" style="display:block"><select id="vvxf-sort" aria-label="Ordenar aeronaves"><option value="registration">Matrícula A–Z</option><option value="model">Modelo A–Z</option><option value="location">Aeroporto A–Z</option><option value="flights">Mais voos</option><option value="distance">Maior distância</option><option value="seats">Maior capacidade</option></select></label>
+          <label class="vvxf-field" for="vvxf-page-size" style="display:block"><select id="vvxf-page-size" aria-label="Registros por página"><option value="12">12 por página</option><option value="24" selected>24 por página</option><option value="48">48 por página</option><option value="all">Mostrar todas</option></select></label>
+          <div class="vvxf-view-switch" role="group" aria-label="Visualização"><button type="button" data-view="table" aria-pressed="true"><i class="fas fa-list" aria-hidden="true"></i> Tabela</button><button type="button" data-view="cards" aria-pressed="false"><i class="fas fa-table-cells-large" aria-hidden="true"></i> Cards</button></div>
+          <button class="vvxf-btn" id="vvxf-refresh" type="button" title="Atualizar dados da frota"><i class="fas fa-rotate" aria-hidden="true"></i> Atualizar</button>
+          <button class="vvxf-btn" id="vvxf-export" type="button" title="Exportar registros filtrados para CSV" disabled><i class="fas fa-file-csv" aria-hidden="true"></i> CSV</button>
+        </div>
+      </div>
+      <div id="vvxf-status" class="vvxf-fetch-state" role="status" aria-live="polite"><i class="fas fa-circle-notch vvxf-spin" aria-hidden="true"></i><h3>Consultando a frota VAX</h3><p>Carregando os dados da frota...</p></div>
+      <div id="vvxf-results" hidden>
+        <div id="vvxf-table-panel" class="vvxf-table-panel">
+          <div class="vvxf-table-wrap"><table class="vvxf-table"><thead><tr><th>Aeronave / matrícula</th><th>Modelo ICAO</th><th>Operação</th><th>Situação do modelo</th><th>Localização</th><th>Passageiros</th><th>Carga máx.</th><th>Voos</th><th>Distância</th><th>Detalhes</th></tr></thead><tbody id="vvxf-tbody"></tbody></table></div>
+        </div>
+        <div id="vvxf-card-panel" class="vvxf-cards vvxf-card-panel" style="display:none"></div>
+        <div class="vvxf-pagination"><span id="vvxf-page-info"></span><div class="vvxf-pages"><button type="button" class="vvxf-btn" id="vvxf-prev"><i class="fas fa-chevron-left" aria-hidden="true"></i> Anterior</button><span id="vvxf-page-number" aria-live="polite"></span><button type="button" class="vvxf-btn" id="vvxf-next">Próxima <i class="fas fa-chevron-right" aria-hidden="true"></i></button></div></div>
+      </div>
+    </section>
+    <p class="vvxf-footnote">Regra: modelo ICAO presente na VAX e na VVX = operacional na VVX; presente apenas na VAX = em testes / homologação. A classificação não certifica versões ou desenvolvedores específicos. Localização = último aeroporto registrado, não posição em tempo real.</p>
+  </div>
+</main>
+<dialog id="vvxf-detail" class="vvxf-dialog" aria-labelledby="vvxf-detail-title">
+  <div class="vvxf-dialog-header"><button type="button" class="vvxf-dialog-close" id="vvxf-detail-close" aria-label="Fechar detalhes"><i class="fas fa-xmark" aria-hidden="true"></i></button><div class="vvxf-eyebrow"><i class="fas fa-plane" aria-hidden="true"></i> FICHA DE TREINAMENTO · VAX</div><h2 id="vvxf-detail-title">Aeronave</h2><p id="vvxf-detail-subtitle"></p></div>
+  <div class="vvxf-dialog-body"><div class="vvxf-detail-grid" id="vvxf-detail-grid"></div><p class="vvxf-dialog-note">A localização corresponde ao aeroporto registrado para a aeronave. As estatísticas são acumuladas e não representam rastreamento em tempo real. A situação é calculada pela presença do modelo ICAO na VVX.</p><div class="vvxf-dialog-links"><a href="frota.html"><i class="fas fa-plane" aria-hidden="true"></i> Frota VVX</a><a href="liveries.html"><i class="fas fa-palette" aria-hidden="true"></i> Liveries Oficiais</a></div></div>
+</dialog>
+<div id="footer-container"></div>
+
+<button id="btn-voltar-topo" title="Voltar ao topo">
+    ↑
+</button>
+
+<!-- BOTÃO DE SUPORTE FLUTUANTE (Atualizado para abrir o formulário) -->
+<button type="button" id="btn-suporte" title="Precisa de ajuda?">
+    <img src="assets/support/support_icon.png" alt="Suporte">
+    <span class="label-suporte">Precisa de ajuda?</span>
+</button>
+    
+<!-- MODAL DA CENTRAL DE ATENDIMENTO -->
+<div id="modal-suporte" class="modal-suporte-container">
+    <div class="modal-suporte-content">
+            <!-- Botão para fechar o modal -->
+            <button type="button" class="btn-fechar-modal" id="fechar-suporte">&times;</button>
+            
+            <div class="modal-header">
+                <h3>Central de Atendimento</h3>
+                <p>Volar Virtual Airlines</p>
+            </div>
+    
+            <!-- FORMULÁRIO CONFIGURADO PARA O STATICFORMS -->
+            <!-- FORMULÁRIO AJUSTADO COM AS DIRETRIZES EXATAS DO STATICFORMS -->
+            <form action="https://api.staticforms.dev/submit" method="POST" id="form-suporte">
+                
+                <!-- AJUSTADO: Nome mudou para apiKey e o valor correto gerado para você -->
+                <input type="hidden" name="apiKey" value="sf_1f0637f6ba466017621733fb">
+                
+                <!-- Campo Anti-Spam / Honeypot (Obrigatório, mantido invisível para robôs) -->
+                <input type="text" name="honeypot" style="display:none">
+                
+                <!-- AJUSTADO: Assunto padrão sugerido pela plataforma -->
+                <input type="hidden" name="subject" value="Volar Virtual Airlines Suporte submission">
+            
+                <!-- Campo: Nome Completo -->
+                <div class="input-group">
+                    <label for="sup-nome">Nome Completo</label>
+                    <input type="text" id="sup-nome" name="name" placeholder="Digite seu nome" required>
+                </div>
+            
+                <!-- Campo: E-mail de Contato -->
+                <div class="input-group">
+                    <label for="sup-email">E-mail de Contato</label>
+                    <input type="email" id="sup-email" name="email" placeholder="seu-email@exemplo.com" required>
+                </div>
+            
+                <!-- Campo: Mensagem -->
+                <div class="input-group">
+                    <label for="sup-mensagem">Mensagem</label>
+                    <textarea id="sup-mensagem" name="message" rows="4" placeholder="Como podemos ajudar você hoje, piloto?" required></textarea>
+                </div>
+            
+                <!-- Botão Enviar -->
+                <button type="submit" class="btn-enviar-suporte">Enviar Mensagem</button>
+                
+            </form>
+    </div>
+</div>
+    
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const btnTopo = document.getElementById('btn-voltar-topo');
+  if (!btnTopo) return;
+  const ajustarBotao = () => { btnTopo.style.display = window.scrollY > 400 ? 'flex' : 'none'; };
+  window.addEventListener('scroll', ajustarBotao, { passive: true });
+  ajustarBotao();
+  btnTopo.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+});
+</script>
+<script>
+
+/* VOLAR ACADEMY EXCELLENCE — Frota VAX + comparação VVX.
+   Consome o endpoint da Volar validado anteriormente; sem chave no navegador. */
+(() => {
+  'use strict';
+  const VAX_API = '/api/frota-vax';
+  const VVX_API = '/api/test-frota';
+  const $ = (id) => document.getElementById(id);
+  const intFmt = new Intl.NumberFormat('pt-BR');
+  const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  const formatInt = (value) => intFmt.format(Number(value) || 0);
+  const categories = {pax:'Passageiros',cargo:'Carga',exec:'Executiva'};
+  let aircraft = [];
+  let vvxModels = new Set();
+  let compareAvailable = false;
+  const situations = { operational:'Operacional na VVX', testing:'Em testes / homologação', unknown:'Comparação indisponível' };
+  let page = 1;
+  let mode = 'table';
+  let filtered = [];
+  let lastFocus = null;
+
+  const category = (a) => a.purpose === 'cargo' ? 'cargo' : ['C750','E55P'].includes(a.icao) ? 'exec' : 'pax';
+  const maker = (a) => {
+    const model = a.model.toLowerCase();
+    if (model.includes('mcdonnell')) return 'McDonnell Douglas';
+    if (model.includes('airbus')) return 'Airbus';
+    if (model.includes('boeing')) return 'Boeing';
+    if (model.includes('embraer')) return 'Embraer';
+    if (model.includes('fokker')) return 'Fokker';
+    if (model.includes('cessna')) return 'Cessna';
+    return 'Outros';
+  };
+  const reg = (a) => a.name.split(' - ')[0].trim() || a.name;
+  const norm = (value) => String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+
+  function normalizeRecord(raw, index) {
+    return {
+      id:String(raw?.id ?? ('unknown-'+index)),
+      name:String(raw?.name ?? 'Aeronave sem identificação').trim(),
+      icao:String(raw?.icao ?? '—').trim().toUpperCase(),
+      model:String(raw?.model ?? 'Modelo não informado').trim(),
+      purpose:String(raw?.purpose ?? 'pax').trim().toLowerCase(),
+      location:String(raw?.location ?? '—').trim().toUpperCase(),
+      passengers:Math.max(0,Number(raw?.passengers)||0),
+      cargoKg:Math.max(0,Number(raw?.cargoKg)||0),
+      flights:Math.max(0,Number(raw?.flights)||0),
+      distance:Math.max(0,Number(raw?.distance)||0)
+    };
+  }
+
+  function situation(a) {
+    if (!compareAvailable || !a.icao || a.icao === '—') return 'unknown';
+    return vvxModels.has(a.icao) ? 'operational' : 'testing';
+  }
+
+  function situationHTML(a) {
+    const status = situation(a);
+    const icons = {operational:'fa-circle-check',testing:'fa-flask',unknown:'fa-circle-question'};
+    return `<span class="vvxf-situation" data-status="${status}"><i class="fas ${icons[status]}" aria-hidden="true"></i>${situations[status]}</span>`;
+  }
+
+  function fillSelect(id, items) {
+    const select = $(id);
+    const old = select.value;
+    select.replaceChildren(select.firstElementChild.cloneNode(true));
+    [...new Set(items.filter(v => v && v !== '—'))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true})).forEach(value=>{
+      const o = document.createElement('option'); o.value = value; o.textContent = value; select.appendChild(o);
+    });
+    if ([...select.options].some(o=>o.value===old)) select.value=old;
+  }
+
+  function updateKpis() {
+    const models = [...new Set(aircraft.map(a=>a.icao).filter(x=>x && x!=='—'))];
+    const cargos = aircraft.filter(a=>category(a)==='cargo').length;
+    $('vvxf-total').textContent = formatInt(aircraft.length);
+    $('vvxf-models').textContent = formatInt(models.length);
+    $('vvxf-approved').textContent = compareAvailable ? formatInt(models.filter(x=>vvxModels.has(x)).length) : '—';
+    $('vvxf-testing').textContent = compareAvailable ? formatInt(models.filter(x=>!vvxModels.has(x)).length) : '—';
+    $('vvxf-pax').textContent = formatInt(aircraft.length-cargos);
+    $('vvxf-cargo').textContent = formatInt(cargos);
+    $('vvxf-exec').textContent = formatInt(aircraft.filter(a=>category(a)==='exec').length);
+    $('vvxf-flights').textContent = formatInt(aircraft.reduce((s,a)=>s+a.flights,0));
+    $('vvxf-airports').textContent = formatInt(new Set(aircraft.filter(a=>a.location!=='—').map(a=>a.location)).size);
+  }
+
+  function updateQuick() {
+    const value = $('vvxf-type').value;
+    document.querySelectorAll('.vvxf-chip[data-quick]').forEach(btn => btn.setAttribute('aria-pressed',String(btn.dataset.quick === value)));
+  }
+
+  function filterData() {
+    const query=norm($('vvxf-search').value);
+    const type=$('vvxf-type').value;
+    const manufacturer=$('vvxf-maker').value;
+    const model=$('vvxf-model').value;
+    const location=$('vvxf-location').value;
+    const activity=$('vvxf-activity').value;
+    const aircraftSituation=$('vvxf-situation').value;
+    filtered = aircraft.filter(a => {
+      if (query && !norm([a.name,a.model,a.icao,a.location,maker(a)].join(' ')).includes(query)) return false;
+      if (type && category(a)!==type) return false;
+      if (manufacturer && maker(a)!==manufacturer) return false;
+      if (model && a.icao!==model) return false;
+      if (location && a.location!==location) return false;
+      if (aircraftSituation && situation(a)!==aircraftSituation) return false;
+      if (activity==='active' && a.flights===0) return false;
+      if (activity==='zero' && a.flights!==0) return false;
+      return true;
+    });
+    const mode=$('vvxf-sort').value;
+    filtered.sort((a,b)=>{
+      if (mode==='flights') return b.flights-a.flights || reg(a).localeCompare(reg(b),'pt-BR');
+      if (mode==='distance') return b.distance-a.distance || reg(a).localeCompare(reg(b),'pt-BR');
+      if (mode==='seats') return b.passengers-a.passengers || reg(a).localeCompare(reg(b),'pt-BR');
+      if (mode==='model') return a.model.localeCompare(b.model,'pt-BR') || reg(a).localeCompare(reg(b),'pt-BR');
+      if (mode==='location') return a.location.localeCompare(b.location,'pt-BR') || reg(a).localeCompare(reg(b),'pt-BR');
+      return reg(a).localeCompare(reg(b),'pt-BR',{numeric:true});
+    });
+    updateQuick();
+  }
+
+  function rowHTML(a) {
+    const kind=category(a);
+    return `<tr>
+      <td><div class="vvxf-aircraft-cell"><div class="vvxf-plane-icon"><i class="fas fa-plane" aria-hidden="true"></i></div><div class="vvxf-aircraft-meta"><strong>${escapeHTML(reg(a))}</strong><small title="${escapeHTML(a.name)}">${escapeHTML(a.name)}</small></div></div></td>
+      <td><span class="vvxf-code">${escapeHTML(a.icao)}</span><div class="vvxf-aircraft-meta"><small>${escapeHTML(a.model)}</small></div></td>
+      <td><span class="vvxf-tag" data-kind="${kind}">${categories[kind]}</span></td>
+      <td>${situationHTML(a)}</td>
+      <td><span class="vvxf-loc"><i class="fas fa-location-dot" aria-hidden="true"></i>${escapeHTML(a.location)}</span></td>
+      <td class="vvxf-mono">${formatInt(a.passengers)}</td>
+      <td class="vvxf-mono">${formatInt(a.cargoKg)} kg</td>
+      <td class="vvxf-mono">${formatInt(a.flights)}</td>
+      <td class="vvxf-mono">${formatInt(a.distance)}</td>
+      <td><button class="vvxf-row-action vvxf-open" data-id="${escapeHTML(a.id)}" type="button" title="Ver ficha de ${escapeHTML(reg(a))}" aria-label="Ver detalhes da aeronave ${escapeHTML(reg(a))}"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></button></td>
+    </tr>`;
+  }
+
+  function cardHTML(a) {
+    const kind=category(a);
+    return `<article class="vvxf-card">
+      <div class="vvxf-card-head"><div class="vvxf-aircraft-cell"><div class="vvxf-plane-icon"><i class="fas fa-plane" aria-hidden="true"></i></div><div><h3 class="vvxf-card-model">${escapeHTML(reg(a))}</h3><p class="vvxf-card-name">${escapeHTML(a.model)} · ${escapeHTML(a.icao)}</p></div></div><span class="vvxf-tag" data-kind="${kind}">${categories[kind]}</span></div>
+      <div class="vvxf-card-situation">${situationHTML(a)}</div>
+      <div class="vvxf-card-metrics"><div><span>Localização registrada</span><strong class="vvxf-loc"><i class="fas fa-location-dot" aria-hidden="true"></i> ${escapeHTML(a.location)}</strong></div><div><span>Capacidade</span><strong>${formatInt(a.passengers)} PAX</strong></div><div><span>Voos acumulados</span><strong>${formatInt(a.flights)}</strong></div><div><span>Carga máxima</span><strong>${formatInt(a.cargoKg)} kg</strong></div></div>
+      <div class="vvxf-card-footer"><span class="vvxf-code">${formatInt(a.distance)} · distância acum.</span><button type="button" class="vvxf-open" data-id="${escapeHTML(a.id)}">Ver detalhes <i class="fas fa-arrow-right" aria-hidden="true"></i></button></div>
+    </article>`;
+  }
+
+  function switchView(view) {
+    mode=view;
+    $('vvxf-table-panel').style.display=view==='table'?'block':'none';
+    $('vvxf-card-panel').style.display=view==='cards'?'grid':'none';
+    document.querySelectorAll('[data-view]').forEach(btn => btn.setAttribute('aria-pressed',String(btn.dataset.view===view)));
+  }
+
+  function render() {
+    filterData();
+    const size=$('vvxf-page-size').value==='all' ? Math.max(1,filtered.length) : Number($('vvxf-page-size').value)||24;
+    const pages=Math.max(1,Math.ceil(filtered.length/size));
+    page=Math.max(1,Math.min(page,pages));
+    const start=(page-1)*size;
+    const visible=filtered.slice(start,start+size);
+    $('vvxf-count').textContent = `${formatInt(filtered.length)} de ${formatInt(aircraft.length)}`;
+    $('vvxf-results').hidden=false;
+    $('vvxf-status').hidden=true;
+    if (filtered.length) {
+      $('vvxf-tbody').innerHTML=visible.map(rowHTML).join('');
+      $('vvxf-card-panel').innerHTML=visible.map(cardHTML).join('');
+    } else {
+      $('vvxf-tbody').innerHTML='<tr><td colspan="10"><div class="vvxf-fetch-state"><i class="fas fa-filter-circle-xmark" aria-hidden="true"></i><h3>Nenhuma aeronave encontrada</h3><p>Ajuste a busca ou limpe os filtros para visualizar mais resultados.</p></div></td></tr>';
+      $('vvxf-card-panel').innerHTML='<div class="vvxf-fetch-state" style="grid-column:1/-1"><i class="fas fa-filter-circle-xmark" aria-hidden="true"></i><h3>Nenhuma aeronave encontrada</h3><p>Ajuste a busca ou limpe os filtros para visualizar mais resultados.</p></div>';
+    }
+    $('vvxf-page-info').textContent = filtered.length ? `Exibindo ${formatInt(start+1)}–${formatInt(Math.min(start+size,filtered.length))} de ${formatInt(filtered.length)} aeronaves` : 'Nenhum registro corresponde aos filtros';
+    $('vvxf-page-number').textContent = `${page} / ${pages}`;
+    $('vvxf-prev').disabled=page===1;
+    $('vvxf-next').disabled=page>=pages;
+    $('vvxf-export').disabled=filtered.length===0;
+    switchView(mode);
+  }
+
+  function setStatus({icon,title,message,canRetry=false}) {
+    const state=$('vvxf-status');
+    state.replaceChildren();
+    const i=document.createElement('i'); i.className=icon; i.setAttribute('aria-hidden','true');
+    const h=document.createElement('h3'); h.textContent=title;
+    const p=document.createElement('p'); p.textContent=message;
+    state.append(i,h,p);
+    if(canRetry){const button=document.createElement('button');button.className='vvxf-btn vvxf-btn-primary';button.type='button';button.textContent='Tentar novamente';button.addEventListener('click',load);state.append(button);}
+    state.hidden=false;
+    $('vvxf-results').hidden=true;
+  }
+
+  async function getFleet(url, signal) {
+    const res = await fetch(url,{method:'GET',headers:{Accept:'application/json'},cache:'no-store',signal});
+    if(!res.ok) throw new Error(`Consulta falhou: ${res.status}`);
+    const data = await res.json();
+    if(data?.success!==true || !Array.isArray(data.aircraft) || data.complete!==true) {
+      throw new Error('A frota consultada está incompleta ou indisponível.');
+    }
+    return data.aircraft;
+  }
+
+  async function load() {
+    $('vvxf-refresh').disabled=true;
+    setStatus({icon:'fas fa-circle-notch vvxf-spin',title:'Consultando a frota VAX',message:'Atualizando as aeronaves da academia...'});
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),25000);
+    try {
+      const [vax,vvx] = await Promise.allSettled([getFleet(VAX_API,controller.signal),getFleet(VVX_API,controller.signal)]);
+      if (vax.status!=='fulfilled') throw vax.reason;
+      aircraft=vax.value.map(normalizeRecord);
+      compareAvailable=vvx.status==='fulfilled';
+      vvxModels=compareAvailable ? new Set(vvx.value.map(a=>String(a?.icao??'').trim().toUpperCase()).filter(x=>x && x!=='—')) : new Set();
+      const situationSelect=$('vvxf-situation');
+      situationSelect.disabled=!compareAvailable;
+      if(!compareAvailable) situationSelect.value='';
+      const info=$('vvxf-compare-info');
+      info.dataset.available=String(compareAvailable);
+      info.replaceChildren();
+      const icon=document.createElement('i');
+      icon.className=compareAvailable?'fas fa-circle-info':'fas fa-triangle-exclamation';
+      icon.setAttribute('aria-hidden','true');
+      const text=document.createElement('span');
+      text.textContent=compareAvailable
+        ? 'Situação por código ICAO: modelos presentes também na VVX são operacionais; os demais estão em testes / homologação na academia.'
+        : 'Frota VAX carregada. Comparação com a VVX temporariamente indisponível: nenhuma aeronave será classificada enquanto isso.';
+      info.append(icon,text);
+      fillSelect('vvxf-maker',aircraft.map(maker));
+      fillSelect('vvxf-model',aircraft.map(a=>a.icao));
+      fillSelect('vvxf-location',aircraft.map(a=>a.location));
+      updateKpis();
+      $('vvxf-updated-hero').textContent=`Consultado em ${new Date().toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})}`;
+      page=1;render();
+    }catch(error){
+      console.error('Frota VAX indisponível:',error);
+      $('vvxf-count').textContent='Consulta indisponível';
+      $('vvxf-export').disabled=true;
+      const info=$('vvxf-compare-info'); info.dataset.available='false';
+      info.textContent='As informações da frota VAX não estão disponíveis no momento.';
+      setStatus({icon:'fas fa-triangle-exclamation',title:'Não foi possível carregar a frota VAX',message:'Verifique a consulta da academia ou tente novamente em instantes.',canRetry:true});
+    }finally {clearTimeout(timer);$('vvxf-refresh').disabled=false;}
+  }
+
+  function detail(a, source) {
+    lastFocus=source;
+    $('vvxf-detail-title').textContent=reg(a);
+    $('vvxf-detail-subtitle').textContent=`${a.model} • ${a.icao} • ${categories[category(a)]}`;
+    const grid=$('vvxf-detail-grid');
+    grid.replaceChildren();
+    const fields=[
+      ['Identificação completa',a.name],
+      ['Modelo da aeronave',a.model],
+      ['Situação do modelo',situations[situation(a)]],
+      ['Operação',categories[category(a)]],
+      ['Aeroporto registrado',a.location],
+      ['Capacidade de passageiros',`${formatInt(a.passengers)} PAX`],
+      ['Capacidade de carga',`${formatInt(a.cargoKg)} kg`],
+      ['Voos realizados',formatInt(a.flights)],
+      ['Distância acumulada',formatInt(a.distance)]
+    ];
+    for(const [label,value] of fields){
+      const box=document.createElement('div');box.className='vvxf-detail-item';
+      const t=document.createElement('span');t.textContent=label;
+      const v=document.createElement('strong');v.textContent=value;
+      box.append(t,v);grid.append(box);
+    }
+    const modal=$('vvxf-detail');
+    if(typeof modal.showModal==='function') modal.showModal();
+    else modal.setAttribute('open','');
+  }
+
+  function exportCSV() {
+    if(!filtered.length) return;
+    const rows=[['Matrícula','Nome completo','Modelo','ICAO','Operação','Situação do modelo','Localização ICAO','Passageiros','Carga (kg)','Voos','Distância acumulada'],...filtered.map(a=>[reg(a),a.name,a.model,a.icao,categories[category(a)],situations[situation(a)],a.location,a.passengers,a.cargoKg,a.flights,a.distance])];
+    const cell=(v)=>{let text=String(v ?? '');if(/^[=+@\-\t\r]/.test(text)) text="'"+text;return '"'+text.replaceAll('"','""')+'"';};
+    const blob=new Blob(['\uFEFF'+rows.map(r=>r.map(cell).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8;'});
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement('a');link.href=url;link.download='VOLAR_FROTA_VAX_'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    const inputIds=['vvxf-type','vvxf-maker','vvxf-model','vvxf-location','vvxf-situation','vvxf-activity','vvxf-sort','vvxf-page-size'];
+    inputIds.forEach(id=>$(id).addEventListener('change',()=>{page=1;render();}));
+    let delay;
+    $('vvxf-search').addEventListener('input',()=>{clearTimeout(delay);delay=setTimeout(()=>{page=1;render();},180);});
+    document.querySelectorAll('.vvxf-chip[data-quick]').forEach(btn=>btn.addEventListener('click',()=>{$('vvxf-type').value=btn.dataset.quick;page=1;render();}));
+    $('vvxf-clear').addEventListener('click',()=>{['vvxf-search',...inputIds].forEach(id=>{if(id==='vvxf-sort') $(id).value='registration';else if(id==='vvxf-page-size') $(id).value='24';else $(id).value='';});page=1;render();});
+    document.querySelectorAll('[data-view]').forEach(btn=>btn.addEventListener('click',()=>switchView(btn.dataset.view)));
+    $('vvxf-refresh').addEventListener('click',load);
+    $('vvxf-export').addEventListener('click',exportCSV);
+    $('vvxf-prev').addEventListener('click',()=>{if(page>1){page--;render();}});
+    $('vvxf-next').addEventListener('click',()=>{page++;render();});
+    $('vvxf-results').addEventListener('click',(event)=>{const btn=event.target.closest('.vvxf-open');if(!btn)return;const a=aircraft.find(item=>item.id===btn.dataset.id);if(a)detail(a,btn);});
+    $('vvxf-detail-close').addEventListener('click',()=>$('vvxf-detail').close());
+    $('vvxf-detail').addEventListener('click',(event)=>{if(event.target===$('vvxf-detail')) $('vvxf-detail').close();});
+    $('vvxf-detail').addEventListener('close',()=>{if(lastFocus?.isConnected)lastFocus.focus();});
+    load();
+  });
+})();
+
+</script>
+<script src="assets/js/menu.js"></script>
+<script src="assets/js/footer.js"></script>
+<script src="assets/js/support.js"></script>
+</body>
+</html>
