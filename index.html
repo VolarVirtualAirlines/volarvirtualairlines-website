@@ -1001,8 +1001,12 @@
 <script>
 (function() {
   "use strict";
+    
+const REFRESH_INTERVAL = 60000;
 
-  const REFRESH_INTERVAL = 60000;
+// ====== CONTROLE DE EXPANSÃO DO PAINEL ======
+const LIMITE_PILOTOS = 4;
+let painelExpandido = false;
 
   // ====== BUSCA OS VOOS ======
   async function buscarVoos(url) {
@@ -1111,6 +1115,88 @@ function criarLinha(piloto) {
     return div.innerHTML;
   }
 
+// ====== CONTROLE DE EXPANSÃO / RECOLHIMENTO ======
+
+function ajustarPosicaoPainel() {
+  const overlay = document.getElementById("pilotos-online");
+
+  if (!overlay || overlay.style.display === "none") return;
+
+  const rect = overlay.getBoundingClientRect();
+
+  const maxX = Math.max(0, window.innerWidth - rect.width);
+  const maxY = Math.max(0, window.innerHeight - rect.height);
+
+  const novoX = Math.max(0, Math.min(rect.left, maxX));
+  const novoY = Math.max(0, Math.min(rect.top, maxY));
+
+  if (novoX !== rect.left) {
+    overlay.style.left = novoX + "px";
+  }
+
+  if (novoY !== rect.top) {
+    overlay.style.top = novoY + "px";
+  }
+}
+
+function atualizarExpansaoPainel() {
+  const overlay = document.getElementById("pilotos-online");
+  const lista = document.getElementById("po-list");
+  const botao = document.getElementById("po-toggle-btn");
+  const texto = document.getElementById("po-toggle-text");
+
+  const linhas = lista.querySelectorAll(".po-pilot-row");
+  const total = linhas.length;
+  const quantidadeExtra = Math.max(0, total - LIMITE_PILOTOS);
+
+  // Recolhe automaticamente quando não houver pilotos extras
+  if (total <= LIMITE_PILOTOS) {
+    painelExpandido = false;
+  }
+
+  // Controla quais pilotos serão exibidos
+  linhas.forEach(function(linha, index) {
+    linha.hidden = !painelExpandido && index >= LIMITE_PILOTOS;
+  });
+
+  // Controla o estado visual do painel
+  overlay.classList.toggle("po-expanded", painelExpandido);
+
+  // Exibe o botão somente quando necessário
+  botao.hidden = total <= LIMITE_PILOTOS;
+
+  // Atualiza o texto do botão
+  texto.textContent = painelExpandido
+    ? "Ver menos"
+    : "Ver mais (+" + quantidadeExtra +
+      (quantidadeExtra === 1 ? " piloto)" : " pilotos)");
+
+  botao.setAttribute("aria-expanded", String(painelExpandido));
+
+  if (!painelExpandido) {
+    lista.scrollTop = 0;
+  }
+
+  // Mantém o painel dentro dos limites da tela
+  ajustarPosicaoPainel();
+}
+
+function configurarBotaoExpansao() {
+  const botao = document.getElementById("po-toggle-btn");
+
+  if (!botao) return;
+
+  botao.addEventListener("click", function(e) {
+    e.stopPropagation();
+
+    painelExpandido = !painelExpandido;
+
+    atualizarExpansaoPainel();
+  });
+
+  window.addEventListener("resize", ajustarPosicaoPainel);
+}
+    
   // ====== CONTROLE DE FECHAR ======
   var overlayFechado = false;
 
@@ -1192,23 +1278,45 @@ function criarLinha(piloto) {
 
     if (todosPilotos.length === 0) {
       overlay.style.display = "none";
+      painelExpandido = false;
+      lista.innerHTML = "";
+      contador.textContent = "0";
+      atualizarExpansaoPainel();
       return;
     }
+      
+    // Respeita o fechamento durante a consulta à API
+    if (overlayFechado) return;
+
+    // Preserva a posição da rolagem
+    const scrollAnterior = lista.scrollTop;
 
     overlay.style.display = "flex";
     contador.textContent = todosPilotos.length;
+
     lista.innerHTML = "";
+
     todosPilotos.forEach(function(piloto) {
       lista.appendChild(criarLinha(piloto));
     });
+
+    // Atualiza o estado expandido ou recolhido
+    atualizarExpansaoPainel();
+
+    // Restaura a rolagem quando expandido
+    if (painelExpandido) {
+      lista.scrollTop = scrollAnterior;
+    }
   }
 
   // ====== INICIALIZAÇÃO ======
   configurarBotaoFechar();
   configurarDrag();
+  configurarBotaoExpansao();
   atualizarPilotos();
   setInterval(atualizarPilotos, REFRESH_INTERVAL);
 })();
+
 </script>
 
 <!-- ====== VOLAR RAOV - PROTEÇÃO TURNSTILE ====== -->
