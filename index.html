@@ -983,12 +983,20 @@
     <button class="po-close" id="po-close-btn" title="Fechar">✕</button>
   </div>
   <div class="po-list" id="po-list"></div>
-  <a class="po-live-cta" href="volar_live_operations.html" aria-label="Acompanhar pilotos no Volar Live Operations">
-    <i class="fas fa-satellite-dish" aria-hidden="true"></i>
-    <span>Acompanhar no Live Operations</span>
-    <i class="fas fa-arrow-right po-cta-arrow" aria-hidden="true"></i>
-  </a>
-</div>
+
+  <!-- BOTÃO EXPANDIR / RECOLHER PILOTOS ONLINE -->
+  <button
+    type="button"
+    class="po-toggle"
+    id="po-toggle-btn"
+    aria-expanded="false"
+    aria-controls="po-list"
+    hidden>
+    <span id="po-toggle-text">Ver mais</span>
+    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+  </button>
+
+  <a class="po-live-cta" href="volar_live_operations.html" aria-label="Acompanhar pilotos no Volar Live Operations"></div>
 
 <script>
 (function() {
