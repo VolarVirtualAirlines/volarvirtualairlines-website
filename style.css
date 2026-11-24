@@ -4595,12 +4595,13 @@ body {
 }
 
 /* ====== OVERLAY: PILOTOS ONLINE ====== */
+/* ====== OVERLAY: PILOTOS ONLINE ====== */
 #pilotos-online {
   position: fixed;
   top: 110px;
   left: 20px;
   width: 320px;
-  max-height: 420px;
+  max-height: calc(100vh - 130px);
   background: rgba(15, 15, 20, 0.82);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -4686,8 +4687,63 @@ body {
 
 .po-list {
   overflow-y: auto;
-  flex: 1;
-  max-height: 360px;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  overscroll-behavior: contain;
+}
+
+/* ====== PILOTOS ONLINE - EXPANDIR / RECOLHER ====== */
+
+#pilotos-online .po-header {
+  flex-shrink: 0;
+}
+
+#pilotos-online .po-toggle {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  width: 100%;
+  padding: 10px 12px;
+
+  background: rgba(255, 255, 255, 0.025);
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  color: #72e9ef;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+#pilotos-online .po-toggle:hover {
+  background: rgba(0, 229, 255, 0.10);
+  color: #ffffff;
+}
+
+#pilotos-online .po-toggle i {
+  font-size: 10px;
+  transition: transform 0.25s ease;
+}
+
+#pilotos-online.po-expanded .po-toggle i {
+  transform: rotate(180deg);
+}
+
+#pilotos-online .po-toggle[hidden],
+#pilotos-online .po-pilot-row[hidden] {
+  display: none !important;
+}
+
+#pilotos-online .po-toggle:focus-visible {
+  outline: 2px solid #00e5ff;
+  outline-offset: -3px;
 }
 
 .po-list::-webkit-scrollbar { width: 4px; }
