@@ -128,12 +128,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }, 0);
   };
 
-  $('vpc-stats').innerHTML = [
-    ['Pilotos únicos', any ? fmt(pilots.length) : '—'],
-    ['Pilotos VVX', available.vvx ? fmt(pilots.filter((p) => p.vvx).length) : '—'],
-    ['Pilotos VAX', available.vax ? fmt(pilots.filter((p) => p.vax).length) : '—'],
-    ['VVX + VAX', both ? fmt(pilots.filter((p) => p.vvx && p.vax).length) : '—'],
-    ['Horas de voo', any ? time(aggregate('time')) : '—'],
+$('vpc-stats').innerHTML = [
+    ['Total de pilotos Volar', any ? fmt(pilots.length) : '—'],
+    ['Vinculados à VVX', available.vvx ? fmt(pilots.filter((p) => p.vvx).length) : '—'],
+    ['Vinculados à VAX', available.vax ? fmt(pilots.filter((p) => p.vax).length) : '—'],
+    ['Vinculados à VVX e VAX', both ? fmt(pilots.filter((p) => p.vvx && p.vax).length) : '—'],    ['Horas de voo', any ? time(aggregate('time')) : '—'],
     ['Voos realizados', any ? fmt(aggregate('flights')) : '—']
   ].map(([label, value]) => `<div><strong>${esc(value)}</strong><span>${label}${partial ? ' · parcial' : ''}</span></div>`).join('');
 
