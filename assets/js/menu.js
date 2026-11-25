@@ -122,23 +122,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     <a href="liveries.html">Liveries Oficiais</a>
                 </div>
             </div>
-
-            <div class="menu-dropdown">
-                <a
-                    href="#"
-                    class="menu-dropdown-toggle"
-                    data-menu="pilotos"
-                    aria-expanded="false"
-                >
-                    <span>Pilotos</span>
-                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                </a>
             
-                <div class="menu-dropdown-content">
-                    <a href="pilotos.html">Volar Virtual Airlines (VVX)</a>
-                    <a href="cadetes.html">Volar Academy Excellence (VAX)</a>
-                </div>
-            </div>
+            <a href="volar_pilot_center.html" data-menu="pilotos">
+                Volar Pilot Center
+            </a>
 
             <div class="menu-dropdown">
                 <a
