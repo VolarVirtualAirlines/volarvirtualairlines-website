@@ -24,7 +24,7 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     >
-    <link rel="stylesheet" href="assets/css/volar_pilot_center.css">
+    <link rel="stylesheet" href="assets/css/volar_pilot_center.css?v=1.6">
 </head>
 
 <body>
@@ -52,60 +52,18 @@
 
 <main id="vpc">
 <section class="vpc-shell">
-
-    <header class="vpc-intro">
-
+<header class="vpc-intro">
     <div class="vpc-intro-top">
-
-        <h1>
-            Volar <span class="vpc-title-accent">Pilot Center</span>
-        </h1>
-
-        <!-- SINALIZADORES DE DISPONIBILIDADE -->
-
+        <h1>Volar <span class="vpc-title-accent">Pilot Center</span></h1>
         <div class="vpc-source-status">
-
-            <div
-                id="vpc-source-vvx"
-                class="vpc-source-indicator is-loading"
-                title="VVX: consultando dados..."
-                role="status"
-                aria-label="VVX: consultando dados"
-            >
-                <span class="vpc-source-dot"></span>
-                <span>VVX</span>
-            </div>
-
-            <div
-                id="vpc-source-vax"
-                class="vpc-source-indicator is-loading"
-                title="VAX: consultando dados..."
-                role="status"
-                aria-label="VAX: consultando dados"
-            >
-                <span class="vpc-source-dot"></span>
-                <span>VAX</span>
-            </div>
-
+            <div id="vpc-source-vvx" class="vpc-source-indicator is-loading" title="VVX: consultando dados..." role="status" aria-label="VVX: consultando dados"><span class="vpc-source-dot"></span><span>VVX</span></div>
+            <div id="vpc-source-vax" class="vpc-source-indicator is-loading" title="VAX: consultando dados..." role="status" aria-label="VAX: consultando dados"><span class="vpc-source-dot"></span><span>VAX</span></div>
         </div>
-
     </div>
-
-    <p class="vpc-description">
-        Acompanhe os pilotos da Volar Virtual Airlines e da Volar Virtual Academy.
-        <br>
-        Consulte sua trajetória operacional, evolução de desempenho e progresso
-        rumo à VVX em um único centro de acompanhamento.
-    </p>
-
-    <p class="vpc-tagline">
-        One Community. One Journey. Continuous Excellence.
-    </p>
-
+    <p class="vpc-description">Acompanhe os pilotos da Volar Virtual Airlines e da Volar Virtual Academy.<br>Consulte sua trajetória operacional, evolução de desempenho e progresso rumo à VVX em um único centro de acompanhamento.</p>
+    <p class="vpc-tagline">One Community. One Journey. Continuous Excellence.</p>
 </header>
-<p id="vpc-status" role="status" hidden>
-    Consultando as fontes NewSky...
-</p>
+<p id="vpc-status" role="status" hidden>Consultando as fontes NewSky...</p>
 <div class="vpc-stats" id="vpc-stats"></div>
 <form id="vpc-filters" class="vpc-filters">
 <label>Buscar piloto<input id="q" placeholder="Nome do piloto" type="search"></label>
@@ -311,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- Integração a implementar após análise dos scripts e APIs atuais. -->
 
 
-<script src="assets/js/volar_pilot_center.js"></script>
+<script src="assets/js/volar_pilot_center.js?v=1.6"></script>
 </body>
 
 </html>
