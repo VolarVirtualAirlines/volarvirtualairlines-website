@@ -121,8 +121,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   $('vpc-status').hidden = !partial;
   
   const aggregate = (field) => {
-    const values = pilots.map((p) => sum(p, field));
-    return values.some((x) => x === null) ? null : values.reduce((s, x) => s + x, 0);
+    return pilots
+        .flatMap((p) => entries(p))
+        .reduce((total, x) => {
+            return total + (num(x.stats?.[field]) ?? 0);
+        }, 0);
   };
 
   $('vpc-stats').innerHTML = [
