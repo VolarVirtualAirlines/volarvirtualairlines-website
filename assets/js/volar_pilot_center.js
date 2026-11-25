@@ -257,10 +257,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     return `
       <article class="vpc-card" data-pilot="${esc(p.id)}"><div class="vpc-front">
         <div class="vpc-person">
-          <div class="vpc-avatar">
-            <span>${esc(initials)}</span>
-            ${avatar !== '—' ? `<img src="https://newsky.app/api/pilot/avatar/${encodeURIComponent(avatar)}" alt="" loading="lazy">` : ''}
-          </div>
+        
+        <div class="vpc-avatar">
+            ${
+                avatar !== '—'
+                    ? `<img src="https://newsky.app/api/pilot/avatar/${encodeURIComponent(avatar)}" alt="" loading="lazy">`
+                    : `<span>${esc(initials)}</span>`
+            }
+        </div>
 
           <div class="vpc-person-main">
             <h2>${esc(name)}</h2>
