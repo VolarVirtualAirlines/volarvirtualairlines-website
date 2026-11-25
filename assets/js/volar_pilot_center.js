@@ -9,6 +9,37 @@ document.addEventListener('DOMContentLoaded', async () => {
   const date = (v) => v && Number.isFinite(Date.parse(v)) ? new Date(v).toLocaleDateString('pt-BR') : '—';
   const sources = { vvx: '/dados_pilotos', vax: '/dados_cadetes' };
 
+    // Sinalizadores de disponibilidade VVX / VAX
+
+  function updateSourceStatus(key, state) {
+
+    const indicator = $(`vpc-source-${key}`);
+
+    if (!indicator) return;
+
+    const company = key.toUpperCase();
+
+    const messages = {
+      loading: 'Consultando dados...',
+      online: 'Fonte de dados disponível',
+      offline: 'Fonte de dados indisponível'
+    };
+
+    indicator.classList.remove(
+      'is-loading',
+      'is-online',
+      'is-offline'
+    );
+
+    indicator.classList.add(`is-${state}`);
+
+    const message = `${company}: ${messages[state]}`;
+
+    indicator.title = message;
+    indicator.setAttribute('aria-label', message);
+
+  }
+
   const available = {};
   const map = new Map();
   let missing = 0;
@@ -23,8 +54,31 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   const keys = Object.keys(sources);
-  const results = await Promise.allSettled(keys.map((k) => load(sources[k])));
-
+  
+  const results = await Promise.allSettled(
+    keys.map(async (k) => {
+  
+      updateSourceStatus(k, 'loading');
+  
+      try {
+  
+        const data = await load(sources[k]);
+  
+        updateSourceStatus(k, 'online');
+  
+        return data;
+  
+      } catch (error) {
+  
+        updateSourceStatus(k, 'offline');
+  
+        throw error;
+  
+      }
+  
+    })
+  );
+  
   results.forEach((r, i) => {
     const k = keys[i];
     available[k] = r.status === 'fulfilled';
@@ -64,7 +118,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const both = available.vvx && available.vax;
 
   $('vpc-status').textContent = `VVX: ${available.vvx ? 'disponível' : 'indisponível'} · VAX: ${available.vax ? 'disponível' : 'indisponível'}${partial ? ' · Dados parciais; totais e estrelas sujeitos à complementação.' : ''}${missing ? ` · ${missing} registros sem ID ignorados.` : ''}${duplicates ? ` · ${duplicates} registros duplicados ignorados.` : ''}`;
-
+  $('vpc-status').hidden = !partial;
+  
   const aggregate = (field) => {
     const values = pilots.map((p) => sum(p, field));
     return values.some((x) => x === null) ? null : values.reduce((s, x) => s + x, 0);
