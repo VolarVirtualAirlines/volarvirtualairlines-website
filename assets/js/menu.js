@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             
             <a href="volar_pilot_center.html" data-menu="pilotos">
-                Volar Pilot Center
+                Pilotos
             </a>
 
             <div class="menu-dropdown">
