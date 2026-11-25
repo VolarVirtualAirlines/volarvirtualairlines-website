@@ -1,4 +1,4 @@
-/* VOLAR PILOT CENTER V1.1 — integração VVX / VAX */
+/* VOLAR PILOT CENTER V1.4 — integração VVX / VAX */
 document.addEventListener('DOMContentLoaded', async () => {
   const $ = (id) => document.getElementById(id);
   const esc = (v) => String(v ?? '—').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <section class="vpc-company ${key}">
           <h3>${label}</h3>
           ${blockState(available[key] ? 'empty' : 'offline', stateTitle, stateText)}
+          ${isVVX && eligible(p) ? '<button type="button" class="vpc-evolve" data-evolve><i class="fas fa-chart-line" aria-hidden="true"></i> Acompanhar evolução</button>' : ''}
         </section>
       `;
     }
@@ -141,7 +142,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (stars === null) {
       content = '<span class="vpc-stars-placeholder">☆ Experiência Volar indisponível</span>';
     } else if (stars === 0) {
-      content = '<span class="vpc-stars-placeholder">☆ Ainda sem estrelas de experiência</span>';
+      content = '';
     } else if (stars <= 5) {
       content = `<span class="vpc-stars-icons">${'★'.repeat(stars)}</span><span class="vpc-stars-label">Experiência Volar</span>`;
     } else {
@@ -151,19 +152,110 @@ document.addEventListener('DOMContentLoaded', async () => {
     return `
       <div class="vpc-stars" title="Estrelas de Experiência Volar: uma estrela a cada 100 horas completas de voo acumuladas na Volar">
         ${content}
-        ${partialData ? '<small>(parcial)</small>' : ''}
+        ${partialData && stars !== 0 ? '<small>(parcial)</small>' : ''}
       </div>
     `;
   }
 
+  function networkId(p, network) {
+    const value = integration(p, network);
+    const id = typeof value === 'string' || typeof value === 'number' ? String(value).trim() : '';
+    return /^\d+$/.test(id) && !/^0+$/.test(id) ? id : '';
+  }
+
+  const eligible = p => both && !partial && !!p.vax && !p.vvx;
+  const historyEndpoint = 'https://newsky.app/api/pilot/flights';
+  // Consulta sob demanda, usando somente a sessão autorizada do navegador.
+  async function getHistory(pilotId) {
+    const flights = [], seen = new Set();
+    const count = 30, maxPages = 10;
+    let exhausted = false, scanned = 0;
+    for (let page = 0; page < maxPages && flights.length < 30; page++) {
+      const response = await fetch(historyEndpoint, {
+        method: 'POST', credentials: 'include', cache: 'no-store',
+        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+        body: JSON.stringify({id: pilotId, skip: page * count, count}),
+        signal: AbortSignal.timeout(15000)
+      });
+      if (!response.ok) throw Object.assign(new Error('NewSky'), {status: response.status});
+      const data = await response.json();
+      if (!Array.isArray(data?.results)) throw new Error('Retorno inválido');
+      scanned += data.results.length;
+      for (const v of data.results) {
+        if (!v || String(v.pilot?._id) !== pilotId || v.airline?.icao !== 'VAX' || v.deleted !== false || !v._id || seen.has(v._id)) continue;
+        if (typeof v.rating !== 'number' || !Number.isFinite(v.rating) || v.rating < 0 || v.rating > 10 || !Number.isFinite(Date.parse(v.close)) || !Number.isFinite(Date.parse(v.arrTimeAct))) continue;
+        seen.add(v._id);
+        flights.push({flightId:v._id, date:v.close, rating:v.rating, route:`${v.dep?.icao || '—'} → ${v.arr?.icao || '—'}`, flightNumber:v.flightNumber || '—', aircraft:v.aircraft?.airframe?.icao || '—'});
+      }
+      if (data.results.length < count || (Number.isFinite(data.totalResults) && scanned >= data.totalResults)) { exhausted = true; break; }
+    }
+    flights.sort((a,b)=>Date.parse(b.date)-Date.parse(a.date));
+    return {flights:flights.slice(0,30).reverse(), limited:!exhausted && flights.length < 30, scanned};
+  }
+  function graph(series, label) {
+    const w=320, left=28, right=310, top=12, bottom=130;
+    const x=i=>series.length===1?(left+right)/2:left+(right-left)*i/(series.length-1);
+    const y=v=>bottom-(bottom-top)*v/10;
+    const path=field=>series.map((v,i)=>`${i?'L':'M'} ${x(i)} ${y(v[field])}`).join(' ');
+    return `<svg class="vpc-chart" viewBox="0 0 ${w} 150" role="img" aria-label="${esc(label)}"><title>${esc(label)}</title>
+      ${[0,2,4,6,8,10].map(v=>`<line x1="${left}" x2="${right}" y1="${y(v)}" y2="${y(v)}" stroke="${v===8?'#ead6a0':'#30495f'}" ${v===8?'stroke-dasharray="5 4"':''}/><text x="21" y="${y(v)+3}" text-anchor="end" fill="#b7cadc" font-size="9">${v}</text>`).join('')}
+      <path d="${path('rating')}" fill="none" stroke="#52dbe5" stroke-width="2" stroke-linejoin="round"/>
+      ${series[0].mean!=null?`<path d="${path('mean')}" fill="none" stroke="#c8b0ff" stroke-width="2"/>`:''}
+      ${series.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v.rating)}" r="2.5" fill="${v.rating<8?'#f18479':v.rating===10?'#67dda7':'#70e5ec'}"><title>${esc(v.detail || v.label)}: ${v.rating.toFixed(2)}</title></circle>`).join('')}
+      <text x="${left}" y="145" fill="#b7cadc" font-size="9">${esc(series[0].label)}</text><text x="${right}" y="145" text-anchor="end" fill="#b7cadc" font-size="9">${series.length>1?esc(series.at(-1).label):''}</text></svg>`;
+  }
+  function evolution(p) {
+    const s=p.vax.stats||{}, r=num(s.rating), n=num(s.flights), t=num(s.time);
+    const valid=r!==null&&r<=10;
+    const metric=(label,v)=>`<div><small>${label}</small><strong>${v}</strong></div>`;
+    const requirement=(label,value,ok)=>`<li><span>${label}</span><strong class="${ok?'vpc-met':''}">${value}</strong></li>`;
+    return `<section class="vpc-back" hidden aria-label="Evolução VAX"><div class="vpc-back-head"><div><h3>VAX · Performance &amp; Evolution</h3><small>Road to VVX · ${esc(profile(p,'fullname'))}</small></div><button type="button" data-return aria-label="Voltar ao perfil">← Voltar</button></div>
+      <div class="vpc-evo-metrics">${metric('Rating atual',valid?r.toFixed(2):'—')}${metric('Meta VVX','8.00')}${metric('Faltam',valid?Math.max(0,8-r).toFixed(2):'—')}</div>
+      <div class="vpc-progress" role="progressbar" aria-label="Progresso em relação à meta de rating" aria-valuemin="0" aria-valuemax="100" ${valid?`aria-valuenow="${Math.min(100,r/8*100)}"`:''}><span style="width:${valid?Math.min(100,r/8*100):0}%"></span></div>
+      <ul class="vpc-requirements">${requirement('Rating mínimo 8.0',valid?(r>=8?'Atingido':r.toFixed(2)+' / 8.00'):'Não informado',valid&&r>=8)}${requirement('Mínimo de 10 voos',n===null?'—':fmt(n)+' / 10',n!==null&&n>=10)}${requirement('Mínimo de 10 horas',t===null?'—':time(t)+' / 10h',t!==null&&t>=600)}${requirement('VAX Pilot Check','A confirmar',false)}</ul>
+      <div class="vpc-history" aria-live="polite"><h3>Histórico de voos</h3><small>Histórico individual via NewSky.</small></div>
+      <div class="vpc-simulator"><h3>Simulador de rating</h3><label>Média dos próximos voos: <output>9.00</output><input type="range" min="8" max="10" step="0.1" value="9" data-sim></label><div class="vpc-projection" aria-live="polite"></div><small>Estimativa por média simples, usando o total de voos como aproximação. Não reproduz necessariamente o cálculo NewSky.</small></div></section>`;
+  }
+  function simulate(article,p) {
+    const slider=article.querySelector('[data-sim]'), f=Number(slider.value), r=num(p.vax.stats?.rating), n=num(p.vax.stats?.flights), out=article.querySelector('.vpc-projection');
+    article.querySelector('output').textContent=f.toFixed(2);
+    if(r===null||r>10||n===null||n<1||!Number.isInteger(n)){out.textContent='Dados insuficientes para estimar.';return;}
+    if(r>=8){out.textContent='Meta de rating atingida! Confira os demais requisitos.';return;}
+    if(f<=8){out.textContent='Com média 8.0, a meta não é atingida em um número finito de voos neste modelo.';return;}
+    const need=Math.ceil(n*(8-r)/(f-8)); const horizon=Math.max(need, 3);
+    const series=Array.from({length:Math.min(horizon,24)+1},(_,i)=>{const k=Math.round(i*horizon/Math.min(horizon,24));return {label:k===0?'Atual':`+${k} voos`,rating:(r*n+f*k)/(n+k)};});
+    out.innerHTML=`<p><strong>${fmt(need)} ${need===1?'voo estimado':'voos estimados'}</strong> para atingir 8.0</p>${graph(series,'Projeção de rating; linha tracejada: meta 8.0')}`;
+  }
+  async function showHistory(article,p) {
+    const el=article.querySelector('.vpc-history');
+    const heading='<h3>Histórico de voos VAX</h3>';
+    const retry='<button type="button" data-history-retry>Tentar novamente</button>';
+    const login='<a href="https://newsky.app/" target="_blank" rel="noopener noreferrer">Acessar NewSky ↗</a>';
+    el.innerHTML=heading+'<small>Consultando histórico no NewSky…</small>';
+    try {
+      const {flights,limited,scanned}=await getHistory(p.id);
+      let total=0;
+      const series=flights.map((v,i)=>({label:date(v.date),detail:`VAX ${v.flightNumber} · ${v.route} · ${v.aircraft} · ${date(v.date)}`,rating:v.rating,mean:(total+=v.rating)/(i+1)}));
+      const notice=limited?'<small>Consulta limitada a 300 registros do perfil; podem existir outros voos VAX.</small>':'';
+      el.innerHTML=heading+'<small class="vpc-history-ok">Consulta NewSky autorizada</small>'+(series.length?
+        `<div class="vpc-history-summary"><span>Voos analisados <strong>${series.length}</strong></span><span>Média da amostra <strong>${(total/series.length).toFixed(2)}</strong></span></div>`+
+        graph(series,'Rating por voo e média da amostra')+'<small>Ciano: rating por voo · Lilás: média acumulada da amostra · Tracejado: meta 8.0. A média não é o rating oficial NewSky.</small>'
+        :'<small>Nenhum voo VAX concluído e avaliado encontrado nos registros consultados.</small>')+notice+`<small>${scanned} registros do perfil consultados.</small>`;
+    } catch(e){
+      const message=e.status===401?'Conecte-se ao NewSky para consultar o histórico. Se já estiver conectado, verifique a sessão e tente novamente.':e.status===403?'O NewSky não autorizou a consulta deste perfil.': 'Não foi possível consultar o NewSky agora. Verifique sua conexão e se está conectado ao NewSky.';
+      el.innerHTML=heading+`<div class="vpc-history-alert"><strong>${e.status===401?'Conecte-se ao NewSky':'Histórico indisponível'}</strong><small>${message}</small><div class="vpc-history-actions">${login}${retry}</div></div>`;
+    }
+  }
   function card(p) {
     const name = profile(p, 'fullname');
     const avatar = profile(p, 'avatar');
     const hours = sum(p, 'time');
+    const ivao = networkId(p, 'ivao');
+    const vatsim = networkId(p, 'vatsim');
     const initials = name.split(/\s+/).slice(0, 2).map((x) => x[0] || '').join('').toUpperCase();
 
     return `
-      <article class="vpc-card">
+      <article class="vpc-card" data-pilot="${esc(p.id)}"><div class="vpc-front">
         <div class="vpc-person">
           <div class="vpc-avatar">
             <span>${esc(initials)}</span>
@@ -193,7 +285,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           </div>
         </section>
 
-        <footer>IVAO ID: ${esc(integration(p, 'ivao'))} · VATSIM ID: ${esc(integration(p, 'vatsim'))}</footer>
+        <footer class="vpc-network-ids">
+          <span class="vpc-network-ivao">${ivao ? `IVAO ID: <strong>${esc(ivao)}</strong>` : ''}</span>
+          <span class="vpc-network-vatsim">${vatsim ? `VATSIM ID: <strong>${esc(vatsim)}</strong>` : ''}</span>
+        </footer>
+      </div>${eligible(p)?evolution(p):''}
       </article>
     `;
   }
@@ -237,6 +333,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     $('vpc-grid').querySelectorAll('img').forEach((img) => img.addEventListener('error', () => img.remove()));
   }
 
+  $('vpc-grid').addEventListener('click',e=>{
+    const button=e.target.closest('[data-evolve],[data-return],[data-history-retry]'); if(!button)return;
+    const article=button.closest('.vpc-card'), p=map.get(article.dataset.pilot);if(!eligible(p))return;
+    if(button.hasAttribute('data-history-retry')){showHistory(article,p);return;}
+    const back=article.querySelector('.vpc-back'), front=article.querySelector('.vpc-front'), open=button.hasAttribute('data-evolve');
+    front.hidden=open;back.hidden=!open;article.classList.toggle('vpc-flipped',open);
+    const face=open?back:front;face.classList.remove('vpc-turn');void face.offsetWidth;face.classList.add('vpc-turn');
+    if(open){simulate(article,p);showHistory(article,p);back.querySelector('[data-return]').focus();}else{front.querySelector('[data-evolve]').focus();}
+  });
+  $('vpc-grid').addEventListener('input',e=>{if(!e.target.matches('[data-sim]'))return;const article=e.target.closest('.vpc-card');simulate(article,map.get(article.dataset.pilot));});
   if (!both) {
     for (const option of $('link').options) {
       if (['vvx', 'vax', 'both'].includes(option.value)) option.disabled = true;
