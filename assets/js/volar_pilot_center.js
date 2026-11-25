@@ -258,7 +258,22 @@ $('vpc-stats').innerHTML = [
         </div>
         <div class="vpc-company-details" hidden>
           <h3>${label}</h3><small>Operational Performance</small>
-          <dl>${[['Voos regulares',s.schedules],['Charters',s.charters],['IVAO',s.online?.ivao],['VATSIM',s.online?.vatsim]].map(([l,v])=>`<dt>${l}</dt><dd>${fmt(num(v))}</dd>`).join('')}
+
+          <dl>${[
+            ['Voos regulares', s.schedules],
+            ['Charters', s.charters],
+            ['IVAO', s.online?.ivao],
+            ['VATSIM', s.online?.vatsim],
+            ['NEWSKY',
+                num(s.flights) !== null &&
+                num(s.online?.ivao) !== null &&
+                num(s.online?.vatsim) !== null &&
+                num(s.flights) >= num(s.online.ivao) + num(s.online.vatsim)
+                    ? num(s.flights) - num(s.online.ivao) - num(s.online.vatsim)
+                    : null
+            ]
+        ].map(([l,v])=>`<dt>${l}</dt><dd>${fmt(num(v))}</dd>`).join('')}          
+          
           <dt>Participação IVAO</dt><dd>${num(s.flights)>0&&num(s.online?.ivao)!==null?(100*num(s.online.ivao)/num(s.flights)).toFixed(1)+'%':'—'}</dd></dl>
           <button type="button" class="vpc-company-toggle" data-company-toggle aria-expanded="true">← Voltar ao resumo</button>
         </div>
