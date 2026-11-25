@@ -160,3 +160,119 @@
 #vpc .vpc-history-alert{border:1px solid #77633f;border-radius:8px;padding:10px;color:#f1cc76}
 #vpc .vpc-history-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
 #vpc .vpc-history-actions a,#vpc .vpc-history-actions button{border:1px solid #42657d;border-radius:6px;padding:7px 10px;color:#dceef7;background:#203b50;font-size:12px;text-decoration:none;cursor:pointer}
+
+/* ==========================================
+   VOLAR PILOT CENTER
+   Sinalizadores de disponibilidade VVX / VAX
+   ========================================== */
+
+#vpc .vpc-intro-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+#vpc .vpc-source-status {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+    padding-top: 12px;
+}
+
+#vpc .vpc-source-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: #b8ccdc;
+    white-space: nowrap;
+    cursor: help;
+}
+
+/* Sinalizador */
+
+#vpc .vpc-source-dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: #eab54f;
+}
+
+/* Verde — fonte disponível */
+
+#vpc .vpc-source-indicator.is-online .vpc-source-dot {
+    background: #43d997;
+    box-shadow: 0 0 9px rgba(67, 217, 151, .65);
+}
+
+/* Amarelo — consultando dados */
+
+#vpc .vpc-source-indicator.is-loading .vpc-source-dot {
+    background: #eab54f;
+    box-shadow: 0 0 9px rgba(234, 181, 79, .65);
+    animation: vpc-source-pulse 1.5s ease-in-out infinite;
+}
+
+/* Vermelho — fonte indisponível */
+
+#vpc .vpc-source-indicator.is-offline .vpc-source-dot {
+    background: #ef5350;
+    box-shadow: 0 0 9px rgba(239, 83, 80, .65);
+}
+
+/* Animação durante a consulta */
+
+@keyframes vpc-source-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .35;
+    }
+}
+
+/* Ocultar a barra de status antiga */
+
+#vpc-status[hidden] {
+    display: none !important;
+}
+
+/* Responsividade */
+
+@media (max-width: 600px) {
+
+    #vpc .vpc-intro-top {
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 12px;
+    }
+
+    #vpc .vpc-intro-top h1 {
+        margin-bottom: 0;
+    }
+
+    #vpc .vpc-source-status {
+        justify-content: flex-start;
+        padding-top: 0;
+        gap: 18px;
+    }
+
+}
+
+/* Acessibilidade */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #vpc .vpc-source-indicator.is-loading .vpc-source-dot {
+        animation: none;
+    }
+
+}
