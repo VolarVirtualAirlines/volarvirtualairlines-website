@@ -2,10 +2,47 @@
 #vpc{background:#081525;color:#eef5fb;min-height:70vh;font-family:Inter,sans-serif;padding:36px 20px 64px;box-sizing:border-box}
 #vpc *{box-sizing:border-box}
 #vpc .vpc-shell{max-width:1600px;margin:auto}
-#vpc .vpc-intro{text-align:center;margin:0 0 28px}
-#vpc .vpc-intro span{letter-spacing:.18em;color:#58d3dc;font-size:12px}
-#vpc h1{font:800 clamp(26px,4vw,46px) Montserrat,sans-serif;margin:12px 0;color:#fff}
-#vpc .vpc-intro p{color:#b8ccdc;margin:8px 0}
+/* Cabeçalho — padrão Volar Live Operations */
+
+#vpc .vpc-intro {
+    text-align: left;
+    margin: 0 0 28px;
+}
+
+#vpc .vpc-intro h1 {
+    font-family: Montserrat, sans-serif;
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+    color: #eef5fb;
+    text-transform: none;
+}
+
+#vpc .vpc-intro .vpc-title-accent {
+    color: #20ced5;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+}
+
+#vpc .vpc-intro .vpc-description {
+    color: #b8ccdc;
+    font-size: 16px;
+    line-height: 1.65;
+    margin: 0 0 8px;
+    max-width: 1200px;
+}
+
+#vpc .vpc-intro .vpc-tagline {
+    color: #58d3dc;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.5;
+    margin: 10px 0 0;
+}
 #vpc-status{padding:12px 16px;border:1px solid #29455b;border-radius:10px;color:#bdd3e1;font-size:13px}
 #vpc .vpc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin:20px 0}
 #vpc .vpc-stats>div{background:#11283c;border:1px solid #25465b;border-radius:12px;padding:18px;text-align:center}
