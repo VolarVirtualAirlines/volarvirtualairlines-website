@@ -263,8 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "frota.html": "frota",
         "frota_vax.html": "frota",
         "liveries.html": "frota",
-        "pilotos.html": "pilotos",
-        "cadetes.html": "pilotos",
+        "volar_pilot_center.html": "pilotos",
         "privacy.html": "volar",
         "terms.html": "volar"
     };
