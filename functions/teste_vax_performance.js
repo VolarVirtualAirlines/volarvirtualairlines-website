@@ -3,7 +3,7 @@ export async function onRequestGet(context) {
 
     const url = "https://newsky.app/api/pilot/flights";
 
-    const apiKey = context.env.NEWSKY_VAX_API_KEY;
+    const apiKey = "VAX_LY50ZzBjkkSjqF9h3srEY2GGvKes47";
 
     const pilotId = "68dc6b913f0641c7f68ff7ec";
 
