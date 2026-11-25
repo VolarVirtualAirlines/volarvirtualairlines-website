@@ -103,8 +103,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const partial = keys.some((k) => !available[k]) || missing > 0 || duplicates > 0;
   const entries = (p) => keys.map((k) => p[k]).filter(Boolean);
   const sum = (p, field) => {
-    const values = entries(p).map((x) => num(x.stats?.[field]));
-    return values.some((x) => x === null) ? null : values.reduce((s, x) => s + x, 0);
+      return entries(p).reduce((total, x) => {
+          return total + (num(x.stats?.[field]) ?? 0);
+      }, 0);
   };
   const profile = (p, f) => entries(p).map((x) => x[f]).find((x) => x != null && x !== '' && x !== 'default') ?? '—';
   const integration = (p, k) => entries(p).map((x) => x.integrations?.[k]).find(Boolean);
