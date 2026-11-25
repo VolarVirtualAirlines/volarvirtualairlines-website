@@ -276,3 +276,31 @@
     }
 
 }
+/* V1.6 — detalhes globais e operacionais independentes */
+#vpc .vpc-person{grid-template-columns:58px minmax(0,1fr) auto auto;gap:8px}
+#vpc .vpc-stars{flex-wrap:wrap;white-space:normal;height:auto;min-height:28px}
+#vpc button.vpc-global-rating{background:#102d35;border:1px solid #32726a;padding:5px 8px;display:grid;gap:2px;text-align:center;align-self:start;font-size:11px;color:#b8ccdc}
+#vpc .vpc-global-rating strong{font-size:23px;color:#b8ccdc;line-height:1.1}
+#vpc .vpc-global-rating.vpc-global-ok strong{color:#62dea6}
+#vpc .vpc-global-rating small{font-size:10px}
+#vpc .vpc-company-summary,#vpc .vpc-company-details{display:flex;flex-direction:column;flex:1;min-width:0}
+#vpc .vpc-company-details dl{margin:16px 0;gap:12px 5px}
+#vpc button.vpc-company-toggle{margin-top:auto;padding:6px 2px;border:0;background:transparent;color:#63d9df;font-size:11px;text-align:center}
+#vpc .vax button.vpc-company-toggle{color:#c8b0ff}
+#vpc .vpc-company-summary dl{margin-bottom:10px}
+#vpc .vpc-global-panel{background:#14283b;border:1px solid #29465c;border-radius:10px;padding:12px;flex:1;min-width:0}
+#vpc .vpc-global-body{display:grid;gap:10px;margin-top:10px}
+#vpc .vpc-global-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;text-align:center}
+#vpc .vpc-global-metrics>div{background:#172d42;padding:8px 3px;border-radius:7px;min-width:0}
+#vpc .vpc-global-metrics strong{display:block;color:#61dbe2;font-size:15px;overflow-wrap:anywhere}
+#vpc .vpc-favorite{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;background:#172d39;border-radius:7px;padding:9px;color:#efd18c;font-size:12px}
+#vpc .vpc-favorite strong{display:block;color:#eef5fb;font-size:16px}
+#vpc .vpc-aircraft-table{width:100%;border-collapse:collapse;font-size:12px;color:#eef5fb;table-layout:auto}
+#vpc .vpc-aircraft-table th,#vpc .vpc-aircraft-table td{padding:7px 3px;text-align:right;border-bottom:1px solid #29465c;background:transparent;white-space:normal}
+#vpc .vpc-aircraft-table th{font-size:10px;color:#b8ccdc;font-weight:500}
+#vpc .vpc-aircraft-table th:first-child,#vpc .vpc-aircraft-table td:first-child{text-align:left}
+#vpc .vpc-aircraft-table td:last-child{color:#62dea6;font-weight:600}
+@media(max-width:600px){#vpc .vpc-person{grid-template-columns:48px minmax(0,1fr) auto;gap:8px}#vpc .vpc-tag{grid-column:2;justify-self:start}#vpc .vpc-global-rating{grid-column:3;grid-row:1}#vpc .vpc-global-metrics strong{font-size:13px}}
+@media(max-width:360px){#vpc .vpc-person{grid-template-columns:48px minmax(0,1fr)}#vpc .vpc-global-rating{grid-column:2;grid-row:auto;justify-self:start}#vpc .vpc-aircraft-table{font-size:11px}}
+
+#vpc .vpc-company-flip{cursor:pointer}
