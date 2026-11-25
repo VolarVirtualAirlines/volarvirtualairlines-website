@@ -1,7 +1,7 @@
 /* Estilos isolados — não alteram menu, suporte ou footer global */
 #vpc{background:#081525;color:#eef5fb;min-height:70vh;font-family:Inter,sans-serif;padding:36px 20px 64px;box-sizing:border-box}
 #vpc *{box-sizing:border-box}
-#vpc .vpc-shell{max-width:1600px;margin:auto}
+#vpc .vpc-shell{max-width:3200px;margin:auto}
 /* Cabeçalho — padrão Volar Live Operations */
 
 #vpc .vpc-intro {
