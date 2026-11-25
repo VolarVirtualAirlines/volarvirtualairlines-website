@@ -18,15 +18,15 @@
 #vpc button[type=reset]{background:#23394e}
 #vpc :focus-visible{outline:2px solid #63e0e7;outline-offset:2px}
 #vpc-count{color:#b9d0df;font-size:13px;margin:18px 0}
-#vpc .vpc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:18px;align-items:start}
-#vpc .vpc-card{background:#102238;border:1px solid #29465c;border-radius:15px;padding:18px;min-width:0;box-shadow:0 8px 20px #0003;height:100%}
+#vpc .vpc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:18px;align-items:stretch}
+#vpc .vpc-card{background:#102238;border:1px solid #29465c;border-radius:15px;padding:18px;min-width:0;box-shadow:0 8px 20px #0003;height:100%;display:flex;flex-direction:column}
 #vpc .vpc-person{display:flex;align-items:flex-start;gap:12px;flex-wrap:nowrap;margin-bottom:16px}
 #vpc .vpc-person-main{flex:1;min-width:0}
 #vpc .vpc-avatar{position:relative;width:58px;height:58px;border-radius:50%;background:#21465c;display:grid;place-items:center;overflow:hidden;color:#67dce5;font-weight:700;flex:none}
 #vpc .vpc-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 #vpc h2{font:700 17px Montserrat,sans-serif;color:#fff;margin:0 0 5px;overflow-wrap:anywhere}
 #vpc small{color:#b7cadc;font-size:12px}
-#vpc .vpc-stars{display:flex;align-items:center;gap:8px;min-height:28px;margin-top:8px;color:#f2c866;font-size:15px;line-height:1.2}
+#vpc .vpc-stars{display:flex;align-items:center;gap:8px;min-height:28px;height:28px;margin-top:8px;color:#f2c866;font-size:15px;line-height:1.2;white-space:nowrap}
 #vpc .vpc-stars-icons{letter-spacing:.08em}
 #vpc .vpc-stars-label{color:#f2c866;font-size:13px;font-weight:600}
 #vpc .vpc-stars-placeholder{color:#e1c46d;font-size:13px;font-weight:600}
@@ -53,5 +53,73 @@
 #vpc .vpc-total span{font-size:11px;color:#b9cadc}
 #vpc .vpc-total strong{display:block;font-size:16px;color:#fff;overflow-wrap:anywhere}
 #vpc .vpc-card footer{margin-top:14px;background:transparent;padding:0;text-align:left;color:#b9cadc;font-size:12px}
-@media(max-width:600px){#vpc .vpc-person{flex-wrap:wrap}#vpc .vpc-tag{margin-left:0}}
-@media(max-width:420px){#vpc{padding:22px 10px}#vpc .vpc-card{padding:12px}#vpc .vpc-companies{grid-template-columns:1fr}#vpc .vpc-company{min-height:auto}}
+/* V1.2 — alinhamento e responsividade */
+#vpc .vpc-person{display:grid;grid-template-columns:58px minmax(0,1fr) auto;min-height:87px}
+#vpc .vpc-person-main{min-width:0}
+#vpc .vpc-companies{flex:1}
+#vpc .vpc-card footer.vpc-network-ids{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;min-height:20px;line-height:20px;align-items:center}
+#vpc .vpc-network-ids span{overflow-wrap:anywhere;min-width:0}
+#vpc .vpc-network-ids strong{font-weight:600;color:#eef5fb}
+#vpc .vpc-network-vatsim{text-align:right}
+#vpc .vpc-company dl{grid-template-columns:minmax(0,1fr) minmax(0,auto)}
+@media(max-width:600px){
+ #vpc{padding:24px 12px 48px}
+ #vpc .vpc-person{grid-template-columns:48px minmax(0,1fr);gap:8px 12px;min-height:110px}
+ #vpc .vpc-avatar{width:48px;height:48px}
+ #vpc .vpc-tag{grid-column:2;justify-self:start;margin:0}
+ #vpc .vpc-filters label{min-width:0}
+ #vpc .vpc-filters select,#vpc .vpc-filters input{width:100%;max-width:100%}
+ #vpc .vpc-stars{gap:4px;font-size:13px}
+ #vpc .vpc-stars-label,#vpc .vpc-stars-placeholder{font-size:11px}
+ #vpc .vpc-stars small{font-size:10px}
+}
+@media(max-width:480px){
+ #vpc .vpc-card{padding:12px}
+ #vpc .vpc-companies{grid-template-columns:1fr}
+ #vpc .vpc-company{min-height:0}
+ #vpc .vpc-company-state{min-height:140px}
+ #vpc .vpc-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #vpc .vpc-stats>div{padding:12px 6px}
+ #vpc .vpc-stats strong{font-size:19px;overflow-wrap:anywhere}
+ #vpc .vpc-total strong{font-size:14px}
+ #vpc .vpc-card footer.vpc-network-ids{font-size:11px}
+}
+@media(max-width:340px){
+ #vpc .vpc-stars{white-space:normal;min-height:36px;height:36px}
+ #vpc .vpc-card footer.vpc-network-ids{line-height:16px;min-height:32px}
+}
+/* V1.3 — VAX Performance & Evolution */
+#vpc .vpc-card [hidden]{display:none!important}
+#vpc .vpc-front{display:flex;flex:1;flex-direction:column;min-width:0}
+#vpc .vpc-evolve{margin-top:10px;font-size:12px;white-space:normal;width:100%}
+#vpc .vpc-back{min-width:0;display:flex;flex-direction:column;gap:12px}
+#vpc .vpc-back-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+#vpc .vpc-back-head button{font-size:12px;flex:none}
+#vpc .vpc-evo-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+#vpc .vpc-evo-metrics>div{background:#172d42;padding:10px 4px;border-radius:8px;text-align:center}
+#vpc .vpc-evo-metrics strong{display:block;font-size:22px;color:#61dbe2}
+#vpc .vpc-progress{height:7px;border-radius:8px;background:#294258;overflow:hidden}
+#vpc .vpc-progress span{display:block;height:100%;background:#49c8d6}
+#vpc .vpc-requirements{list-style:none;padding:0;margin:0;display:grid;gap:7px;font-size:12px}
+#vpc .vpc-requirements li{display:flex;justify-content:space-between;gap:8px;color:#b7cadc}
+#vpc .vpc-requirements strong{color:#f1cc76;text-align:right}
+#vpc .vpc-requirements strong.vpc-met{color:#66dba8}
+#vpc .vpc-history,#vpc .vpc-simulator{background:#172d42;padding:12px;border-radius:9px;min-width:0}
+#vpc .vpc-simulator label{display:block;font-size:12px;color:#b7cadc}
+#vpc .vpc-simulator output{color:#61dbe2;font-weight:700}
+#vpc .vpc-simulator input[type=range]{display:block;width:100%;padding:0;margin:8px 0;accent-color:#49c8d6}
+#vpc .vpc-projection p{margin:6px 0;font-size:13px;color:#61dbe2}
+#vpc .vpc-chart{display:block;width:100%;height:auto;max-height:170px}
+#vpc .vpc-turn{animation:vpc-turn .32s ease-out;transform-origin:center}
+@keyframes vpc-turn{from{transform:perspective(900px) rotateY(-85deg);opacity:.2}to{transform:perspective(900px) rotateY(0);opacity:1}}
+@media(prefers-reduced-motion:reduce){#vpc .vpc-turn{animation:none}}
+@media(max-width:480px){#vpc .vpc-evo-metrics strong{font-size:18px}#vpc .vpc-back-head{flex-wrap:wrap}}
+
+/* V1.4 — histórico autenticado NewSky */
+#vpc .vpc-history small{display:block;line-height:1.5;margin-top:5px;color:#b7cadc}
+#vpc .vpc-history .vpc-history-ok{color:#66dba8}
+#vpc .vpc-history-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:9px 0;color:#b7cadc;font-size:11px}
+#vpc .vpc-history-summary strong{display:block;color:#61dbe2;font-size:19px}
+#vpc .vpc-history-alert{border:1px solid #77633f;border-radius:8px;padding:10px;color:#f1cc76}
+#vpc .vpc-history-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
+#vpc .vpc-history-actions a,#vpc .vpc-history-actions button{border:1px solid #42657d;border-radius:6px;padding:7px 10px;color:#dceef7;background:#203b50;font-size:12px;text-decoration:none;cursor:pointer}
