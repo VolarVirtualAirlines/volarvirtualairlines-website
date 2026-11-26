@@ -1,4 +1,4 @@
-/* VOLAR PERFORMANCE CENTER V1.2 — dados VVX/VAX e perfis globais opcionais */
+/* VOLAR PERFORMANCE CENTER V1.2.2 — dados VVX/VAX e perfis globais opcionais */
  document.addEventListener('DOMContentLoaded', () => {
  'use strict';
  const $=id=>document.getElementById(id), esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -58,7 +58,7 @@
  $('stars').innerHTML=has?columns(groups,list.length)+note('Uma estrela a cada 100 horas VVX + VAX, mesmo quando o filtro é por companhia.'+(!sourceOK()?' Experiência parcial.':'')):note('Dados indisponíveis.');
  $('hall').innerHTML=[['Master of Flight Hours','time'],['Excellence · VVX','vvxRating'],['Excellence · VAX','vaxRating'],['IVAO Ambassador','ivao'],['Beyond Horizons','dist']].map(([l,k])=>{const a=ranked(list,k);return row(l,a.length?a.filter(x=>x.pos===1).map(x=>name(x.p)).join(' / ')+' · '+metrics[k][2](a[0].v):'—');}).join('')+note('Destaques acumulados, não premiações por período.'+(!ok?' Dados parciais.':''));
  const aircraft=new Map();let covered=0;for(const p of list){const s=profiles.get(p.id);const valid=Object.entries(s?.airframes||{}).filter(([k,v])=>num(v?.flights)>0);if(valid.length)covered++;for(const [k,v] of valid)aircraft.set(k,(aircraft.get(k)||0)+num(v.flights));}const ac=[...aircraft].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));const acTotal=ac.reduce((a,x)=>a+x[1],0);
- $('aircraft').innerHTML=note(`Dados globais NewSky dos pilotos selecionados, não voos exclusivos da Volar. Cobertura: ${covered}/${list.length} pilotos com dados de aeronave.`)+(ac.length?bars(aircraftExpanded?ac:ac.slice(0,5),acTotal)+row('Voos com aeronave informada',fmt(acTotal)):note('Consulte os perfis NewSky para carregar este indicador.'));
+ $('aircraft').innerHTML=note(`Dados globais NewSky dos pilotos selecionados, não voos exclusivos da Volar. Cobertura: ${covered}/${list.length} pilotos com dados de aeronave.`)+(ac.length?bars(aircraftExpanded?ac:ac.slice(0,5),acTotal)+row('Voos com aeronave informada',fmt(acTotal)):note(profileBusy?'Consultando perfis NewSky…':profiles.size?'Nenhuma estatística de aeronave retornada. Consulte novamente os perfis NewSky.':'Clique em Consultar perfis NewSky, no topo da página.'));
  $('aircraft-toggle').hidden=ac.length<=5; $('aircraft-toggle').textContent=aircraftExpanded?'Ver menos':'Ver todas as aeronaves ('+ac.length+')'; $('aircraft-toggle').setAttribute('aria-expanded',String(aircraftExpanded));
  if(!available.vax||!sourceOK())$('academy').innerHTML=note('Academy: a identificação de cadetes exclusivos depende das duas fontes completas.');else{const cad=pilots.filter(p=>p.vax&&!p.vvx);const eligible=cad.filter(p=>rating(profiles.get(p.id)?.rating)>=8&&rating(profiles.get(p.id)?.rating)!==null&&sum(p,'flights','vax')>=10&&sum(p,'time','vax')>=600);$('academy').innerHTML=row('Cadetes exclusivos VAX',fmt(cad.length))+row('Rating geral disponível',fmt(cad.filter(p=>rating(profiles.get(p.id)?.rating)!==null).length))+row('Metas numéricas atingidas',fmt(eligible.length))+row('VAX Pilot Check','A confirmar')+note('Painel fixo da Academy. Metas: rating geral ≥ 8, 10 voos e 10h na VAX. Não confirma promoção.');}
  const active=list.filter(p=>entries(p).some(x=>x.status?.active===true)).length,inactive=list.filter(p=>entries(p).every(x=>x.status?.active===false)).length;const recent=list.filter(p=>entries(p).some(x=>{const d=Date.parse(x.stats?.lastFlightDate);return Number.isFinite(d)&&d<=Date.now()&&d>=Date.now()-30*86400000;})).length;
@@ -66,7 +66,40 @@
  $('podium').querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>img.remove()));
  }
  async function load(){if(busy||profileBusy)return;busy=true;$('refresh').disabled=true;$('profiles').disabled=true;$('notice').textContent='Consultando fontes NewSky…';const results=await Promise.allSettled(keys.map(async k=>{setSource(k,'loading');try{const r=await fetch(urls[k],{cache:'no-store',signal:AbortSignal.timeout(20000)});if(!r.ok)throw Error('HTTP '+r.status);const j=await r.json();if(j.error||!Array.isArray(j.dados))throw Error('Retorno inválido');setSource(k,'online');return j.dados;}catch(e){setSource(k,'offline');throw e;}}));const map=new Map();available={};issues={};results.forEach((r,i)=>{const k=keys[i];available[k]=r.status==='fulfilled';issues[k]=0;if(!available[k])return;for(const raw of r.value){if(!raw||!['string','number'].includes(typeof raw._id)||!String(raw._id).trim()){issues[k]++;continue;}const id=String(raw._id).trim();if(!map.has(id))map.set(id,{id});if(map.get(id)[k]){issues[k]++;continue;}map.get(id)[k]=raw;}});pilots=[...map.values()];profiles.clear();$('profile-status').innerHTML='Perfis globais opcionais: requerem sessão NewSky. <a href="https://newsky.app/" target="_blank" rel="noopener noreferrer">Acessar NewSky ↗</a>';$('notice').textContent=(sourceOK()?'Fontes disponíveis.':'Dados parciais ou indisponíveis. ' +keys.map(k=>k.toUpperCase()+': '+(available[k]?'disponível':'indisponível')+(issues[k]?` (${issues[k]} registros ignorados)`:'')).join(' · '))+ ' · Consulta: '+new Date().toLocaleString('pt-BR');busy=false;$('refresh').disabled=false;$('profiles').disabled=!pilots.length;render();}
- async function getProfiles(){if(busy||profileBusy)return;profileBusy=true;$('profiles').disabled=true;$('refresh').disabled=true;let next=0,done=0,errors=0,unauth=false,limited=false;const queue=pilots.filter(p=>!profiles.has(p.id));const progress=()=>{$('profile-status').textContent=`Perfis NewSky: ${profiles.size}/${pilots.length} disponíveis · ${done}/${queue.length} consultas concluídas · ${errors} falhas.`;};progress();async function worker(){while(next<queue.length&&!unauth&&!limited){const p=queue[next++];try{const r=await fetch('https://newsky.app/api/pilot/'+encodeURIComponent(p.id),{method:'GET',credentials:'include',cache:'no-store',signal:AbortSignal.timeout(15000)});if(!r.ok){if(r.status===401)unauth=true;if(r.status===429)limited=true;throw Error('HTTP '+r.status);}const d=await r.json();if(String(d?._id)!==p.id||!d.stats||typeof d.stats!=='object')throw Error('Retorno inválido');const {rating,time,flights,airframes}=d.stats;profiles.set(p.id,{rating,time,flights,airframes});}catch(e){errors++;}finally{done++;progress();}}}await Promise.all(Array.from({length:Math.min(3,queue.length)},worker));profileBusy=false;$('profiles').disabled=false;$('refresh').disabled=false;progress();if(unauth||limited||errors){$('profile-status').append(document.createTextNode(unauth?' Conecte-se ao NewSky e tente novamente.':limited?' Limite de consultas atingido; tente mais tarde.':' Alguns perfis não foram autorizados ou estão indisponíveis.'));const a=document.createElement('a');a.href='https://newsky.app/';a.target='_blank';a.rel='noopener noreferrer';a.textContent=' Acessar NewSky ↗';$('profile-status').append(a);}render();}
+ // Fluxo manual: um clique consulta e atualiza todos os indicadores dependentes.
+ async function getProfiles(){
+   if(busy||profileBusy||!pilots.length)return;
+   const button=$('profiles'), status=$('profile-status');
+   profileBusy=true; button.disabled=true; button.textContent='Consultando perfis…'; $('refresh').disabled=true;
+   let next=0,done=0,errors=0,unauth=false,limited=false,forbidden=false;
+   const queue=[...pilots]; // Cada clique permite uma nova consulta, inclusive airframes vazios.
+   profiles.clear();
+   const progress=()=>{status.textContent=`Perfis NewSky: ${profiles.size}/${pilots.length} disponíveis · ${done}/${queue.length} consultas concluídas · ${errors} falhas.`;};
+   try {
+     progress(); render();
+     async function worker(){
+       while(next<queue.length&&!unauth&&!limited){
+         const p=queue[next++];
+         try {
+           const r=await fetch('https://newsky.app/api/pilot/'+encodeURIComponent(p.id),{method:'GET',credentials:'include',cache:'no-store',signal:AbortSignal.timeout(15000)});
+           if(!r.ok){if(r.status===401)unauth=true;if(r.status===403)forbidden=true;if(r.status===429)limited=true;throw Error('HTTP '+r.status);}
+           const d=await r.json();
+           if(String(d?._id)!==p.id||!d.stats||typeof d.stats!=='object')throw Error('Retorno inválido');
+           const {rating,time,flights,airframes}=d.stats; profiles.set(p.id,{rating,time,flights,airframes});
+         } catch(e){errors++;} finally {done++;progress();}
+       }
+     }
+     await Promise.all(Array.from({length:Math.min(3,queue.length)},worker));
+   } finally {
+     profileBusy=false; button.disabled=false; button.textContent='Consultar perfis NewSky'; $('refresh').disabled=false;
+     progress();
+     if(unauth||limited||errors){
+       status.append(document.createTextNode(unauth?' Sessão não autorizada (401). Conecte-se ao NewSky e clique novamente no botão.':limited?' Limite de consultas atingido (429). Tente mais tarde.':forbidden?' Alguns perfis não foram autorizados (403).':' Alguns perfis estão indisponíveis. Verifique conexão e sessão NewSky.'));
+       const a=document.createElement('a'); a.href='https://newsky.app/';a.target='_blank';a.rel='noopener noreferrer';a.textContent=' Acessar NewSky ↗';status.append(a);
+     }
+     render();
+   }
+ }
  $('rank-toggle').addEventListener('click',()=>{rankExpanded=!rankExpanded;render();}); $('aircraft-toggle').addEventListener('click',()=>{aircraftExpanded=!aircraftExpanded;render();});
- $('scope').addEventListener('change',()=>{rankExpanded=false;aircraftExpanded=false;if(($('scope').value==='vvx'&&$('metric').value==='vaxRating')||($('scope').value==='vax'&&$('metric').value==='vvxRating'))$('metric').value='time';render();});$('metric').addEventListener('change',()=>{rankExpanded=false;render();});$('refresh').addEventListener('click',load);$('profiles').addEventListener('click',getProfiles);load();
+ $('scope').addEventListener('change',()=>{rankExpanded=false;aircraftExpanded=false;if(($('scope').value==='vvx'&&$('metric').value==='vaxRating')||($('scope').value==='vax'&&$('metric').value==='vvxRating'))$('metric').value='time';render();});$('metric').addEventListener('change',()=>{rankExpanded=false;render();});$('refresh').addEventListener('click',load);$('profiles').addEventListener('click',()=>getProfiles());load();
  });
