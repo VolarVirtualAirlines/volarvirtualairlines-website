@@ -81,6 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         <span class="menu-live-text"><i class="fas fa-satellite-dish" aria-hidden="true"></i> Volar Live Operations</span>
                         <span class="menu-live-label"><span class="menu-live-dot" aria-hidden="true"></span> AO VIVO</span>
                     </a>
+                    <!-- VOLAR PERFORMANCE CENTER -->
+                    <a href="volar_performance_center.html">
+                        <i class="fas fa-chart-bar" aria-hidden="true"></i>
+                        Volar Performance Center
+                    </a>
                     <a href="rotas.html">Rotas Oficiais</a>
                     <a href="index.html#voos-recentes">Voos Recentes</a>
                     <a href="ferramentas.html">Ferramentas Recomendadas</a>
@@ -256,6 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "staff.html": "volar",
         "rotas.html": "operacoes",
         "volar_live_operations.html": "operacoes",
+        "volar_performance_center.html": "operacoes",
         "ferramentas.html": "operacoes",
         "cargo.html": "divisoes",
         "executive.html": "divisoes",
