@@ -41,3 +41,7 @@
 
 /* V1.2.3 — autenticação localizada, sem alterar a grade */
 #vpf .vpf-auth{display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px;padding:18px 10px;margin:12px 0;color:#eab967;border:1px solid #38556c;border-radius:9px}#vpf .vpf-auth i{font-size:22px}#vpf .vpf-auth a{padding:8px 12px;border:1px solid #38556c;border-radius:6px;text-decoration:none;font-size:13px}#vpf .vpf-sources{flex-wrap:wrap}#vpf .vpf-sources .partial,#vpf .vpf-sources .idle{color:#eab54f}
+
+/* V1.2.5 — status compacto, quebra natural em telas estreitas */
+#vpf .vpf-status-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 9px;margin:10px 0;color:#b8ccdc;font-size:13px;line-height:1.5}
+#vpf .vpf-status-line #profile-status:before{content:"·";margin-right:9px;color:#7895aa}
