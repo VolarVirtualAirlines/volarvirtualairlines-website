@@ -1085,7 +1085,16 @@ main.vlo{
       pilot:firstText(row?.pilot?.fullname,row?.pilot?.name,row?.pilotName,'Piloto não informado'),
       dep:firstText(row?.dep?.icao,row?.departure?.icao,'---'),arr:firstText(row?.arr?.icao,row?.arrival?.icao,'---'),
       aircraft:firstText(row?.aircraft?.airframe?.ident,row?.aircraft?.ident,row?.aircraft?.type,'N/D'),
-      network:firstText(row?.network?.name,'NewSky'),position:positionOf(row),
+
+      simulator:firstText(
+        typeof row?.simulator === 'string' ? row.simulator : '',
+        row?.simulator?.name,
+        row?.simulator?.ident,
+        row?.simulator?.code,
+        row?.simulatorName
+      ),
+
+      network:firstText(row?.network?.name,'NewSky'),position:positionOf(row),      
       depPosition:airportInFlight(row?.dep || row?.departure),
       arrPosition:airportInFlight(row?.arr || row?.arrival)};
   }
