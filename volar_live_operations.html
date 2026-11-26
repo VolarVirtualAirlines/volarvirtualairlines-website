@@ -495,6 +495,72 @@ main.vlo{
   .vlo .flight{transition:none}
   .vlo .flight:hover{transform:none}
 }
+
+    
+/* ============================================
+   V6.7 - SIMULADOR NOS CARDS OPERACIONAIS
+   Rede | Simulador | Status
+   ============================================ */
+
+.vlo .flight-operational-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 10px;
+    margin-top: 5px;
+    min-width: 0;
+}
+
+.vlo .flight-operational-row .flight-compact-network {
+    min-width: 0;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+.vlo .flight-simulator-slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+}
+
+.vlo .flight-simulator-badge {
+    display: inline-block;
+    max-width: 100%;
+    padding: 4px 9px;
+    border: 1px solid #315873;
+    border-radius: 6px;
+    background: #193A50;
+    color: #84DCEB;
+    font-size: 10px;
+    font-weight: 750;
+    line-height: 1.25;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.vlo .flight-operational-row .flight-status-active {
+    min-width: 0;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 420px) {
+    .vlo .flight-operational-row {
+        column-gap: 5px;
+    }
+
+    .vlo .flight-simulator-badge {
+        padding: 3px 5px;
+        font-size: 9px;
+    }
+
+    .vlo .flight-operational-row .flight-status-active {
+        font-size: 10px;
+    }
+}
+    
   </style>
 </head>
 <body>
