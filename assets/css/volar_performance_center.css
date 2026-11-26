@@ -45,3 +45,19 @@
 /* V1.2.5 — status compacto, quebra natural em telas estreitas */
 #vpf .vpf-status-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 9px;margin:10px 0;color:#b8ccdc;font-size:13px;line-height:1.5}
 #vpf .vpf-status-line #profile-status:before{content:"·";margin-right:9px;color:#7895aa}
+/* V1.2.7 — reconhecimento, progresso e engajamento */
+#vpf .vpf-honors{display:grid;gap:7px;margin:12px 0}
+#vpf .vpf-honor{display:grid;grid-template-columns:36px minmax(0,1fr) minmax(0,1fr);align-items:center;gap:10px;padding:10px 8px;background:#172d42;border-radius:8px}
+#vpf .vpf-honor i{display:grid;place-items:center;width:34px;height:34px;background:#243b4c;color:#efd18c;border-radius:7px;font-size:17px}
+#vpf .vpf-honor b,#vpf .vpf-honor strong{display:block;font-size:13px;color:#eef5fb}
+#vpf .vpf-honor small{display:block;font-size:11px;line-height:1.4;margin-top:3px}
+#vpf .vpf-honor-value{text-align:right}#vpf .vpf-honor-value small{color:#52dbe5}
+#vpf .vpf-eyebrow{color:#c8b0ff;font-size:13px;margin:7px 0 12px}
+#vpf .vpf-mini-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0 18px}
+#vpf .vpf-mini-kpis>div,#vpf .vpf-engagement-metrics>div{background:#172d42;border-radius:8px;padding:14px 9px;text-align:center;display:grid;gap:5px;align-content:center}
+#vpf .vpf-mini-kpis strong{font-size:30px;color:#c8b0ff}#vpf .vpf-subtitle{font-size:14px;color:#eef5fb;margin:12px 0}
+#vpf .vpf-academy-progress{margin:14px 0}#vpf .vpf-academy-progress>div:first-child{display:flex;justify-content:space-between;gap:8px;font-size:13px;margin-bottom:7px}#vpf .vpf-academy-progress strong{color:#c8b0ff;text-align:right}
+#vpf .vpf-progress-track{height:10px;background:#29465c;border-radius:6px;overflow:hidden}#vpf .vpf-progress-track span{height:100%;display:block;background:#b49aef;border-radius:6px}
+#vpf .vpf-checkline{display:flex;align-items:center;gap:8px;border-top:1px solid #29465c;padding-top:15px;margin-top:20px;font-size:13px;flex-wrap:wrap}#vpf .vpf-checkline i,#vpf .vpf-checkline strong{color:#efd18c}#vpf .vpf-checkline strong{margin-left:auto}
+#vpf #activity{display:block}#vpf .vpf-engagement{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:24px;align-items:center;margin:10px 0}#vpf .vpf-engagement-chart{display:flex;align-items:center;gap:16px}#vpf .vpf-engagement-chart svg{width:44%;max-width:190px;flex:none}#vpf .vpf-engagement-chart b,#vpf .vpf-engagement-chart small{display:block;margin:5px 0}#vpf .vpf-engagement-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}#vpf .vpf-engagement-metrics strong{font-size:25px;color:#52dbe5}#vpf .vpf-engagement-metrics small{font-size:12px}
+@media(max-width:1100px){#vpf .vpf-engagement{grid-template-columns:1fr}}@media(max-width:650px){#vpf .vpf-engagement-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#vpf .vpf-honor{grid-template-columns:30px minmax(0,1fr) minmax(0,1fr);gap:6px}#vpf .vpf-honor i{width:28px;height:28px}#vpf .vpf-honor b,#vpf .vpf-honor strong{font-size:12px}}
