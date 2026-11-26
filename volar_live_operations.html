@@ -1222,6 +1222,15 @@ main.vlo{
     // V6.6: cabeçalho único, duas colunas operacionais e status compacto.
     // Maiúsculas somente na apresentação: o valor original continua disponível nos dados da API.
     const networkDisplay=String(f.network || 'NEWSKY').toLocaleUpperCase('pt-BR');
+
+    // V6.7 - Formatação do simulador
+    const simulatorRaw = String(f.simulator || '').trim();
+    
+    const simulatorDisplay = simulatorRaw
+      .toUpperCase()
+      .replace(/^MSFS[\s-]*(2020|2024)$/i, 'MSFS $1')
+      .replace(/^X[\s-]*PLANE[\s-]*(11|12)$/i, 'X-PLANE $1');
+    
     button.innerHTML=
       `<div class="flight-title">`+
         `<div class="flight-heading-main">`+
@@ -1232,12 +1241,24 @@ main.vlo{
         `</div>`+
         `<span class="airline ${f.airline.toLowerCase()}">${safe(f.airline)}</span>`+
       `</div>`+
+
+      // Linha 2 - Piloto e aeronave
       `<div class="flight-compact-grid">`+
         `<span class="flight-compact-cell" title="${safe(f.pilot)}">${safe(f.pilot)}</span>`+
         `<span class="flight-compact-cell align-right" title="${safe(f.aircraft)}">${safe(f.aircraft)}</span>`+
-        `<span class="flight-compact-cell flight-compact-network" title="${safe(networkDisplay)}">${safe(networkDisplay)}</span>`+
-        `<span class="flight-compact-cell align-right flight-status-active">Em andamento</span>`+
       `</div>`+
+      
+      // Linha 3 - Rede, simulador e status
+      `<div class="flight-operational-row">`+
+        `<span class="flight-compact-network" title="${safe(networkDisplay)}">${safe(networkDisplay)}</span>`+
+        `<span class="flight-simulator-slot">`+
+          (simulatorDisplay
+            ? `<span class="flight-simulator-badge" title="Simulador: ${safe(simulatorDisplay)}">${safe(simulatorDisplay)}</span>`
+            : '')+
+        `</span>`+
+        `<span class="flight-status-active">Em andamento</span>`+
+      `</div>`+
+      
       `<span class="flight-position ${f.position?'':'missing'}">`+
         `<span class="flight-position-dot" aria-hidden="true"></span>`+
         `${f.position?'Posição disponível · clique para localizar':'Posição indisponível · sem localização no mapa'}`+
