@@ -24,7 +24,7 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     >
-    <link rel="stylesheet" href="assets/css/volar_performance_center.css?v=1.2.3">
+    <link rel="stylesheet" href="assets/css/volar_performance_center.css?v=1.2.5">
 </head>
 
 <body>
@@ -52,11 +52,11 @@
 
 <main id="vpf"><section class="vpf-shell">
 <header class="vpf-intro"><div><h1>Volar <span>Performance Center</span></h1><p>Operational Intelligence &amp; Pilot Rankings</p><em>Beyond Numbers. Driven by Excellence.</em></div><div class="vpf-sources"><span id="source-vvx" role="status">● VVX</span><span id="source-vax" role="status">● VAX</span><span id="source-newsky" role="status">● NewSky</span></div></header>
-<div class="vpf-toolbar"><label>Companhia <select id="scope"><option value="all">Volar consolidada</option><option value="vvx">VVX · Principal</option><option value="vax">VAX · Academy</option></select></label><label>Ranking <select id="metric"><option value="time">Horas de voo</option><option value="flights">Voos realizados</option><option value="dist">Distância</option><option value="vvxRating">Rating VVX</option><option value="vaxRating">Rating VAX</option><option value="globalRating">Rating Geral NewSky</option><option value="ivao">Voos IVAO</option><option value="vatsim">Voos VATSIM</option><option value="newsky">Voos NEWSKY</option><option value="seniority">Antiguidade</option></select></label><button id="refresh" type="button">↻ Atualizar dados</button></div>
-<p id="notice" role="status">Consultando fontes...</p><p id="profile-status" role="status">Consultando disponibilidade dos perfis…</p>
+<div class="vpf-toolbar"><label>Companhia <select id="scope"><option value="all">Volar consolidada</option><option value="vvx">VVX · Principal</option><option value="vax">VAX · Academy</option></select></label><label>Ranking <select id="metric"><option value="time">Horas de voo</option><option value="flights">Mais voos realizados</option><option value="dist">Distância</option><option value="vvxRating">Rating VVX</option><option value="vaxRating">Rating VAX</option><option value="globalRating">Rating Geral NewSky</option><option value="ivao">Voos IVAO</option><option value="vatsim">Voos VATSIM</option><option value="newsky">Voos NEWSKY</option><option value="seniority">Antiguidade</option></select></label><button id="refresh" type="button">↻ Atualizar dados</button></div>
+<div class="vpf-status-line"><span id="notice" role="status">Consultando fontes...</span><span id="profile-status" role="status">Consultando disponibilidade dos perfis…</span></div>
 <div id="kpis" class="vpf-kpis"></div>
 <div class="vpf-grid"><section class="vpf-panel vpf-wide"><h2><i class="fas fa-trophy"></i> Pilot Leaderboard</h2><p id="ranking-note"></p><div id="podium" class="vpf-podium"></div><div class="vpf-scroll"><table><thead><tr><th>Pos.</th><th>Piloto</th><th>Vínculo</th><th id="metric-head">Indicador</th><th>Experiência Volar</th></tr></thead><tbody id="ranking"></tbody></table></div><button class="vpf-expand" id="rank-toggle" type="button" aria-expanded="false" aria-controls="ranking" hidden>Ver ranking completo</button></section>
-<section class="vpf-panel"><h2><i class="fas fa-chart-bar"></i> Ranking Performance</h2><div id="rank-chart"></div></section><section class="vpf-panel"><h2>Network Performance</h2><div id="networks"></div></section><section class="vpf-panel"><h2>Operational Performance</h2><div id="operations"></div></section><section class="vpf-panel"><h2>Experience &amp; Stars</h2><div id="stars"></div></section><section class="vpf-panel"><h2>Hall of Excellence</h2><div id="hall"></div></section><section class="vpf-panel"><h2>Aircraft Performance</h2><div id="aircraft"></div><button class="vpf-expand" id="aircraft-toggle" type="button" aria-expanded="false" aria-controls="aircraft" hidden>Ver mais aeronaves</button></section><section class="vpf-panel"><h2>Academy Performance</h2><div id="academy"></div></section><section class="vpf-panel"><h2>Pilot Activity</h2><div id="activity"></div></section></div>
+<section class="vpf-panel"><h2><i class="fas fa-chart-bar"></i> Flight Ranking</h2><div id="rank-chart"></div><button class="vpf-expand" id="rank-chart-toggle" type="button" aria-expanded="false" aria-controls="rank-chart" hidden>Ver lista completa</button></section><section class="vpf-panel"><h2>Network Performance</h2><div id="networks"></div></section><section class="vpf-panel"><h2>Operational Performance</h2><div id="operations"></div></section><section class="vpf-panel"><h2>Experience &amp; Stars</h2><div id="stars"></div></section><section class="vpf-panel"><h2>Hall of Excellence</h2><div id="hall"></div></section><section class="vpf-panel"><h2>Aircraft Performance</h2><div id="aircraft"></div><button class="vpf-expand" id="aircraft-toggle" type="button" aria-expanded="false" aria-controls="aircraft" hidden>Ver mais aeronaves</button></section><section class="vpf-panel"><h2>Academy Performance</h2><div id="academy"></div></section><section class="vpf-panel"><h2>Pilot Activity</h2><div id="activity"></div></section></div>
 <p class="vpf-footnote">Estatísticas acumuladas dos pilotos atualmente retornados pelas fontes. Não equivalem necessariamente aos totais históricos das companhias. Horários e dados sujeitos à atualização NewSky.</p>
 </section></main>
 
@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <script src="assets/js/support.js"></script>
 
 
-<script src="assets/js/volar_performance_center.js?v=1.2.3"></script>
+<script src="assets/js/volar_performance_center.js?v=1.2.5"></script>
 </body>
 
 </html>
