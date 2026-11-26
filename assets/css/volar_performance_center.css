@@ -61,3 +61,17 @@
 #vpf .vpf-checkline{display:flex;align-items:center;gap:8px;border-top:1px solid #29465c;padding-top:15px;margin-top:20px;font-size:13px;flex-wrap:wrap}#vpf .vpf-checkline i,#vpf .vpf-checkline strong{color:#efd18c}#vpf .vpf-checkline strong{margin-left:auto}
 #vpf #activity{display:block}#vpf .vpf-engagement{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:24px;align-items:center;margin:10px 0}#vpf .vpf-engagement-chart{display:flex;align-items:center;gap:16px}#vpf .vpf-engagement-chart svg{width:44%;max-width:190px;flex:none}#vpf .vpf-engagement-chart b,#vpf .vpf-engagement-chart small{display:block;margin:5px 0}#vpf .vpf-engagement-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}#vpf .vpf-engagement-metrics strong{font-size:25px;color:#52dbe5}#vpf .vpf-engagement-metrics small{font-size:12px}
 @media(max-width:1100px){#vpf .vpf-engagement{grid-template-columns:1fr}}@media(max-width:650px){#vpf .vpf-engagement-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#vpf .vpf-honor{grid-template-columns:30px minmax(0,1fr) minmax(0,1fr);gap:6px}#vpf .vpf-honor i{width:28px;height:28px}#vpf .vpf-honor b,#vpf .vpf-honor strong{font-size:12px}}
+
+/* V1.2.8 — acabamento exclusivo de Pilot Activity & Engagement */
+#vpf .vpf-engagement{grid-template-columns:minmax(280px,auto) minmax(0,1fr);gap:20px}
+#vpf .vpf-engagement-chart{gap:14px;min-width:0}
+#vpf .vpf-engagement-chart svg{width:clamp(120px,10vw,175px);max-width:44%;flex:none}
+#vpf .vpf-engagement-label{fill:#b8ccdc;font-size:10px;letter-spacing:0}
+#vpf .vpf-engagement-count{display:block;color:#52dbe5;font-size:18px;margin-top:8px}
+#vpf .vpf-engagement-metrics .vpf-activity-general strong{color:#52dbe5}
+#vpf .vpf-engagement-metrics .vpf-activity-positive strong{color:#62dea6}
+#vpf .vpf-engagement-metrics .vpf-activity-attention strong{color:#eab54f}
+#vpf .vpf-engagement-metrics .vpf-activity-negative strong{color:#ef7370}
+#vpf .vpf-engagement-metrics .vpf-activity-neutral strong{color:#8da4b8}
+@media(max-width:1100px){#vpf .vpf-engagement{grid-template-columns:1fr;gap:14px}}
+@media(max-width:400px){#vpf .vpf-engagement-chart{gap:8px}#vpf .vpf-engagement-chart svg{width:40%}#vpf .vpf-engagement-count{font-size:15px}}
