@@ -560,6 +560,57 @@ main.vlo{
         font-size: 10px;
     }
 }
+
+
+/* ============================================
+   V6.7 - BADGES DAS REDES DE VOO
+   ============================================ */
+
+.vlo .flight-operational-row .flight-network-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    width: fit-content;
+    max-width: 100%;
+    padding: 4px 9px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: .035em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* IVAO - AZUL */
+.vlo .flight-network-badge.rede-ivao {
+    background: #2563eb;
+}
+
+/* VATSIM - VERDE */
+.vlo .flight-network-badge.rede-vatsim {
+    background: #16834a;
+}
+
+/* NEWSKY - CINZA */
+.vlo .flight-network-badge.rede-newsky {
+    background: #596579;
+}
+
+/* OUTRAS REDES - NEUTRO */
+.vlo .flight-network-badge.rede-outra {
+    background: #475569;
+}
+
+/* TELAS MENORES */
+@media (max-width: 420px) {
+    .vlo .flight-operational-row .flight-network-badge {
+        padding: 3px 6px;
+        font-size: 9px;
+    }
+}
     
   </style>
 </head>
