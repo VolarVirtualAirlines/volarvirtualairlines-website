@@ -1289,6 +1289,13 @@ main.vlo{
     // Maiúsculas somente na apresentação: o valor original continua disponível nos dados da API.
     const networkDisplay=String(f.network || 'NEWSKY').toLocaleUpperCase('pt-BR');
 
+    // V6.7 - Identificação visual da rede
+    const networkClass =
+        networkDisplay === 'IVAO' ? 'rede-ivao' :
+        networkDisplay === 'VATSIM' ? 'rede-vatsim' :
+        networkDisplay === 'NEWSKY' ? 'rede-newsky' :
+        'rede-outra';
+
     // V6.7 - Formatação do simulador
     const simulatorRaw = String(f.simulator || '').trim();
     
@@ -1316,7 +1323,7 @@ main.vlo{
       
       // Linha 3 - Rede, simulador e status
       `<div class="flight-operational-row">`+
-        `<span class="flight-compact-network" title="${safe(networkDisplay)}">${safe(networkDisplay)}</span>`+
+      `<span class="flight-compact-network flight-network-badge ${networkClass}" title="Rede: ${safe(networkDisplay)}">${safe(networkDisplay)}</span>`+
         `<span class="flight-simulator-slot">`+
           (simulatorDisplay
             ? `<span class="flight-simulator-badge" title="Simulador: ${safe(simulatorDisplay)}">${safe(simulatorDisplay)}</span>`
